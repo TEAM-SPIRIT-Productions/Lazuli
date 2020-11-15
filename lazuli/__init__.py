@@ -303,7 +303,7 @@ JOBS = {
 	
 	# Special jobs   
 	'500': 'Maple Brigadier',
-    '800': 'Manager'
+    '800': 'Manager',
 	'900': 'GM',
     '910': 'Super GM',
 	'9000': 'Additional Skills',
