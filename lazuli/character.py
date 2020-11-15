@@ -7,7 +7,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 import mysql.connector as con
 
 from lazuli import JOBS
-# from lazuli.inventory import Inventory
+from lazuli.inventory import Inventory
 from lazuli.account import Account
 
 
@@ -19,7 +19,7 @@ class Character:
     This class contains the appropriate getter and setter methods for said attributes.
 
     Attributes:
-
+        TO BE ADDED
     """
 
     def __init__(self, char_stats, database_config):
@@ -29,7 +29,7 @@ class Character:
 
         Args:
             char_stats: dictionary of character stats, formatted in AzureMS style
-            database_config: dictionary of protected attributes from a AzureMS object
+            database_config: dictionary of protected attributes from a Lazuli object
         """
         self._stats = char_stats
         self._database_config = database_config
@@ -200,11 +200,11 @@ class Character:
 
     @property
     def character_id(self):
-        return self._character_id  # Only getter, no setter; Public Key must not be set manually!
+        return self._character_id  # Only getter, no setter; Primary Key must not be set manually!
 
     @property
     def account_id(self):
-        return self._account_id  # Only getter, no setter; Public Key must not be set manually!
+        return self._account_id  # Only getter, no setter; Primary Key must not be set manually!
 
     @property
     def level(self):
