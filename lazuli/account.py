@@ -155,6 +155,31 @@ class Account:
 		self.set_stat_by_column("chrslot", value)
 		self._char_slots = value
 
+	def is_online(self):
+		""" checks if loggedin column is greater than 0 (they are online if > 0)
+
+		Returns:
+			Boolean, representing the online status of the account
+		"""
+		if int(self.logged_in) > 0:
+			return True
+		return False
+
+	def unstuck(self):
+		"""Sets loggedin column in database to 0
+		This unstucks the account as server checks loggedin value to decided whether they are "logged in"
+		"""
+		self.logged_in = 0
+
+	def change_password(self, new_pass):
+		"""Changes the current password to the given one.
+		Azure316 does not hash passwords by default, therefore this function is technically functional.
+		As "safe" as any website registration or auto register.
+		Args:
+			new_pass: string, representing the new password
+		"""
+		self.set_stat_by_column("password", new_pass)
+
 	def get_stat_by_column(self, column):
 		"""Fetches account attribute by column name
 
