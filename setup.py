@@ -23,22 +23,15 @@ classifiers = [
 
 setup(
     name="lazuli",
-    version="0.0.1",
+    version="0.0.2",
     description="A Python-based tool for interacting with AzureMSv316-based databases.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/TEAM-SPIRIT-Productions/Lazuli",
     author="Amos Chua",
-    classifiers=classifiers,    
+    classifiers=classifiers,
     keywords="database, azure, maplestory",
     packages=find_packages(),
     python_requires=">=3.6",
     install_requires=["mysql-connector-python-rf"],
-    project_urls={
-        'Change Log': 'https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md'
-        'Project Wiki': 'https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki',
-        # 'API Docs': 'LINK',
-        'Bug Reports': 'https://github.com/TEAM-SPIRIT-Productions/Lazuli/issues',
-        'Source': 'https://github.com/TEAM-SPIRIT-Productions/Lazuli',
-    },
 )

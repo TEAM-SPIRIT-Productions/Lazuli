@@ -1,5 +1,9 @@
 ## CHANGELOG:  
+
+### v0.0.2  
+- Add character model
+- Add account model
   
 ### v0.0.1  
-- Initialise project
-- Add database model (with placeholder for Account and Character objects)
+- Initialise project  
+- Add database model (with placeholder for Account and Character objects)  
