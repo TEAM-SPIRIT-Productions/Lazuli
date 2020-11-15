@@ -565,6 +565,7 @@ class Character:
     def bl_slots(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("buddyCapacity", amount)
+        self._bl_slots = amount
 
     def add_bl_slots(self, amount):
         # TODO: Add checks
@@ -579,6 +580,7 @@ class Character:
     def rebirths(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("reborns", amount)
+        self._rebirths = amount
 
     def add_rebirths(self, amount):
         # TODO: Add checks
@@ -593,6 +595,7 @@ class Character:
     def ambition(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("ambition", amount)
+        self._ambition = amount
 
     def add_ambition(self, amount):
         # TODO: Add checks
@@ -607,6 +610,7 @@ class Character:
     def insight(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("insight", amount)
+        self._insight = amount
 
     def add_insight(self, amount):
         # TODO: Add checks
@@ -621,6 +625,7 @@ class Character:
     def willpower(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("willpower", amount)
+        self._willpower = amount
 
     def add_willpower(self, amount):
         # TODO: Add checks
@@ -635,6 +640,7 @@ class Character:
     def diligence(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("diligence", amount)
+        self._diligence = amount
 
     def add_diligence(self, amount):
         # TODO: Add checks
@@ -649,6 +655,7 @@ class Character:
     def empathy(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("empathy", amount)
+        self._empathy = amount
 
     def add_empathy(self, amount):
         # TODO: Add checks
@@ -663,6 +670,7 @@ class Character:
     def charm(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("charm", amount)
+        self._charm = amount
 
     def add_charm(self, amount):
         # TODO: Add checks
@@ -677,6 +685,7 @@ class Character:
     def honour(self, amount):
         # TODO: Add checks
         self.set_stat_by_column("honour", amount)
+        self._honour = amount
 
     def add_honour(self, amount):
         # TODO: Add checks
@@ -691,6 +700,7 @@ class Character:
     def mute(self, status):
         # TODO: Add checks
         self.set_stat_by_column("mute", status)
+        self._mute = status
 
     @property
     def account(self):
