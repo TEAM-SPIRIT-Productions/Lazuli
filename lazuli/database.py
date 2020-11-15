@@ -41,11 +41,11 @@ class Lazuli:
         self._port = port
 
         self._database_config = {
-            "host": self.host,
-            "user": self.user,
-            "password": self.password,
-            "schema": self.schema,
-            "port": self.port
+            'host': self.host,
+            'user': self.user,
+            'password': self.password,
+            'schema': self.schema,
+            'port': self.port
         }
 
     @property
