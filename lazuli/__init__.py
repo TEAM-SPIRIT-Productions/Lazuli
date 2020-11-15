@@ -75,7 +75,7 @@ JOBS = {
     '434': 'Blade Master',
 	
 	# Explorer Pirates
-	'500': 'Pirate'  # Explorer Pirates 1 (Common)
+	'500': 'Pirate',  # Explorer Pirates 1 (Common)
     '510': 'Brawler',
     '511': 'Marauder',
     '512': 'Buccaneer',  # (aka Viper in MSEA/KMS)
