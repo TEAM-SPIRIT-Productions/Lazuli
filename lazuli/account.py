@@ -1,4 +1,4 @@
-"""This module holds the Account class for the Lazuli package.
+"""This module holds the Account class for the lazuli package.
 
 Copyright 2020 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
