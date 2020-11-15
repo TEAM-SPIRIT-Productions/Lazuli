@@ -26,7 +26,7 @@ class Inventory:
         equipped_inv: list of dictionaries, representing in-game items currently equipped by the character
     """
 
-    def __init__(self, inv_ids, db_config):
+    def __init__(self, character_id, db_config):
         """Inventory object; quasi-models AzureMS inventories.
 
         Due to the inherent complexity of MapleStory's inventory system, this Inventory object will
@@ -40,3 +40,86 @@ class Inventory:
         # Initialise attributes with contents of each inventory type (init methods)
         # Create getters for each attribute
         # Create has_item_in_XXX and is_equiping methods
+        self._character_id = character_id
+        self._database_config = db_config
+
+    @property
+    def database_config(self):
+        return self._database_config
+
+    @property
+    def character_id(self):
+        return self._character_id
+
+    @staticmethod
+    def get_inv_type_by_name(inv_string):
+        if inv_string == "equip" or inv_string == "eqp":
+            return 1
+        elif inv_string == "equipped":
+            return -1
+        elif inv_string == "use" or inv_string == "consume":
+            return 2
+        elif inv_string == "etc":
+            return 4
+        elif inv_string == "setup" or inv_string == "install":
+            return 3
+        elif inv_string == "cash":
+            return 5
+
+    @staticmethod
+    def get_inv_name_by_type(inv_type):
+        if inv_type == 1:
+            return "equip"
+        elif inv_type == -1:
+            return "equipped"
+        elif inv_type == 2:
+            return "use"
+        elif inv_type == 3:
+            return "setup"
+        elif inv_type == 4:
+            return "etc"
+        elif inv_type == 5:
+            return "cash"
+
+    def load_inv(self, inv_type):
+        """ Fetches Inventory data from a given Inventory Type, (I.E. -1, 1, 2, 3, 4, 5)
+
+        Args:
+            inv_type: int
+
+        Returns: dictionary, representing the inventory type we loaded
+
+        """
+        try:
+            database = con.connect(
+                host=self.database_config['host'],
+                user=self.database_config['user'],
+                password=self.database_config['password'],
+                database=self.database_config['schema'],
+                port=self.database_config['port']
+            )
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(
+                f"SELECT * FROM inventoryitems WHERE characterid = '{self.character_id}' AND inventorytype = '{inv_type}'")
+            inventory = cursor.fetchall()
+
+            inv = {}
+
+            for items in inventory:
+                # More to add if needed.
+                bag_index = items["position"]
+                item_id = items["itemid"]
+                quantity = items["quantity"]
+                isCash = items["isCash"]
+                inventory_type = items["inventorytype"]
+                item_stats = {
+                    "itemid": item_id,
+                    "quantity": quantity,
+                    "inventorytype": inventory_type,
+                    "isCash": isCash
+                }
+                inv[bag_index] = item_stats
+                # Key value, we set as the bag_index aka position of the item in the inventory.
+            return inv
+        except Exception as e:
+            print(f"[ERROR] Error trying to load inventory type {inv_type}", e)
