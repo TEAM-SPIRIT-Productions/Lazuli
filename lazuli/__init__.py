@@ -177,7 +177,7 @@ JOBS = {
 	'3000': 'Citizen',  # Non-Demon/Xenon Resistance
 
 	# Resistance classes have 300X beginner job IDs
-	'3001': 'Demon Slayer',  # Demon classes Beginner (Demons have their own beginner classes)
+	'3001': 'Demon',  # Demon classes Beginner (Demons have their own beginner classes)
 	'3100': 'Demon Slayer',  # DS 1
 	'3110': 'Demon Slayer',  # DS 2
 	'3111': 'Demon Slayer',  # DS 3
