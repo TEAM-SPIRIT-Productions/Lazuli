@@ -187,33 +187,33 @@ JOBS = {
 	'3120': 'Demon Avenger',  # DA 2
 	'3121': 'Demon Avenger',  # DA 3
 	'3122': 'Demon Avenger',  # DA 4
-	
+
 	'3200': 'Battle Mage',  # BaM 1
 	'3210': 'Battle Mage',  # BaM 2
 	'3211': 'Battle Mage',  # BaM 3
 	'3212': 'Battle Mage',  # BaM 4
-	
+
 	'3300': 'Wild Hunter',  # WH 1
 	'3310': 'Wild Hunter',  # WH 2
 	'3311': 'Wild Hunter',  # WH 3
 	'3312': 'Wild Hunter',  # WH 4
-	
+
 	'3500': 'Mechanic',  # Mech 1
 	'3510': 'Mechanic',  # Mech 2
 	'3511': 'Mechanic',  # Mech 3
 	'3512': 'Mechanic',  # Mech 4
-	
+
 	'3002': 'Xenon',  # Xenon Beginner (Xenons have their own beginner class)
 	'3600': 'Xenon',  # Xenon 1
 	'3610': 'Xenon',  # Xenon 2
 	'3611': 'Xenon',  # Xenon 3
 	'3612': 'Xenon',  # Xenon 4
-	
+
 	'3700': 'Blaster',  # Blaster 1
 	'3710': 'Blaster',  # Blaster 1
 	'3711': 'Blaster',  # Blaster 1
 	'3712': 'Blaster',  # Blaster 1
-	
+
 	# Sengoku Classes
 	# Sengoku classes have 400X beginner job IDs
 	'4001': 'Hayato',  # Hayato Beginner
@@ -221,94 +221,93 @@ JOBS = {
 	'4110': 'Hayato',  # Hayato 2
 	'4111': 'Hayato',  # Hayato 3
 	'4112': 'Hayato',  # Hayato 4
-	
+
 	'4002': 'Kanna',  # Kanna Beginner
 	'4200': 'Kanna',  # Kanna 1
 	'4210': 'Kanna',  # Kanna 2
 	'4211': 'Kanna',  # Kanna 3
 	'4212': 'Kanna',  # Kanna 4
-	
+
 	# Special KoC
 	'5000': 'Mihile',  # Mihile Beginner (aka Nameless Warden)
 	'5100': 'Mihile',  # Mihile 1
 	'5110': 'Mihile',  # Mihile 2
 	'5111': 'Mihile',  # Mihile 3
 	'5112': 'Mihile',  # Mihile 4
-	
+
 	# Nova Classes
 	'6000': 'Kaiser',  # Kaiser Beginner
 	'6100': 'Kaiser',  # Kaiser 1
 	'6110': 'Kaiser',  # Kaiser 2
 	'6111': 'Kaiser',  # Kaiser 3
 	'6112': 'Kaiser',  # Kaiser 4
-	
+
 	'6001': 'Angelic Buster',  # AB Beginner
 	'6500': 'Angelic Buster',  # AB 1
 	'6510': 'Angelic Buster',  # AB 2
 	'6511': 'Angelic Buster',  # AB 3
 	'6512': 'Angelic Buster',  # AB 4
-	
+
 	'6002': 'Cadena',  # Cadena Beginner
 	'6400': 'Cadena',  # Cadena 1
 	'6410': 'Cadena',  # Cadena 2
 	'6411': 'Cadena',  # Cadena 3
 	'6412': 'Cadena',  # Cadena 4
-	
+
 	# Child of God Classes
 	'10000': 'Zero',  # Zero Beginner
 	'10100': 'Zero',  # Zero 1
 	'10110': 'Zero',  # Zero 2
 	'10111': 'Zero',  # Zero 3
 	'10112': 'Zero',  # Zero 4
-	
+
 	# Child of Furry Classes
 	'11000': 'Beast Tamer',  # Beast Tamer Beginner
 	'11200': 'Beast Tamer',  # Beast Tamer 1
 	'11210': 'Beast Tamer',  # Beast Tamer 2
 	'11211': 'Beast Tamer',  # Beast Tamer 3
 	'11212': 'Beast Tamer',  # Beast Tamer 4
-	
+
 	# Special: Kinesis
 	'14000': 'Kinesis',  # Kinesis Beginner
 	'14200': 'Kinesis',  # Kinesis 1
 	'14210': 'Kinesis',  # Kinesis 2
 	'14211': 'Kinesis',  # Kinesis 3
 	'14212': 'Kinesis',  # Kinesis 4
-	
+
 	# Flora Classes
 	'15000': 'Illium',  # Illium Beginner
 	'15200': 'Illium',  # Illium 1
 	'15210': 'Illium',  # Illium 2
 	'15211': 'Illium',  # Illium 3
 	'15212': 'Illium',  # Illium 4
-	
+
 	'15001': 'Ark',  # Ark Beginner
 	'15500': 'Ark',  # Ark 1
 	'15510': 'Ark',  # Ark 2
 	'15511': 'Ark',  # Ark 3
 	'15512': 'Ark',  # Ark 4
-	
+
 	'15002': 'Adele',  # Adele Beginner
 	'15100': 'Adele',  # Adele 1
 	'15110': 'Adele',  # Adele 2
 	'15112': 'Adele',  # Adele 3
 	'15111': 'Adele',  # Adele 4
-	
+
 	# Anima Classes
 	'16000': 'Hoyoung',  # Hoyoung Beginner
 	'16400': 'Hoyoung',  # Hoyoung 1
 	'16410': 'Hoyoung',  # Hoyoung 2
 	'16411': 'Hoyoung',  # Hoyoung 3
 	'16412': 'Hoyoung',  # Hoyoung 4
-	
-	# Special jobs   
-	'500': 'Maple Brigadier',
+
+	# Special jobs
 	'800': 'Manager',
 	'900': 'GM',
 	'910': 'Super GM',
 	'9000': 'Additional Skills',
 	'40000': 'V-Skills',
-	
+
 	# Special: Pink Bean
 	'13000': 'Pink Bean',  # Pink Bean Beginner
 	'13100': 'Pink Bean',  # Pink Bean 1
