@@ -33,6 +33,7 @@ class Lazuli:
         password: Optional; Password for access to the database. Defaults to ""
         port: Optional; Port with which to access the database. Defaults to 3306
     """
+
     def __init__(self, host="localhost", schema="kms_316", user="root", password="", port=3306):
         self._host = host
         self._schema = schema
@@ -153,7 +154,8 @@ class Lazuli:
             List index out of range: Wrong column or character name
         """
         try:
-            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema, port=self.port)
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
+                                   port=self.port)
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE name = '{name}'")
             database.commit()
@@ -162,4 +164,17 @@ class Lazuli:
             return True
         except Exception as e:
             print("[ERROR] Error trying to update character stats in Database.", e)
+            return False
+
+    def get_online_players(self):
+        try:
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
+                                   port=self.port)
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(f"SELECT * FROM accounts WHERE loggedin > 0")
+            rows = cursor.fetchall()
+            database.disconnect()
+            return len(rows)  # Amount of online players
+        except Exception as e:
+            print("[ERROR] Error trying to get online players amount from database.", e)
             return False
