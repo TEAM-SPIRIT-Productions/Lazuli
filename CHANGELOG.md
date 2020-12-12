@@ -2,6 +2,9 @@
 
 ### v0.0.4
 - Minor fix: type error for account instantiation
+- Open up Discussions page
+- Add docstrings
+- Generate API Docs
 
 ### v0.0.3
 - Add inventory model
