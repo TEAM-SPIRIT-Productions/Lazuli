@@ -40,7 +40,7 @@ class Inventory:
         # Create children methods for each inventory type
         # Initialise attributes with contents of each inventory type (init methods)
         # Create getters for each attribute
-        # Create has_item_in_XXX and is_equiping methods
+        # Create has_item_in_XXX and is_equipping methods
         self._character_id = character_id
         self._database_config = db_config
 
@@ -54,12 +54,12 @@ class Inventory:
 
     @staticmethod
     def get_inv_type_by_name(inv_string):
-        inv_type = utils.inv_types.get(inv_string)
+        inv_type = utils.map_inv_types.get(inv_string)
         return inv_type
 
     @staticmethod
     def get_inv_name_by_type(inv_type):
-        inv_name = utils.get_key(utils.inv_types, inv_type)
+        inv_name = utils.get_key(utils.map_inv_types, inv_type)
         return inv_name
 
     def load_inv(self, inv_type):

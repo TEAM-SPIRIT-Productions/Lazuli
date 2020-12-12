@@ -36,7 +36,7 @@ def get_key(dictionary, val):
 
 
 # Dictionary that maps inventory tabs' names to their corresponding index in the DB/source
-inv_types = {
+map_inv_types = {
     'equipped': -1,
     'equip': 1,
     'eqp': 1,
