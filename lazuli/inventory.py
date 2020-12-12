@@ -44,6 +44,14 @@ class Inventory:
         self._character_id = character_id
         self._database_config = db_config
 
+        self._equip_inv = self.init_equip_items()
+        self._use_inv = self.init_use_inv()
+        self._etc_inv = self.init_etc_inv()
+        self._cash_inv = self.init_cash_inv()
+        self._install_inv = self.init_install_inv()
+
+        self._equipped_inv = self.init_equipped_inv()
+
     @property
     def database_config(self):
         return self._database_config
@@ -51,6 +59,30 @@ class Inventory:
     @property
     def character_id(self):
         return self._character_id
+
+    @property
+    def equip_inv(self):
+        return self._equip_inv
+
+    @property
+    def consume_inv(self):
+        return self._use_inv
+
+    @property
+    def etc_inv(self):
+        return self._etc_inv
+
+    @property
+    def cash_inv(self):
+        return self._cash_inv
+
+    @property
+    def install_inv(self):
+        return self._install_inv
+
+    @property
+    def equipped_inv(self):
+        return self._equipped_inv
 
     @staticmethod
     def get_inv_type_by_name(inv_string):
@@ -104,3 +136,21 @@ class Inventory:
             return inv
         except Exception as e:
             print(f"[ERROR] Error trying to load inventory type {inv_type}", e)
+
+    def init_equip_items(self):
+        return self.load_inv(self.get_inv_type_by_name("equip"))
+
+    def init_use_inv(self):
+        return self.load_inv(self.get_inv_type_by_name("use"))
+
+    def init_etc_inv(self):
+        return self.load_inv(self.get_inv_type_by_name("etc'"))
+
+    def init_cash_inv(self):
+        return self.load_inv(self.get_inv_type_by_name("cash"))
+
+    def init_equipped_inv(self):
+        return self.load_inv(self.get_inv_type_by_name("equipped"))
+
+    def init_install_inv(self):
+        return self.load_inv(self.get_inv_type_by_name("setup"))
