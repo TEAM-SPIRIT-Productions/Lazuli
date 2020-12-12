@@ -1,0 +1,1723 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.14">
+    
+    
+      
+        <title>Database - Lazuli</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d3202873.min.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ff0a5ce4.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#4cae4f">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="lightgreen">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module-lazulidatabase" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="Lazuli" class="md-header-nav__button md-logo" aria-label="Lazuli">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Lazuli
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Database
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/TEAM-SPIRIT-Productions/Lazuli/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lazuli
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Lazuli" class="md-nav__button md-logo" aria-label="Lazuli">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Lazuli
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/TEAM-SPIRIT-Productions/Lazuli/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lazuli
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../CHANGELOG/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Reference
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Reference" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" checked>
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Lazuli
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Lazuli" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        <span class="md-nav__icon md-icon"></span>
+        Lazuli
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../account/" title="Account" class="md-nav__link">
+      Account
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../character/" title="Character" class="md-nav__link">
+      Character
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Database
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" title="Database" class="md-nav__link md-nav__link--active">
+      Database
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lazuli" class="md-nav__link">
+    Lazuli
+  </a>
+  
+    <nav class="md-nav" aria-label="Lazuli">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instance-variables" class="md-nav__link">
+    Instance variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_account_by_username" class="md-nav__link">
+    get_account_by_username
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_char_by_name" class="md-nav__link">
+    get_char_by_name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_online_count" class="md-nav__link">
+    get_online_count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_online_list" class="md-nav__link">
+    get_online_list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_online_players" class="md-nav__link">
+    get_online_players
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_char_stat" class="md-nav__link">
+    set_char_stat
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inventory/" title="Inventory" class="md-nav__link">
+      Inventory
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../utility/" title="Utility" class="md-nav__link">
+      Utility
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lazuli" class="md-nav__link">
+    Lazuli
+  </a>
+  
+    <nav class="md-nav" aria-label="Lazuli">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instance-variables" class="md-nav__link">
+    Instance variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_account_by_username" class="md-nav__link">
+    get_account_by_username
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_char_by_name" class="md-nav__link">
+    get_char_by_name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_online_count" class="md-nav__link">
+    get_online_count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_online_list" class="md-nav__link">
+    get_online_list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_online_players" class="md-nav__link">
+    get_online_players
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_char_stat" class="md-nav__link">
+    set_char_stat
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/TEAM-SPIRIT-Productions/Lazuli/edit/master/reference/lazuli/database.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="module-lazulidatabase">Module lazuli.database</h1>
+<p>Lazuli is designed for use in development of AzureMSv316-based MapleStory private server tools (e.g. Discord bots).</p>
+<p>Copyright 2020 TEAM SPIRIT. All rights reserved.
+Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+This module contains the main class that users would instantiate: Lazuli.
+Users can use this class to fetch and manipulate information from the database.
+Refer to the project wiki on GitHub for more in-depth examples.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Typical</span> <span class="k">usage</span> <span class="n">example</span><span class="p">:</span>
+
+<span class="n">lazuli</span> <span class="o">=</span> <span class="n">Lazuli</span><span class="p">()</span>  <span class="o">#</span> <span class="n">Instantiate</span> <span class="n">DB</span> <span class="k">object</span>
+<span class="nb">char</span> <span class="o">=</span> <span class="n">lazuli</span><span class="p">.</span><span class="n">get_char_by_name</span><span class="p">(</span><span class="ss">&quot;KOOKIIE&quot;</span><span class="p">)</span>  <span class="o">#</span> <span class="n">Instantiate</span> <span class="nb">Character</span> <span class="k">object</span>
+<span class="n">meso</span> <span class="o">=</span> <span class="nb">char</span><span class="p">.</span><span class="n">money</span>  <span class="o">#</span> <span class="n">Use</span> <span class="k">of</span> <span class="nb">Character</span> <span class="n">methods</span> <span class="k">to</span> <span class="k">fetch</span> <span class="k">data</span> <span class="k">from</span> <span class="n">DB</span>
+<span class="nb">char</span><span class="p">.</span><span class="n">money</span> <span class="o">=</span> <span class="mi">123456789</span>  <span class="o">#</span> <span class="n">Use</span> <span class="k">of</span> <span class="nb">Character</span> <span class="n">methods</span> <span class="k">to</span> <span class="k">write</span> <span class="k">data</span> <span class="k">to</span> <span class="n">DB</span>
+</code></pre></div>
+
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Lazuli is designed for use in development of AzureMSv316-based MapleStory private server tools (e.g. Discord bots).</span>
+
+<span class="sd">Copyright 2020 TEAM SPIRIT. All rights reserved.</span>
+
+<span class="sd">Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.</span>
+
+<span class="sd">This module contains the main class that users would instantiate: Lazuli.</span>
+
+<span class="sd">Users can use this class to fetch and manipulate information from the database.</span>
+
+<span class="sd">Refer to the project wiki on GitHub for more in-depth examples.</span>
+
+<span class="sd">    Typical usage example:</span>
+
+<span class="sd">    lazuli = Lazuli()  # Instantiate DB object</span>
+
+<span class="sd">    char = lazuli.get_char_by_name(&quot;KOOKIIE&quot;)  # Instantiate Character object</span>
+
+<span class="sd">    meso = char.money  # Use of Character methods to fetch data from DB</span>
+
+<span class="sd">    char.money = 123456789  # Use of Character methods to write data to DB</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">mysql.connector</span> <span class="kn">as</span> <span class="nn">con</span>
+
+<span class="kn">from</span> <span class="nn">lazuli.character</span> <span class="kn">import</span> <span class="n">Character</span>
+
+<span class="kn">from</span> <span class="nn">lazuli.account</span> <span class="kn">import</span> <span class="n">Account</span>
+
+<span class="k">class</span> <span class="nc">Lazuli</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Database object; models the AzureMS DB.</span>
+
+<span class="sd">    Use this class to create instances of AzureMS characters, or inventories, complete with their respective</span>
+
+<span class="sd">    data from the connected AzureMS-based database.</span>
+
+<span class="sd">    Using instance method Lazuli::get_char_by_name(&quot;name&quot;) will create a Character object (see character.py) instance</span>
+
+<span class="sd">    that has attributes identical to the character with IGN &quot;name&quot; in the connected AzureMS-based database.</span>
+
+<span class="sd">    Attributes:</span>
+
+<span class="sd">        host: Optional; IP address of the database. Defaults to &quot;localhost&quot;</span>
+
+<span class="sd">        schema: Optional; Name of the schema of the database. Defaults to &quot;kms_316`&quot;</span>
+
+<span class="sd">        user: Optional; Username for access to the database. Defaults to &quot;root&quot;</span>
+
+<span class="sd">        password: Optional; Password for access to the database. Defaults to &quot;&quot;</span>
+
+<span class="sd">        port: Optional; Port with which to access the database. Defaults to 3306</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s2">&quot;kms_316&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">schema</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">user</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="n">password</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="p">{</span>
+
+            <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+
+            <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+
+            <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+
+            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+
+        <span class="p">}</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span>
+
+    <span class="nd">@host.setter</span>
+
+    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span>
+
+    <span class="nd">@schema.setter</span>
+
+    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span>
+
+    <span class="nd">@user.setter</span>
+
+    <span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span>
+
+    <span class="nd">@password.setter</span>
+
+    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span>
+
+    <span class="nd">@port.setter</span>
+
+    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_port</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">new_port</span>
+
+    <span class="k">def</span> <span class="nf">get_char_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char_name</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create an instance of a Character object from the given character name</span>
+
+<span class="sd">        Uses the class constructor of the Character class to create a new instance, with the corresponding</span>
+
+<span class="sd">        character data and database attributes from the connected database.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            char_name: string, representing character name (aka IGN)</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            Character object instantiated with corresponding data from the connected database.</span>
+
+<span class="sd">            Defaults to None if the operation fails.</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure - handled by the Character::get_db() method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM characters WHERE `name` = &#39;{char_name}&#39;&quot;</span>
+
+        <span class="p">)</span>  <span class="c1"># Fetch first result because there should only be one character with that name</span>
+
+        <span class="n">character</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="n">character_stats</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">character</span>
+
+    <span class="k">def</span> <span class="nf">get_account_by_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Given a username (NOT IGN), create a new account object instance</span>
+
+<span class="sd">        Fetches the user account attributes from the database by querying for username.</span>
+
+<span class="sd">        uses the User class constructor to create a new User object instance, with the said attributes.</span>
+
+<span class="sd">        Useful for getting account information from accounts with no characters.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            username: String, representing the username used for logging the user into game</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            Account object with attributes identical to its corresponding entry in the database</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure - handled by the Character::get_db() method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">account_info</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE `name` = &#39;{username}&#39;&quot;</span>
+
+        <span class="p">)</span>  <span class="c1"># Fetch first result because there should only be one character with that name</span>
+
+        <span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">account</span>
+
+    <span class="k">def</span> <span class="nf">set_char_stat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Given a character name and column name, change its value in the database</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            column: string, representing the column in the database</span>
+
+<span class="sd">            name: string, representing the character name in the database</span>
+
+<span class="sd">            value: string/int, representing the value that is to be updated in the corresponding field</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            boolean, representing whether the operation completed successfully</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            SQL Error 2003: Can&#39;t cannect to DB</span>
+
+<span class="sd">            WinError 10060: No response from DB</span>
+
+<span class="sd">            List index out of range: Wrong column or character name</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+
+                                   <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{name}&#39;&quot;</span><span class="p">)</span>
+
+            <span class="n">database</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+            <span class="n">database</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully set {name}&#39;s stats in database.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to update character stats in Database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">get_online_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetch the list of players currently online</span>
+
+<span class="sd">        AzureMS stores login state in the DB, in the &#39;accounts&#39; table, &#39;loggedin&#39; column.</span>
+
+<span class="sd">        Lazuli::get_online_list queries for a list of all accounts that are logged in.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            List, representing all players online. Defaults to False in the event of an error during execution</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+
+                                   <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE `loggedin` &gt; 0&quot;</span><span class="p">)</span>
+
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+            <span class="n">database</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">rows</span>  <span class="c1"># List of online players</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to get online players amount from database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">get_online_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetch the number of players currently online</span>
+
+<span class="sd">        Uses the Lazuli::get_online_list method to fetch the list of all players online.</span>
+
+<span class="sd">        Counts the length of said list, to obtain number of players online.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            Int, representing number of players online. Defaults to False in the event of an error during execution</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure, handled by Lazuli::get_online_list()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">players</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_online_list</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_online_players</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetch usernames of all players currently online</span>
+
+<span class="sd">        Uses the Lazuli::get_online_list method to fetch the list of all players online.</span>
+
+<span class="sd">        Extract the usernames from the said list.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            List, representing all players online. Defaults to False in the event of an error during execution</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure, handled by Lazuli::get_online_list()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_online_list</span><span class="p">()</span>
+
+        <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">player_data</span><span class="p">:</span>
+
+            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">players</span>
+</code></pre></div>
+
+</details>
+<h2 id="classes">Classes</h2>
+<h3 id="lazuli">Lazuli</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Lazuli</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+    <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;kms_316&#39;</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">3306</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Database object; models the AzureMS DB.</p>
+<p>Use this class to create instances of AzureMS characters, or inventories, complete with their respective
+data from the connected AzureMS-based database.
+Using instance method Lazuli::get_char_by_name("name") will create a Character object (see character.py) instance
+that has attributes identical to the character with IGN "name" in the connected AzureMS-based database.</p>
+<p>Attributes:
+    host: Optional; IP address of the database. Defaults to "localhost"
+    schema: Optional; Name of the schema of the database. Defaults to "kms_316`"
+    user: Optional; Username for access to the database. Defaults to "root"
+    password: Optional; Password for access to the database. Defaults to ""
+    port: Optional; Port with which to access the database. Defaults to 3306</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="n">Lazuli</span><span class="o">:</span>
+
+    <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Database object; models the AzureMS DB.</span>
+
+<span class="s2">    Use this class to create instances of AzureMS characters, or inventories, complete with their respective</span>
+
+<span class="s2">    data from the connected AzureMS-based database.</span>
+
+<span class="s2">    Using instance method Lazuli::get_char_by_name(&quot;</span><span class="k">name</span><span class="s2">&quot;) will create a Character object (see character.py) instance</span>
+
+<span class="s2">    that has attributes identical to the character with IGN &quot;</span><span class="k">name</span><span class="s2">&quot; in the connected AzureMS-based database.</span>
+
+<span class="s2">    Attributes:</span>
+
+<span class="s2">        host: Optional; IP address of the database. Defaults to &quot;</span><span class="n">localhost</span><span class="s2">&quot;</span>
+
+<span class="s2">        schema: Optional; Name of the schema of the database. Defaults to &quot;</span><span class="n">kms_316</span><span class="n n-Quoted">`&quot;</span>
+
+<span class="n n-Quoted">        user: Optional; Username for access to the database. Defaults to &quot;root&quot;</span>
+
+<span class="n n-Quoted">        password: Optional; Password for access to the database. Defaults to &quot;&quot;</span>
+
+<span class="n n-Quoted">        port: Optional; Port with which to access the database. Defaults to 3306</span>
+
+<span class="n n-Quoted">    &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">    def __init__(self, host=&quot;localhost&quot;, schema=&quot;kms_316&quot;, user=&quot;root&quot;, password=&quot;&quot;, port=3306):</span>
+
+<span class="n n-Quoted">        self._host = host</span>
+
+<span class="n n-Quoted">        self._schema = schema</span>
+
+<span class="n n-Quoted">        self._user = user</span>
+
+<span class="n n-Quoted">        self._password = password</span>
+
+<span class="n n-Quoted">        self._port = port</span>
+
+<span class="n n-Quoted">        self._database_config = {</span>
+
+<span class="n n-Quoted">            &#39;host&#39;: self.host,</span>
+
+<span class="n n-Quoted">            &#39;user&#39;: self.user,</span>
+
+<span class="n n-Quoted">            &#39;password&#39;: self.password,</span>
+
+<span class="n n-Quoted">            &#39;schema&#39;: self.schema,</span>
+
+<span class="n n-Quoted">            &#39;port&#39;: self.port</span>
+
+<span class="n n-Quoted">        }</span>
+
+<span class="n n-Quoted">    @property</span>
+
+<span class="n n-Quoted">    def host(self):</span>
+
+<span class="n n-Quoted">        return self._host</span>
+
+<span class="n n-Quoted">    @host.setter</span>
+
+<span class="n n-Quoted">    def host(self, x):</span>
+
+<span class="n n-Quoted">        self._host = x</span>
+
+<span class="n n-Quoted">    @property</span>
+
+<span class="n n-Quoted">    def schema(self):</span>
+
+<span class="n n-Quoted">        return self._schema</span>
+
+<span class="n n-Quoted">    @schema.setter</span>
+
+<span class="n n-Quoted">    def schema(self, x):</span>
+
+<span class="n n-Quoted">        self._schema = x</span>
+
+<span class="n n-Quoted">    @property</span>
+
+<span class="n n-Quoted">    def user(self):</span>
+
+<span class="n n-Quoted">        return self._user</span>
+
+<span class="n n-Quoted">    @user.setter</span>
+
+<span class="n n-Quoted">    def user(self, x):</span>
+
+<span class="n n-Quoted">        self._user = x</span>
+
+<span class="n n-Quoted">    @property</span>
+
+<span class="n n-Quoted">    def password(self):</span>
+
+<span class="n n-Quoted">        return self._password</span>
+
+<span class="n n-Quoted">    @password.setter</span>
+
+<span class="n n-Quoted">    def password(self, x):</span>
+
+<span class="n n-Quoted">        self._password = x</span>
+
+<span class="n n-Quoted">    @property</span>
+
+<span class="n n-Quoted">    def port(self):</span>
+
+<span class="n n-Quoted">        return self._port</span>
+
+<span class="n n-Quoted">    @port.setter</span>
+
+<span class="n n-Quoted">    def port(self, new_port):</span>
+
+<span class="n n-Quoted">        self._port = new_port</span>
+
+<span class="n n-Quoted">    def get_char_by_name(self, char_name):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Create an instance of a Character object from the given character name</span>
+
+<span class="n n-Quoted">        Uses the class constructor of the Character class to create a new instance, with the corresponding</span>
+
+<span class="n n-Quoted">        character data and database attributes from the connected database.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            char_name: string, representing character name (aka IGN)</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            Character object instantiated with corresponding data from the connected database.</span>
+
+<span class="n n-Quoted">            Defaults to None if the operation fails.</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure - handled by the Character::get_db() method</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        character_stats = Character.get_db(</span>
+
+<span class="n n-Quoted">            self._database_config,</span>
+
+<span class="n n-Quoted">            f&quot;SELECT * FROM characters WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{char_name}&#39;&quot;</span>
+
+<span class="n n-Quoted">        )  # Fetch first result because there should only be one character with that name</span>
+
+<span class="n n-Quoted">        character = Character(character_stats, self._database_config)</span>
+
+<span class="n n-Quoted">        return character</span>
+
+<span class="n n-Quoted">    def get_account_by_username(self, username):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Given a username (NOT IGN), create a new account object instance</span>
+
+<span class="n n-Quoted">        Fetches the user account attributes from the database by querying for username.</span>
+
+<span class="n n-Quoted">        uses the User class constructor to create a new User object instance, with the said attributes.</span>
+
+<span class="n n-Quoted">        Useful for getting account information from accounts with no characters.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            username: String, representing the username used for logging the user into game</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            Account object with attributes identical to its corresponding entry in the database</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure - handled by the Character::get_db() method</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        account_info = Character.get_db(</span>
+
+<span class="n n-Quoted">            self._database_config,</span>
+
+<span class="n n-Quoted">            f&quot;SELECT * FROM accounts WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{username}&#39;&quot;</span>
+
+<span class="n n-Quoted">        )  # Fetch first result because there should only be one character with that name</span>
+
+<span class="n n-Quoted">        account = Account(account_info, self._database_config)</span>
+
+<span class="n n-Quoted">        return account</span>
+
+<span class="n n-Quoted">    def set_char_stat(self, name, column, value):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Given a character name and column name, change its value in the database</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            column: string, representing the column in the database</span>
+
+<span class="n n-Quoted">            name: string, representing the character name in the database</span>
+
+<span class="n n-Quoted">            value: string/int, representing the value that is to be updated in the corresponding field</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            boolean, representing whether the operation completed successfully</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            SQL Error 2003: Can&#39;t cannect to DB</span>
+
+<span class="n n-Quoted">            WinError 10060: No response from DB</span>
+
+<span class="n n-Quoted">            List index out of range: Wrong column or character name</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        try:</span>
+
+<span class="n n-Quoted">            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,</span>
+
+<span class="n n-Quoted">                                   port=self.port)</span>
+
+<span class="n n-Quoted">            cursor = database.cursor(dictionary=True)</span>
+
+<span class="n n-Quoted">            cursor.execute(f&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{name}&#39;&quot;)</span>
+
+<span class="n n-Quoted">            database.commit()</span>
+
+<span class="n n-Quoted">            database.disconnect()</span>
+
+<span class="n n-Quoted">            print(f&quot;Successfully set {name}&#39;s stats in database.&quot;)</span>
+
+<span class="n n-Quoted">            return True</span>
+
+<span class="n n-Quoted">        except Exception as e:</span>
+
+<span class="n n-Quoted">            print(&quot;[ERROR] Error trying to update character stats in Database.&quot;, e)</span>
+
+<span class="n n-Quoted">            return False</span>
+
+<span class="n n-Quoted">    def get_online_list(self):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetch the list of players currently online</span>
+
+<span class="n n-Quoted">        AzureMS stores login state in the DB, in the &#39;accounts&#39; table, &#39;loggedin&#39; column.</span>
+
+<span class="n n-Quoted">        Lazuli::get_online_list queries for a list of all accounts that are logged in.</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            List, representing all players online. Defaults to False in the event of an error during execution</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        try:</span>
+
+<span class="n n-Quoted">            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,</span>
+
+<span class="n n-Quoted">                                   port=self.port)</span>
+
+<span class="n n-Quoted">            cursor = database.cursor(dictionary=True)</span>
+
+<span class="n n-Quoted">            cursor.execute(f&quot;SELECT * FROM accounts WHERE `</span><span class="n">loggedin</span><span class="n n-Quoted">` &gt; 0&quot;)</span>
+
+<span class="n n-Quoted">            rows = cursor.fetchall()</span>
+
+<span class="n n-Quoted">            database.disconnect()</span>
+
+<span class="n n-Quoted">            return rows  # List of online players</span>
+
+<span class="n n-Quoted">        except Exception as e:</span>
+
+<span class="n n-Quoted">            print(&quot;[ERROR] Error trying to get online players amount from database.&quot;, e)</span>
+
+<span class="n n-Quoted">            return False</span>
+
+<span class="n n-Quoted">    def get_online_count(self):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetch the number of players currently online</span>
+
+<span class="n n-Quoted">        Uses the Lazuli::get_online_list method to fetch the list of all players online.</span>
+
+<span class="n n-Quoted">        Counts the length of said list, to obtain number of players online.</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            Int, representing number of players online. Defaults to False in the event of an error during execution</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure, handled by Lazuli::get_online_list()</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        players = self.get_online_list()</span>
+
+<span class="n n-Quoted">        return len(players)</span>
+
+<span class="n n-Quoted">    def get_online_players(self):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetch usernames of all players currently online</span>
+
+<span class="n n-Quoted">        Uses the Lazuli::get_online_list method to fetch the list of all players online.</span>
+
+<span class="n n-Quoted">        Extract the usernames from the said list.</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            List, representing all players online. Defaults to False in the event of an error during execution</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure, handled by Lazuli::get_online_list()</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        player_data = self.get_online_list()</span>
+
+<span class="n n-Quoted">        players = []</span>
+
+<span class="n n-Quoted">        for player in player_data:</span>
+
+<span class="n n-Quoted">            players.append(player[&#39;name&#39;])</span>
+
+<span class="n n-Quoted">        return players</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h4 id="instance-variables">Instance variables</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">host</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">password</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">port</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">schema</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">user</span>
+</code></pre></div>
+
+<h4 id="methods">Methods</h4>
+<h5 id="get_account_by_username">get_account_by_username</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_account_by_username</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">username</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Given a username (NOT IGN), create a new account object instance</p>
+<p>Fetches the user account attributes from the database by querying for username.
+uses the User class constructor to create a new User object instance, with the said attributes.
+Useful for getting account information from accounts with no characters.</p>
+<p>Args:
+    username: String, representing the username used for logging the user into game</p>
+<p>Returns:
+    Account object with attributes identical to its corresponding entry in the database</p>
+<p>Raises:
+    Generic error on failure - handled by the Character::get_db() method</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_account_by_username</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a username (NOT IGN), create a new account object instance</span>
+
+<span class="s2">        Fetches the user account attributes from the database by querying for username.</span>
+
+<span class="s2">        uses the User class constructor to create a new User object instance, with the said attributes.</span>
+
+<span class="s2">        Useful for getting account information from accounts with no characters.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            username: String, representing the username used for logging the user into game</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            Account object with attributes identical to its corresponding entry in the database</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure - handled by the Character::get_db() method</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">account_info</span> <span class="o">=</span> <span class="k">Character</span><span class="p">.</span><span class="n">get_db</span><span class="p">(</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE `name` = &#39;{username}&#39;&quot;</span>
+
+        <span class="p">)</span>  <span class="c1"># Fetch first result because there should only be one character with that name</span>
+
+        <span class="k">account</span> <span class="o">=</span> <span class="k">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">account</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_char_by_name">get_char_by_name</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_char_by_name</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">char_name</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Create an instance of a Character object from the given character name</p>
+<p>Uses the class constructor of the Character class to create a new instance, with the corresponding
+character data and database attributes from the connected database.</p>
+<p>Args:
+    char_name: string, representing character name (aka IGN)</p>
+<p>Returns:
+    Character object instantiated with corresponding data from the connected database.
+    Defaults to None if the operation fails.</p>
+<p>Raises:
+    Generic error on failure - handled by the Character::get_db() method</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_char_by_name</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">char_name</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Create an instance of a Character object from the given character name</span>
+
+<span class="s2">        Uses the class constructor of the Character class to create a new instance, with the corresponding</span>
+
+<span class="s2">        character data and database attributes from the connected database.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            char_name: string, representing character name (aka IGN)</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            Character object instantiated with corresponding data from the connected database.</span>
+
+<span class="s2">            Defaults to None if the operation fails.</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure - handled by the Character::get_db() method</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">character_stats</span> <span class="o">=</span> <span class="k">Character</span><span class="p">.</span><span class="n">get_db</span><span class="p">(</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM characters WHERE `name` = &#39;{char_name}&#39;&quot;</span>
+
+        <span class="p">)</span>  <span class="c1"># Fetch first result because there should only be one character with that name</span>
+
+        <span class="k">character</span> <span class="o">=</span> <span class="k">Character</span><span class="p">(</span><span class="n">character_stats</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">character</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_online_count">get_online_count</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_online_count</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Fetch the number of players currently online</p>
+<p>Uses the Lazuli::get_online_list method to fetch the list of all players online.
+Counts the length of said list, to obtain number of players online.</p>
+<p>Returns:
+    Int, representing number of players online. Defaults to False in the event of an error during execution</p>
+<p>Raises:
+    Generic error on failure, handled by Lazuli::get_online_list()</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_online_count</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
+
+        <span class="ss">&quot;&quot;&quot;Fetch the number of players currently online</span>
+
+<span class="ss">        Uses the Lazuli::get_online_list method to fetch the list of all players online.</span>
+
+<span class="ss">        Counts the length of said list, to obtain number of players online.</span>
+
+<span class="ss">        Returns:</span>
+
+<span class="ss">            Int, representing number of players online. Defaults to False in the event of an error during execution</span>
+
+<span class="ss">        Raises:</span>
+
+<span class="ss">            Generic error on failure, handled by Lazuli::get_online_list()</span>
+
+<span class="ss">        &quot;&quot;&quot;</span>
+
+        <span class="n">players</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">get_online_list</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">len</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_online_list">get_online_list</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_online_list</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Fetch the list of players currently online</p>
+<p>AzureMS stores login state in the DB, in the 'accounts' table, 'loggedin' column.
+Lazuli::get_online_list queries for a list of all accounts that are logged in.</p>
+<p>Returns:
+    List, representing all players online. Defaults to False in the event of an error during execution</p>
+<p>Raises:
+    Generic error on failure</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_online_list</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetch the list of players currently online</span>
+
+<span class="s2">        AzureMS stores login state in the DB, in the &#39;accounts&#39; table, &#39;loggedin&#39; column.</span>
+
+<span class="s2">        Lazuli::get_online_list queries for a list of all accounts that are logged in.</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            List, representing all players online. Defaults to False in the event of an error during execution</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">try</span><span class="o">:</span>
+
+            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">host</span><span class="p">,</span> <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">user</span><span class="p">,</span> <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">password</span><span class="p">,</span> <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">schema</span><span class="p">,</span>
+
+                                   <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">port</span><span class="p">)</span>
+
+            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
+
+            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE `loggedin` &gt; 0&quot;</span><span class="p">)</span>
+
+            <span class="k">rows</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+            <span class="k">database</span><span class="p">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="k">rows</span>  <span class="c1"># List of online players</span>
+
+        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
+
+            <span class="n">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to get online players amount from database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="no">False</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_online_players">get_online_players</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_online_players</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Fetch usernames of all players currently online</p>
+<p>Uses the Lazuli::get_online_list method to fetch the list of all players online.
+Extract the usernames from the said list.</p>
+<p>Returns:
+    List, representing all players online. Defaults to False in the event of an error during execution</p>
+<p>Raises:
+    Generic error on failure, handled by Lazuli::get_online_list()</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_online_players</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
+
+        <span class="ss">&quot;&quot;&quot;Fetch usernames of all players currently online</span>
+
+<span class="ss">        Uses the Lazuli::get_online_list method to fetch the list of all players online.</span>
+
+<span class="ss">        Extract the usernames from the said list.</span>
+
+<span class="ss">        Returns:</span>
+
+<span class="ss">            List, representing all players online. Defaults to False in the event of an error during execution</span>
+
+<span class="ss">        Raises:</span>
+
+<span class="ss">            Generic error on failure, handled by Lazuli::get_online_list()</span>
+
+<span class="ss">        &quot;&quot;&quot;</span>
+
+        <span class="n">player_data</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">get_online_list</span><span class="p">()</span>
+
+        <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">player</span> <span class="k">in</span> <span class="n">player_data</span><span class="p">:</span>
+
+            <span class="n">players</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">players</span>
+</code></pre></div>
+
+</details>
+<h5 id="set_char_stat">set_char_stat</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_char_stat</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">column</span><span class="p">,</span>
+    <span class="n">value</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Given a character name and column name, change its value in the database</p>
+<p>Args:
+    column: string, representing the column in the database
+    name: string, representing the character name in the database
+    value: string/int, representing the value that is to be updated in the corresponding field</p>
+<p>Returns:
+    boolean, representing whether the operation completed successfully</p>
+<p>Raises:
+    SQL Error 2003: Can't cannect to DB
+    WinError 10060: No response from DB
+    List index out of range: Wrong column or character name</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="k">set</span><span class="n">_char_stat</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">name</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a character name and column name, change its value in the database</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            column: string, representing the column in the database</span>
+
+<span class="s2">            name: string, representing the character name in the database</span>
+
+<span class="s2">            value: string/int, representing the value that is to be updated in the corresponding field</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            boolean, representing whether the operation completed successfully</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            SQL Error 2003: Can&#39;t cannect to DB</span>
+
+<span class="s2">            WinError 10060: No response from DB</span>
+
+<span class="s2">            List index out of range: Wrong column or character name</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">try</span><span class="o">:</span>
+
+            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">host</span><span class="p">,</span> <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">user</span><span class="p">,</span> <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">password</span><span class="p">,</span> <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">schema</span><span class="p">,</span>
+
+                                   <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">port</span><span class="p">)</span>
+
+            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
+
+            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{name}&#39;&quot;</span><span class="p">)</span>
+
+            <span class="k">database</span><span class="p">.</span><span class="k">commit</span><span class="p">()</span>
+
+            <span class="k">database</span><span class="p">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully set {name}&#39;s stats in database.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="no">True</span>
+
+        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
+
+            <span class="n">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to update character stats in Database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="no">False</span>
+</code></pre></div>
+
+</details>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../character/" title="Character" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Character
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../" title="Index" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Index
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Powered by
+        <a href="http://timothycrosley.github.io/portray">portray.</a>
+        You too can
+        <a href="http://timothycrosley.github.io/portray">
+          portray</a>
+        your Python project well using automatic documentation.
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.2d1db4bd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.5eca75d3.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
