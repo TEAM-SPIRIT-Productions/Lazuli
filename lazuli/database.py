@@ -166,15 +166,14 @@ class Lazuli:
             print("[ERROR] Error trying to update character stats in Database.", e)
             return False
 
-    def get_online_players(self):
-        """Fetch the number of players currently online
+    def get_online_list(self):
+        """Fetch the list of players currently online
 
         AzureMS stores login state in the DB, in the 'accounts' table, 'loggedin' column.
-        Lazuli::get_online_players queries the number of accounts that are logged in, and counts the number of rows
-        in the resulting list of Dictionaries.
+        Lazuli::get_online_list queries for a list of all accounts that are logged in.
 
         Returns:
-            Int, representing number of players online. Defaults to False in the event of an error during execution
+            List, representing all players online. Defaults to False in the event of an error during execution
 
         Raises:
             Generic error on failure
@@ -186,7 +185,40 @@ class Lazuli:
             cursor.execute(f"SELECT * FROM accounts WHERE `loggedin` > 0")
             rows = cursor.fetchall()
             database.disconnect()
-            return len(rows)  # Amount of online players
+            return rows  # List of online players
         except Exception as e:
             print("[ERROR] Error trying to get online players amount from database.", e)
             return False
+
+    def get_online_count(self):
+        """Fetch the number of players currently online
+
+        Uses the Lazuli::get_online_list method to fetch the list of all players online.
+        Counts the length of said list, to obtain number of players online.
+
+        Returns:
+            Int, representing number of players online. Defaults to False in the event of an error during execution
+
+        Raises:
+            Generic error on failure, handled by Lazuli::get_online_list()
+        """
+        players = self.get_online_list()
+        return len(players)
+
+    def get_online_players(self):
+        """Fetch usernames of all players currently online
+
+        Uses the Lazuli::get_online_list method to fetch the list of all players online.
+        Extract the usernames from the said list.
+
+        Returns:
+            List, representing all players online. Defaults to False in the event of an error during execution
+
+        Raises:
+            Generic error on failure, handled by Lazuli::get_online_list()
+        """
+        player_data = self.get_online_list()
+        players = []
+        for player in player_data:
+            players.append(player['name'])
+        return players
