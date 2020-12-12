@@ -107,7 +107,7 @@ class Lazuli:
         """
         character_stats = Character.get_db(
             self._database_config,
-            f"SELECT * FROM characters WHERE name = '{char_name}'"
+            f"SELECT * FROM characters WHERE `name` = '{char_name}'"
         )  # Fetch first result because there should only be one character with that name
 
         character = Character(character_stats, self._database_config)
@@ -131,7 +131,7 @@ class Lazuli:
         """
         account_info = Character.get_db(
             self._database_config,
-            f"SELECT * FROM accounts WHERE name = '{username}'"
+            f"SELECT * FROM accounts WHERE `name` = '{username}'"
         )  # Fetch first result because there should only be one character with that name
 
         account = Account(account_info, self._database_config)
@@ -157,7 +157,7 @@ class Lazuli:
             database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
                                    port=self.port)
             cursor = database.cursor(dictionary=True)
-            cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE name = '{name}'")
+            cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE `name` = '{name}'")
             database.commit()
             database.disconnect()
             print(f"Successfully set {name}'s stats in database.")
@@ -171,7 +171,7 @@ class Lazuli:
             database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
                                    port=self.port)
             cursor = database.cursor(dictionary=True)
-            cursor.execute(f"SELECT * FROM accounts WHERE loggedin > 0")
+            cursor.execute(f"SELECT * FROM accounts WHERE `loggedin` > 0")
             rows = cursor.fetchall()
             database.disconnect()
             return len(rows)  # Amount of online players
