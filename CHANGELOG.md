@@ -1,5 +1,8 @@
 ## CHANGELOG:  
 
+### v0.0.3
+- Add inventory model
+
 ### v0.0.2  
 - Add character model
 - Add account model
