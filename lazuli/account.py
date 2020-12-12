@@ -128,6 +128,15 @@ class Account:
 		self.set_stat_by_column("nxCash", value)
 		self._nx = value
 
+	def add_nx(self, amount):
+		"""Adds the specified amount to the current NX pool
+
+		Args:
+			amount: Int, representing the amount of NX to be added to the NX pool
+		"""
+		new_nx = int(amount) + self.nx
+		self.nx = new_nx
+
 	@property
 	def maple_points(self):
 		return self._nx
@@ -136,6 +145,15 @@ class Account:
 	def maple_points(self, value):
 		self.set_stat_by_column("mPoints", value)
 		self._maple_points = value
+
+	def add_maple_points(self, amount):
+		"""Adds the specified amount to the current Maple Points pool
+
+		Args:
+			amount: Int, representing the number of Maple Points to be added to the current pool
+		"""
+		new_maple_points = int(amount) + self.maple_points
+		self.maple_points = new_maple_points
 
 	@property
 	def vp(self):
@@ -146,6 +164,15 @@ class Account:
 		self.set_stat_by_column("vpoints", value)
 		self._vp = value
 
+	def add_vp(self, amount):
+		"""Adds the specified amount to the current VP count
+
+		Args:
+			amount: Int, representing the number of vote points to be added to the current count
+		"""
+		new_vp = int(amount) + self.vp
+		self.vp = new_vp
+
 	@property
 	def dp(self):
 		return self._dp
@@ -155,6 +182,15 @@ class Account:
 		self.set_stat_by_column("realcash", value)
 		self._dp = value
 
+	def add_dp(self, amount):
+		"""Adds the specified amount to the current DP count
+
+		Args:
+			amount: Int, representing the number of DPs to be added to the current count
+		"""
+		new_dp = int(amount) + self.dp
+		self.dp = new_dp
+
 	@property
 	def char_slots(self):
 		return self._char_slots
@@ -163,6 +199,15 @@ class Account:
 	def char_slots(self, value):
 		self.set_stat_by_column("chrslot", value)
 		self._char_slots = value
+
+	def add_char_slots(self, amount):
+		"""Adds the specified amount to the current character slot count
+
+		Args:
+			amount: Int, representing the number of slots to be added to the current count
+		"""
+		new_count = int(amount) + self.char_slots
+		self.char_slots = new_count
 
 	def is_online(self):
 		"""Checks if the 'loggedin' column is greater than 0 (they are online if > 0)
@@ -176,14 +221,18 @@ class Account:
 
 	def unstuck(self):
 		"""Sets loggedin column in database to 0
+
 		This unstucks the account as server checks loggedin value to decided whether they are "logged in"
 		"""
 		self.logged_in = 0
 
 	def change_password(self, new_pass):
 		"""Changes the current password to the given one.
+
+		WARNING: INHERENTLY UNSAFE
 		Azure316 does not hash passwords by default, therefore this function is technically functional.
 		As "safe" as any website registration or auto register.
+
 		Args:
 			new_pass: string, representing the new password
 		"""
@@ -194,6 +243,7 @@ class Account:
 
 		Returns:
 			Int or String, representing user attribute queried
+
 		Raises:
 			Generic error on failure
 		"""
