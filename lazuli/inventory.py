@@ -5,6 +5,7 @@ Use of this source code is governed by a AGPL-style license that can be found in
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
 import mysql.connector as con
+import lazuli.utility as utils
 
 
 class Inventory:
@@ -35,7 +36,7 @@ class Inventory:
         the `inventoryitems` table in a AzureMS-based database.
     """
         # Pseudocode:
-        # Create generic SQL method that fetches all entries from a given query
+        # Create generic SQL method that fetches all entries from a given query - Handled by Brandon
         # Create children methods for each inventory type
         # Initialise attributes with contents of each inventory type (init methods)
         # Create getters for each attribute
@@ -53,33 +54,13 @@ class Inventory:
 
     @staticmethod
     def get_inv_type_by_name(inv_string):
-        if inv_string == "equip" or inv_string == "eqp":
-            return 1
-        elif inv_string == "equipped":
-            return -1
-        elif inv_string == "use" or inv_string == "consume":
-            return 2
-        elif inv_string == "etc":
-            return 4
-        elif inv_string == "setup" or inv_string == "install":
-            return 3
-        elif inv_string == "cash":
-            return 5
+        inv_type = utils.inv_types.get(inv_string)
+        return inv_type
 
     @staticmethod
     def get_inv_name_by_type(inv_type):
-        if inv_type == 1:
-            return "equip"
-        elif inv_type == -1:
-            return "equipped"
-        elif inv_type == 2:
-            return "use"
-        elif inv_type == 3:
-            return "setup"
-        elif inv_type == 4:
-            return "etc"
-        elif inv_type == 5:
-            return "cash"
+        inv_name = utils.get_key(utils.inv_types, inv_type)
+        return inv_name
 
     def load_inv(self, inv_type):
         """ Fetches Inventory data from a given Inventory Type, (I.E. -1, 1, 2, 3, 4, 5)
