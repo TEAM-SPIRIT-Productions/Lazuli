@@ -1,5 +1,8 @@
 ## CHANGELOG:  
 
+### v0.0.4
+- Minor fix: type error for account instantiation
+
 ### v0.0.3
 - Add inventory model
 
