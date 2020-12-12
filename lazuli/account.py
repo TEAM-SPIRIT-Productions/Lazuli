@@ -16,7 +16,16 @@ class Account:
 	This class contains the appropriate getter and setter methods for said attributes.
 
 	Attributes:
-		TO BE ADDED
+		account_id: Integer, representing Primary Key for account - Do NOT set manually
+		username: String, representing account username; varchar(64)
+		logged_in: Integer, represents login status of the account; int(1) and not bool for some reason
+		banned: Integer, represents ban status of the account; int(1) and not bool for some reason
+		ban_reason: String, representing account ban reason; text
+		nx: Integer, representing the amount of NX Prepaid the user has
+		maple_points: Integer, representing the amount of Maple Points the user has
+		vp:Integer, representing the amount of Vote Points the user has
+		dp: Integer, representing the amount of Donation Points the user has
+		char_slots: Integer, representing the number of character slots the user has
 	"""
 	def __init__(self, account_info, database_config):
 		"""Emulates how account object is handled server-sided
@@ -156,7 +165,7 @@ class Account:
 		self._char_slots = value
 
 	def is_online(self):
-		""" checks if loggedin column is greater than 0 (they are online if > 0)
+		"""Checks if the 'loggedin' column is greater than 0 (they are online if > 0)
 
 		Returns:
 			Boolean, representing the online status of the account

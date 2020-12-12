@@ -19,7 +19,36 @@ class Character:
     This class contains the appropriate getter and setter methods for said attributes.
 
     Attributes:
-        TO BE ADDED
+        character_id: Integer, representing Primary Key for Character; int(11)
+        account_id: Integer, representing Primary Key for Account (FK); int(11)
+        name: String, representing Character IGN; varchar(13)
+        level: Integer, representing Character level
+        exp: Integer, representing Character EXP; bigint(20)
+        strength: Integer, representing Character STR stat pool
+        dex: Integer, representing Character DEX stat pool
+        luk: Integer, representing Character LUK stat pool
+        inte: Integer, representing Character INT stat pool
+        max_hp: Integer, representing Character Max HP stat pool
+        max_mp: Integer, representing Character Max MP stat pool
+        meso: Integer, representing character wealth (aka Meso count)
+        job: Integer, representing Job ID of the character
+        skin: Integer, representing Skin ID of the character
+        gender: Integer, representing Gender ID of the character
+        fame: Integer, representing Character fame count
+        hair: Integer, representing Hair ID of the character
+        face: Integer, representing Face ID of the character
+        ap: Integer, representing Character free Ability Points (AP) pool
+        map: Integer, representing Map ID of the map that the character is currently in
+        bl_slots: Integer, representing Character Buddy List slots
+        rebirths: Integer, representing Character rebirth count
+        ambition: Integer, representing Character Ambition pool
+        insight: Integer, representing Character Insight pool
+        willpower: Integer, representing Character Willpower pool
+        diligence: Integer, representing Character Diligence pool
+        empathy: Integer, representing Character Empathy pool
+        charm: Integer, representing Character Charm pool
+        honour: Integer, representing Character Honour pool
+        mute: String, representing whether a character is chat-banned
     """
 
     def __init__(self, char_stats, database_config):
@@ -712,6 +741,11 @@ class Character:
         return self._inventory
 
     def get_char_img(self):
+        """Generates character avatar using MapleStory.io API
+
+        Returns:
+            url: String, a link to the generated avatar
+        """
         equipped_items = [self.face, self.hair]
         equipped_inv = self.inventory.equipped_inv
 

@@ -80,13 +80,16 @@ class Inventory:
 		return self._equipped_inv
 
 	def load_inv(self, inv_type):
-		""" Fetches Inventory data from a given Inventory Type, (I.E. -1, 1, 2, 3, 4, 5)
+		"""Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)
 
 		Args:
 			inv_type: int
 
-		Returns: dictionary, representing the inventory type we loaded
+		Returns:
+			Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type
 
+		Raises:
+			Generic error on failure
 		"""
 		try:
 			database = con.connect(

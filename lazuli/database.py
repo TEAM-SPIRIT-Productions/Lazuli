@@ -167,6 +167,18 @@ class Lazuli:
             return False
 
     def get_online_players(self):
+        """Fetch the number of players currently online
+
+        AzureMS stores login state in the DB, in the 'accounts' table, 'loggedin' column.
+        Lazuli::get_online_players queries the number of accounts that are logged in, and counts the number of rows
+        in the resulting list of Dictionaries.
+
+        Returns:
+            Int, representing number of players online. Defaults to False in the event of an error during execution
+
+        Raises:
+            Generic error on failure
+        """
         try:
             database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
                                    port=self.port)
