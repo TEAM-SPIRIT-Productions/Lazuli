@@ -2,6 +2,7 @@
 
 ### v0.0.4
 - Minor fix: type error for account instantiation
+- Feature: Fetch usernames of all players online
 - Open up Discussions page
 - Add docstrings
 - Generate API Docs
