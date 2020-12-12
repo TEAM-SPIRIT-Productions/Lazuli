@@ -79,16 +79,6 @@ class Inventory:
 	def equipped_inv(self):
 		return self._equipped_inv
 
-	@staticmethod
-	def get_inv_type_by_name(inv_string):
-		inv_type = utils.map_inv_types.get(inv_string)
-		return inv_type
-
-	@staticmethod
-	def get_inv_name_by_type(inv_type):
-		inv_name = utils.get_key(utils.map_inv_types, inv_type)
-		return inv_name
-
 	def load_inv(self, inv_type):
 		""" Fetches Inventory data from a given Inventory Type, (I.E. -1, 1, 2, 3, 4, 5)
 
@@ -133,22 +123,22 @@ class Inventory:
 			print(f"[ERROR] Error trying to load inventory type {inv_type}", e)
 
 	def init_equip_items(self):
-		return self.load_inv(self.get_inv_type_by_name("equip"))
+		return self.load_inv(utils.get_inv_type_by_name("equip"))
 
 	def init_use_inv(self):
-		return self.load_inv(self.get_inv_type_by_name("use"))
+		return self.load_inv(utils.get_inv_type_by_name("use"))
 
 	def init_etc_inv(self):
-		return self.load_inv(self.get_inv_type_by_name("etc'"))
+		return self.load_inv(utils.get_inv_type_by_name("etc'"))
 
 	def init_cash_inv(self):
-		return self.load_inv(self.get_inv_type_by_name("cash"))
+		return self.load_inv(utils.get_inv_type_by_name("cash"))
 
 	def init_equipped_inv(self):
-		return self.load_inv(self.get_inv_type_by_name("equipped"))
+		return self.load_inv(utils.get_inv_type_by_name("equipped"))
 
 	def init_install_inv(self):
-		return self.load_inv(self.get_inv_type_by_name("setup"))
+		return self.load_inv(utils.get_inv_type_by_name("setup"))
 
 	@staticmethod
 	def has_item_in_inv_type(inv_type, item_id):
@@ -212,4 +202,3 @@ class Inventory:
 			Boolean, representing whether the specified item was found
 		"""
 		return self.has_item_in_inv_type(self.equipped_inv, item_id)
-

@@ -6,6 +6,20 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 """
 
 
+# Dictionary that maps inventory tabs' names to their corresponding index in the DB/source
+map_inv_types = {
+    'equipped': -1,
+    'equip': 1,
+    'eqp': 1,
+    'use': 2,  # Default name for Lazuli purposes
+    'consume': 2,  # name in WZ
+    'etc': 4,
+    'setup': 3,  # Default name for Lazuli purposes
+    'install': 3,  # name in WZ
+    'cash': 5
+}
+
+
 def get_key(dictionary, val):
     """Generic function to return the key for a given value
 
@@ -35,15 +49,11 @@ def get_key(dictionary, val):
         return False
 
 
-# Dictionary that maps inventory tabs' names to their corresponding index in the DB/source
-map_inv_types = {
-    'equipped': -1,
-    'equip': 1,
-    'eqp': 1,
-    'use': 2,  # Default name for Lazuli purposes
-    'consume': 2,  # name in WZ
-    'etc': 4,
-    'setup': 3,  # Default name for Lazuli purposes
-    'install': 3,  # name in WZ
-    'cash': 5
-}
+def get_inv_type_by_name(inv_string):
+    inv_type = map_inv_types.get(inv_string)
+    return inv_type
+
+
+def get_inv_name_by_type(inv_type):  # Never used
+    inv_name = get_key(map_inv_types, inv_type)
+    return inv_name
