@@ -1,11 +1,13 @@
 ## CHANGELOG:  
 
-### v0.0.4
+### v0.0.5
 - Minor fix: type error for account instantiation
+- Generate API Docs
 - Feature: Fetch usernames of all players online
+
+### v0.0.4
 - Open up Discussions page
 - Add docstrings
-- Generate API Docs
 
 ### v0.0.3
 - Add inventory model
