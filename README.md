@@ -1,11 +1,14 @@
 # Lazuli
+![](https://i.imgur.com/o25Tqra.png)  
+[![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=month&units=international_system&left_color=black&right_color=blue&left_text=Monthly%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=week&units=international_system&left_color=black&right_color=blue&left_text=Weekly%20Downloads)](https://pepy.tech/project/lazuli)  
+*Stats courtesy of PePy*  
 Lazuli is a pip-compatible, Python-based package for interacting with [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
 Lazuli is inspired by and based on the [SwordieDB](https://github.com/Bratah123/SwordieDB) project.  
 
 Lazuli allows access to character and inventory attributes in [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
 
 #### Current Status: Now Available on PyPi (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))
-
+---
 ### Quick Start
 Installation via PyPi/Pip:
   1. Run `pip install lazuli` inside of your venv (or global, if desired)
