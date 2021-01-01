@@ -16,6 +16,7 @@ Refer to the project wiki on GitHub for more in-depth examples.
 import mysql.connector as con
 from lazuli.character import Character
 from lazuli.account import Account
+import lazuli.utility as utils
 
 
 class Lazuli:
@@ -166,11 +167,31 @@ class Lazuli:
             print("[ERROR] Error trying to update character stats in Database.", e)
             return False
 
+    def get_db_all_hits(self, query):
+        """Fetch all matching data from DB using the provided query
+
+        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.
+        Feeds the config values into utility.get_db_all_hits().
+
+        Args:
+            query: String, representing SQL query
+
+        Returns:
+            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes
+
+        Raises:
+            Generic error on failure - handled by the utility.get_db_all_hits() method
+
+        """
+        data = utils.get_db_all_hits(self._database_config, query)
+        return data
+
     def get_online_list(self):
         """Fetch the list of players currently online
 
         AzureMS stores login state in the DB, in the 'accounts' table, 'loggedin' column.
-        Lazuli::get_online_list queries for a list of all accounts that are logged in.
+        Lazuli::get_online_list queries for a list of all accounts that are logged in,
+        using the Lazuli::get_db_all_hits method.
 
         Returns:
             List, representing all players online. Defaults to False in the event of an error during execution
@@ -178,17 +199,8 @@ class Lazuli:
         Raises:
             Generic error on failure
         """
-        try:
-            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
-                                   port=self.port)
-            cursor = database.cursor(dictionary=True)
-            cursor.execute(f"SELECT * FROM accounts WHERE `loggedin` > 0")
-            rows = cursor.fetchall()
-            database.disconnect()
-            return rows  # List of online players
-        except Exception as e:
-            print("[ERROR] Error trying to get online players amount from database.", e)
-            return False
+        data = self.get_db_all_hits(f"SELECT * FROM accounts WHERE `loggedin` > 0")
+        return data  # List of online players
 
     def get_online_count(self):
         """Fetch the number of players currently online
