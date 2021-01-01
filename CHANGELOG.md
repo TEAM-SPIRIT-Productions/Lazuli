@@ -1,5 +1,11 @@
 ## CHANGELOG:  
 
+### v0.0.6
+- Migrate all **static** functions to utility module (breaking API change!)
+- Add `get_db_all_hits` utility function, for getting all DB matches
+- Add `get_db_all_hits`` wrapper function in `database.Lazuli`
+- Made `Lazuli::get_online_list` use `Lazuli::get_db_all_hits`
+
 ### v0.0.5
 - Minor fix: type error for account instantiation
 - Generate API Docs
