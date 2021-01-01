@@ -152,7 +152,7 @@ class Character:
         Returns:
             Account object with attributes identical to its corresponding entry in the database
         Raises:
-            Generic error on failure - handled by the Character::get_db() method
+            Generic error on failure - handled by the utility.get_db_first_hit() method
         """
         account_id = utils.get_db_first_hit(
             self._database_config,
@@ -176,7 +176,7 @@ class Character:
         a new Inventory object instance, with the relevant inventory attributes from the database.
 
         Raises:
-            Generic error on failure - handled by the Character::get_db() method
+            Generic error on failure - handled by the utility.get_db_first_hit() method
         """
         inventory = Inventory(self.character_id, self.database_config)
         return inventory
