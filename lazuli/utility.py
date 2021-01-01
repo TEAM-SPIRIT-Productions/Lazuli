@@ -67,8 +67,8 @@ def get_db_first_hit(config, query):
     Character::set_stat_by_column() & Character::get_user_id(), which ultimately ended in failure.
 
     Args:
-        config, dictionary, representing database config attributes
-        query, String, representing SQL query
+        config: dictionary, representing database config attributes
+        query: String, representing SQL query
 
     Returns:
         String representing the result of the provided SQL query, using the provided DB connection attributes
@@ -102,8 +102,8 @@ def get_db_all_hits(config, query):
     """Generic top level function for fetching all matching data from DB using the provided DB config and query
 
     Args:
-        config, dictionary, representing database config attributes
-        query, String, representing SQL query
+        config: dictionary, representing database config attributes
+        query: String, representing SQL query
 
     Returns:
         List of objects, representing the result of the provided SQL query, using the provided DB connection attributes
@@ -142,8 +142,8 @@ def has_item_in_inv_type(inv_type, item_id):
     the provided item ID can be found as a value.
 
     Args:
-        inv_type, inventory object, representing inventory tab to search
-        item_id, int, representing the ID of the item to search for
+        inv_type: inventory object, representing inventory tab to search
+        item_id: int, representing the ID of the item to search for
 
     Returns:
         Boolean, representing whether the specified item was found
