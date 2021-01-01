@@ -232,57 +232,73 @@ class Lazuli:
         player_data = self.get_online_list()
         return utils.extract_name(player_data)
 
-    def get_level_ranking(self):
-        """Fetches the Top 5 players in terms of level
+    def get_level_ranking(self, number_of_players=5):
+        """Fetches the top ranking players in terms of level
 
-        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
 
-        Returns:
-            List of Strings, representing player names
-        """
-        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `level` DESC LIMIT 5")
-        return utils.extract_name(player_data)
-
-    def get_meso_ranking(self):
-        """Fetches the Top 5 players in terms of mesos
-
-        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+        Args:
+            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
-            List of Strings, representing player names
+            List of Tuples, representing player names and their corresponding level
         """
-        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT 5")
-        return utils.extract_name(player_data)
+        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `level` DESC LIMIT {number_of_players}")
+        return utils.extract_name_and_value(player_data, "`level`")
 
-    def get_fame_ranking(self):
-        """Fetches the Top 5 players in terms of fame
+    def get_meso_ranking(self, number_of_players=5):
+        """Fetches the top ranking players in terms of mesos
 
-        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
+
+        Args:
+            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
-            List of Strings, representing player names
+            List of Tuples, representing player names and their corresponding mesos
         """
-        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT 5")
-        return utils.extract_name(player_data)
+        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT {number_of_players}")
+        return utils.extract_name_and_value(player_data, "`meso`")
 
-    def get_rebirth_ranking(self):
-        """Fetches the Top 5 players in terms of rebirths
+    def get_fame_ranking(self, number_of_players=5):
+        """Fetches the top ranking players in terms of fame
 
-        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
+
+        Args:
+            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
-            List of Strings, representing player names
+            List of Tuples, representing player names and their corresponding fame
         """
-        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT 5")
-        return utils.extract_name(player_data)
+        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT {number_of_players}")
+        return utils.extract_name_and_value(player_data, "`fame`")
 
-    def get_rebirth_ranking_by_job_id(self, job_id):
-        """Fetches the Top 5 players of a particular class (specific Job ID), in terms of rebirths
+    def get_rebirth_ranking(self, number_of_players=5):
+        """Fetches the top ranking players in terms of rebirths
 
-        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
+
+        Args:
+            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
-            List of Strings, representing player names
+            List of Tuples, representing player names and their corresponding rebirths
         """
-        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT 5")
-        return utils.extract_name(player_data)
+        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT {number_of_players}")
+        return utils.extract_name_and_value(player_data, "`reborns`")
+
+    def get_rebirth_ranking_by_job_id(self, job_id, number_of_players=5):
+        """Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths
+
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
+
+        Args:
+            job_id: Int, representing specific Job ID to query
+            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+
+        Returns:
+            List of Tuples, representing player names and their corresponding rebirths
+        """
+        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT {number_of_players}")
+        return utils.extract_name_and_value(player_data, "`reborns`")
