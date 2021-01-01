@@ -95,7 +95,7 @@ def get_db_first_hit(config, query):
         return data
 
     except Exception as e:
-        print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
+        print(f"CRITICAL: Error encountered whilst attempting to connect to the database! \n{e}")
 
 
 def get_db_all_hits(config, query):
@@ -130,7 +130,7 @@ def get_db_all_hits(config, query):
         return data
 
     except Exception as e:
-        print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
+        print(f"CRITICAL: Error encountered whilst attempting to connect to the database! \n{e}")
 
 
 def has_item_in_inv_type(inv_type, item_id):
@@ -152,3 +152,24 @@ def has_item_in_inv_type(inv_type, item_id):
         if inv_type[bag_index]['itemid'] == item_id:
             return True
     return False
+
+
+def extract_name(player_list):
+    """Extracts a list of players from SQL data, via the name column
+
+    Args:
+        player_list: List of dicts, representing list of all players
+
+    Returns:
+        List of Strings, representing player names
+    """
+    try:
+        if not player_list[0]['name']:  # if empty or null; sanity check
+            raise RuntimeError
+
+        players = []
+        for player in player_list:
+            players.append(player['name'])
+        return players
+    except Exception as e:
+        print(f"ERROR: Error encountered whilst attempting extract list of player names!\n{e}")

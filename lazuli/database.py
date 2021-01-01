@@ -230,7 +230,4 @@ class Lazuli:
             Generic error on failure, handled by Lazuli::get_online_list()
         """
         player_data = self.get_online_list()
-        players = []
-        for player in player_data:
-            players.append(player['name'])
-        return players
+        return utils.extract_name(player_data)
