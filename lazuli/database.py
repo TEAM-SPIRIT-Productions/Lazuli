@@ -231,3 +231,58 @@ class Lazuli:
         """
         player_data = self.get_online_list()
         return utils.extract_name(player_data)
+
+    def get_level_ranking(self):
+        """Fetches the Top 5 players in terms of level
+
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+
+        Returns:
+            List of Strings, representing player names
+        """
+        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `level` DESC LIMIT 5")
+        return utils.extract_name(player_data)
+
+    def get_meso_ranking(self):
+        """Fetches the Top 5 players in terms of mesos
+
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+
+        Returns:
+            List of Strings, representing player names
+        """
+        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT 5")
+        return utils.extract_name(player_data)
+
+    def get_fame_ranking(self):
+        """Fetches the Top 5 players in terms of fame
+
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+
+        Returns:
+            List of Strings, representing player names
+        """
+        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT 5")
+        return utils.extract_name(player_data)
+
+    def get_rebirth_ranking(self):
+        """Fetches the Top 5 players in terms of rebirths
+
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+
+        Returns:
+            List of Strings, representing player names
+        """
+        player_data = self.get_db_all_hits("SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT 5")
+        return utils.extract_name(player_data)
+
+    def get_rebirth_ranking_by_job_id(self, job_id):
+        """Fetches the Top 5 players of a particular class (specific Job ID), in terms of rebirths
+
+        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.
+
+        Returns:
+            List of Strings, representing player names
+        """
+        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT 5")
+        return utils.extract_name(player_data)
