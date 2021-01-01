@@ -850,7 +850,7 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
+        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
@@ -886,7 +886,7 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">account_info</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
+        <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
@@ -1304,7 +1304,7 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        character_stats = Character.get_db_first_hit(</span>
+<span class="n n-Quoted">        character_stats = utils.get_db_first_hit(</span>
 
 <span class="n n-Quoted">            self._database_config,</span>
 
@@ -1340,7 +1340,7 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        account_info = Character.get_db_first_hit(</span>
+<span class="n n-Quoted">        account_info = utils.get_db_first_hit(</span>
 
 <span class="n n-Quoted">            self._database_config,</span>
 
@@ -1659,7 +1659,7 @@ Useful for getting account information from accounts with no characters.</p>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">account_info</span> <span class="o">=</span> <span class="k">Character</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
+        <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
@@ -1714,7 +1714,7 @@ character data and database attributes from the connected database.</p>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">character_stats</span> <span class="o">=</span> <span class="k">Character</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
+        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
