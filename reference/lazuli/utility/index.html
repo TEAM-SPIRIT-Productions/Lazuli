@@ -370,6 +370,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#extract_name_and_value" class="md-nav__link">
+    extract_name_and_value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_db_all_hits" class="md-nav__link">
     get_db_all_hits
   </a>
@@ -474,6 +481,13 @@
           <li class="md-nav__item">
   <a href="#extract_name" class="md-nav__link">
     extract_name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract_name_and_value" class="md-nav__link">
+    extract_name_and_value
   </a>
   
 </li>
@@ -825,6 +839,40 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
         <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Error encountered whilst attempting extract list of player names!</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">extract_name_and_value</span><span class="p">(</span><span class="n">player_list</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Extracts a list of players (and a specified value) from SQL data, via the name column</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        player_list: List of dicts, representing list of all players</span>
+
+<span class="sd">        column: String, representing column name to extract</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">        List of Tuples, representing player names and their corresponding values (e.g. level)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="c1"># if empty or null; sanity check</span>
+
+            <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+        <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">player_list</span><span class="p">:</span>
+
+            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">player</span><span class="p">[</span><span class="n">column</span><span class="p">]))</span>  <span class="c1"># List of Tuples, as per Brandon&#39;s request</span>
+
+        <span class="k">return</span> <span class="n">players</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Error encountered whilst attempting extract list of player names!</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -875,6 +923,55 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
     <span class="k">except</span> <span class="k">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
         <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Error encountered whilst attempting extract list of player names!\n{e}&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<h3 id="extract_name_and_value">extract_name_and_value</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">extract_name_and_value</span><span class="p">(</span>
+    <span class="n">player_list</span><span class="p">,</span>
+    <span class="n">column</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Extracts a list of players (and a specified value) from SQL data, via the name column</p>
+<p>Args:
+    player_list: List of dicts, representing list of all players
+    column: String, representing column name to extract</p>
+<p>Returns:
+    List of Tuples, representing player names and their corresponding values (e.g. level)</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_list</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;Extracts a list of players (and a specified value) from SQL data, via the name column</span>
+
+<span class="ss">    Args:</span>
+
+<span class="ss">        player_list: List of dicts, representing list of all players</span>
+
+<span class="ss">        column: String, representing column name to extract</span>
+
+<span class="ss">    Returns:</span>
+
+<span class="ss">        List of Tuples, representing player names and their corresponding values (e.g. level)</span>
+
+<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">player_list</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">null</span><span class="p">;</span><span class="w"> </span><span class="n">sanity</span><span class="w"> </span><span class="k">check</span><span class="w"></span>
+
+<span class="w">            </span><span class="n">raise</span><span class="w"> </span><span class="n">RuntimeError</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">player_list</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">            </span><span class="n">players</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">player</span><span class="o">[</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">player</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="p">))</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">Tuples</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">Brandon</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">request</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">players</span><span class="w"></span>
+
+<span class="w">    </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Error encountered whilst attempting extract list of player names!\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 </details>

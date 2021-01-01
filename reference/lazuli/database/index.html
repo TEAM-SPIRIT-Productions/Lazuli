@@ -1042,85 +1042,107 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
         <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_level_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_level_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Fetches the Top 5 players in terms of level</span>
+        <span class="sd">&quot;&quot;&quot;Fetches the top ranking players in terms of level</span>
 
-<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
 
-<span class="sd">        Returns:</span>
+<span class="sd">        Args:</span>
 
-<span class="sd">            List of Strings, representing player names</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `level` DESC LIMIT 5&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">get_meso_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot;Fetches the Top 5 players in terms of mesos</span>
-
-<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="sd">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="sd">        Returns:</span>
 
-<span class="sd">            List of Strings, representing player names</span>
+<span class="sd">            List of Tuples, representing player names and their corresponding level</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `level` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;level&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_fame_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_meso_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Fetches the Top 5 players in terms of fame</span>
+        <span class="sd">&quot;&quot;&quot;Fetches the top ranking players in terms of mesos</span>
 
-<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="sd">        Returns:</span>
 
-<span class="sd">            List of Strings, representing player names</span>
+<span class="sd">            List of Tuples, representing player names and their corresponding mesos</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;meso&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_rebirth_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_fame_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Fetches the Top 5 players in terms of rebirths</span>
+        <span class="sd">&quot;&quot;&quot;Fetches the top ranking players in terms of fame</span>
 
-<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="sd">        Returns:</span>
 
-<span class="sd">            List of Strings, representing player names</span>
+<span class="sd">            List of Tuples, representing player names and their corresponding fame</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;fame&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_rebirth_ranking_by_job_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_rebirth_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Fetches the Top 5 players of a particular class (specific Job ID), in terms of rebirths</span>
+        <span class="sd">&quot;&quot;&quot;Fetches the top ranking players in terms of rebirths</span>
 
-<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="sd">        Returns:</span>
 
-<span class="sd">            List of Strings, representing player names</span>
+<span class="sd">            List of Tuples, representing player names and their corresponding rebirths</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;reborns&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_rebirth_ranking_by_job_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths</span>
+
+<span class="sd">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            job_id: Int, representing specific Job ID to query</span>
+
+<span class="sd">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            List of Tuples, representing player names and their corresponding rebirths</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">player_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;reborns&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1474,85 +1496,107 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        return utils.extract_name(player_data)</span>
 
-<span class="n n-Quoted">    def get_level_ranking(self):</span>
+<span class="n n-Quoted">    def get_level_ranking(self, number_of_players=5):</span>
 
-<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the Top 5 players in terms of level</span>
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the top ranking players in terms of level</span>
 
-<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
 
-<span class="n n-Quoted">        Returns:</span>
+<span class="n n-Quoted">        Args:</span>
 
-<span class="n n-Quoted">            List of Strings, representing player names</span>
-
-<span class="n n-Quoted">        &quot;&quot;&quot;</span>
-
-<span class="n n-Quoted">        player_data = self.get_db_all_hits(&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="k">level</span><span class="n n-Quoted">` DESC LIMIT 5&quot;)</span>
-
-<span class="n n-Quoted">        return utils.extract_name(player_data)</span>
-
-<span class="n n-Quoted">    def get_meso_ranking(self):</span>
-
-<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the Top 5 players in terms of mesos</span>
-
-<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="n n-Quoted">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="n n-Quoted">        Returns:</span>
 
-<span class="n n-Quoted">            List of Strings, representing player names</span>
+<span class="n n-Quoted">            List of Tuples, representing player names and their corresponding level</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        player_data = self.get_db_all_hits(&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="n">meso</span><span class="n n-Quoted">` DESC LIMIT 5&quot;)</span>
+<span class="n n-Quoted">        player_data = self.get_db_all_hits(f&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="k">level</span><span class="n n-Quoted">` DESC LIMIT {number_of_players}&quot;)</span>
 
-<span class="n n-Quoted">        return utils.extract_name(player_data)</span>
+<span class="n n-Quoted">        return utils.extract_name_and_value(player_data, &quot;level&quot;)</span>
 
-<span class="n n-Quoted">    def get_fame_ranking(self):</span>
+<span class="n n-Quoted">    def get_meso_ranking(self, number_of_players=5):</span>
 
-<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the Top 5 players in terms of fame</span>
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the top ranking players in terms of mesos</span>
 
-<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="n n-Quoted">        Returns:</span>
 
-<span class="n n-Quoted">            List of Strings, representing player names</span>
+<span class="n n-Quoted">            List of Tuples, representing player names and their corresponding mesos</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        player_data = self.get_db_all_hits(&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="n">fame</span><span class="n n-Quoted">` DESC LIMIT 5&quot;)</span>
+<span class="n n-Quoted">        player_data = self.get_db_all_hits(f&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="n">meso</span><span class="n n-Quoted">` DESC LIMIT {number_of_players}&quot;)</span>
 
-<span class="n n-Quoted">        return utils.extract_name(player_data)</span>
+<span class="n n-Quoted">        return utils.extract_name_and_value(player_data, &quot;meso&quot;)</span>
 
-<span class="n n-Quoted">    def get_rebirth_ranking(self):</span>
+<span class="n n-Quoted">    def get_fame_ranking(self, number_of_players=5):</span>
 
-<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the Top 5 players in terms of rebirths</span>
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the top ranking players in terms of fame</span>
 
-<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="n n-Quoted">        Returns:</span>
 
-<span class="n n-Quoted">            List of Strings, representing player names</span>
+<span class="n n-Quoted">            List of Tuples, representing player names and their corresponding fame</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        player_data = self.get_db_all_hits(&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="n">reborns</span><span class="n n-Quoted">` DESC LIMIT 5&quot;)</span>
+<span class="n n-Quoted">        player_data = self.get_db_all_hits(f&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="n">fame</span><span class="n n-Quoted">` DESC LIMIT {number_of_players}&quot;)</span>
 
-<span class="n n-Quoted">        return utils.extract_name(player_data)</span>
+<span class="n n-Quoted">        return utils.extract_name_and_value(player_data, &quot;fame&quot;)</span>
 
-<span class="n n-Quoted">    def get_rebirth_ranking_by_job_id(self, job_id):</span>
+<span class="n n-Quoted">    def get_rebirth_ranking(self, number_of_players=5):</span>
 
-<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the Top 5 players of a particular class (specific Job ID), in terms of rebirths</span>
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the top ranking players in terms of rebirths</span>
 
-<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="n n-Quoted">        Returns:</span>
 
-<span class="n n-Quoted">            List of Strings, representing player names</span>
+<span class="n n-Quoted">            List of Tuples, representing player names and their corresponding rebirths</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        player_data = self.get_db_all_hits(f&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` WHERE `</span><span class="n">job</span><span class="n n-Quoted">`={job_id} ORDER BY `</span><span class="n">reborns</span><span class="n n-Quoted">` DESC LIMIT 5&quot;)</span>
+<span class="n n-Quoted">        player_data = self.get_db_all_hits(f&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` ORDER BY `</span><span class="n">reborns</span><span class="n n-Quoted">` DESC LIMIT {number_of_players}&quot;)</span>
 
-<span class="n n-Quoted">        return utils.extract_name(player_data)</span>
+<span class="n n-Quoted">        return utils.extract_name_and_value(player_data, &quot;reborns&quot;)</span>
+
+<span class="n n-Quoted">    def get_rebirth_ranking_by_job_id(self, job_id, number_of_players=5):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths</span>
+
+<span class="n n-Quoted">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            job_id: Int, representing specific Job ID to query</span>
+
+<span class="n n-Quoted">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            List of Tuples, representing player names and their corresponding rebirths</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        player_data = self.get_db_all_hits(f&quot;SELECT * FROM `</span><span class="n">characters</span><span class="n n-Quoted">` WHERE `</span><span class="n">job</span><span class="n n-Quoted">`={job_id} ORDER BY `</span><span class="n">reborns</span><span class="n n-Quoted">` DESC LIMIT {number_of_players}&quot;)</span>
+
+<span class="n n-Quoted">        return utils.extract_name_and_value(player_data, &quot;reborns&quot;)</span>
 </code></pre></div>
 
 </details>
@@ -1730,85 +1774,106 @@ Feeds the config values into utility.get_db_all_hits().</p>
 </details>
 <h5 id="get_fame_ranking">get_fame_ranking</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_fame_ranking</span><span class="p">(</span>
-    <span class="bp">self</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetches the Top 5 players in terms of fame</p>
-<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</p>
+<p>Fetches the top ranking players in terms of fame</p>
+<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</p>
+<p>Args:
+    number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</p>
 <p>Returns:
-    List of Strings, representing player names</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_fame_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+    List of Tuples, representing player names and their corresponding fame</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_fame_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the Top 5 players in terms of fame</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the top ranking players in terms of fame</span>
 
-<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            List of Strings, representing player names</span>
+<span class="s2">            List of Tuples, representing player names and their corresponding fame</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;fame&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
 <h5 id="get_level_ranking">get_level_ranking</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_level_ranking</span><span class="p">(</span>
-    <span class="bp">self</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetches the Top 5 players in terms of level</p>
-<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</p>
+<p>Fetches the top ranking players in terms of level</p>
+<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</p>
+<p>Args:
+    number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</p>
 <p>Returns:
-    List of Strings, representing player names</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_level_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+    List of Tuples, representing player names and their corresponding level</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_level_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the Top 5 players in terms of level</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the top ranking players in terms of level</span>
 
-<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            List of Strings, representing player names</span>
+<span class="s2">            List of Tuples, representing player names and their corresponding level</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `level` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `level` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;level&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
 <h5 id="get_meso_ranking">get_meso_ranking</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_meso_ranking</span><span class="p">(</span>
-    <span class="bp">self</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetches the Top 5 players in terms of mesos</p>
-<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</p>
+<p>Fetches the top ranking players in terms of mesos</p>
+<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</p>
+<p>Args:
+    number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</p>
 <p>Returns:
-    List of Strings, representing player names</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_meso_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+    List of Tuples, representing player names and their corresponding mesos</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_meso_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the Top 5 players in terms of mesos</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the top ranking players in terms of mesos</span>
 
-<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            List of Strings, representing player names</span>
+<span class="s2">            List of Tuples, representing player names and their corresponding mesos</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;meso&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1928,58 +1993,75 @@ Extract the usernames from the said list.</p>
 </details>
 <h5 id="get_rebirth_ranking">get_rebirth_ranking</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_rebirth_ranking</span><span class="p">(</span>
-    <span class="bp">self</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetches the Top 5 players in terms of rebirths</p>
-<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</p>
+<p>Fetches the top ranking players in terms of rebirths</p>
+<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</p>
+<p>Args:
+    number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</p>
 <p>Returns:
-    List of Strings, representing player names</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_rebirth_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+    List of Tuples, representing player names and their corresponding rebirths</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_rebirth_ranking</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the Top 5 players in terms of rebirths</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the top ranking players in terms of rebirths</span>
 
-<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            List of Strings, representing player names</span>
+<span class="s2">            List of Tuples, representing player names and their corresponding rebirths</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;reborns&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
 <h5 id="get_rebirth_ranking_by_job_id">get_rebirth_ranking_by_job_id</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_rebirth_ranking_by_job_id</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
-    <span class="n">job_id</span>
+    <span class="n">job_id</span><span class="p">,</span>
+    <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetches the Top 5 players of a particular class (specific Job ID), in terms of rebirths</p>
-<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</p>
+<p>Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths</p>
+<p>Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</p>
+<p>Args:
+    job_id: Int, representing specific Job ID to query
+    number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</p>
 <p>Returns:
-    List of Strings, representing player names</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_rebirth_ranking_by_job_id</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">)</span><span class="o">:</span>
+    List of Tuples, representing player names and their corresponding rebirths</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_rebirth_ranking_by_job_id</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="n">number_of_players</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the Top 5 players of a particular class (specific Job ID), in terms of rebirths</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths</span>
 
-<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name to process the data.</span>
+<span class="s2">        Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            job_id: Int, representing specific Job ID to query</span>
+
+<span class="s2">            number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            List of Strings, representing player names</span>
+<span class="s2">            List of Tuples, representing player names and their corresponding rebirths</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT 5&quot;</span><span class="p">)</span>
+        <span class="n">player_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT {number_of_players}&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">player_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="s2">&quot;reborns&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
