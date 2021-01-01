@@ -173,3 +173,25 @@ def extract_name(player_list):
         return players
     except Exception as e:
         print(f"ERROR: Error encountered whilst attempting extract list of player names!\n{e}")
+
+
+def extract_name_and_value(player_list, column):
+    """Extracts a list of players (and a specified value) from SQL data, via the name column
+
+    Args:
+        player_list: List of dicts, representing list of all players
+        column: String, representing column name to extract
+
+    Returns:
+        List of Tuples, representing player names and their corresponding values (e.g. level)
+    """
+    try:
+        if not player_list[0]['name']:  # if empty or null; sanity check
+            raise RuntimeError
+
+        players = []
+        for player in player_list:
+            players.append((player['name'], player[column]))  # List of Tuples, as per Brandon's request
+        return players
+    except Exception as e:
+        print(f"ERROR: Error encountered whilst attempting extract list of player names!\n{e}")
