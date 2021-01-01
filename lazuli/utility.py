@@ -98,6 +98,41 @@ def get_db_first_hit(config, query):
         print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
 
 
+def get_db_all_hits(config, query):
+    """Generic top level function for fetching all matching data from DB using the provided DB config and query
+
+    Args:
+        config, dictionary, representing database config attributes
+        query, String, representing SQL query
+
+    Returns:
+        List of objects, representing the result of the provided SQL query, using the provided DB connection attributes
+
+    Raises:
+        SQL Error 2003: Can't cannect to DB
+        WinError 10060: No response from DB
+        List index out of range: Wrong column name
+        Generic error as a final catch-all
+    """
+    try:
+        database = con.connect(
+            host=config['host'],
+            user=config['user'],
+            password=config['password'],
+            database=config['schema'],
+            port=config['port']
+        )
+        cursor = database.cursor(dictionary=True)
+        cursor.execute(query)
+        data = cursor.fetchall()
+        database.disconnect()
+
+        return data
+
+    except Exception as e:
+        print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
+
+
 def has_item_in_inv_type(inv_type, item_id):
     """Checks whether the particular tab of the inventory has an item
 
