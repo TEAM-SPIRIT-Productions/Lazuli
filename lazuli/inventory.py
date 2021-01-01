@@ -143,28 +143,13 @@ class Inventory:
 	def init_install_inv(self):
 		return self.load_inv(utils.get_inv_type_by_name("setup"))
 
-	@staticmethod
-	def has_item_in_inv_type(inv_type, item_id):
-		"""Checks whether the particular tab of the inventory has an item
-		Generic static method used by the other Inventory::has_item_in_XXX() methods, and the
-		Character::is_equipping() method.
-		Iterates through the dictionary of items associated with the specified tab, and check if
-		the provided item ID can be found as a value.
-		Returns:
-			Boolean, representing whether the specified item was found
-		"""
-		for bag_index in inv_type:
-			if inv_type[bag_index]['itemid'] == item_id:
-				return True
-		return False
-
 	def has_item_in_equip(self, item_id):
 		"""Checks whether the EQUIP tab of the inventory has an item
 		Uses Inventory::has_item_in_inv_type()
 		Returns:
 			Boolean, representing whether the specified item was found
 		"""
-		return self.has_item_in_inv_type(self.equip_inv, item_id)
+		return utils.has_item_in_inv_type(self.equip_inv, item_id)
 
 	def has_item_in_consume(self, item_id):
 		"""Checks whether the USE tab of the inventory has an item
@@ -172,7 +157,7 @@ class Inventory:
 		Returns:
 			Boolean, representing whether the specified item was found
 		"""
-		return self.has_item_in_inv_type(self.consume_inv, item_id)
+		return utils.has_item_in_inv_type(self.consume_inv, item_id)
 
 	def has_item_in_etc(self, item_id):
 		"""Checks whether the ETC tab of the inventory has an item
@@ -180,7 +165,7 @@ class Inventory:
 		Returns:
 			Boolean, representing whether the specified item was found
 		"""
-		return self.has_item_in_inv_type(self.etc_inv, item_id)
+		return utils.has_item_in_inv_type(self.etc_inv, item_id)
 
 	def has_item_in_install(self, item_id):
 		"""Checks whether the SETUP tab of the inventory has an item
@@ -188,7 +173,7 @@ class Inventory:
 		Returns:
 			Boolean, representing whether the specified item was found
 		"""
-		return self.has_item_in_inv_type(self.install_inv, item_id)
+		return utils.has_item_in_inv_type(self.install_inv, item_id)
 
 	def has_item_in_cash(self, item_id):
 		"""Checks whether the CASH tab of the inventory has an item
@@ -196,7 +181,7 @@ class Inventory:
 		Returns:
 			Boolean, representing whether the specified item was found
 		"""
-		return self.has_item_in_inv_type(self.cash_inv, item_id)
+		return utils.has_item_in_inv_type(self.cash_inv, item_id)
 
 	def is_equipping(self, item_id):
 		"""Checks whether the EQUIP window (i.e. Hotkey "E") has an item (i.e. item is equipped)
@@ -204,4 +189,4 @@ class Inventory:
 		Returns:
 			Boolean, representing whether the specified item was found
 		"""
-		return self.has_item_in_inv_type(self.equipped_inv, item_id)
+		return utils.has_item_in_inv_type(self.equipped_inv, item_id)

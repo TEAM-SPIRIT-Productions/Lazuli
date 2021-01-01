@@ -4,7 +4,7 @@ Copyright 2020 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
-
+import mysql.connector as con
 
 # Dictionary that maps inventory tabs' names to their corresponding index in the DB/source
 map_inv_types = {
@@ -57,3 +57,63 @@ def get_inv_type_by_name(inv_string):
 def get_inv_name_by_type(inv_type):  # Never used
     inv_name = get_key(map_inv_types, inv_type)
     return inv_name
+
+
+def get_db_first_hit(config, query):
+    """Generic top level function for fetching data (first hit) from DB using the provided DB config and query
+
+    This method assumes that only one result is found - it always defaults to the first result.
+    An effort has been made to convert this to a decorator so that it may also be applied to
+    Character::set_stat_by_column() & Character::get_user_id(), which ultimately ended in failure.
+
+    Args:
+        config, dictionary, representing database config attributes
+        query, String, representing SQL query
+
+    Returns:
+        String representing the result of the provided SQL query, using the provided DB connection attributes
+
+    Raises:
+        SQL Error 2003: Can't cannect to DB
+        WinError 10060: No response from DB
+        List index out of range: Wrong column name
+        Generic error as a final catch-all
+    """
+    try:
+        database = con.connect(
+            host=config['host'],
+            user=config['user'],
+            password=config['password'],
+            database=config['schema'],
+            port=config['port']
+        )
+        cursor = database.cursor(dictionary=True)
+        cursor.execute(query)
+        data = cursor.fetchall()[0]
+        database.disconnect()
+
+        return data
+
+    except Exception as e:
+        print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
+
+
+def has_item_in_inv_type(inv_type, item_id):
+    """Checks whether the particular tab of the inventory has an item
+
+    Generic top level function used by Inventory::has_item_in_XXX() methods, and the
+    Inventory::is_equipping() method.
+    Iterates through the dictionary of items associated with the specified tab, and check if
+    the provided item ID can be found as a value.
+
+    Args:
+        inv_type, inventory object, representing inventory tab to search
+        item_id, int, representing the ID of the item to search for
+
+    Returns:
+        Boolean, representing whether the specified item was found
+    """
+    for bag_index in inv_type:
+        if inv_type[bag_index]['itemid'] == item_id:
+            return True
+    return False

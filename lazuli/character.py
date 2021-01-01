@@ -9,6 +9,7 @@ import mysql.connector as con
 from lazuli import JOBS
 from lazuli.inventory import Inventory
 from lazuli.account import Account
+import lazuli.utility as utils
 
 
 class Character:
@@ -153,13 +154,13 @@ class Character:
         Raises:
             Generic error on failure - handled by the Character::get_db() method
         """
-        account_id = self.get_db(
+        account_id = utils.get_db_first_hit(
             self._database_config,
             f"SELECT * FROM characters WHERE id = '{self.character_id}'"
         ).get("accountid")  # get_db() returns a Dictionary, so get() is used to fetch only the value
         # The row will always be 0 because there should be no characters with the same character ID (Primary Key)
 
-        account_info = self.get_db(
+        account_info = utils.get_db_first_hit(
             self._database_config,
             f"SELECT * FROM accounts WHERE id = '{account_id}'"
         )  # The row will always be 0 because there should be no characters with the same account ID (Primary Key)
@@ -179,46 +180,6 @@ class Character:
         """
         inventory = Inventory(self.character_id, self.database_config)
         return inventory
-
-    # Static method for fetching DB
-    @staticmethod
-    def get_db(config, query):
-        """Generic static method for fetching data from DB using the provided DB config and query
-        
-        This method assumes that only one character is found - it always defaults to the first result.
-        An effort has been made to convert this to a decorator so that it may also be applied to
-        Character::set_stat_by_column() & Character::get_user_id(), which ultimately ended in failure.
-        
-        Args:
-            config, dictionary, representing database config attributes
-            query, String, representing SQL query
-
-        Returns:
-            String representing the result of the provided SQL query, using the provided DB connection attributes
-
-        Raises:
-            SQL Error 2003: Can't cannect to DB
-            WinError 10060: No response from DB
-            List index out of range: Wrong column name
-            Generic error as a final catch-all
-        """
-        try:
-            database = con.connect(
-                host=config['host'],
-                user=config['user'],
-                password=config['password'],
-                database=config['schema'],
-                port=config['port']
-            )
-            cursor = database.cursor(dictionary=True)
-            cursor.execute(query)
-            data = cursor.fetchall()[0]
-            database.disconnect()
-
-            return data
-            
-        except Exception as e:
-            print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
 
     @property
     def database_config(self):
