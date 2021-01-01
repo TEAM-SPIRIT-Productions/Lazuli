@@ -244,7 +244,7 @@ class Lazuli:
             List of Tuples, representing player names and their corresponding level
         """
         player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `level` DESC LIMIT {number_of_players}")
-        return utils.extract_name_and_value(player_data, "`level`")
+        return utils.extract_name_and_value(player_data, "level")
 
     def get_meso_ranking(self, number_of_players=5):
         """Fetches the top ranking players in terms of mesos
@@ -258,7 +258,7 @@ class Lazuli:
             List of Tuples, representing player names and their corresponding mesos
         """
         player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT {number_of_players}")
-        return utils.extract_name_and_value(player_data, "`meso`")
+        return utils.extract_name_and_value(player_data, "meso")
 
     def get_fame_ranking(self, number_of_players=5):
         """Fetches the top ranking players in terms of fame
@@ -272,7 +272,7 @@ class Lazuli:
             List of Tuples, representing player names and their corresponding fame
         """
         player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT {number_of_players}")
-        return utils.extract_name_and_value(player_data, "`fame`")
+        return utils.extract_name_and_value(player_data, "fame")
 
     def get_rebirth_ranking(self, number_of_players=5):
         """Fetches the top ranking players in terms of rebirths
@@ -286,7 +286,7 @@ class Lazuli:
             List of Tuples, representing player names and their corresponding rebirths
         """
         player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT {number_of_players}")
-        return utils.extract_name_and_value(player_data, "`reborns`")
+        return utils.extract_name_and_value(player_data, "reborns")
 
     def get_rebirth_ranking_by_job_id(self, job_id, number_of_players=5):
         """Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths
@@ -301,4 +301,4 @@ class Lazuli:
             List of Tuples, representing player names and their corresponding rebirths
         """
         player_data = self.get_db_all_hits(f"SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT {number_of_players}")
-        return utils.extract_name_and_value(player_data, "`reborns`")
+        return utils.extract_name_and_value(player_data, "reborns")
