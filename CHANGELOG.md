@@ -1,5 +1,9 @@
 ## CHANGELOG:  
 
+### v0.0.8
+- Fix faulty refactor causing `get_char_by_name` and `get_account_by_username` to fail.
+- Make `get_db_first_hit` more DRY
+
 ### v0.0.7
 - Add utility function `extract_name_and_value`
 - Add arg to ranking methods, for variable no. of players
