@@ -106,7 +106,7 @@ class Lazuli:
         Raises:
             Generic error on failure - handled by the Character::get_db() method
         """
-        character_stats = Character.get_db_first_hit(
+        character_stats = utils.get_db_first_hit(
             self._database_config,
             f"SELECT * FROM characters WHERE `name` = '{char_name}'"
         )  # Fetch first result because there should only be one character with that name
@@ -130,7 +130,7 @@ class Lazuli:
         Raises:
             Generic error on failure - handled by the Character::get_db() method
         """
-        account_info = Character.get_db_first_hit(
+        account_info = utils.get_db_first_hit(
             self._database_config,
             f"SELECT * FROM accounts WHERE `name` = '{username}'"
         )  # Fetch first result because there should only be one character with that name

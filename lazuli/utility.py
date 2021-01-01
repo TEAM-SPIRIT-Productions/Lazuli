@@ -59,45 +59,6 @@ def get_inv_name_by_type(inv_type):  # Never used
     return inv_name
 
 
-def get_db_first_hit(config, query):
-    """Generic top level function for fetching data (first hit) from DB using the provided DB config and query
-
-    This method assumes that only one result is found - it always defaults to the first result.
-    An effort has been made to convert this to a decorator so that it may also be applied to
-    Character::set_stat_by_column() & Character::get_user_id(), which ultimately ended in failure.
-
-    Args:
-        config: dictionary, representing database config attributes
-        query: String, representing SQL query
-
-    Returns:
-        String representing the result of the provided SQL query, using the provided DB connection attributes
-
-    Raises:
-        SQL Error 2003: Can't cannect to DB
-        WinError 10060: No response from DB
-        List index out of range: Wrong column name
-        Generic error as a final catch-all
-    """
-    try:
-        database = con.connect(
-            host=config['host'],
-            user=config['user'],
-            password=config['password'],
-            database=config['schema'],
-            port=config['port']
-        )
-        cursor = database.cursor(dictionary=True)
-        cursor.execute(query)
-        data = cursor.fetchall()[0]
-        database.disconnect()
-
-        return data
-
-    except Exception as e:
-        print(f"CRITICAL: Error encountered whilst attempting to connect to the database! \n{e}")
-
-
 def get_db_all_hits(config, query):
     """Generic top level function for fetching all matching data from DB using the provided DB config and query
 
@@ -131,6 +92,21 @@ def get_db_all_hits(config, query):
 
     except Exception as e:
         print(f"CRITICAL: Error encountered whilst attempting to connect to the database! \n{e}")
+
+
+def get_db_first_hit(config, query):
+    """Generic top level function for fetching data (first hit) from DB using the provided DB config and query
+
+    This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.
+
+    Args:
+        config: dictionary, representing database config attributes
+        query: String, representing SQL query
+
+    Returns:
+        Var, representing first result
+    """
+    return get_db_all_hits(config, query)[0]
 
 
 def has_item_in_inv_type(inv_type, item_id):
