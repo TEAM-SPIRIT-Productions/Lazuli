@@ -1,5 +1,11 @@
 ## CHANGELOG:  
 
+### v0.0.7
+- Add utility function `extract_name_and_value`
+- Add arg to ranking methods, for variable no. of players
+- Add default value (5) for ranking methods' player count
+- Make ranking methods extract values like level (not just name), using `extract_name_and_value`
+
 ### v0.0.6
 - Migrate all **static** functions to utility module (breaking API change!)
 - Migrate name extraction (from list of player data) to utility module
