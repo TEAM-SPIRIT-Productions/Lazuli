@@ -4,6 +4,7 @@
 - Experimental fix for encoding issues
     - Tested working in CLI
     - To be tested for discord.py integration
+- Refactor DB read-write functions for more *DRY*
 
 ### v0.0.9
 - Fix type errors in meso and EXP setters
