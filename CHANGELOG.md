@@ -1,5 +1,10 @@
 ## CHANGELOG:  
 
+### v0.0.9
+- Fix type errors in meso and EXP setters
+- Fix docstring (faulty refactor) in database module
+- Add toggle option for GMs in ranking methods 
+
 ### v0.0.8
 - Fix faulty refactor causing `get_char_by_name` and `get_account_by_username` to fail.
 - Make `get_db_first_hit` more DRY
