@@ -1,5 +1,10 @@
 ## CHANGELOG:  
 
+### v0.1.0
+- Experimental fix for encoding issues
+    - Tested working in CLI
+    - To be tested for discord.py integration
+
 ### v0.0.9
 - Fix type errors in meso and EXP setters
 - Fix docstring (faulty refactor) in database module
