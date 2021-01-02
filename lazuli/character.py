@@ -264,7 +264,7 @@ class Character:
 
     @meso.setter
     def meso(self, amount):
-        if amount > 10000000000:
+        if int(amount) > 10000000000:
             raise ValueError("You should not try to set meso to more than 10b!")
         else:
             self.set_stat_by_column("meso", amount)
@@ -360,7 +360,7 @@ class Character:
 
     @exp.setter
     def exp(self, exp_amount):
-        if exp_amount > 2147483647:
+        if int(exp_amount) > 2147483647:
             raise ValueError("You should not try to set EXP above 2bil!")
         else:
             self.set_stat_by_column("exp", exp_amount)

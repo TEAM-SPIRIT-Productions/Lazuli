@@ -104,7 +104,7 @@ class Lazuli:
             Defaults to None if the operation fails.
 
         Raises:
-            Generic error on failure - handled by the Character::get_db() method
+            Generic error on failure - handled by the utility.get_db_first_hit() method
         """
         character_stats = utils.get_db_first_hit(
             self._database_config,
@@ -128,7 +128,7 @@ class Lazuli:
             Account object with attributes identical to its corresponding entry in the database
 
         Raises:
-            Generic error on failure - handled by the Character::get_db() method
+            Generic error on failure - handled by the utility.get_db_first_hit() method
         """
         account_info = utils.get_db_first_hit(
             self._database_config,
