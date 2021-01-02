@@ -722,7 +722,7 @@ class Character:
         """Update a character's stats from column name in database
 
         Grabs the database attributes provided through the class constructor.
-        Uses these attributes to attempt a database connection.
+        Uses these attributes to attempt a database connection through utility.write_to_db.
         Attempts to update the field represented by the provided column in characterstats, with the provided value.
         Not recommended to use this alone, as it won't update the character object which this was used from.
 
@@ -734,46 +734,27 @@ class Character:
             A boolean representing whether the operation was successful
 
         Raises:
-            SQL Error 2003: Can't cannect to DB
-            WinError 10060: No response from DB
-            List index out of range: Wrong column name
+            Generic error, handled in utility.write_to_db
         """
-
-        host = self._database_config['host']
-        user = self._database_config['user']
-        password = self._database_config['password']
-        schema = self._database_config['schema']
-        port = self._database_config['port']
-        charset = self._database_config['charset']
-
-        try:
-            database = con.connect(host=host, user=user, password=password, database=schema, port=port, charset=charset)
-
-            cursor = database.cursor(dictionary=True)
-            cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE name = '{self.name}'")
-            database.commit()
+        status = utils.write_to_db(
+            self._database_config,
+            f"UPDATE characters SET {column} = '{value}' WHERE name = '{self.name}'"
+        )
+        if status:
             print(f"Successfully updated {column} value for character: {self.name}.")
             self._stats[column] = value  # Update the stats in the dictionary
-            database.disconnect()
-            return True
-        except Exception as e:
-            print("[ERROR] Error trying to set stats in database.", e)
-            return False
+        return status
 
     def get_stat_by_column(self, column):
-        """Given a column name, return its value in the database
+        """Fetches account attribute by column name
 
         Args:
-            column: string, representing the column in the database from which the value is to be fetched from
+            column: String, representing column name in DB
 
         Returns:
-            string, representing the value in the database associated with the provided column
+            Int or String, representing user attribute queried
 
         Raises:
-            Generic error on failure
+            Generic error on failure, handled by utils.get_stat_by_column
         """
-        try:
-            return self.stats[column]
-        except Exception as e:
-            print("[ERROR] Error trying to get stats from given column.", e)
-            return False
+        return utils.get_stat_by_column(self.stats, column)

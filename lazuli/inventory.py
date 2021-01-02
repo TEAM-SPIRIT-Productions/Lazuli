@@ -124,7 +124,7 @@ class Inventory:
 				# Key value, we set as the bag_index aka position of the item in the inventory.
 			return inv
 		except Exception as e:
-			print(f"[ERROR] Error trying to load inventory type {inv_type}", e)
+			print(f"[ERROR] Error trying to load inventory type {inv_type}\n{e}")
 
 	def init_equip_items(self):
 		return self.load_inv(utils.get_inv_type_by_name("equip"))

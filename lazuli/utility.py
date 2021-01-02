@@ -6,6 +6,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 """
 import mysql.connector as con
 
+# CONSTANTS -------------------------------------------------------------------------------
 # Dictionary that maps inventory tabs' names to their corresponding index in the DB/source
 map_inv_types = {
     'equipped': -1,
@@ -20,6 +21,7 @@ map_inv_types = {
 }
 
 
+# UTILITY FUNCTIONS ------------------------------------------------------------------------
 def get_key(dictionary, val):
     """Generic function to return the key for a given value
 
@@ -45,18 +47,8 @@ def get_key(dictionary, val):
         print("No corresponding key found")
         return False
     except Exception as e:
-        print(f"Unexpected error encountered whilst attempting to perform dictionary search: {e}")
+        print(f"Unexpected error encountered whilst attempting to perform dictionary search:\n{e}")
         return False
-
-
-def get_inv_type_by_name(inv_string):
-    inv_type = map_inv_types.get(inv_string)
-    return inv_type
-
-
-def get_inv_name_by_type(inv_type):  # Never used
-    inv_name = get_key(map_inv_types, inv_type)
-    return inv_name
 
 
 def get_db_all_hits(config, query):
@@ -108,6 +100,70 @@ def get_db_first_hit(config, query):
         Var, representing first result
     """
     return get_db_all_hits(config, query)[0]
+
+
+def get_stat_by_column(data, column):
+    """Fetches dictionary attribute by key (wrapper)
+
+    Args:
+        data: Dictionary, representing account or character attributes
+        column: String, representing column name in DB
+
+    Returns:
+        Int or String, representing user attribute queried
+
+    Raises:
+        Generic error on failure
+    """
+    try:
+        return data[column]
+    except Exception as e:
+        print(f"ERROR: Unable to extract the given column for table users.\n{e}")
+
+
+def write_to_db(config, query):
+    """Performs write operations to DB using the provided DB config and query (generic)
+
+    Args:
+        config: Dictionary, representing database config attributes
+        query: string, representing SQL query
+
+    Returns:
+        A boolean representing whether the operation was successful
+
+    Raises:
+        SQL Error 2003: Can't cannect to DB
+        WinError 10060: No response from DB
+        List index out of range: Wrong column name
+    """
+    try:
+        database = con.connect(
+            host=config['host'],
+            user=config['user'],
+            password=config['password'],
+            database=config['schema'],
+            port=config['port'],
+            charset=config['charset']
+        )
+
+        cursor = database.cursor(dictionary=True)
+        cursor.execute(query)
+        database.commit()
+        database.disconnect()
+        return True
+    except Exception as e:
+        print(f"ERROR: Unable to set stats in database.\n{e}")
+        return False
+
+
+def get_inv_type_by_name(inv_string):
+    inv_type = map_inv_types.get(inv_string)
+    return inv_type
+
+
+def get_inv_name_by_type(inv_type):  # Never used
+    inv_name = get_key(map_inv_types, inv_type)
+    return inv_name
 
 
 def has_item_in_inv_type(inv_type, item_id):

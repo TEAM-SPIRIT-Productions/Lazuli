@@ -6,6 +6,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 """
 import mysql.connector as con
 
+import lazuli.utility as utils
+
 
 class Account:
 	"""Account object; models AzureMS accounts.
@@ -241,22 +243,22 @@ class Account:
 	def get_stat_by_column(self, column):
 		"""Fetches account attribute by column name
 
+		Args:
+			column: String, representing column name in DB
+
 		Returns:
 			Int or String, representing user attribute queried
 
 		Raises:
-			Generic error on failure
+			Generic error on failure, handled by utils.get_stat_by_column
 		"""
-		try:
-			return self.account_info[str(column)]
-		except Exception as e:
-			print("[ERROR] Error trying to obtain the given column for table users.", e)
+		return utils.get_stat_by_column(self.account_info, column)
 
 	def set_stat_by_column(self, column, value):
 		"""Sets a account's attributes by column name in database
 
 		Grabs the database attributes provided through the class constructor.
-		Uses these attributes to attempt a database connection.
+		Uses these attributes to attempt a database connection through utility.write_to_db.
 		Attempts to update the field represented by the provided column in the accounts table, with the provided value.
 		Not recommended to use this alone, as it won't update the account object which this was used from
 
@@ -268,27 +270,13 @@ class Account:
 			A boolean representing whether the operation was successful.
 
 		Raises:
-			SQL Error 2003: Can't cannect to DB
-			WinError 10060: No response from DB
-			List index out of range: Wrong column name
+			Generic error, handled in utility.write_to_db
 		"""
-		host = self._database_config['host']
-		user = self._database_config['user']
-		password = self._database_config['password']
-		schema = self._database_config['schema']
-		port = self._database_config['port']
-		charset = self._database_config['charset']
-
-		try:
-			database = con.connect(host=host, user=user, password=password, database=schema, port=port, charset=charset)
-
-			cursor = database.cursor(dictionary=True)
-			cursor.execute(f"UPDATE accounts SET {column} = '{value}' WHERE id = '{self.account_id}'")
-			database.commit()
+		status = utils.write_to_db(
+			self._database_config,
+			f"UPDATE accounts SET {column} = '{value}' WHERE id = '{self.account_id}'"
+		)
+		if status:
 			print(f"Successfully updated {column} value for user id: {self.account_id}.")
 			self._account_info[column] = value  # Update the stats in the dictionary
-			database.disconnect()
-			return True
-		except Exception as e:
-			print("[ERROR] Error trying to set stats in database.", e)
-			return False
+		return status

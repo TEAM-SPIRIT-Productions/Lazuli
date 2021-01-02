@@ -103,6 +103,43 @@ class Lazuli:
     def charset(self, new_charset):
         self._charset = new_charset
 
+    def get_db_all_hits(self, query):
+        """Fetch all matching data from DB using the provided query
+
+        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.
+        Feeds the config values into utility.get_db_all_hits().
+        Added here for API-use purposes.
+
+        Args:
+            query: String, representing SQL query
+
+        Returns:
+            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes
+
+        Raises:
+            Generic error on failure - handled by the utility.get_db_all_hits() method
+
+        """
+        data = utils.get_db_all_hits(self._database_config, query)
+        return data
+
+    def get_db_first_hit(self, query):
+        """Fetch data (first hit) from DB using the provided query
+
+        This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.
+        Added here for API-use purposes.
+
+        Args:
+            query: String, representing SQL query
+
+        Returns:
+            Var, representing first result
+
+        Raises:
+            Generic error on failure - handled by the utility.get_db_all_hits() method
+        """
+        return self.get_db_all_hits(query)[0]
+
     def get_char_by_name(self, char_name):
         """Create an instance of a Character object from the given character name
 
@@ -117,10 +154,9 @@ class Lazuli:
             Defaults to None if the operation fails.
 
         Raises:
-            Generic error on failure - handled by the utility.get_db_first_hit() method
+            Generic error on failure - handled by the get_db_first_hit() method
         """
-        character_stats = utils.get_db_first_hit(
-            self._database_config,
+        character_stats = self.get_db_first_hit(
             f"SELECT * FROM characters WHERE `name` = '{char_name}'"
         )  # Fetch first result because there should only be one character with that name
 
@@ -141,10 +177,9 @@ class Lazuli:
             Account object with attributes identical to its corresponding entry in the database
 
         Raises:
-            Generic error on failure - handled by the utility.get_db_first_hit() method
+            Generic error on failure - handled by the get_db_first_hit() method
         """
-        account_info = utils.get_db_first_hit(
-            self._database_config,
+        account_info = self.get_db_first_hit(
             f"SELECT * FROM accounts WHERE `name` = '{username}'"
         )  # Fetch first result because there should only be one character with that name
 
@@ -152,7 +187,7 @@ class Lazuli:
         return account
 
     def set_char_stat(self, name, column, value):
-        """Given a character name and column name, change its value in the database
+        """Given a character name and column name, change its value in the database using utility.write_to_db
 
         Args:
             column: string, representing the column in the database
@@ -163,41 +198,15 @@ class Lazuli:
             boolean, representing whether the operation completed successfully
 
         Raises:
-            SQL Error 2003: Can't cannect to DB
-            WinError 10060: No response from DB
-            List index out of range: Wrong column or character name
+            Generic error, handled in utility.write_to_db
         """
-        try:
-            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
-                                   port=self.port, charset=self.charset)
-            cursor = database.cursor(dictionary=True)
-            cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE `name` = '{name}'")
-            database.commit()
-            database.disconnect()
+        status = utils.write_to_db(
+            self._database_config,
+            f"UPDATE characters SET {column} = '{value}' WHERE `name` = '{name}'"
+        )
+        if status:
             print(f"Successfully set {name}'s stats in database.")
-            return True
-        except Exception as e:
-            print("[ERROR] Error trying to update character stats in Database.", e)
-            return False
-
-    def get_db_all_hits(self, query):
-        """Fetch all matching data from DB using the provided query
-
-        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.
-        Feeds the config values into utility.get_db_all_hits().
-
-        Args:
-            query: String, representing SQL query
-
-        Returns:
-            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes
-
-        Raises:
-            Generic error on failure - handled by the utility.get_db_all_hits() method
-
-        """
-        data = utils.get_db_all_hits(self._database_config, query)
-        return data
+        return status
 
     def get_online_list(self):
         """Fetch the list of players currently online
