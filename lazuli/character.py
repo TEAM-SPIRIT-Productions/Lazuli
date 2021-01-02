@@ -376,7 +376,7 @@ class Character:
             raise ValueError("You should not try to increment EXP by more than 2bil!")
         else:
             new_exp = int(self.exp) + amount
-            self.exp = str(new_exp)  # EXP is a String; converting back to String for consistency
+            self.exp = str(new_exp)  # EXP is a String; coverting back to String for consistency
 
     @property
     def strength(self):
@@ -739,14 +739,15 @@ class Character:
             List index out of range: Wrong column name
         """
 
-        host = self._database_config["host"]
-        user = self._database_config["user"]
-        password = self._database_config["password"]
-        schema = self._database_config["schema"]
-        port = self._database_config["port"]
+        host = self._database_config['host']
+        user = self._database_config['user']
+        password = self._database_config['password']
+        schema = self._database_config['schema']
+        port = self._database_config['port']
+        charset = self._database_config['charset']
 
         try:
-            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+            database = con.connect(host=host, user=user, password=password, database=schema, port=port, charset=charset)
 
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE name = '{self.name}'")

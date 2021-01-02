@@ -81,7 +81,8 @@ def get_db_all_hits(config, query):
             user=config['user'],
             password=config['password'],
             database=config['schema'],
-            port=config['port']
+            port=config['port'],
+            charset=config['charset']
         )
         cursor = database.cursor(dictionary=True)
         cursor.execute(query)

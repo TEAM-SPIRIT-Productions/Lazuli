@@ -272,14 +272,15 @@ class Account:
 			WinError 10060: No response from DB
 			List index out of range: Wrong column name
 		"""
-		host = self._database_config["host"]
-		user = self._database_config["user"]
-		password = self._database_config["password"]
-		schema = self._database_config["schema"]
-		port = self._database_config["port"]
+		host = self._database_config['host']
+		user = self._database_config['user']
+		password = self._database_config['password']
+		schema = self._database_config['schema']
+		port = self._database_config['port']
+		charset = self._database_config['charset']
 
 		try:
-			database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+			database = con.connect(host=host, user=user, password=password, database=schema, port=port, charset=charset)
 
 			cursor = database.cursor(dictionary=True)
 			cursor.execute(f"UPDATE accounts SET {column} = '{value}' WHERE id = '{self.account_id}'")

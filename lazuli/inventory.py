@@ -97,7 +97,8 @@ class Inventory:
 				user=self.database_config['user'],
 				password=self.database_config['password'],
 				database=self.database_config['schema'],
-				port=self.database_config['port']
+				port=self.database_config['port'],
+				charset=self.database_config['charset']
 			)
 			cursor = database.cursor(dictionary=True)
 			cursor.execute(

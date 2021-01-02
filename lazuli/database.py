@@ -26,6 +26,8 @@ class Lazuli:
     data from the connected AzureMS-based database.
     Using instance method Lazuli::get_char_by_name("name") will create a Character object (see character.py) instance
     that has attributes identical to the character with IGN "name" in the connected AzureMS-based database.
+    Azure source technically uses Win-949 encoding, but cp949 is not a supported charset by MySQL, so this module
+    shall default to the EucKR charset instead.
 
     Attributes:
         host: Optional; IP address of the database. Defaults to "localhost"
@@ -33,21 +35,24 @@ class Lazuli:
         user: Optional; Username for access to the database. Defaults to "root"
         password: Optional; Password for access to the database. Defaults to ""
         port: Optional; Port with which to access the database. Defaults to 3306
+        charset: Optional; Encoding. Defaults to "euckr"
     """
 
-    def __init__(self, host="localhost", schema="kms_316", user="root", password="", port=3306):
+    def __init__(self, host="localhost", schema="kms_316", user="root", password="", port=3306, charset="euckr"):
         self._host = host
         self._schema = schema
         self._user = user
         self._password = password
         self._port = port
+        self._charset = charset
 
         self._database_config = {
             'host': self.host,
             'user': self.user,
             'password': self.password,
             'schema': self.schema,
-            'port': self.port
+            'port': self.port,
+            'charset': self.charset
         }
 
     @property
@@ -89,6 +94,14 @@ class Lazuli:
     @port.setter
     def port(self, new_port):
         self._port = new_port
+
+    @property
+    def charset(self):
+        return self._charset
+
+    @charset.setter
+    def charset(self, new_charset):
+        self._charset = new_charset
 
     def get_char_by_name(self, char_name):
         """Create an instance of a Character object from the given character name
@@ -156,7 +169,7 @@ class Lazuli:
         """
         try:
             database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,
-                                   port=self.port)
+                                   port=self.port, charset=self.charset)
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"UPDATE characters SET {column} = '{value}' WHERE `name` = '{name}'")
             database.commit()
