@@ -232,73 +232,95 @@ class Lazuli:
         player_data = self.get_online_list()
         return utils.extract_name(player_data)
 
-    def get_level_ranking(self, number_of_players=5):
+    def get_level_ranking(self, number_of_players=5, show_gm=False):
         """Fetches the top ranking players in terms of level
 
         Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
 
         Args:
+            show_gm: (optional): Add GMs (Game Masters) to the list of rankings
             number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
             List of Tuples, representing player names and their corresponding level
         """
-        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `level` DESC LIMIT {number_of_players}")
+
+        prepared_statement = f"SELECT * FROM `characters` ORDER BY `level` DESC LIMIT {number_of_players}" \
+            if show_gm else f"SELECT * FROM `characters` WHERE `gm` < 1 ORDER BY `level` DESC LIMIT {number_of_players}"
+
+        player_data = self.get_db_all_hits(prepared_statement)
         return utils.extract_name_and_value(player_data, "level")
 
-    def get_meso_ranking(self, number_of_players=5):
+    def get_meso_ranking(self, number_of_players=5, show_gm=False):
         """Fetches the top ranking players in terms of mesos
 
         Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
 
         Args:
+            show_gm: (optional): Add GMs (Game Masters) to the list of rankings
             number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
             List of Tuples, representing player names and their corresponding mesos
         """
-        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT {number_of_players}")
+        prepared_statement = f"SELECT * FROM `characters` ORDER BY `meso` DESC LIMIT {number_of_players}" \
+            if show_gm else f"SELECT * FROM `characters` WHERE `gm` < 1 ORDER BY `meso` DESC LIMIT {number_of_players}"
+
+        player_data = self.get_db_all_hits(prepared_statement)
         return utils.extract_name_and_value(player_data, "meso")
 
-    def get_fame_ranking(self, number_of_players=5):
+    def get_fame_ranking(self, number_of_players=5, show_gm=False):
         """Fetches the top ranking players in terms of fame
 
         Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
 
         Args:
+            show_gm: (optional): Add GMs (Game Masters) to the list of rankings
             number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
             List of Tuples, representing player names and their corresponding fame
         """
-        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT {number_of_players}")
+        prepared_statement = f"SELECT * FROM `characters` ORDER BY `fame` DESC LIMIT {number_of_players}" \
+            if show_gm else f"SELECT * FROM `characters` WHERE `gm` < 1 ORDER BY `fame` DESC LIMIT {number_of_players}"
+
+        player_data = self.get_db_all_hits(prepared_statement)
         return utils.extract_name_and_value(player_data, "fame")
 
-    def get_rebirth_ranking(self, number_of_players=5):
+    def get_rebirth_ranking(self, number_of_players=5, show_gm=False):
         """Fetches the top ranking players in terms of rebirths
 
         Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
 
         Args:
+            show_gm: (optional): Add GMs (Game Masters) to the list of rankings
             number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
             List of Tuples, representing player names and their corresponding rebirths
         """
-        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT {number_of_players}")
+        prepared_statement = f"SELECT * FROM `characters` ORDER BY `reborns` DESC LIMIT {number_of_players}" \
+            if show_gm else f"SELECT * FROM `characters` WHERE `gm` < 1 ORDER BY `reborns` DESC LIMIT {number_of_players}"
+
+        player_data = self.get_db_all_hits(prepared_statement)
         return utils.extract_name_and_value(player_data, "reborns")
 
-    def get_rebirth_ranking_by_job_id(self, job_id, number_of_players=5):
+    def get_rebirth_ranking_by_job_id(self, job_id, number_of_players=5, show_gm=False):
         """Fetches the top ranking players of a particular class (specific Job ID), in terms of rebirths
 
         Uses Lazuli::get_db_all_hits to query, and utility.extract_name_and_value to process the data.
 
         Args:
+            show_gm: (optional): Add GMs (Game Masters) to the list of rankings
             job_id: Int, representing specific Job ID to query
             number_of_players (optional): Int, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
         Returns:
             List of Tuples, representing player names and their corresponding rebirths
         """
-        player_data = self.get_db_all_hits(f"SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns` DESC LIMIT {number_of_players}")
+        prepared_statement = f"SELECT * FROM `characters` WHERE `job`={job_id} ORDER BY `reborns`DESC LIMIT {number_of_players}" \
+            if show_gm else f"SELECT * FROM `characters` WHERE `job`={job_id} AND `gm` < 1 ORDER BY" \
+                             f"`reborns` DESC LIMIT {number_of_players}"
+
+        player_data = self.get_db_all_hits(prepared_statement)
         return utils.extract_name_and_value(player_data, "reborns")
