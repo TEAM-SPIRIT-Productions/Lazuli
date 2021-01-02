@@ -670,6 +670,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="kn">import</span> <span class="nn">mysql.connector</span> <span class="kn">as</span> <span class="nn">con</span>
 
+<span class="kn">import</span> <span class="nn">lazuli.utility</span> <span class="kn">as</span> <span class="nn">utils</span>
+
 <span class="k">class</span> <span class="nc">Account</span><span class="p">:</span>
 
     <span class="sd">&quot;&quot;&quot;Account object; models AzureMS accounts.</span>
@@ -1042,23 +1044,21 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="sd">&quot;&quot;&quot;Fetches account attribute by column name</span>
 
+<span class="sd">        Args:</span>
+
+<span class="sd">            column: String, representing column name in DB</span>
+
 <span class="sd">        Returns:</span>
 
 <span class="sd">            Int or String, representing user attribute queried</span>
 
 <span class="sd">        Raises:</span>
 
-<span class="sd">            Generic error on failure</span>
+<span class="sd">            Generic error on failure, handled by utils.get_stat_by_column</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">try</span><span class="p">:</span>
-
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">account_info</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">column</span><span class="p">)]</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to obtain the given column for table users.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account_info</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">set_stat_by_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
@@ -1066,7 +1066,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="sd">        Uses these attributes to attempt a database connection.</span>
+<span class="sd">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
 
 <span class="sd">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
 
@@ -1084,47 +1084,25 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Raises:</span>
 
-<span class="sd">            SQL Error 2003: Can&#39;t cannect to DB</span>
-
-<span class="sd">            WinError 10060: No response from DB</span>
-
-<span class="sd">            List index out of range: Wrong column name</span>
+<span class="sd">            Generic error, handled in utility.write_to_db</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">host</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">write_to_db</span><span class="p">(</span>
 
-        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-        <span class="n">password</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span>
 
-        <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
 
-        <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
-
-        <span class="k">try</span><span class="p">:</span>
-
-            <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
-
-            <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="p">)</span>
-
-            <span class="n">database</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
 
             <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># Update the stats in the dictionary</span>
 
-            <span class="n">database</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
-
-            <span class="k">return</span> <span class="bp">True</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to set stats in database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">status</span>
 </code></pre></div>
 
 </details>
@@ -1524,23 +1502,21 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="w">        </span><span class="ss">&quot;&quot;&quot;Fetches account attribute by column name</span>
 
+<span class="ss">        Args:</span>
+
+<span class="ss">            column: String, representing column name in DB</span>
+
 <span class="ss">        Returns:</span>
 
 <span class="ss">            Int or String, representing user attribute queried</span>
 
 <span class="ss">        Raises:</span>
 
-<span class="ss">            Generic error on failure</span>
+<span class="ss">            Generic error on failure, handled by utils.get_stat_by_column</span>
 
 <span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">account_info</span><span class="o">[</span><span class="n">str(column)</span><span class="o">]</span><span class="w"></span>
-
-<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="ss">&quot;[ERROR] Error trying to obtain the given column for table users.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">account_info</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
@@ -1548,7 +1524,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="ss">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="ss">        Uses these attributes to attempt a database connection.</span>
+<span class="ss">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
 
 <span class="ss">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
 
@@ -1566,47 +1542,25 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="ss">        Raises:</span>
 
-<span class="ss">            SQL Error 2003: Can&#39;t cannect to DB</span>
-
-<span class="ss">            WinError 10060: No response from DB</span>
-
-<span class="ss">            List index out of range: Wrong column name</span>
+<span class="ss">            Generic error, handled in utility.write_to_db</span>
 
 <span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;host&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;user&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;password&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">f</span><span class="ss">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;schema&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">)</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;port&quot;</span><span class="o">]</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="k">connect</span><span class="p">(</span><span class="k">host</span><span class="o">=</span><span class="k">host</span><span class="p">,</span><span class="w"> </span><span class="k">user</span><span class="o">=</span><span class="k">user</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="k">database</span><span class="o">=</span><span class="k">schema</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="nc">cursor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">database</span><span class="p">.</span><span class="nc">cursor</span><span class="p">(</span><span class="k">dictionary</span><span class="o">=</span><span class="k">True</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="nc">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">database</span><span class="p">.</span><span class="k">commit</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"></span>
 
 <span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"></span>
 
-<span class="w">            </span><span class="k">database</span><span class="p">.</span><span class="k">disconnect</span><span class="p">()</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">True</span><span class="w"></span>
-
-<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="ss">&quot;[ERROR] Error trying to set stats in database.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">False</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="w"></span>
 </code></pre></div>
 
 </details>
@@ -1820,13 +1774,19 @@ As "safe" as any website registration or auto register.</p>
 </code></pre></div>
 
 <p>Fetches account attribute by column name</p>
+<p>Args:
+        column: String, representing column name in DB</p>
 <p>Returns:
         Int or String, representing user attribute queried</p>
 <p>Raises:
-        Generic error on failure</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+        Generic error on failure, handled by utils.get_stat_by_column</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="k">column</span><span class="p">):</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Fetches account attribute by column name</span>
+        <span class="ss">&quot;&quot;&quot;Fetches account attribute by column name</span>
+
+<span class="ss">        Args:</span>
+
+<span class="ss">            column: String, representing column name in DB</span>
 
 <span class="ss">        Returns:</span>
 
@@ -1834,17 +1794,11 @@ As "safe" as any website registration or auto register.</p>
 
 <span class="ss">        Raises:</span>
 
-<span class="ss">            Generic error on failure</span>
+<span class="ss">            Generic error on failure, handled by utils.get_stat_by_column</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">account_info</span><span class="o">[</span><span class="n">str(column)</span><span class="o">]</span><span class="w"></span>
-
-<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="ss">&quot;[ERROR] Error trying to obtain the given column for table users.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">account_info</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1931,7 +1885,7 @@ the Account object instance.</p>
 
 <p>Sets a account's attributes by column name in database</p>
 <p>Grabs the database attributes provided through the class constructor.
-Uses these attributes to attempt a database connection.
+Uses these attributes to attempt a database connection through utility.write_to_db.
 Attempts to update the field represented by the provided column in the accounts table, with the provided value.
 Not recommended to use this alone, as it won't update the account object which this was used from</p>
 <p>Args:
@@ -1940,16 +1894,14 @@ Not recommended to use this alone, as it won't update the account object which t
 <p>Returns:
         A boolean representing whether the operation was successful.</p>
 <p>Raises:
-        SQL Error 2003: Can't cannect to DB
-        WinError 10060: No response from DB
-        List index out of range: Wrong column name</p>
+        Generic error, handled in utility.write_to_db</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
 <span class="w">        </span><span class="ss">&quot;&quot;&quot;Sets a account&#39;s attributes by column name in database</span>
 
 <span class="ss">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="ss">        Uses these attributes to attempt a database connection.</span>
+<span class="ss">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
 
 <span class="ss">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
 
@@ -1967,47 +1919,25 @@ Not recommended to use this alone, as it won't update the account object which t
 
 <span class="ss">        Raises:</span>
 
-<span class="ss">            SQL Error 2003: Can&#39;t cannect to DB</span>
-
-<span class="ss">            WinError 10060: No response from DB</span>
-
-<span class="ss">            List index out of range: Wrong column name</span>
+<span class="ss">            Generic error, handled in utility.write_to_db</span>
 
 <span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;host&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;user&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;password&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">f</span><span class="ss">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;schema&quot;</span><span class="o">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">)</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="o">[</span><span class="n">&quot;port&quot;</span><span class="o">]</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="k">connect</span><span class="p">(</span><span class="k">host</span><span class="o">=</span><span class="k">host</span><span class="p">,</span><span class="w"> </span><span class="k">user</span><span class="o">=</span><span class="k">user</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="k">database</span><span class="o">=</span><span class="k">schema</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="nc">cursor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">database</span><span class="p">.</span><span class="nc">cursor</span><span class="p">(</span><span class="k">dictionary</span><span class="o">=</span><span class="k">True</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="nc">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">database</span><span class="p">.</span><span class="k">commit</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"></span>
 
 <span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"></span>
 
-<span class="w">            </span><span class="k">database</span><span class="p">.</span><span class="k">disconnect</span><span class="p">()</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">True</span><span class="w"></span>
-
-<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="ss">&quot;[ERROR] Error trying to set stats in database.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">False</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="w"></span>
 </code></pre></div>
 
 </details>

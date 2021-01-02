@@ -412,8 +412,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_stat_by_column" class="md-nav__link">
+    get_stat_by_column
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#has_item_in_inv_type" class="md-nav__link">
     has_item_in_inv_type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_to_db" class="md-nav__link">
+    write_to_db
   </a>
   
 </li>
@@ -528,8 +542,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_stat_by_column" class="md-nav__link">
+    get_stat_by_column
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#has_item_in_inv_type" class="md-nav__link">
     has_item_in_inv_type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_to_db" class="md-nav__link">
+    write_to_db
   </a>
   
 </li>
@@ -576,6 +604,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="kn">import</span> <span class="nn">mysql.connector</span> <span class="kn">as</span> <span class="nn">con</span>
 
+<span class="c1"># CONSTANTS -------------------------------------------------------------------------------</span>
+
 <span class="c1"># Dictionary that maps inventory tabs&#39; names to their corresponding index in the DB/source</span>
 
 <span class="n">map_inv_types</span> <span class="o">=</span> <span class="p">{</span>
@@ -599,6 +629,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
     <span class="s1">&#39;cash&#39;</span><span class="p">:</span> <span class="mi">5</span>
 
 <span class="p">}</span>
+
+<span class="c1"># UTILITY FUNCTIONS ------------------------------------------------------------------------</span>
 
 <span class="k">def</span> <span class="nf">get_key</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
 
@@ -642,21 +674,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Unexpected error encountered whilst attempting to perform dictionary search: {e}&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Unexpected error encountered whilst attempting to perform dictionary search:</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">False</span>
-
-<span class="k">def</span> <span class="nf">get_inv_type_by_name</span><span class="p">(</span><span class="n">inv_string</span><span class="p">):</span>
-
-    <span class="n">inv_type</span> <span class="o">=</span> <span class="n">map_inv_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">inv_string</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">inv_type</span>
-
-<span class="k">def</span> <span class="nf">get_inv_name_by_type</span><span class="p">(</span><span class="n">inv_type</span><span class="p">):</span>  <span class="c1"># Never used</span>
-
-    <span class="n">inv_name</span> <span class="o">=</span> <span class="n">get_key</span><span class="p">(</span><span class="n">map_inv_types</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">inv_name</span>
 
 <span class="k">def</span> <span class="nf">get_db_all_hits</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
@@ -696,7 +716,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="n">database</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
 
-            <span class="n">port</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+
+            <span class="n">charset</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
 
         <span class="p">)</span>
 
@@ -733,6 +755,104 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_stat_by_column</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Fetches dictionary attribute by key (wrapper)</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        data: Dictionary, representing account or character attributes</span>
+
+<span class="sd">        column: String, representing column name in DB</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">        Int or String, representing user attribute queried</span>
+
+<span class="sd">    Raises:</span>
+
+<span class="sd">        Generic error on failure</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to extract the given column for table users.</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">write_to_db</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Performs write operations to DB using the provided DB config and query (generic)</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        config: Dictionary, representing database config attributes</span>
+
+<span class="sd">        query: string, representing SQL query</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">        A boolean representing whether the operation was successful</span>
+
+<span class="sd">    Raises:</span>
+
+<span class="sd">        SQL Error 2003: Can&#39;t cannect to DB</span>
+
+<span class="sd">        WinError 10060: No response from DB</span>
+
+<span class="sd">        List index out of range: Wrong column name</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+
+            <span class="n">host</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
+
+            <span class="n">user</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
+
+            <span class="n">password</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
+
+            <span class="n">database</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
+
+            <span class="n">port</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+
+            <span class="n">charset</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
+
+        <span class="p">)</span>
+
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="n">database</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="n">database</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to set stats in database.</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">get_inv_type_by_name</span><span class="p">(</span><span class="n">inv_string</span><span class="p">):</span>
+
+    <span class="n">inv_type</span> <span class="o">=</span> <span class="n">map_inv_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">inv_string</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inv_type</span>
+
+<span class="k">def</span> <span class="nf">get_inv_name_by_type</span><span class="p">(</span><span class="n">inv_type</span><span class="p">):</span>  <span class="c1"># Never used</span>
+
+    <span class="n">inv_name</span> <span class="o">=</span> <span class="n">get_key</span><span class="p">(</span><span class="n">map_inv_types</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inv_name</span>
 
 <span class="k">def</span> <span class="nf">has_item_in_inv_type</span><span class="p">(</span><span class="n">inv_type</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
@@ -989,7 +1109,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="k">database</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
 
-            <span class="n">port</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+
+            <span class="n">charset</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
 
         <span class="p">)</span>
 
@@ -1134,9 +1256,54 @@ Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is 
 
     <span class="k">except</span> <span class="k">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Unexpected error encountered whilst attempting to perform dictionary search: {e}&quot;</span><span class="p">)</span>
+        <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Unexpected error encountered whilst attempting to perform dictionary search:\n{e}&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">False</span>
+</code></pre></div>
+
+</details>
+<h3 id="get_stat_by_column">get_stat_by_column</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_stat_by_column</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">column</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Fetches dictionary attribute by key (wrapper)</p>
+<p>Args:
+    data: Dictionary, representing account or character attributes
+    column: String, representing column name in DB</p>
+<p>Returns:
+    Int or String, representing user attribute queried</p>
+<p>Raises:
+    Generic error on failure</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;Fetches dictionary attribute by key (wrapper)</span>
+
+<span class="ss">    Args:</span>
+
+<span class="ss">        data: Dictionary, representing account or character attributes</span>
+
+<span class="ss">        column: String, representing column name in DB</span>
+
+<span class="ss">    Returns:</span>
+
+<span class="ss">        Int or String, representing user attribute queried</span>
+
+<span class="ss">    Raises:</span>
+
+<span class="ss">        Generic error on failure</span>
+
+<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="w"></span>
+
+<span class="w">    </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Unable to extract the given column for table users.\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 </details>
@@ -1188,6 +1355,83 @@ the provided item ID can be found as a value.</p>
 <span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">True</span><span class="w"></span>
 
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">False</span><span class="w"></span>
+</code></pre></div>
+
+</details>
+<h3 id="write_to_db">write_to_db</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write_to_db</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">,</span>
+    <span class="n">query</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Performs write operations to DB using the provided DB config and query (generic)</p>
+<p>Args:
+    config: Dictionary, representing database config attributes
+    query: string, representing SQL query</p>
+<p>Returns:
+    A boolean representing whether the operation was successful</p>
+<p>Raises:
+    SQL Error 2003: Can't cannect to DB
+    WinError 10060: No response from DB
+    List index out of range: Wrong column name</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">write_to_db</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+    <span class="ss">&quot;&quot;&quot;Performs write operations to DB using the provided DB config and query (generic)</span>
+
+<span class="ss">    Args:</span>
+
+<span class="ss">        config: Dictionary, representing database config attributes</span>
+
+<span class="ss">        query: string, representing SQL query</span>
+
+<span class="ss">    Returns:</span>
+
+<span class="ss">        A boolean representing whether the operation was successful</span>
+
+<span class="ss">    Raises:</span>
+
+<span class="ss">        SQL Error 2003: Can&#39;t cannect to DB</span>
+
+<span class="ss">        WinError 10060: No response from DB</span>
+
+<span class="ss">        List index out of range: Wrong column name</span>
+
+<span class="ss">    &quot;&quot;&quot;</span>
+
+    <span class="n">try</span><span class="p">:</span>
+
+        <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="k">connect</span><span class="p">(</span>
+
+            <span class="k">host</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
+
+            <span class="k">user</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
+
+            <span class="n">password</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
+
+            <span class="k">database</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
+
+            <span class="n">port</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+
+            <span class="n">charset</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
+
+        <span class="p">)</span>
+
+        <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="k">dictionary</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+
+        <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="k">database</span><span class="p">.</span><span class="k">commit</span><span class="p">()</span>
+
+        <span class="k">database</span><span class="p">.</span><span class="k">disconnect</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="k">True</span>
+
+    <span class="k">except</span> <span class="k">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+        <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Unable to set stats in database.\n{e}&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">False</span>
 </code></pre></div>
 
 </details>

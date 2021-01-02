@@ -364,6 +364,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_db_first_hit" class="md-nav__link">
+    get_db_first_hit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_fame_ranking" class="md-nav__link">
     get_fame_ranking
   </a>
@@ -570,6 +577,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_db_first_hit" class="md-nav__link">
+    get_db_first_hit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_fame_ranking" class="md-nav__link">
     get_fame_ranking
   </a>
@@ -726,6 +740,10 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">    that has attributes identical to the character with IGN &quot;name&quot; in the connected AzureMS-based database.</span>
 
+<span class="sd">    Azure source technically uses Win-949 encoding, but cp949 is not a supported charset by MySQL, so this module</span>
+
+<span class="sd">    shall default to the EucKR charset instead.</span>
+
 <span class="sd">    Attributes:</span>
 
 <span class="sd">        host: Optional; IP address of the database. Defaults to &quot;localhost&quot;</span>
@@ -738,9 +756,11 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">        port: Optional; Port with which to access the database. Defaults to 3306</span>
 
+<span class="sd">        charset: Optional; Encoding. Defaults to &quot;euckr&quot;</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s2">&quot;kms_316&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s2">&quot;kms_316&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s2">&quot;euckr&quot;</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
 
@@ -752,6 +772,8 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">charset</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="p">{</span>
 
             <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
@@ -762,7 +784,9 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
             <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
 
-            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+
+            <span class="s1">&#39;charset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">charset</span>
 
         <span class="p">}</span>
 
@@ -826,6 +850,70 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">new_port</span>
 
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span>
+
+    <span class="nd">@charset.setter</span>
+
+    <span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_charset</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">new_charset</span>
+
+    <span class="k">def</span> <span class="nf">get_db_all_hits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetch all matching data from DB using the provided query</span>
+
+<span class="sd">        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.</span>
+
+<span class="sd">        Feeds the config values into utility.get_db_all_hits().</span>
+
+<span class="sd">        Added here for API-use purposes.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            query: String, representing SQL query</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">get_db_first_hit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetch data (first hit) from DB using the provided query</span>
+
+<span class="sd">        This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.</span>
+
+<span class="sd">        Added here for API-use purposes.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            query: String, representing SQL query</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            Var, representing first result</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">query</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
     <span class="k">def</span> <span class="nf">get_char_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char_name</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;Create an instance of a Character object from the given character name</span>
@@ -846,13 +934,11 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">        Raises:</span>
 
-<span class="sd">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="sd">            Generic error on failure - handled by the get_db_first_hit() method</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+        <span class="n">character_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM characters WHERE `name` = &#39;{char_name}&#39;&quot;</span>
 
@@ -882,13 +968,11 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">        Raises:</span>
 
-<span class="sd">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="sd">            Generic error on failure - handled by the get_db_first_hit() method</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+        <span class="n">account_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE `name` = &#39;{username}&#39;&quot;</span>
 
@@ -900,7 +984,7 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
     <span class="k">def</span> <span class="nf">set_char_stat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Given a character name and column name, change its value in the database</span>
+        <span class="sd">&quot;&quot;&quot;Given a character name and column name, change its value in the database using utility.write_to_db</span>
 
 <span class="sd">        Args:</span>
 
@@ -916,63 +1000,23 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
 <span class="sd">        Raises:</span>
 
-<span class="sd">            SQL Error 2003: Can&#39;t cannect to DB</span>
-
-<span class="sd">            WinError 10060: No response from DB</span>
-
-<span class="sd">            List index out of range: Wrong column or character name</span>
+<span class="sd">            Generic error, handled in utility.write_to_db</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">try</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">write_to_db</span><span class="p">(</span>
 
-            <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-                                   <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{name}&#39;&quot;</span>
 
-            <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="p">)</span>
 
-            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{name}&#39;&quot;</span><span class="p">)</span>
-
-            <span class="n">database</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-
-            <span class="n">database</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
 
             <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully set {name}&#39;s stats in database.&quot;</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="bp">True</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to update character stats in Database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="bp">False</span>
-
-    <span class="k">def</span> <span class="nf">get_db_all_hits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot;Fetch all matching data from DB using the provided query</span>
-
-<span class="sd">        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.</span>
-
-<span class="sd">        Feeds the config values into utility.get_db_all_hits().</span>
-
-<span class="sd">        Args:</span>
-
-<span class="sd">            query: String, representing SQL query</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</span>
-
-<span class="sd">        Raises:</span>
-
-<span class="sd">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">data</span>
+        <span class="k">return</span> <span class="n">status</span>
 
     <span class="k">def</span> <span class="nf">get_online_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -1185,7 +1229,8 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
     <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;kms_316&#39;</span><span class="p">,</span>
     <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span>
     <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">port</span><span class="o">=</span><span class="mi">3306</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+    <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;euckr&#39;</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -1193,13 +1238,16 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 <p>Use this class to create instances of AzureMS characters, or inventories, complete with their respective
 data from the connected AzureMS-based database.
 Using instance method Lazuli::get_char_by_name("name") will create a Character object (see character.py) instance
-that has attributes identical to the character with IGN "name" in the connected AzureMS-based database.</p>
+that has attributes identical to the character with IGN "name" in the connected AzureMS-based database.
+Azure source technically uses Win-949 encoding, but cp949 is not a supported charset by MySQL, so this module
+shall default to the EucKR charset instead.</p>
 <p>Attributes:
     host: Optional; IP address of the database. Defaults to "localhost"
     schema: Optional; Name of the schema of the database. Defaults to "kms_316`"
     user: Optional; Username for access to the database. Defaults to "root"
     password: Optional; Password for access to the database. Defaults to ""
-    port: Optional; Port with which to access the database. Defaults to 3306</p>
+    port: Optional; Port with which to access the database. Defaults to 3306
+    charset: Optional; Encoding. Defaults to "euckr"</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="n">Lazuli</span><span class="o">:</span>
 
     <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Database object; models the AzureMS DB.</span>
@@ -1211,6 +1259,10 @@ that has attributes identical to the character with IGN "name" in the connected 
 <span class="s2">    Using instance method Lazuli::get_char_by_name(&quot;</span><span class="k">name</span><span class="s2">&quot;) will create a Character object (see character.py) instance</span>
 
 <span class="s2">    that has attributes identical to the character with IGN &quot;</span><span class="k">name</span><span class="s2">&quot; in the connected AzureMS-based database.</span>
+
+<span class="s2">    Azure source technically uses Win-949 encoding, but cp949 is not a supported charset by MySQL, so this module</span>
+
+<span class="s2">    shall default to the EucKR charset instead.</span>
 
 <span class="s2">    Attributes:</span>
 
@@ -1224,9 +1276,11 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        port: Optional; Port with which to access the database. Defaults to 3306</span>
 
+<span class="n n-Quoted">        charset: Optional; Encoding. Defaults to &quot;euckr&quot;</span>
+
 <span class="n n-Quoted">    &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">    def __init__(self, host=&quot;localhost&quot;, schema=&quot;kms_316&quot;, user=&quot;root&quot;, password=&quot;&quot;, port=3306):</span>
+<span class="n n-Quoted">    def __init__(self, host=&quot;localhost&quot;, schema=&quot;kms_316&quot;, user=&quot;root&quot;, password=&quot;&quot;, port=3306, charset=&quot;euckr&quot;):</span>
 
 <span class="n n-Quoted">        self._host = host</span>
 
@@ -1238,6 +1292,8 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        self._port = port</span>
 
+<span class="n n-Quoted">        self._charset = charset</span>
+
 <span class="n n-Quoted">        self._database_config = {</span>
 
 <span class="n n-Quoted">            &#39;host&#39;: self.host,</span>
@@ -1248,7 +1304,9 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">            &#39;schema&#39;: self.schema,</span>
 
-<span class="n n-Quoted">            &#39;port&#39;: self.port</span>
+<span class="n n-Quoted">            &#39;port&#39;: self.port,</span>
+
+<span class="n n-Quoted">            &#39;charset&#39;: self.charset</span>
 
 <span class="n n-Quoted">        }</span>
 
@@ -1312,6 +1370,70 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        self._port = new_port</span>
 
+<span class="n n-Quoted">    @property</span>
+
+<span class="n n-Quoted">    def charset(self):</span>
+
+<span class="n n-Quoted">        return self._charset</span>
+
+<span class="n n-Quoted">    @charset.setter</span>
+
+<span class="n n-Quoted">    def charset(self, new_charset):</span>
+
+<span class="n n-Quoted">        self._charset = new_charset</span>
+
+<span class="n n-Quoted">    def get_db_all_hits(self, query):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetch all matching data from DB using the provided query</span>
+
+<span class="n n-Quoted">        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.</span>
+
+<span class="n n-Quoted">        Feeds the config values into utility.get_db_all_hits().</span>
+
+<span class="n n-Quoted">        Added here for API-use purposes.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            query: String, representing SQL query</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        data = utils.get_db_all_hits(self._database_config, query)</span>
+
+<span class="n n-Quoted">        return data</span>
+
+<span class="n n-Quoted">    def get_db_first_hit(self, query):</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;Fetch data (first hit) from DB using the provided query</span>
+
+<span class="n n-Quoted">        This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.</span>
+
+<span class="n n-Quoted">        Added here for API-use purposes.</span>
+
+<span class="n n-Quoted">        Args:</span>
+
+<span class="n n-Quoted">            query: String, representing SQL query</span>
+
+<span class="n n-Quoted">        Returns:</span>
+
+<span class="n n-Quoted">            Var, representing first result</span>
+
+<span class="n n-Quoted">        Raises:</span>
+
+<span class="n n-Quoted">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
+
+<span class="n n-Quoted">        &quot;&quot;&quot;</span>
+
+<span class="n n-Quoted">        return self.get_db_all_hits(query)[0]</span>
+
 <span class="n n-Quoted">    def get_char_by_name(self, char_name):</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;Create an instance of a Character object from the given character name</span>
@@ -1332,13 +1454,11 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        Raises:</span>
 
-<span class="n n-Quoted">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="n n-Quoted">            Generic error on failure - handled by the get_db_first_hit() method</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        character_stats = utils.get_db_first_hit(</span>
-
-<span class="n n-Quoted">            self._database_config,</span>
+<span class="n n-Quoted">        character_stats = self.get_db_first_hit(</span>
 
 <span class="n n-Quoted">            f&quot;SELECT * FROM characters WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{char_name}&#39;&quot;</span>
 
@@ -1368,13 +1488,11 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        Raises:</span>
 
-<span class="n n-Quoted">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="n n-Quoted">            Generic error on failure - handled by the get_db_first_hit() method</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        account_info = utils.get_db_first_hit(</span>
-
-<span class="n n-Quoted">            self._database_config,</span>
+<span class="n n-Quoted">        account_info = self.get_db_first_hit(</span>
 
 <span class="n n-Quoted">            f&quot;SELECT * FROM accounts WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{username}&#39;&quot;</span>
 
@@ -1386,7 +1504,7 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">    def set_char_stat(self, name, column, value):</span>
 
-<span class="n n-Quoted">        &quot;&quot;&quot;Given a character name and column name, change its value in the database</span>
+<span class="n n-Quoted">        &quot;&quot;&quot;Given a character name and column name, change its value in the database using utility.write_to_db</span>
 
 <span class="n n-Quoted">        Args:</span>
 
@@ -1402,63 +1520,23 @@ that has attributes identical to the character with IGN "name" in the connected 
 
 <span class="n n-Quoted">        Raises:</span>
 
-<span class="n n-Quoted">            SQL Error 2003: Can&#39;t cannect to DB</span>
-
-<span class="n n-Quoted">            WinError 10060: No response from DB</span>
-
-<span class="n n-Quoted">            List index out of range: Wrong column or character name</span>
+<span class="n n-Quoted">            Generic error, handled in utility.write_to_db</span>
 
 <span class="n n-Quoted">        &quot;&quot;&quot;</span>
 
-<span class="n n-Quoted">        try:</span>
+<span class="n n-Quoted">        status = utils.write_to_db(</span>
 
-<span class="n n-Quoted">            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema,</span>
+<span class="n n-Quoted">            self._database_config,</span>
 
-<span class="n n-Quoted">                                   port=self.port)</span>
+<span class="n n-Quoted">            f&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{name}&#39;&quot;</span>
 
-<span class="n n-Quoted">            cursor = database.cursor(dictionary=True)</span>
+<span class="n n-Quoted">        )</span>
 
-<span class="n n-Quoted">            cursor.execute(f&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `</span><span class="k">name</span><span class="n n-Quoted">` = &#39;{name}&#39;&quot;)</span>
-
-<span class="n n-Quoted">            database.commit()</span>
-
-<span class="n n-Quoted">            database.disconnect()</span>
+<span class="n n-Quoted">        if status:</span>
 
 <span class="n n-Quoted">            print(f&quot;Successfully set {name}&#39;s stats in database.&quot;)</span>
 
-<span class="n n-Quoted">            return True</span>
-
-<span class="n n-Quoted">        except Exception as e:</span>
-
-<span class="n n-Quoted">            print(&quot;[ERROR] Error trying to update character stats in Database.&quot;, e)</span>
-
-<span class="n n-Quoted">            return False</span>
-
-<span class="n n-Quoted">    def get_db_all_hits(self, query):</span>
-
-<span class="n n-Quoted">        &quot;&quot;&quot;Fetch all matching data from DB using the provided query</span>
-
-<span class="n n-Quoted">        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.</span>
-
-<span class="n n-Quoted">        Feeds the config values into utility.get_db_all_hits().</span>
-
-<span class="n n-Quoted">        Args:</span>
-
-<span class="n n-Quoted">            query: String, representing SQL query</span>
-
-<span class="n n-Quoted">        Returns:</span>
-
-<span class="n n-Quoted">            List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</span>
-
-<span class="n n-Quoted">        Raises:</span>
-
-<span class="n n-Quoted">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
-
-<span class="n n-Quoted">        &quot;&quot;&quot;</span>
-
-<span class="n n-Quoted">        data = utils.get_db_all_hits(self._database_config, query)</span>
-
-<span class="n n-Quoted">        return data</span>
+<span class="n n-Quoted">        return status</span>
 
 <span class="n n-Quoted">    def get_online_list(self):</span>
 
@@ -1666,6 +1744,9 @@ that has attributes identical to the character with IGN "name" in the connected 
 </details>
 <hr />
 <h4 id="instance-variables">Instance variables</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">charset</span>
+</code></pre></div>
+
 <div class="codehilite"><pre><span></span><code><span class="n">host</span>
 </code></pre></div>
 
@@ -1698,7 +1779,7 @@ Useful for getting account information from accounts with no characters.</p>
 <p>Returns:
     Account object with attributes identical to its corresponding entry in the database</p>
 <p>Raises:
-    Generic error on failure - handled by the utility.get_db_first_hit() method</p>
+    Generic error on failure - handled by the get_db_first_hit() method</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_account_by_username</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span><span class="o">:</span>
 
         <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a username (NOT IGN), create a new account object instance</span>
@@ -1719,13 +1800,11 @@ Useful for getting account information from accounts with no characters.</p>
 
 <span class="s2">        Raises:</span>
 
-<span class="s2">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s2">            Generic error on failure - handled by the get_db_first_hit() method</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
-
-            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
+        <span class="n">account_info</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE `name` = &#39;{username}&#39;&quot;</span>
 
@@ -1753,7 +1832,7 @@ character data and database attributes from the connected database.</p>
     Character object instantiated with corresponding data from the connected database.
     Defaults to None if the operation fails.</p>
 <p>Raises:
-    Generic error on failure - handled by the utility.get_db_first_hit() method</p>
+    Generic error on failure - handled by the get_db_first_hit() method</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_char_by_name</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">char_name</span><span class="p">)</span><span class="o">:</span>
 
         <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Create an instance of a Character object from the given character name</span>
@@ -1774,13 +1853,11 @@ character data and database attributes from the connected database.</p>
 
 <span class="s2">        Raises:</span>
 
-<span class="s2">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s2">            Generic error on failure - handled by the get_db_first_hit() method</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
-
-            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
+        <span class="n">character_stats</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM characters WHERE `name` = &#39;{char_name}&#39;&quot;</span>
 
@@ -1801,7 +1878,8 @@ character data and database attributes from the connected database.</p>
 
 <p>Fetch all matching data from DB using the provided query</p>
 <p>Wrapper function. Uses the DB config from Lazuli attributes for DB connection.
-Feeds the config values into utility.get_db_all_hits().</p>
+Feeds the config values into utility.get_db_all_hits().
+Added here for API-use purposes.</p>
 <p>Args:
     query: String, representing SQL query</p>
 <p>Returns:
@@ -1815,6 +1893,8 @@ Feeds the config values into utility.get_db_all_hits().</p>
 <span class="ss">        Wrapper function. Uses the DB config from Lazuli attributes for DB connection.</span>
 
 <span class="ss">        Feeds the config values into utility.get_db_all_hits().</span>
+
+<span class="ss">        Added here for API-use purposes.</span>
 
 <span class="ss">        Args:</span>
 
@@ -1833,6 +1913,48 @@ Feeds the config values into utility.get_db_all_hits().</p>
         <span class="k">data</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">data</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_db_first_hit">get_db_first_hit</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_db_first_hit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">query</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Fetch data (first hit) from DB using the provided query</p>
+<p>This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.
+Added here for API-use purposes.</p>
+<p>Args:
+    query: String, representing SQL query</p>
+<p>Returns:
+    Var, representing first result</p>
+<p>Raises:
+    Generic error on failure - handled by the utility.get_db_all_hits() method</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_db_first_hit</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+        <span class="ss">&quot;&quot;&quot;Fetch data (first hit) from DB using the provided query</span>
+
+<span class="ss">        This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.</span>
+
+<span class="ss">        Added here for API-use purposes.</span>
+
+<span class="ss">        Args:</span>
+
+<span class="ss">            query: String, representing SQL query</span>
+
+<span class="ss">        Returns:</span>
+
+<span class="ss">            Var, representing first result</span>
+
+<span class="ss">        Raises:</span>
+
+<span class="ss">            Generic error on failure - handled by the utility.get_db_all_hits() method</span>
+
+<span class="ss">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="k">self</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">query</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div>
 
 </details>
@@ -2180,7 +2302,7 @@ Extract the usernames from the said list.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Given a character name and column name, change its value in the database</p>
+<p>Given a character name and column name, change its value in the database using utility.write_to_db</p>
 <p>Args:
     column: string, representing the column in the database
     name: string, representing the character name in the database
@@ -2188,12 +2310,10 @@ Extract the usernames from the said list.</p>
 <p>Returns:
     boolean, representing whether the operation completed successfully</p>
 <p>Raises:
-    SQL Error 2003: Can't cannect to DB
-    WinError 10060: No response from DB
-    List index out of range: Wrong column or character name</p>
+    Generic error, handled in utility.write_to_db</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="k">set</span><span class="n">_char_stat</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">name</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a character name and column name, change its value in the database</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a character name and column name, change its value in the database using utility.write_to_db</span>
 
 <span class="s2">        Args:</span>
 
@@ -2209,37 +2329,23 @@ Extract the usernames from the said list.</p>
 
 <span class="s2">        Raises:</span>
 
-<span class="s2">            SQL Error 2003: Can&#39;t cannect to DB</span>
-
-<span class="s2">            WinError 10060: No response from DB</span>
-
-<span class="s2">            List index out of range: Wrong column or character name</span>
+<span class="s2">            Generic error, handled in utility.write_to_db</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">try</span><span class="o">:</span>
+        <span class="k">status</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span>
 
-            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">host</span><span class="p">,</span> <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">user</span><span class="p">,</span> <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">password</span><span class="p">,</span> <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">schema</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-                                   <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="k">port</span><span class="p">)</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{name}&#39;&quot;</span>
 
-            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
+        <span class="p">)</span>
 
-            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{name}&#39;&quot;</span><span class="p">)</span>
-
-            <span class="k">database</span><span class="p">.</span><span class="k">commit</span><span class="p">()</span>
-
-            <span class="k">database</span><span class="p">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
 
             <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully set {name}&#39;s stats in database.&quot;</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="no">True</span>
-
-        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
-
-            <span class="n">print</span><span class="p">(</span><span class="s2">&quot;[ERROR] Error trying to update character stats in Database.&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="no">False</span>
+        <span class="k">return</span> <span class="k">status</span>
 </code></pre></div>
 
 </details>

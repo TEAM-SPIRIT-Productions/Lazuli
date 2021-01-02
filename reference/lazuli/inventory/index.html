@@ -842,7 +842,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
                 <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
 
-                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]</span>
+                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+
+                <span class="n">charset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
 
             <span class="p">)</span>
 
@@ -890,7 +892,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">init_equip_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -1166,7 +1168,9 @@ this module offers NO inventory-write operations (aka setters).</p>
 
 <span class="w">                </span><span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;schema&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
 
-<span class="w">                </span><span class="n">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;port&#39;</span><span class="o">]</span><span class="w"></span>
+<span class="w">                </span><span class="n">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;port&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+
+<span class="w">                </span><span class="n">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;charset&#39;</span><span class="o">]</span><span class="w"></span>
 
 <span class="w">            </span><span class="p">)</span><span class="w"></span>
 
@@ -1214,7 +1218,7 @@ this module offers NO inventory-write operations (aka setters).</p>
 
 <span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[ERROR] Error trying to load inventory type {inv_type}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[ERROR] Error trying to load inventory type {inv_type}\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_equip_items</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
@@ -1631,7 +1635,9 @@ Returns:
 
 <span class="w">                </span><span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;schema&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
 
-<span class="w">                </span><span class="n">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;port&#39;</span><span class="o">]</span><span class="w"></span>
+<span class="w">                </span><span class="n">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;port&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+
+<span class="w">                </span><span class="n">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;charset&#39;</span><span class="o">]</span><span class="w"></span>
 
 <span class="w">            </span><span class="p">)</span><span class="w"></span>
 
@@ -1679,7 +1685,7 @@ Returns:
 
 <span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[ERROR] Error trying to load inventory type {inv_type}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[ERROR] Error trying to load inventory type {inv_type}\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 </details>
