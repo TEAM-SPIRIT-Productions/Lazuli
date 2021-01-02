@@ -1362,7 +1362,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">meso</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">10000000000</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">amount</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10000000000</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set meso to more than 10b!&quot;</span><span class="p">)</span>
 
@@ -1518,7 +1518,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">exp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">exp_amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">exp_amount</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">exp_amount</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set EXP above 2bil!&quot;</span><span class="p">)</span>
 
@@ -2671,7 +2671,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">meso</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">10000000000</span>:
+        <span class="k">if</span> <span class="n">int</span>(<span class="n">amount</span>) &gt; <span class="mi">10000000000</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set meso to more than 10b!&quot;</span>)
 
@@ -2827,7 +2827,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="nb">exp</span>(<span class="nb">self</span>, <span class="n">exp_amount</span>):
 
-        <span class="k">if</span> <span class="n">exp_amount</span> &gt; <span class="mi">2147483647</span>:
+        <span class="k">if</span> <span class="n">int</span>(<span class="n">exp_amount</span>) &gt; <span class="mi">2147483647</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set EXP above 2bil!&quot;</span>)
 
