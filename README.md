@@ -1,7 +1,7 @@
 # Lazuli
 ![](https://i.imgur.com/o25Tqra.png)  
-[![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=month&units=international_system&left_color=black&right_color=blue&left_text=Monthly%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=week&units=international_system&left_color=black&right_color=blue&left_text=Weekly%20Downloads)](https://pepy.tech/project/lazuli)  
-*Stats courtesy of PePy*  
+[![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=month&units=international_system&left_color=black&right_color=blue&left_text=Monthly%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=week&units=international_system&left_color=black&right_color=blue&left_text=Weekly%20Downloads)](https://pepy.tech/project/lazuli) [![HitCount](http://hits.dwyl.com/TEAM-SPIRIT-Productions/Lazuli.svg)](http://hits.dwyl.com/TEAM-SPIRIT-Productions/Lazuli)  
+*Stats courtesy of PePy and [dwyl](https://github.com/dwyl)*  
 Lazuli is a pip-compatible, Python-based package for interacting with [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
 Lazuli is inspired by and based on the [SwordieDB](https://github.com/Bratah123/SwordieDB) project.  
 
