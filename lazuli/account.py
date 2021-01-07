@@ -140,7 +140,7 @@ class Account:
 
 	@property
 	def maple_points(self):
-		return self._nx
+		return self._maple_points
 
 	@maple_points.setter
 	def maple_points(self, value):
