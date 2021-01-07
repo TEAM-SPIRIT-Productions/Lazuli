@@ -37,13 +37,13 @@ def test_fetch_char_name(char, expected):
 @pytest.mark.parametrize("expected", [900001])
 def test_fetch_char_id(char, expected):
 	assert char.character_id == expected, \
-		f"Critical Error: Character ID test failed! Name: {char.character_id}; Type: {type(char.character_id)}"
+		f"Critical Error: Character ID test failed! ID: {char.character_id}; Type: {type(char.character_id)}"
 
 
 @pytest.mark.parametrize("expected", [90001])
 def test_fetch_acc_id(char, expected):
 	assert char.account_id == expected, \
-		f"Critical Error: Account ID test failed! Name: {char.account_id}; Type: {type(char.account_id)}"
+		f"Critical Error: Account ID test failed! ID: {char.account_id}; Type: {type(char.account_id)}"
 
 
 @pytest.mark.parametrize("expected", [0])
