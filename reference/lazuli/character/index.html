@@ -920,8 +920,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">&quot;&quot;&quot;</span>
 
-<span class="s s-Atom">import</span> <span class="s s-Atom">mysql</span><span class="p">.</span><span class="s s-Atom">connector</span> <span class="s s-Atom">as</span> <span class="s s-Atom">con</span>
-
 <span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span> <span class="s s-Atom">import</span> <span class="nv">JOBS</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span><span class="p">.</span><span class="s s-Atom">inventory</span> <span class="s s-Atom">import</span> <span class="nv">Inventory</span>
@@ -1362,7 +1360,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">meso</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">amount</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10000000000</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">10000000000</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set meso to more than 10b!&quot;</span><span class="p">)</span>
 
@@ -1390,7 +1388,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="nn">else</span><span class="p">:</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">meso</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="s s-Atom">new_amount</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">money</span> <span class="o">is</span> <span class="s s-Atom">a</span> <span class="nv">String</span><span class="p">;</span> <span class="s s-Atom">converting</span> <span class="s s-Atom">back</span> <span class="s s-Atom">to</span> <span class="nv">String</span> <span class="s s-Atom">for</span> <span class="s s-Atom">consistency</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">meso</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1490,7 +1488,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">skin</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;skin&quot;</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">check</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;skincolor&quot;</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">check</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">skin</span> <span class="o">=</span> <span class="s s-Atom">skin_id</span>
 
@@ -1518,7 +1516,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">exp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">exp_amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">exp_amount</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">exp_amount</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set EXP above 2bil!&quot;</span><span class="p">)</span>
 
@@ -1546,7 +1544,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="s s-Atom">new_exp</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="s s-Atom">new_exp</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">EXP</span> <span class="o">is</span> <span class="s s-Atom">a</span> <span class="nv">String</span><span class="p">;</span> <span class="s s-Atom">coverting</span> <span class="s s-Atom">back</span> <span class="s s-Atom">to</span> <span class="nv">String</span> <span class="s s-Atom">for</span> <span class="s s-Atom">consistency</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span> <span class="o">=</span> <span class="s s-Atom">new_exp</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -2032,7 +2030,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;honour&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;innerExp&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">honour</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
@@ -2056,7 +2054,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;mute&quot;</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chatban&quot;</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">mute</span> <span class="o">=</span> <span class="s s-Atom">status</span>
 
@@ -2641,7 +2639,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">meso</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="k">if</span> <span class="n">int</span>(<span class="n">amount</span>) &gt; <span class="mi">10000000000</span>:
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">10000000000</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set meso to more than 10b!&quot;</span>)
 
@@ -2669,7 +2667,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">else:</span>
 
-            <span class="nb">self</span>.<span class="n">meso</span> = <span class="n">str</span>(<span class="n">new_amount</span>)  <span class="c1"># money is a String; converting back to String for consistency</span>
+            <span class="nb">self</span>.<span class="n">meso</span> = <span class="n">new_amount</span>
 
     <span class="nv">@property</span>
 
@@ -2769,7 +2767,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">skin</span>(<span class="nb">self</span>, <span class="n">skin_id</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;skin&quot;</span>, <span class="n">skin_id</span>)  <span class="c1"># TODO: Add check</span>
+        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;skincolor&quot;</span>, <span class="n">skin_id</span>)  <span class="c1"># TODO: Add check</span>
 
         <span class="nb">self</span>.<span class="n">_skin</span> = <span class="n">skin_id</span>
 
@@ -2797,7 +2795,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="nb">exp</span>(<span class="nb">self</span>, <span class="n">exp_amount</span>):
 
-        <span class="k">if</span> <span class="n">int</span>(<span class="n">exp_amount</span>) &gt; <span class="mi">2147483647</span>:
+        <span class="k">if</span> <span class="n">exp_amount</span> &gt; <span class="mi">2147483647</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set EXP above 2bil!&quot;</span>)
 
@@ -2825,7 +2823,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="n">new_exp</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="nb">exp</span>) + <span class="n">amount</span>
 
-            <span class="nb">self</span>.<span class="nb">exp</span> = <span class="n">str</span>(<span class="n">new_exp</span>)  <span class="c1"># EXP is a String; coverting back to String for consistency</span>
+            <span class="nb">self</span>.<span class="nb">exp</span> = <span class="n">new_exp</span>
 
     <span class="nv">@property</span>
 
@@ -3311,7 +3309,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="c1"># TODO: Add checks</span>
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;honour&quot;</span>, <span class="n">amount</span>)
+        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;innerExp&quot;</span>, <span class="n">amount</span>)
 
         <span class="nb">self</span>.<span class="n">_honour</span> = <span class="n">amount</span>
 
@@ -3335,7 +3333,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="c1"># TODO: Add checks</span>
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;mute&quot;</span>, <span class="nb">status</span>)
+        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;chatban&quot;</span>, <span class="nb">status</span>)
 
         <span class="nb">self</span>.<span class="n">_mute</span> = <span class="nb">status</span>
 
@@ -3723,7 +3721,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="n">new_exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">exp</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-            <span class="k">self</span><span class="p">.</span><span class="n">exp</span> <span class="o">=</span> <span class="n">str</span><span class="p">(</span><span class="n">new_exp</span><span class="p">)</span>  <span class="o">#</span> <span class="n">EXP</span> <span class="k">is</span> <span class="n">a</span> <span class="n">String</span><span class="p">;</span> <span class="n">coverting</span> <span class="n">back</span> <span class="k">to</span> <span class="n">String</span> <span class="k">for</span> <span class="n">consistency</span>
+            <span class="k">self</span><span class="p">.</span><span class="n">exp</span> <span class="o">=</span> <span class="n">new_exp</span>
 </code></pre></div>
 
 </details>
@@ -3969,7 +3967,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="k">else</span><span class="p">:</span>
 
-            <span class="k">self</span><span class="p">.</span><span class="n">meso</span> <span class="o">=</span> <span class="n">str</span><span class="p">(</span><span class="n">new_amount</span><span class="p">)</span>  <span class="o">#</span> <span class="n">money</span> <span class="k">is</span> <span class="n">a</span> <span class="n">String</span><span class="p">;</span> <span class="n">converting</span> <span class="n">back</span> <span class="k">to</span> <span class="n">String</span> <span class="k">for</span> <span class="n">consistency</span>
+            <span class="k">self</span><span class="p">.</span><span class="n">meso</span> <span class="o">=</span> <span class="n">new_amount</span>
 </code></pre></div>
 
 </details>
