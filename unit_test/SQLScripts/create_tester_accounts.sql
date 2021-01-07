@@ -1,9 +1,9 @@
 -- Create admin tester account with Account ID of 90,001
 INSERT INTO `accounts` (`id`, `name`, `password`, `2ndpassword`, `using2ndpassword`, 
-`loggedin`, `banned`, `gm`, `nxCash`, `mPoints`, `vpoints`, `realcash`, `chrslot`)
-VALUES (90001, 'tester0x00', 'test', '1111', 1, 0, 0, 0, 0, 0, 0, 0, 3)
+`loggedin`, `banned`,`banreason`, `gm`, `nxCash`, `mPoints`, `vpoints`, `realcash`, `chrslot`)
+VALUES (90001, 'tester0x00', 'test', '1111', 1, 0, 0, 'Lorem Ipsum', 0, 0, 0, 0, 0, 3)
 ON DUPLICATE KEY UPDATE `name`='tester0x00', `password`='test', `2ndpassword`='1111', 
-`using2ndpassword`=1, `loggedin`=0, `banned`=0, `gm`=0, `nxCash`=0, `mPoints`=0, 
+`using2ndpassword`=1, `loggedin`=0, `banned`=0,`banreason`='Lorem Ipsum', `gm`=0, `nxCash`=0, `mPoints`=0,
 `vpoints`=0, `realcash`=0, `chrslot`=3;
 
 -- Create admin tester account with Account ID of 90,002
