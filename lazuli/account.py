@@ -273,7 +273,7 @@ class Account:
 		"""
 		status = utils.write_to_db(
 			self._database_config,
-			f"UPDATE accounts SET {column} = '{value}' WHERE id = '{self.account_id}'"
+			f"UPDATE `accounts` SET {column} = '{value}' WHERE `id` = '{self.account_id}'"
 		)
 		if status:
 			print(f"Successfully updated {column} value for user id: {self.account_id}.")

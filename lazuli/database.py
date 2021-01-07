@@ -156,7 +156,7 @@ class Lazuli:
             Generic error on failure - handled by the get_db_first_hit() method
         """
         character_stats = self.get_db_first_hit(
-            f"SELECT * FROM characters WHERE `name` = '{char_name}'"
+            f"SELECT * FROM `characters` WHERE `name` = '{char_name}'"
         )  # Fetch first result because there should only be one character with that name
 
         character = Character(character_stats, self._database_config)
@@ -179,7 +179,7 @@ class Lazuli:
             Generic error on failure - handled by the get_db_first_hit() method
         """
         account_info = self.get_db_first_hit(
-            f"SELECT * FROM accounts WHERE `name` = '{username}'"
+            f"SELECT * FROM `accounts` WHERE `name` = '{username}'"
         )  # Fetch first result because there should only be one character with that name
 
         account = Account(account_info, self._database_config)
@@ -201,7 +201,7 @@ class Lazuli:
         """
         status = utils.write_to_db(
             self._database_config,
-            f"UPDATE characters SET {column} = '{value}' WHERE `name` = '{name}'"
+            f"UPDATE `characters` SET {column} = '{value}' WHERE `name` = '{name}'"
         )
         if status:
             print(f"Successfully set {name}'s stats in database.")
@@ -220,7 +220,7 @@ class Lazuli:
         Raises:
             Generic error on failure
         """
-        data = self.get_db_all_hits(f"SELECT * FROM accounts WHERE `loggedin` > 0")
+        data = self.get_db_all_hits(f"SELECT * FROM `accounts` WHERE `loggedin` > 0")
         return data  # List of online players
 
     def get_online_count(self):

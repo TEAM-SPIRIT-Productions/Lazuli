@@ -102,7 +102,7 @@ class Inventory:
 			)
 			cursor = database.cursor(dictionary=True)
 			cursor.execute(
-				f"SELECT * FROM inventoryitems WHERE characterid = '{self.character_id}' AND inventorytype = '{inv_type}'")
+				f"SELECT * FROM `inventoryitems` WHERE `characterid` = '{self.character_id}' AND `inventorytype` = '{inv_type}'")
 			inventory = cursor.fetchall()
 
 			inv = {}

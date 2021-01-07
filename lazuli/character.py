@@ -155,13 +155,13 @@ class Character:
         """
         account_id = utils.get_db_first_hit(
             self._database_config,
-            f"SELECT * FROM characters WHERE id = '{self.character_id}'"
+            f"SELECT * FROM `characters` WHERE `id` = '{self.character_id}'"
         ).get("accountid")  # get_db() returns a Dictionary, so get() is used to fetch only the value
         # The row will always be 0 because there should be no characters with the same character ID (Primary Key)
 
         account_info = utils.get_db_first_hit(
             self._database_config,
-            f"SELECT * FROM accounts WHERE id = '{account_id}'"
+            f"SELECT * FROM `accounts` WHERE `id` = '{account_id}'"
         )  # The row will always be 0 because there should be no characters with the same account ID (Primary Key)
 
         account = Account(account_info, self.database_config)
@@ -737,7 +737,7 @@ class Character:
         """
         status = utils.write_to_db(
             self._database_config,
-            f"UPDATE characters SET {column} = '{value}' WHERE name = '{self.name}'"
+            f"UPDATE `characters` SET {column} = '{value}' WHERE `name` = '{self.name}'"
         )
         if status:
             print(f"Successfully updated {column} value for character: {self.name}.")
