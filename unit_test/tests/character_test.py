@@ -203,7 +203,7 @@ def test_fetch_personality(char, expected):
 
 # Character info setting tests -------------------------------------------------------------------------------
 @pytest.mark.parametrize("before, delta, expected", [
-	("314159", 2827433, "3141592"),
+	(314159, 2827433, 3141592),
 ])
 def test_meso_changes(char, before, delta, expected):
 	char.meso = before  # Sets money to 314,159 mesos in the database
@@ -213,7 +213,7 @@ def test_meso_changes(char, before, delta, expected):
 	# character now has 3,141,592 mesos
 	assert char.meso == expected, \
 		f"Meso adding test failed! Expected: {expected}; Meso count: {char.meso}; Type: {type(char.meso)}"
-	char.meso = "0"  # reset to baseline
+	char.meso = 0  # reset to baseline
 
 
 @pytest.mark.parametrize("before, delta, expected", [
@@ -265,7 +265,7 @@ def test_name_changes(char, before, expected):
 
 
 @pytest.mark.parametrize("before, expected", [
-	("253000000", "100000000"),
+	(253000000, 100000000),
 ])
 def test_map_changes(char, before, expected):
 	char.map = expected
@@ -305,7 +305,7 @@ def test_skin_changes(char, before, expected):
 
 
 @pytest.mark.parametrize("before, delta, expected", [
-	("314159", 2827433, "3141592"),
+	(314159, 2827433, 3141592),
 ])
 def test_exp_changes(char, before, delta, expected):
 	char.exp = before
@@ -314,7 +314,7 @@ def test_exp_changes(char, before, delta, expected):
 	char.add_exp(delta)
 	assert char.exp == expected, \
 		f"EXP test adding failed! Expected: {expected}; EXP amount: {char.exp}; Type: {type(char.exp)}"
-	char.exp = "0"  # reset to baseline
+	char.exp = 0  # reset to baseline
 
 
 @pytest.mark.parametrize("before, delta, expected", [
@@ -434,7 +434,7 @@ def test_rb_changes(char, before, delta, expected):
 	char.rebirths = 0  # reset to baseline
 
 
-@pytest.mark.parametrize("before, delta, expected", [
+@pytest.mark.parametrize("before, delta, expected", [(
 	{
 		'ambition': 10,
 		'insight': 10,
@@ -452,7 +452,7 @@ def test_rb_changes(char, before, delta, expected):
 		'empathy': 31,
 		'charm': 31,
 	},
-])
+)])
 def test_personality_changes(char, before, delta, expected):
 	char.ambition = before['ambition']
 	char.insight = before['insight']

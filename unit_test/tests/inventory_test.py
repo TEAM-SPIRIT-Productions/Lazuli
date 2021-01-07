@@ -31,7 +31,7 @@ def inventory():
 
 # Inventory info fetching tests -------------------------------------------------------------------------------
 # Test non-cash equipped
-@pytest.mark.parametrize("slot, item_id, qty", [-1, 1002140, 1])
+@pytest.mark.parametrize("slot, item_id, qty", [(-1, 1002140, 1)])
 def test_fetch_equipped_item(inventory, slot, item_id, qty):
 	assert inventory.equipped_inv[slot]['itemid'] == item_id,  \
 		f"Error encountered whilst directly fetching item ID from bagindex: \n" \
@@ -44,7 +44,7 @@ def test_fetch_equipped_item(inventory, slot, item_id, qty):
 		f"Type: {type(inventory.equipped_inv[slot]['quantity'])}"
 
 
-@pytest.mark.parametrize("item_id, wrong_id , status", [1002140, 1002141, True])
+@pytest.mark.parametrize("item_id, wrong_id , status", [(1002140, 1002141, True)])
 def test_is_equipped(inventory, item_id, wrong_id, status):
 	assert inventory.is_equipping(item_id), \
 		f"Error encountered whilst checking if non-cash equip is worn: \n" \
@@ -57,7 +57,7 @@ def test_is_equipped(inventory, item_id, wrong_id, status):
 
 
 # Test non-cash equip
-@pytest.mark.parametrize("slot, item_id, qty", [1, 1002140, 1])
+@pytest.mark.parametrize("slot, item_id, qty", [(1, 1002140, 1)])
 def test_fetch_equip_item(inventory, slot, item_id, qty):
 	assert inventory.equip_inv[slot]['itemid'] == item_id,  \
 		f"Error encountered whilst directly fetching item ID from bagindex: \n" \
@@ -70,7 +70,7 @@ def test_fetch_equip_item(inventory, slot, item_id, qty):
 		f"Type: {type(inventory.equip_inv[slot]['quantity'])}"
 
 
-@pytest.mark.parametrize("item_id, wrong_id , status", [1002140, 1002141, True])
+@pytest.mark.parametrize("item_id, wrong_id , status", [(1002140, 1002141, True)])
 def test_is_in_equip(inventory, item_id, wrong_id, status):
 	assert inventory.has_item_in_equip(item_id), \
 		f"Error encountered whilst checking if non-cash equip is in inventory: \n" \

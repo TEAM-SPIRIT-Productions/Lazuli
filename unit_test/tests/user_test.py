@@ -23,7 +23,7 @@ def test_direct_user_fetch():
 		raise SystemExit(f"Error has occurred whist attempting to load DB: \n{e}")
 	user = azure.get_account_by_username("tester0x00")
 	# Account ID test is here:
-	assert user.user_id == 90001,\
+	assert user.account_id == 90001,\
 		f"Error encountered whilst fetching Account by Username:\n" \
 		f"Expected: 90001 (Int); Encountered: {user.user_id}, Type: {type(user.user_id)}"
 
@@ -41,7 +41,7 @@ def user():
 	if char_obj is None:
 		raise SystemExit("CRITICAL ERROR: UNABLE TO FETCH CHARACTER BY NAME! TERMINATING...")
 
-	user_obj = char_obj.user  # Get user from Char object
+	user_obj = char_obj.account  # Get user from Char object
 	if user_obj is None:
 		raise SystemExit("CRITICAL ERROR: UNABLE TO FETCH ACCOUNT FROM CHARACTER! TERMINATING...")
 	return user_obj
@@ -58,8 +58,8 @@ def test_fetch_acc_name(user, expected):
 def test_fetch_login_status(user, expected):
 	assert user.logged_in == expected, \
 		f"Login Status test failed! Status: {user.logged_in}; Type: {type(user.logged_in)}"
-	assert user.is_online is True, \
-		f"Login Status (is_online() method) test failed! Status: {user.is_online}; Type: {type(user.is_online)}"
+	assert user.is_online() is False, \
+		f"Login Status (is_online() method) test failed! Status: {user.is_online()}; Type: {type(user.is_online())}"
 
 
 @pytest.mark.parametrize("expected", [0])

@@ -27,8 +27,8 @@ def azure():
 # General functional testing -------------------------------------------------------------------------------
 @pytest.mark.parametrize("expected", [1])
 def test_fetch_online_count(azure, expected):
-	assert azure.get_online_list() == expected, \
-		f"Online count test failed! Count: {azure.get_online_list()}; Type: {type(azure.get_online_list())}"
+	assert azure.get_online_count() == expected, \
+		f"Online count test failed! Count: {azure.get_online_count()}; Type: {type(azure.get_online_count())}"
 
 
 @pytest.mark.parametrize("expected", [["tester0x01"]])
@@ -37,11 +37,11 @@ def test_fetch_online_players(azure, expected):
 		f"Online count test failed! Players: {azure.get_online_players()}; Type: {type(azure.get_online_players())}"
 
 
-@pytest.mark.parametrize("expected_1st, expected_2nd", [('tester0x01', 10), ('tester0x00', 10)])
+@pytest.mark.parametrize("expected_1st, expected_2nd", [("tester0x01", "tester0x00")])
 def test_level_ranking(azure, expected_1st, expected_2nd):
-	assert azure.get_level_ranking()[0] == expected_1st, \
-		f"Level Ranking test failed! Player: {azure.get_level_ranking()[0]}; Type: {type(azure.get_level_ranking()[0])}"
-	assert azure.get_level_ranking()[1] == expected_2nd, \
-		f"Level Ranking test failed! Player: {azure.get_level_ranking()[1]}; Type: {type(azure.get_level_ranking()[1])}"
+	assert azure.get_level_ranking()[0][0] == expected_1st, \
+		f"Level Ranking test failed! Player: {azure.get_level_ranking()[0]}; Type: {type(azure.get_level_ranking()[0][0])}"
+	assert azure.get_level_ranking()[1][0] == expected_2nd, \
+		f"Level Ranking test failed! Player: {azure.get_level_ranking()[1]}; Type: {type(azure.get_level_ranking()[1][0])}"
 
 # Other general methods omitted for being the exact same logic in the engine
