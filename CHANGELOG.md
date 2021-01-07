@@ -1,5 +1,12 @@
 ## CHANGELOG:  
 
+### v0.1.1
+- Remove unused import statements (faulty refactor)
+- Remove unnecessary casts causing Character.Meso and Character.EXP to fail
+- Fix wrong column names in prepared statements causing setters to fail
+- Add unit tests
+- Fix unit test bugs
+
 ### v0.1.0
 - Experimental fix for encoding issues
     - Tested working in CLI
