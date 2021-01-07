@@ -40,10 +40,10 @@ ON DUPLICATE KEY UPDATE `characterid`=900001, `equip`=96, `use`=96, `setup`=96, 
 -- Equipped - WZ Hat
 INSERT INTO `inventoryitems` (`inventoryitemid`, `type`, `characterid`, `itemid`, `inventorytype`, `position`, `quantity`, `GM_Log`, `uniqueid`)
 VALUES (90000001, 1, 900001, 1002140, -1, -5, 1, 'KOOKIIE Tester', 90000001)
-ON DUPLICATE KEY UPDATE  `type`=1, `characterid`=900001, `itemid`=1002140, `inventorytype`=-1, `position`=-5, `quantity`=1, `GM_Log`='KOOKIIE Tester', `uniqueid`=90000001;
--- Equip - WZ Hat
+ON DUPLICATE KEY UPDATE  `type`=1, `characterid`=900001, `itemid`=1002140, `inventorytype`=-1, `position`=-1, `quantity`=1, `GM_Log`='KOOKIIE Tester', `uniqueid`=90000001;
+-- Equip - WZ Hat; slot 1
 INSERT INTO `inventoryitems` (`inventoryitemid`, `type`, `characterid`, `itemid`, `inventorytype`, `position`, `quantity`, `GM_Log`, `uniqueid`)
-VALUES (90000002, 1, 900001, 1002140, -1, -5, 1, 'KOOKIIE Tester', 90000002)
+VALUES (90000002, 1, 900001, 1002140, 1, 1, 1, 'KOOKIIE Tester', 90000002)
 ON DUPLICATE KEY UPDATE  `type`=1, `characterid`=900001, `itemid`=1002140, `inventorytype`=1, `position`=1, `quantity`=1, `GM_Log`='KOOKIIE Tester', `uniqueid`=90000002;
 
 -- Equip stats for above 2 items
