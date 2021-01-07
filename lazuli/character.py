@@ -4,7 +4,6 @@ Copyright 2020 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
-import mysql.connector as con
 
 from lazuli import JOBS
 from lazuli.inventory import Inventory
@@ -264,7 +263,7 @@ class Character:
 
     @meso.setter
     def meso(self, amount):
-        if int(amount) > 10000000000:
+        if amount > 10000000000:
             raise ValueError("You should not try to set meso to more than 10b!")
         else:
             self.set_stat_by_column("meso", amount)
@@ -280,7 +279,7 @@ class Character:
         if new_amount > 10000000000:
             raise ValueError("You should not try to set meso to more than 10b!")
         else:
-            self.meso = str(new_amount)  # money is a String; converting back to String for consistency
+            self.meso = new_amount
 
     @property
     def fame(self):
@@ -342,7 +341,7 @@ class Character:
 
     @skin.setter
     def skin(self, skin_id):
-        self.set_stat_by_column("skin", skin_id)  # TODO: Add check
+        self.set_stat_by_column("skincolor", skin_id)  # TODO: Add check
         self._skin = skin_id
 
     @property
@@ -360,7 +359,7 @@ class Character:
 
     @exp.setter
     def exp(self, exp_amount):
-        if int(exp_amount) > 2147483647:
+        if exp_amount > 2147483647:
             raise ValueError("You should not try to set EXP above 2bil!")
         else:
             self.set_stat_by_column("exp", exp_amount)
@@ -376,7 +375,7 @@ class Character:
             raise ValueError("You should not try to increment EXP by more than 2bil!")
         else:
             new_exp = int(self.exp) + amount
-            self.exp = str(new_exp)  # EXP is a String; coverting back to String for consistency
+            self.exp = new_exp
 
     @property
     def strength(self):
@@ -675,7 +674,7 @@ class Character:
     @honour.setter
     def honour(self, amount):
         # TODO: Add checks
-        self.set_stat_by_column("honour", amount)
+        self.set_stat_by_column("innerExp", amount)
         self._honour = amount
 
     def add_honour(self, amount):
@@ -690,7 +689,7 @@ class Character:
     @mute.setter
     def mute(self, status):
         # TODO: Add checks
-        self.set_stat_by_column("mute", status)
+        self.set_stat_by_column("chatban", status)
         self._mute = status
 
     @property

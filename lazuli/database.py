@@ -13,7 +13,6 @@ Refer to the project wiki on GitHub for more in-depth examples.
     meso = char.money  # Use of Character methods to fetch data from DB
     char.money = 123456789  # Use of Character methods to write data to DB
 """
-import mysql.connector as con
 from lazuli.character import Character
 from lazuli.account import Account
 import lazuli.utility as utils

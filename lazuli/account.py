@@ -4,7 +4,6 @@ Copyright 2020 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
-import mysql.connector as con
 
 import lazuli.utility as utils
 
