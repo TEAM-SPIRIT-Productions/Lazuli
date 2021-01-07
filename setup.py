@@ -30,7 +30,7 @@ setup(
     url="https://github.com/TEAM-SPIRIT-Productions/Lazuli",
     author="Amos Chua",
     classifiers=classifiers,
-    keywords="database, azure, maplestory",
+    keywords="database, maplestory",
     packages=find_packages(),
     python_requires=">=3.6",
     install_requires=["mysql-connector-python-rf"],
