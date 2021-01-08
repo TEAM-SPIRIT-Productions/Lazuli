@@ -90,8 +90,20 @@ class Account:
 
 	@username.setter
 	def username(self, new_name):
-		self.set_stat_by_column("name", new_name)
-		self._username = new_name
+		# Check for length:
+		if len(str(new_name)) > 64:
+			raise ValueError("That name is too long!")  # Message to be passed along on failure
+		else:
+			# Check for clashes
+			data = utils.get_db_all_hits(
+				self.database_config,
+				f"SELECT * FROM `accounts` WHERE `name` = '{new_name}'"
+			)
+			if not data:  # if the list of accounts with clashing names is not empty
+				self.set_stat_by_column("name", new_name)  # set name in DB
+				self._username = new_name  # refreshes account instance in memory
+			else:
+				raise ValueError("That name is already taken!")  # Message to be passed along on failure
 
 	@property
 	def logged_in(self):
@@ -99,8 +111,15 @@ class Account:
 
 	@logged_in.setter
 	def logged_in(self, value):
-		self.set_stat_by_column("loggedin", value)  # Use with caution!
-		self._logged_in = value
+		try:
+			if value > 127:  # DB only accepts 1-byte int
+				# Message to be passed along on failure:
+				raise ValueError("That `logged_in` value is too large! Stick to either 0 or 1!")
+			else:
+				self.set_stat_by_column("loggedin", value)  # Use with caution!
+				self._logged_in = value
+		except Exception:
+			raise ValueError("Invalid input! Stick to either 0 or 1!")  # Message to be passed along on failure
 
 	@property
 	def banned(self):
@@ -108,8 +127,15 @@ class Account:
 
 	@banned.setter
 	def banned(self, value):
-		self.set_stat_by_column("banned", value)  # Use with caution!
-		self._banned = value
+		try:
+			if value > 127:  # DB only accepts 1-byte int
+				# Message to be passed along on failure:
+				raise ValueError("That `banned` value is too large! Stick to either 0 or 1!")
+			else:
+				self.set_stat_by_column("banned", value)  # Use with caution!
+				self._banned = value
+		except Exception:
+			raise ValueError("Invalid input! Stick to either 0 or 1!")  # Message to be passed along on failure
 
 	@property
 	def ban_reason(self):
@@ -117,7 +143,7 @@ class Account:
 
 	@ban_reason.setter
 	def ban_reason(self, value):
-		self.set_stat_by_column("banreason", value)
+		self.set_stat_by_column("banreason", value)  # type `text`; 65k chars
 		self._ban_reason = value
 
 	@property
@@ -126,8 +152,11 @@ class Account:
 
 	@nx.setter
 	def nx(self, value):
-		self.set_stat_by_column("nxCash", value)
-		self._nx = value
+		if value > 2147483647:
+			raise ValueError("Invalid input! Please keep NX within 2.1b!")
+		else:
+			self.set_stat_by_column("nxCash", value)
+			self._nx = value
 
 	def add_nx(self, amount):
 		"""Adds the specified amount to the current NX pool
@@ -144,8 +173,11 @@ class Account:
 
 	@maple_points.setter
 	def maple_points(self, value):
-		self.set_stat_by_column("mPoints", value)
-		self._maple_points = value
+		if value > 2147483647:
+			raise ValueError("Invalid input! Please keep Maple Points within 2.1b!")
+		else:
+			self.set_stat_by_column("mPoints", value)
+			self._maple_points = value
 
 	def add_maple_points(self, amount):
 		"""Adds the specified amount to the current Maple Points pool
@@ -162,8 +194,11 @@ class Account:
 
 	@vp.setter
 	def vp(self, value):
-		self.set_stat_by_column("vpoints", value)
-		self._vp = value
+		if value > 2147483647:
+			raise ValueError("Invalid input! Please keep Vote Points within 2.1b!")
+		else:
+			self.set_stat_by_column("vpoints", value)
+			self._vp = value
 
 	def add_vp(self, amount):
 		"""Adds the specified amount to the current VP count
@@ -180,8 +215,11 @@ class Account:
 
 	@dp.setter
 	def dp(self, value):
-		self.set_stat_by_column("realcash", value)
-		self._dp = value
+		if value > 2147483647:
+			raise ValueError("Invalid input! Please keep DPs within 2.1b!")
+		else:
+			self.set_stat_by_column("realcash", value)
+			self._dp = value
 
 	def add_dp(self, amount):
 		"""Adds the specified amount to the current DP count
@@ -198,8 +236,11 @@ class Account:
 
 	@char_slots.setter
 	def char_slots(self, value):
-		self.set_stat_by_column("chrslot", value)
-		self._char_slots = value
+		if value > 52:
+			raise ValueError("Invalid input! Please keep Character Slots within 52!")
+		else:
+			self.set_stat_by_column("chrslot", value)
+			self._char_slots = value
 
 	def add_char_slots(self, amount):
 		"""Adds the specified amount to the current character slot count

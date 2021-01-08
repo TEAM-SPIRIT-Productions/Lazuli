@@ -154,13 +154,13 @@ class Character:
             Generic error on failure - handled by the utility.get_db_first_hit() method
         """
         account_id = utils.get_db_first_hit(
-            self._database_config,
+            self.database_config,
             f"SELECT * FROM `characters` WHERE `id` = '{self.character_id}'"
         ).get("accountid")  # get_db() returns a Dictionary, so get() is used to fetch only the value
         # The row will always be 0 because there should be no characters with the same character ID (Primary Key)
 
         account_info = utils.get_db_first_hit(
-            self._database_config,
+            self.database_config,
             f"SELECT * FROM `accounts` WHERE `id` = '{account_id}'"
         )  # The row will always be 0 because there should be no characters with the same account ID (Primary Key)
 
@@ -215,10 +215,7 @@ class Character:
             amount: Int, representing the number of levels to be added to the current count
         """
         new_level = int(self.level) + amount
-        if new_level > 275:
-            raise ValueError("Level should not exceed 275!")
-        else:
-            self.level = new_level
+        self.level = new_level
 
     @property
     def job(self):
@@ -251,11 +248,20 @@ class Character:
         Args:
             new_name: string, representing the new character name that will be set in the database
         """
-        if len(new_name) > 13:
+        # Check length against max length in Azure DB
+        # Not checking for special symbols etc, since this is an admin command
+        if len(str(new_name)) > 13:
             raise ValueError("Character names can only be 13 characters long!")
+        # Check clashes
+        data = utils.get_db_all_hits(
+            self.database_config,
+            f"SELECT * FROM `characters` WHERE `name` = '{new_name}'"
+        )
+        if not data:  # if the list of accounts with clashing names is not empty
+            self.set_stat_by_column("name", new_name)  # set IGN in DB
+            self._name = new_name  # refresh character instance attributes in memory
         else:
-            self.set_stat_by_column("name", new_name)
-            self._name = new_name
+            raise ValueError("That name is already taken!")  # Message to be passed along on failure
 
     @property
     def meso(self):
@@ -276,10 +282,7 @@ class Character:
             amount: Int, representing the amount of mesos to be added to the current count
         """
         new_amount = int(self.meso) + amount
-        if new_amount > 10000000000:
-            raise ValueError("You should not try to set meso to more than 10b!")
-        else:
-            self.meso = new_amount
+        self.meso = new_amount
 
     @property
     def fame(self):
@@ -300,10 +303,7 @@ class Character:
             amount: Int, representing the number of fames to be added to the current count
         """
         new_fame = int(self.fame) + amount
-        if new_fame > 32767:
-            raise ValueError("You should not try to set fame to more than 30k!")
-        else:
-            self.fame = new_fame
+        self.fame = new_fame
 
     @property
     def map(self):
@@ -323,8 +323,11 @@ class Character:
 
     @face.setter
     def face(self, face_id):
-        self.set_stat_by_column("face", face_id)  # TODO: Add check
-        self._face = face_id
+        if face_id < 20000 or face_id > 29999:  # Best guess - might be wrong!
+            raise ValueError("Wrong face ID!")
+        else:
+            self.set_stat_by_column("face", face_id)
+            self._face = face_id
 
     @property
     def hair(self):
@@ -332,8 +335,11 @@ class Character:
 
     @hair.setter
     def hair(self, hair_id):
-        self.set_stat_by_column("hair", hair_id)  # TODO: Add check
-        self._hair = hair_id
+        if hair_id < 30000 or hair_id > 49999:  # Best guess - might be wrong!
+            raise ValueError("Wrong hair ID!")
+        else:
+            self.set_stat_by_column("hair", hair_id)
+            self._hair = hair_id
 
     @property
     def skin(self):
@@ -341,8 +347,11 @@ class Character:
 
     @skin.setter
     def skin(self, skin_id):
-        self.set_stat_by_column("skincolor", skin_id)  # TODO: Add check
-        self._skin = skin_id
+        if skin_id < 0 or skin_id > 16:  # Best guess - might be wrong!
+            raise ValueError("Wrong skin colour ID!")
+        else:
+            self.set_stat_by_column("skincolor", skin_id)
+            self._skin = skin_id
 
     @property
     def gender(self):
@@ -350,8 +359,11 @@ class Character:
 
     @gender.setter
     def gender(self, gender_id):
-        self.set_stat_by_column("gender", gender_id)  # TODO: Add check
-        self._gender = gender_id
+        if gender_id < -1 or gender_id > 1:  # Best guess - might be wrong!
+            raise ValueError("Wrong gender ID!")
+        else:
+            self.set_stat_by_column("gender", gender_id)
+            self._gender = gender_id
 
     @property
     def exp(self):
@@ -359,8 +371,8 @@ class Character:
 
     @exp.setter
     def exp(self, exp_amount):
-        if exp_amount > 2147483647:
-            raise ValueError("You should not try to set EXP above 2bil!")
+        if exp_amount > 9223372036854775807:  # Azure DB uses Bigint for EXP
+            raise ValueError("You should not try to set EXP above 9.2 Quintillion!")
         else:
             self.set_stat_by_column("exp", exp_amount)
             self._exp = exp_amount
@@ -371,11 +383,8 @@ class Character:
         Args:
             amount: Int, representing the amount of EXP to be added to the current pool
         """
-        if amount > 2147483647:
-            raise ValueError("You should not try to increment EXP by more than 2bil!")
-        else:
-            new_exp = int(self.exp) + amount
-            self.exp = new_exp
+        new_exp = int(self.exp) + amount
+        self.exp = new_exp
 
     @property
     def strength(self):
@@ -383,7 +392,7 @@ class Character:
 
     @strength.setter
     def strength(self, amount):
-        if amount > 32767:
+        if amount > 32767:  # Azure DB uses Int for stats, but it may cause problems with the client past signed shorts
             raise ValueError("You should not try to set STR above 30k!")
         else:
             self.set_stat_by_column("str", amount)
@@ -396,10 +405,7 @@ class Character:
             amount: Int, representing the amount of STR to be added to the current pool
         """
         new_str = int(self.strength) + amount
-        if new_str > 32767:
-            raise ValueError("You should not try to set STR above 30k!")
-        else:
-            self.strength = new_str
+        self.strength = new_str
 
     @property
     def dex(self):
@@ -420,10 +426,7 @@ class Character:
             amount: Int, representing the amount of DEX to be added to the current pool
         """
         new_dex = int(self.dex) + amount
-        if new_dex > 32767:
-            raise ValueError("You should not try to set DEX above 30k!")
-        else:
-            self.dex = new_dex
+        self.dex = new_dex
 
     @property
     def inte(self):
@@ -444,10 +447,7 @@ class Character:
             amount: Int, representing the amount of INT to be added to the current pool
         """
         new_inte = int(self.inte) + amount
-        if new_inte > 32767:
-            raise ValueError("You should not try to set INT above 30k!")
-        else:
-            self.inte = new_inte
+        self.inte = new_inte
 
     @property
     def luk(self):
@@ -468,10 +468,7 @@ class Character:
             amount: Int, representing the amount of LUK to be added to the current pool
         """
         new_luk = int(self.luk) + amount
-        if new_luk > 32767:
-            raise ValueError("You should not try to set LUK above 30k!")
-        else:
-            self.luk = new_luk
+        self.luk = new_luk
 
     def get_primary_stats(self):
         """Returns str, int, dex, luk values in a dictionary
@@ -493,8 +490,11 @@ class Character:
 
     @max_hp.setter
     def max_hp(self, amount):
-        self.set_stat_by_column("maxhp", amount)
-        self._max_hp = amount
+        if amount > 500000:
+            raise ValueError("You should not try to set HP above 500k!")
+        else:
+            self.set_stat_by_column("maxhp", amount)
+            self._max_hp = amount
 
     def add_max_hp(self, amount):
         """Add the specified amount to the current existing Max HP pool
@@ -511,8 +511,11 @@ class Character:
 
     @max_mp.setter
     def max_mp(self, amount):
-        self.set_stat_by_column("maxmp", amount)
-        self._max_mp = amount
+        if amount > 500000:
+            raise ValueError("You should not try to set MP above 500k!")
+        else:
+            self.set_stat_by_column("maxmp", amount)
+            self._max_mp = amount
 
     def add_max_mp(self, amount):
         """Add the specified amount to the current existing Max MP pool
@@ -542,10 +545,7 @@ class Character:
             amount: Int, representing the amount of free AP to be added to the current pool
         """
         new_ap = int(self.ap) + amount
-        if new_ap > 32767:
-            raise ValueError("You should not try to set AP above 30k!")
-        else:
-            self.ap = new_ap
+        self.ap = new_ap
 
     @property
     def bl_slots(self):
@@ -553,12 +553,13 @@ class Character:
 
     @bl_slots.setter
     def bl_slots(self, amount):
-        # TODO: Add checks
-        self.set_stat_by_column("buddyCapacity", amount)
-        self._bl_slots = amount
+        if amount > 100:
+            raise ValueError("You should not try to set BL slots above 100!")
+        else:
+            self.set_stat_by_column("buddyCapacity", amount)
+            self._bl_slots = amount
 
     def add_bl_slots(self, amount):
-        # TODO: Add checks
         new_amount = int(self.bl_slots) + amount
         self.bl_slots = new_amount
 
@@ -568,12 +569,13 @@ class Character:
 
     @rebirths.setter
     def rebirths(self, amount):
-        # TODO: Add checks
-        self.set_stat_by_column("reborns", amount)
-        self._rebirths = amount
+        if amount > 2147483647:
+            raise ValueError("You should not try to set rebirths above 2.1b!")
+        else:
+            self.set_stat_by_column("reborns", amount)
+            self._rebirths = amount
 
     def add_rebirths(self, amount):
-        # TODO: Add checks
         new_amount = int(self.rebirths) + amount
         self.rebirths = new_amount
 
@@ -583,12 +585,11 @@ class Character:
 
     @ambition.setter
     def ambition(self, amount):
-        # TODO: Add checks
+        # TODO: Add checks; DB allows 2.1b, but not sure what the actual cap in source is
         self.set_stat_by_column("ambition", amount)
         self._ambition = amount
 
     def add_ambition(self, amount):
-        # TODO: Add checks
         new_amount = int(self.ambition) + amount
         self.ambition = new_amount
 
@@ -603,7 +604,6 @@ class Character:
         self._insight = amount
 
     def add_insight(self, amount):
-        # TODO: Add checks
         new_amount = int(self.insight) + amount
         self.insight = new_amount
 
@@ -618,7 +618,6 @@ class Character:
         self._willpower = amount
 
     def add_willpower(self, amount):
-        # TODO: Add checks
         new_amount = int(self.willpower) + amount
         self.willpower = new_amount
 
@@ -633,7 +632,6 @@ class Character:
         self._diligence = amount
 
     def add_diligence(self, amount):
-        # TODO: Add checks
         new_amount = int(self.diligence) + amount
         self.diligence = new_amount
 
@@ -648,7 +646,6 @@ class Character:
         self._empathy = amount
 
     def add_empathy(self, amount):
-        # TODO: Add checks
         new_amount = int(self.empathy) + amount
         self.empathy = new_amount
 
@@ -663,9 +660,24 @@ class Character:
         self._charm = amount
 
     def add_charm(self, amount):
-        # TODO: Add checks
         new_amount = int(self.charm) + amount
         self.charm = new_amount
+
+    def get_personality_traits(self):
+        """Returns the 6 personality trait values in a dictionary
+
+        Returns:
+            dictionary of personality traits
+        """
+        traits = {
+            "ambition": self.ambition,
+            "insight": self.insight,
+            "willpower": self.willpower,
+            "diligence": self.diligence,
+            "empathy": self.empathy,
+            "charm": self.charm,
+        }
+        return traits
 
     @property
     def honour(self):
@@ -678,7 +690,6 @@ class Character:
         self._honour = amount
 
     def add_honour(self, amount):
-        # TODO: Add checks
         new_amount = int(self.honour) + amount
         self.honour = new_amount
 
@@ -688,9 +699,11 @@ class Character:
 
     @mute.setter
     def mute(self, status):
-        # TODO: Add checks
-        self.set_stat_by_column("chatban", status)
-        self._mute = status
+        if status == "false" or status == "true":
+            self.set_stat_by_column("chatban", status)
+            self._mute = status
+        else:
+            raise ValueError("Invalid input! Stick to `true` or `false`!")
 
     @property
     def account(self):
@@ -701,7 +714,7 @@ class Character:
         return self._inventory
 
     def get_char_img(self):
-        """Generates character avatar using MapleStory.io API
+        """Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!
 
         Returns:
             url: String, a link to the generated avatar
