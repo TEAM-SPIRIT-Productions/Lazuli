@@ -1,5 +1,10 @@
 ## CHANGELOG:  
 
+### v1.0.0
+- Remove unnecessary checks
+- Added checks to more setters
+- Ready for release!
+
 ### v0.1.1
 - Remove unused import statements (faulty refactor)
 - Remove unnecessary casts causing Character.Meso and Character.EXP to fail

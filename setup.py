@@ -8,7 +8,7 @@ here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 classifiers = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
     'Intended Audience :: Education',
     'Operating System :: OS Independent',
@@ -23,7 +23,7 @@ classifiers = [
 
 setup(
     name="lazuli",
-    version="0.1.1",
+    version="1.0.0",
     description="A Python-based tool for interacting with AzureMSv316-based databases.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -33,5 +33,5 @@ setup(
     keywords="database, maplestory",
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=["mysql-connector-python-rf"],
+    install_requires=["mysql-connector-python"],
 )
