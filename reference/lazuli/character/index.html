@@ -492,6 +492,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_personality_traits" class="md-nav__link">
+    get_personality_traits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_primary_stats" class="md-nav__link">
     get_primary_stats
   </a>
@@ -824,6 +831,13 @@
           <li class="md-nav__item">
   <a href="#get_job_name" class="md-nav__link">
     get_job_name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_personality_traits" class="md-nav__link">
+    get_personality_traits
   </a>
   
 </li>
@@ -1186,9 +1200,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">account_id</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
-            <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM characters WHERE id = &#39;{self.character_id}&#39;&quot;</span>
+            <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
         <span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nf">get_db</span><span class="p">()</span> <span class="s s-Atom">returns</span> <span class="s s-Atom">a</span> <span class="nv">Dictionary</span><span class="p">,</span> <span class="s s-Atom">so</span> <span class="nf">get</span><span class="p">()</span> <span class="o">is</span> <span class="s s-Atom">used</span> <span class="s s-Atom">to</span> <span class="s s-Atom">fetch</span> <span class="s s-Atom">only</span> <span class="s s-Atom">the</span> <span class="s s-Atom">value</span>
 
@@ -1196,9 +1210,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">account_info</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
-            <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE id = &#39;{account_id}&#39;&quot;</span>
+            <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
         <span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">The</span> <span class="s s-Atom">row</span> <span class="s s-Atom">will</span> <span class="s s-Atom">always</span> <span class="s s-Atom">be</span> <span class="mi">0</span> <span class="s s-Atom">because</span> <span class="s s-Atom">there</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">no</span> <span class="s s-Atom">characters</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">same</span> <span class="s s-Atom">account</span> <span class="nv">ID</span> <span class="p">(</span><span class="nv">Primary</span> <span class="nv">Key</span><span class="p">)</span>
 
@@ -1282,13 +1296,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_level</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">level</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_level</span> <span class="o">&gt;</span> <span class="mi">275</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Level should not exceed 275!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">level</span> <span class="o">=</span> <span class="s s-Atom">new_level</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">level</span> <span class="o">=</span> <span class="s s-Atom">new_level</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1340,15 +1348,33 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
-        <span class="s s-Atom">if</span> <span class="nf">len</span><span class="p">(</span><span class="s s-Atom">new_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">13</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">#</span> <span class="nv">Check</span> <span class="s s-Atom">length</span> <span class="s s-Atom">against</span> <span class="s s-Atom">max</span> <span class="s s-Atom">length</span> <span class="s s-Atom">in</span> <span class="nv">Azure</span> <span class="nv">DB</span>
+
+        <span class="s s-Atom">#</span> <span class="nv">Not</span> <span class="s s-Atom">checking</span> <span class="s s-Atom">for</span> <span class="s s-Atom">special</span> <span class="s s-Atom">symbols</span> <span class="s s-Atom">etc</span><span class="p">,</span> <span class="s s-Atom">since</span> <span class="s s-Atom">this</span> <span class="o">is</span> <span class="s s-Atom">an</span> <span class="s s-Atom">admin</span> <span class="s s-Atom">command</span>
+
+        <span class="s s-Atom">if</span> <span class="nf">len</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="s s-Atom">new_name</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">13</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Character names can only be 13 characters long!&quot;</span><span class="p">)</span>
 
+        <span class="s s-Atom">#</span> <span class="nv">Check</span> <span class="s s-Atom">clashes</span>
+
+        <span class="s s-Atom">data</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_all_hits</span><span class="p">(</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
+
+        <span class="p">)</span>
+
+        <span class="s s-Atom">if</span> <span class="o">not</span> <span class="nn">data</span><span class="p">:</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">if</span> <span class="s s-Atom">the</span> <span class="s s-Atom">list</span> <span class="s s-Atom">of</span> <span class="s s-Atom">accounts</span> <span class="s s-Atom">with</span> <span class="s s-Atom">clashing</span> <span class="s s-Atom">names</span> <span class="o">is</span> <span class="o">not</span> <span class="s s-Atom">empty</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s s-Atom">new_name</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">set</span> <span class="nv">IGN</span> <span class="s s-Atom">in</span> <span class="nv">DB</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">name</span> <span class="o">=</span> <span class="s s-Atom">new_name</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">refresh</span> <span class="s s-Atom">character</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">attributes</span> <span class="s s-Atom">in</span> <span class="s s-Atom">memory</span>
+
         <span class="nn">else</span><span class="p">:</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s s-Atom">new_name</span><span class="p">)</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">name</span> <span class="o">=</span> <span class="s s-Atom">new_name</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">Message</span> <span class="s s-Atom">to</span> <span class="s s-Atom">be</span> <span class="s s-Atom">passed</span> <span class="s s-Atom">along</span> <span class="s s-Atom">on</span> <span class="s s-Atom">failure</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1382,13 +1408,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">meso</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_amount</span> <span class="o">&gt;</span> <span class="mi">10000000000</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set meso to more than 10b!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">meso</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">meso</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1422,13 +1442,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_fame</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">fame</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_fame</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set fame to more than 30k!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">fame</span> <span class="o">=</span> <span class="s s-Atom">new_fame</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">fame</span> <span class="o">=</span> <span class="s s-Atom">new_fame</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1460,9 +1474,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">face</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">face_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;face&quot;</span><span class="p">,</span> <span class="s s-Atom">face_id</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">check</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">face_id</span> <span class="o">&lt;</span> <span class="mi">20000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">face_id</span> <span class="o">&gt;</span> <span class="mi">29999</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">face</span> <span class="o">=</span> <span class="s s-Atom">face_id</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong face ID!&quot;</span><span class="p">)</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;face&quot;</span><span class="p">,</span> <span class="s s-Atom">face_id</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">face</span> <span class="o">=</span> <span class="s s-Atom">face_id</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1474,9 +1494,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">hair</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">hair_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;hair&quot;</span><span class="p">,</span> <span class="s s-Atom">hair_id</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">check</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">hair_id</span> <span class="o">&lt;</span> <span class="mi">30000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">hair_id</span> <span class="o">&gt;</span> <span class="mi">49999</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">hair</span> <span class="o">=</span> <span class="s s-Atom">hair_id</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong hair ID!&quot;</span><span class="p">)</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;hair&quot;</span><span class="p">,</span> <span class="s s-Atom">hair_id</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">hair</span> <span class="o">=</span> <span class="s s-Atom">hair_id</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1488,9 +1514,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">skin</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;skincolor&quot;</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">check</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">skin_id</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="s s-Atom">or</span> <span class="s s-Atom">skin_id</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">skin</span> <span class="o">=</span> <span class="s s-Atom">skin_id</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong skin colour ID!&quot;</span><span class="p">)</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;skincolor&quot;</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">skin</span> <span class="o">=</span> <span class="s s-Atom">skin_id</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1502,9 +1534,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">gender</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">gender_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="s s-Atom">gender_id</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">check</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">gender_id</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="s s-Atom">or</span> <span class="s s-Atom">gender_id</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">gender</span> <span class="o">=</span> <span class="s s-Atom">gender_id</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong gender ID!&quot;</span><span class="p">)</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="s s-Atom">gender_id</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">gender</span> <span class="o">=</span> <span class="s s-Atom">gender_id</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1516,9 +1554,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">exp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">exp_amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">exp_amount</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">exp_amount</span> <span class="o">&gt;</span> <span class="mi">9223372036854775807</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Azure</span> <span class="nv">DB</span> <span class="s s-Atom">uses</span> <span class="nv">Bigint</span> <span class="s s-Atom">for</span> <span class="nv">EXP</span>
 
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set EXP above 2bil!&quot;</span><span class="p">)</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set EXP above 9.2 Quintillion!&quot;</span><span class="p">)</span>
 
         <span class="nn">else</span><span class="p">:</span>
 
@@ -1536,15 +1574,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">new_exp</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to increment EXP by more than 2bil!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">new_exp</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span> <span class="o">=</span> <span class="s s-Atom">new_exp</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">exp</span> <span class="o">=</span> <span class="s s-Atom">new_exp</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1556,7 +1588,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">strength</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Azure</span> <span class="nv">DB</span> <span class="s s-Atom">uses</span> <span class="nv">Int</span> <span class="s s-Atom">for</span> <span class="s s-Atom">stats</span><span class="p">,</span> <span class="s s-Atom">but</span> <span class="s s-Atom">it</span> <span class="s s-Atom">may</span> <span class="s s-Atom">cause</span> <span class="s s-Atom">problems</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">client</span> <span class="s s-Atom">past</span> <span class="s s-Atom">signed</span> <span class="s s-Atom">shorts</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set STR above 30k!&quot;</span><span class="p">)</span>
 
@@ -1578,13 +1610,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_str</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">strength</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_str</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set STR above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">strength</span> <span class="o">=</span> <span class="s s-Atom">new_str</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">strength</span> <span class="o">=</span> <span class="s s-Atom">new_str</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1618,13 +1644,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_dex</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">dex</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_dex</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set DEX above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">dex</span> <span class="o">=</span> <span class="s s-Atom">new_dex</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">dex</span> <span class="o">=</span> <span class="s s-Atom">new_dex</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1658,13 +1678,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_inte</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">inte</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_inte</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set INT above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">inte</span> <span class="o">=</span> <span class="s s-Atom">new_inte</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">inte</span> <span class="o">=</span> <span class="s s-Atom">new_inte</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1698,13 +1712,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_luk</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">luk</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_luk</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set LUK above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">luk</span> <span class="o">=</span> <span class="s s-Atom">new_luk</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">luk</span> <span class="o">=</span> <span class="s s-Atom">new_luk</span>
 
     <span class="s s-Atom">def</span> <span class="nf">get_primary_stats</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
@@ -1740,9 +1748,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">max_hp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;maxhp&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">500000</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">max_hp</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set HP above 500k!&quot;</span><span class="p">)</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;maxhp&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">max_hp</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_max_hp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
@@ -1768,9 +1782,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">max_mp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;maxmp&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">500000</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">max_mp</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set MP above 500k!&quot;</span><span class="p">)</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;maxmp&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">max_mp</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_max_mp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
@@ -1818,13 +1838,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">new_ap</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">ap</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">new_ap</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
-
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set AP above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="nn">else</span><span class="p">:</span>
-
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">ap</span> <span class="o">=</span> <span class="s s-Atom">new_ap</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">ap</span> <span class="o">=</span> <span class="s s-Atom">new_ap</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1836,15 +1850,17 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">bl_slots</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;buddyCapacity&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set BL slots above 100!&quot;</span><span class="p">)</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">bl_slots</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;buddyCapacity&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">bl_slots</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_bl_slots</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">bl_slots</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
@@ -1860,15 +1876,17 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">rebirths</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;reborns&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set rebirths above 2.1b!&quot;</span><span class="p">)</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">rebirths</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;reborns&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">rebirths</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_rebirths</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">rebirths</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
@@ -1884,15 +1902,13 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">ambition</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
+        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span><span class="p">;</span> <span class="nv">DB</span> <span class="s s-Atom">allows</span> <span class="mf">2.1</span><span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">but</span> <span class="o">not</span> <span class="s s-Atom">sure</span> <span class="s s-Atom">what</span> <span class="s s-Atom">the</span> <span class="s s-Atom">actual</span> <span class="s s-Atom">cap</span> <span class="s s-Atom">in</span> <span class="s s-Atom">source</span> <span class="o">is</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;ambition&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">ambition</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_ambition</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">ambition</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
@@ -1916,8 +1932,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">add_insight</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
-
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">insight</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">insight</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
@@ -1939,8 +1953,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">willpower</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_willpower</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">willpower</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
@@ -1964,8 +1976,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">add_diligence</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
-
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">diligence</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">diligence</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
@@ -1987,8 +1997,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">empathy</span> <span class="o">=</span> <span class="s s-Atom">amount</span>
 
     <span class="s s-Atom">def</span> <span class="nf">add_empathy</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
 
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">empathy</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
@@ -2012,11 +2020,37 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">add_charm</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
-
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">charm</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">charm</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
+
+    <span class="s s-Atom">def</span> <span class="nf">get_personality_traits</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+        <span class="s2">&quot;&quot;&quot;Returns the 6 personality trait values in a dictionary</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            dictionary of personality traits</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="s s-Atom">traits</span> <span class="o">=</span> <span class="p">{</span>
+
+            <span class="s2">&quot;ambition&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">ambition</span><span class="p">,</span>
+
+            <span class="s2">&quot;insight&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">insight</span><span class="p">,</span>
+
+            <span class="s2">&quot;willpower&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">willpower</span><span class="p">,</span>
+
+            <span class="s2">&quot;diligence&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">diligence</span><span class="p">,</span>
+
+            <span class="s2">&quot;empathy&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">empathy</span><span class="p">,</span>
+
+            <span class="s2">&quot;charm&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">charm</span><span class="p">,</span>
+
+        <span class="p">}</span>
+
+        <span class="s s-Atom">return</span> <span class="s s-Atom">traits</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -2036,8 +2070,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">add_honour</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
-
         <span class="s s-Atom">new_amount</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">honour</span><span class="p">)</span> <span class="o">+</span> <span class="s s-Atom">amount</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">honour</span> <span class="o">=</span> <span class="s s-Atom">new_amount</span>
@@ -2052,11 +2084,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">mute</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">status</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="s s-Atom">or</span> <span class="s s-Atom">status</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chatban&quot;</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chatban&quot;</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">mute</span> <span class="o">=</span> <span class="s s-Atom">status</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">mute</span> <span class="o">=</span> <span class="s s-Atom">status</span>
+
+        <span class="nn">else</span><span class="p">:</span>
+
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to `true` or `false`!&quot;</span><span class="p">)</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -2072,7 +2108,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">get_char_img</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io API</span>
+        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</span>
 
 <span class="s2">        Returns:</span>
 
@@ -2126,7 +2162,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
-            <span class="s s-Atom">f</span><span class="s2">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE name = &#39;{self.name}&#39;&quot;</span>
+            <span class="s s-Atom">f</span><span class="s2">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{self.name}&#39;&quot;</span>
 
         <span class="p">)</span>
 
@@ -2465,9 +2501,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">account_id</span> = <span class="n">utils</span>.<span class="n">get_db_first_hit</span>(
 
-            <span class="nb">self</span>.<span class="n">_database_config</span>,
+            <span class="nb">self</span>.<span class="n">database_config</span>,
 
-            <span class="nb">f</span><span class="s">&quot;SELECT * FROM characters WHERE id = &#39;{self.character_id}&#39;&quot;</span>
+            <span class="nb">f</span><span class="s">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
         ).<span class="nb">get</span>(<span class="s">&quot;accountid&quot;</span>)  <span class="c1"># get_db() returns a Dictionary, so get() is used to fetch only the value</span>
 
@@ -2475,9 +2511,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">account_info</span> = <span class="n">utils</span>.<span class="n">get_db_first_hit</span>(
 
-            <span class="nb">self</span>.<span class="n">_database_config</span>,
+            <span class="nb">self</span>.<span class="n">database_config</span>,
 
-            <span class="nb">f</span><span class="s">&quot;SELECT * FROM accounts WHERE id = &#39;{account_id}&#39;&quot;</span>
+            <span class="nb">f</span><span class="s">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
         )  <span class="c1"># The row will always be 0 because there should be no characters with the same account ID (Primary Key)</span>
 
@@ -2561,13 +2597,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_level</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="nb">level</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_level</span> &gt; <span class="mi">275</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Level should not exceed 275!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="nb">level</span> = <span class="n">new_level</span>
+        <span class="nb">self</span>.<span class="nb">level</span> = <span class="n">new_level</span>
 
     <span class="nv">@property</span>
 
@@ -2619,15 +2649,33 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">len</span>(<span class="n">new_name</span>) &gt; <span class="mi">13</span>:
+        <span class="c1"># Check length against max length in Azure DB</span>
+
+        <span class="c1"># Not checking for special symbols etc, since this is an admin command</span>
+
+        <span class="k">if</span> <span class="n">len</span>(<span class="n">str</span>(<span class="n">new_name</span>)) &gt; <span class="mi">13</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Character names can only be 13 characters long!&quot;</span>)
 
+        <span class="c1"># Check clashes</span>
+
+        <span class="n">data</span> = <span class="n">utils</span>.<span class="n">get_db_all_hits</span>(
+
+            <span class="nb">self</span>.<span class="n">database_config</span>,
+
+            <span class="nb">f</span><span class="s">&quot;SELECT * FROM `characters` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
+
+        )
+
+        <span class="k">if</span> <span class="nb">not</span> <span class="n">data:</span>  <span class="c1"># if the list of accounts with clashing names is not empty</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;name&quot;</span>, <span class="n">new_name</span>)  <span class="c1"># set IGN in DB</span>
+
+            <span class="nb">self</span>.<span class="n">_name</span> = <span class="n">new_name</span>  <span class="c1"># refresh character instance attributes in memory</span>
+
         <span class="n">else:</span>
 
-            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;name&quot;</span>, <span class="n">new_name</span>)
-
-            <span class="nb">self</span>.<span class="n">_name</span> = <span class="n">new_name</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;That name is already taken!&quot;</span>)  <span class="c1"># Message to be passed along on failure</span>
 
     <span class="nv">@property</span>
 
@@ -2661,13 +2709,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">meso</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_amount</span> &gt; <span class="mi">10000000000</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set meso to more than 10b!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">meso</span> = <span class="n">new_amount</span>
+        <span class="nb">self</span>.<span class="n">meso</span> = <span class="n">new_amount</span>
 
     <span class="nv">@property</span>
 
@@ -2701,13 +2743,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_fame</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">fame</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_fame</span> &gt; <span class="mi">32767</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set fame to more than 30k!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">fame</span> = <span class="n">new_fame</span>
+        <span class="nb">self</span>.<span class="n">fame</span> = <span class="n">new_fame</span>
 
     <span class="nv">@property</span>
 
@@ -2739,9 +2775,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">face</span>(<span class="nb">self</span>, <span class="n">face_id</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;face&quot;</span>, <span class="n">face_id</span>)  <span class="c1"># TODO: Add check</span>
+        <span class="k">if</span> <span class="n">face_id</span> &lt; <span class="mi">20000</span> <span class="o">or</span> <span class="n">face_id</span> &gt; <span class="mi">29999</span>:  <span class="c1"># Best guess - might be wrong!</span>
 
-        <span class="nb">self</span>.<span class="n">_face</span> = <span class="n">face_id</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong face ID!&quot;</span>)
+
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;face&quot;</span>, <span class="n">face_id</span>)
+
+            <span class="nb">self</span>.<span class="n">_face</span> = <span class="n">face_id</span>
 
     <span class="nv">@property</span>
 
@@ -2753,9 +2795,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">hair</span>(<span class="nb">self</span>, <span class="n">hair_id</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;hair&quot;</span>, <span class="n">hair_id</span>)  <span class="c1"># TODO: Add check</span>
+        <span class="k">if</span> <span class="n">hair_id</span> &lt; <span class="mi">30000</span> <span class="o">or</span> <span class="n">hair_id</span> &gt; <span class="mi">49999</span>:  <span class="c1"># Best guess - might be wrong!</span>
 
-        <span class="nb">self</span>.<span class="n">_hair</span> = <span class="n">hair_id</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong hair ID!&quot;</span>)
+
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;hair&quot;</span>, <span class="n">hair_id</span>)
+
+            <span class="nb">self</span>.<span class="n">_hair</span> = <span class="n">hair_id</span>
 
     <span class="nv">@property</span>
 
@@ -2767,9 +2815,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">skin</span>(<span class="nb">self</span>, <span class="n">skin_id</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;skincolor&quot;</span>, <span class="n">skin_id</span>)  <span class="c1"># TODO: Add check</span>
+        <span class="k">if</span> <span class="n">skin_id</span> &lt; <span class="mi">0</span> <span class="o">or</span> <span class="n">skin_id</span> &gt; <span class="mi">16</span>:  <span class="c1"># Best guess - might be wrong!</span>
 
-        <span class="nb">self</span>.<span class="n">_skin</span> = <span class="n">skin_id</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong skin colour ID!&quot;</span>)
+
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;skincolor&quot;</span>, <span class="n">skin_id</span>)
+
+            <span class="nb">self</span>.<span class="n">_skin</span> = <span class="n">skin_id</span>
 
     <span class="nv">@property</span>
 
@@ -2781,9 +2835,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">gender</span>(<span class="nb">self</span>, <span class="n">gender_id</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;gender&quot;</span>, <span class="n">gender_id</span>)  <span class="c1"># TODO: Add check</span>
+        <span class="k">if</span> <span class="n">gender_id</span> &lt; -<span class="mi">1</span> <span class="o">or</span> <span class="n">gender_id</span> &gt; <span class="mi">1</span>:  <span class="c1"># Best guess - might be wrong!</span>
 
-        <span class="nb">self</span>.<span class="n">_gender</span> = <span class="n">gender_id</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong gender ID!&quot;</span>)
+
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;gender&quot;</span>, <span class="n">gender_id</span>)
+
+            <span class="nb">self</span>.<span class="n">_gender</span> = <span class="n">gender_id</span>
 
     <span class="nv">@property</span>
 
@@ -2795,9 +2855,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="nb">exp</span>(<span class="nb">self</span>, <span class="n">exp_amount</span>):
 
-        <span class="k">if</span> <span class="n">exp_amount</span> &gt; <span class="mi">2147483647</span>:
+        <span class="k">if</span> <span class="n">exp_amount</span> &gt; <span class="mi">9223372036854775807</span>:  <span class="c1"># Azure DB uses Bigint for EXP</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set EXP above 2bil!&quot;</span>)
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set EXP above 9.2 Quintillion!&quot;</span>)
 
         <span class="n">else:</span>
 
@@ -2815,15 +2875,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">2147483647</span>:
+        <span class="n">new_exp</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="nb">exp</span>) + <span class="n">amount</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to increment EXP by more than 2bil!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="n">new_exp</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="nb">exp</span>) + <span class="n">amount</span>
-
-            <span class="nb">self</span>.<span class="nb">exp</span> = <span class="n">new_exp</span>
+        <span class="nb">self</span>.<span class="nb">exp</span> = <span class="n">new_exp</span>
 
     <span class="nv">@property</span>
 
@@ -2835,7 +2889,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">strength</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">32767</span>:
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">32767</span>:  <span class="c1"># Azure DB uses Int for stats, but it may cause problems with the client past signed shorts</span>
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set STR above 30k!&quot;</span>)
 
@@ -2857,13 +2911,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_str</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">strength</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_str</span> &gt; <span class="mi">32767</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set STR above 30k!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">strength</span> = <span class="n">new_str</span>
+        <span class="nb">self</span>.<span class="n">strength</span> = <span class="n">new_str</span>
 
     <span class="nv">@property</span>
 
@@ -2897,13 +2945,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_dex</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">dex</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_dex</span> &gt; <span class="mi">32767</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set DEX above 30k!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">dex</span> = <span class="n">new_dex</span>
+        <span class="nb">self</span>.<span class="n">dex</span> = <span class="n">new_dex</span>
 
     <span class="nv">@property</span>
 
@@ -2937,13 +2979,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_inte</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">inte</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_inte</span> &gt; <span class="mi">32767</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set INT above 30k!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">inte</span> = <span class="n">new_inte</span>
+        <span class="nb">self</span>.<span class="n">inte</span> = <span class="n">new_inte</span>
 
     <span class="nv">@property</span>
 
@@ -2977,13 +3013,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_luk</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">luk</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_luk</span> &gt; <span class="mi">32767</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set LUK above 30k!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">luk</span> = <span class="n">new_luk</span>
+        <span class="nb">self</span>.<span class="n">luk</span> = <span class="n">new_luk</span>
 
     <span class="n">def</span> <span class="n">get_primary_stats</span>(<span class="nb">self</span>):
 
@@ -3019,9 +3049,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">max_hp</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;maxhp&quot;</span>, <span class="n">amount</span>)
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">500000</span>:
 
-        <span class="nb">self</span>.<span class="n">_max_hp</span> = <span class="n">amount</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set HP above 500k!&quot;</span>)
+
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;maxhp&quot;</span>, <span class="n">amount</span>)
+
+            <span class="nb">self</span>.<span class="n">_max_hp</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_max_hp</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
@@ -3047,9 +3083,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">max_mp</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;maxmp&quot;</span>, <span class="n">amount</span>)
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">500000</span>:
 
-        <span class="nb">self</span>.<span class="n">_max_mp</span> = <span class="n">amount</span>
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set MP above 500k!&quot;</span>)
+
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;maxmp&quot;</span>, <span class="n">amount</span>)
+
+            <span class="nb">self</span>.<span class="n">_max_mp</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_max_mp</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
@@ -3097,13 +3139,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_ap</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">ap</span>) + <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_ap</span> &gt; <span class="mi">32767</span>:
-
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set AP above 30k!&quot;</span>)
-
-        <span class="n">else:</span>
-
-            <span class="nb">self</span>.<span class="n">ap</span> = <span class="n">new_ap</span>
+        <span class="nb">self</span>.<span class="n">ap</span> = <span class="n">new_ap</span>
 
     <span class="nv">@property</span>
 
@@ -3115,15 +3151,17 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">bl_slots</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">100</span>:
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;buddyCapacity&quot;</span>, <span class="n">amount</span>)
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set BL slots above 100!&quot;</span>)
 
-        <span class="nb">self</span>.<span class="n">_bl_slots</span> = <span class="n">amount</span>
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;buddyCapacity&quot;</span>, <span class="n">amount</span>)
+
+            <span class="nb">self</span>.<span class="n">_bl_slots</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_bl_slots</span>(<span class="nb">self</span>, <span class="n">amount</span>):
-
-        <span class="c1"># TODO: Add checks</span>
 
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">bl_slots</span>) + <span class="n">amount</span>
 
@@ -3139,15 +3177,17 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">rebirths</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">2147483647</span>:
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;reborns&quot;</span>, <span class="n">amount</span>)
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set rebirths above 2.1b!&quot;</span>)
 
-        <span class="nb">self</span>.<span class="n">_rebirths</span> = <span class="n">amount</span>
+        <span class="n">else:</span>
+
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;reborns&quot;</span>, <span class="n">amount</span>)
+
+            <span class="nb">self</span>.<span class="n">_rebirths</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_rebirths</span>(<span class="nb">self</span>, <span class="n">amount</span>):
-
-        <span class="c1"># TODO: Add checks</span>
 
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">rebirths</span>) + <span class="n">amount</span>
 
@@ -3163,15 +3203,13 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">ambition</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
+        <span class="c1"># TODO: Add checks; DB allows 2.1b, but not sure what the actual cap in source is</span>
 
         <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;ambition&quot;</span>, <span class="n">amount</span>)
 
         <span class="nb">self</span>.<span class="n">_ambition</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_ambition</span>(<span class="nb">self</span>, <span class="n">amount</span>):
-
-        <span class="c1"># TODO: Add checks</span>
 
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">ambition</span>) + <span class="n">amount</span>
 
@@ -3195,8 +3233,6 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">add_insight</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
-
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">insight</span>) + <span class="n">amount</span>
 
         <span class="nb">self</span>.<span class="n">insight</span> = <span class="n">new_amount</span>
@@ -3218,8 +3254,6 @@ This class contains the appropriate getter and setter methods for said attribute
         <span class="nb">self</span>.<span class="n">_willpower</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_willpower</span>(<span class="nb">self</span>, <span class="n">amount</span>):
-
-        <span class="c1"># TODO: Add checks</span>
 
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">willpower</span>) + <span class="n">amount</span>
 
@@ -3243,8 +3277,6 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">add_diligence</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
-
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">diligence</span>) + <span class="n">amount</span>
 
         <span class="nb">self</span>.<span class="n">diligence</span> = <span class="n">new_amount</span>
@@ -3266,8 +3298,6 @@ This class contains the appropriate getter and setter methods for said attribute
         <span class="nb">self</span>.<span class="n">_empathy</span> = <span class="n">amount</span>
 
     <span class="n">def</span> <span class="n">add_empathy</span>(<span class="nb">self</span>, <span class="n">amount</span>):
-
-        <span class="c1"># TODO: Add checks</span>
 
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">empathy</span>) + <span class="n">amount</span>
 
@@ -3291,11 +3321,37 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">add_charm</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
-
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">charm</span>) + <span class="n">amount</span>
 
         <span class="nb">self</span>.<span class="n">charm</span> = <span class="n">new_amount</span>
+
+    <span class="n">def</span> <span class="n">get_personality_traits</span>(<span class="nb">self</span>):
+
+        <span class="s">&quot;&quot;&quot;Returns the 6 personality trait values in a dictionary</span>
+
+<span class="s">        Returns:</span>
+
+<span class="s">            dictionary of personality traits</span>
+
+<span class="s">        &quot;&quot;&quot;</span>
+
+        <span class="n">traits</span> = {
+
+            <span class="s">&quot;ambition&quot;</span>: <span class="nb">self</span>.<span class="n">ambition</span>,
+
+            <span class="s">&quot;insight&quot;</span>: <span class="nb">self</span>.<span class="n">insight</span>,
+
+            <span class="s">&quot;willpower&quot;</span>: <span class="nb">self</span>.<span class="n">willpower</span>,
+
+            <span class="s">&quot;diligence&quot;</span>: <span class="nb">self</span>.<span class="n">diligence</span>,
+
+            <span class="s">&quot;empathy&quot;</span>: <span class="nb">self</span>.<span class="n">empathy</span>,
+
+            <span class="s">&quot;charm&quot;</span>: <span class="nb">self</span>.<span class="n">charm</span>,
+
+        }
+
+        <span class="k">return</span> <span class="n">traits</span>
 
     <span class="nv">@property</span>
 
@@ -3315,8 +3371,6 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">add_honour</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks</span>
-
         <span class="n">new_amount</span> = <span class="n">int</span>(<span class="nb">self</span>.<span class="n">honour</span>) + <span class="n">amount</span>
 
         <span class="nb">self</span>.<span class="n">honour</span> = <span class="n">new_amount</span>
@@ -3331,11 +3385,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">mute</span>(<span class="nb">self</span>, <span class="nb">status</span>):
 
-        <span class="c1"># TODO: Add checks</span>
+        <span class="k">if</span> <span class="nb">status</span> == <span class="s">&quot;false&quot;</span> <span class="o">or</span> <span class="nb">status</span> == <span class="s">&quot;true&quot;</span>:
 
-        <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;chatban&quot;</span>, <span class="nb">status</span>)
+            <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;chatban&quot;</span>, <span class="nb">status</span>)
 
-        <span class="nb">self</span>.<span class="n">_mute</span> = <span class="nb">status</span>
+            <span class="nb">self</span>.<span class="n">_mute</span> = <span class="nb">status</span>
+
+        <span class="n">else:</span>
+
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Invalid input! Stick to `true` or `false`!&quot;</span>)
 
     <span class="nv">@property</span>
 
@@ -3351,7 +3409,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">get_char_img</span>(<span class="nb">self</span>):
 
-        <span class="s">&quot;&quot;&quot;Generates character avatar using MapleStory.io API</span>
+        <span class="s">&quot;&quot;&quot;Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</span>
 
 <span class="s">        Returns:</span>
 
@@ -3405,7 +3463,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="nb">self</span>.<span class="n">_database_config</span>,
 
-            <span class="nb">f</span><span class="s">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE name = &#39;{self.name}&#39;&quot;</span>
+            <span class="nb">f</span><span class="s">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{self.name}&#39;&quot;</span>
 
         )
 
@@ -3553,8 +3611,6 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_ambition</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
-
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">ambition</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
         <span class="k">self</span><span class="p">.</span><span class="n">ambition</span> <span class="o">=</span> <span class="n">new_amount</span>
@@ -3583,13 +3639,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_ap</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">ap</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_ap</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set AP above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">ap</span> <span class="o">=</span> <span class="n">new_ap</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">ap</span> <span class="o">=</span> <span class="n">new_ap</span>
 </code></pre></div>
 
 </details>
@@ -3601,8 +3651,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_bl_slots</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">bl_slots</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -3618,8 +3666,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_charm</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">charm</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -3649,13 +3695,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_dex</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">dex</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_dex</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set DEX above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">dex</span> <span class="o">=</span> <span class="n">new_dex</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">dex</span> <span class="o">=</span> <span class="n">new_dex</span>
 </code></pre></div>
 
 </details>
@@ -3667,8 +3707,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_diligence</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">diligence</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -3684,8 +3722,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_empathy</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">empathy</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -3713,15 +3749,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
+        <span class="n">new_exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">exp</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to increment EXP by more than 2bil!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="n">new_exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">exp</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">exp</span> <span class="o">=</span> <span class="n">new_exp</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">exp</span> <span class="o">=</span> <span class="n">new_exp</span>
 </code></pre></div>
 
 </details>
@@ -3747,13 +3777,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_fame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">fame</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_fame</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set fame to more than 30k!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">fame</span> <span class="o">=</span> <span class="n">new_fame</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">fame</span> <span class="o">=</span> <span class="n">new_fame</span>
 </code></pre></div>
 
 </details>
@@ -3765,8 +3789,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_honour</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">honour</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -3782,8 +3804,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_insight</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">insight</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -3813,13 +3833,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_inte</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">inte</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_inte</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set INT above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">inte</span> <span class="o">=</span> <span class="n">new_inte</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">inte</span> <span class="o">=</span> <span class="n">new_inte</span>
 </code></pre></div>
 
 </details>
@@ -3845,13 +3859,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="k">level</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_level</span> <span class="o">&gt;</span> <span class="mi">275</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;Level should not exceed 275!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="k">level</span> <span class="o">=</span> <span class="n">new_level</span>
+        <span class="k">self</span><span class="p">.</span><span class="k">level</span> <span class="o">=</span> <span class="n">new_level</span>
 </code></pre></div>
 
 </details>
@@ -3877,13 +3885,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_luk</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">luk</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_luk</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set LUK above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">luk</span> <span class="o">=</span> <span class="n">new_luk</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">luk</span> <span class="o">=</span> <span class="n">new_luk</span>
 </code></pre></div>
 
 </details>
@@ -3961,13 +3963,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">meso</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_amount</span> <span class="o">&gt;</span> <span class="mi">10000000000</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set meso to more than 10b!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">meso</span> <span class="o">=</span> <span class="n">new_amount</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">meso</span> <span class="o">=</span> <span class="n">new_amount</span>
 </code></pre></div>
 
 </details>
@@ -3979,8 +3975,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_rebirths</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">rebirths</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -4010,13 +4004,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">new_str</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">strength</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
-        <span class="k">if</span> <span class="n">new_str</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">:</span>
-
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="ss">&quot;You should not try to set STR above 30k!&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">self</span><span class="p">.</span><span class="n">strength</span> <span class="o">=</span> <span class="n">new_str</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">strength</span> <span class="o">=</span> <span class="n">new_str</span>
 </code></pre></div>
 
 </details>
@@ -4028,8 +4016,6 @@ This class contains the appropriate getter and setter methods for said attribute
 </code></pre></div>
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_willpower</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-
-        <span class="o">#</span> <span class="n">TODO</span><span class="p">:</span> <span class="k">Add</span> <span class="n">checks</span>
 
         <span class="n">new_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">willpower</span><span class="p">)</span> <span class="o">+</span> <span class="n">amount</span>
 
@@ -4043,12 +4029,12 @@ This class contains the appropriate getter and setter methods for said attribute
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Generates character avatar using MapleStory.io API</p>
+<p>Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</p>
 <p>Returns:
     url: String, a link to the generated avatar</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="s s-Atom">def</span> <span class="nf">get_char_img</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io API</span>
+        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</span>
 
 <span class="s2">        Returns:</span>
 
@@ -4092,6 +4078,45 @@ This class contains the appropriate getter and setter methods for said attribute
 <span class="ss">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">str</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">job</span><span class="p">)]</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_personality_traits">get_personality_traits</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_personality_traits</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Returns the 6 personality trait values in a dictionary</p>
+<p>Returns:
+    dictionary of personality traits</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_personality_traits</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
+
+        <span class="ss">&quot;&quot;&quot;Returns the 6 personality trait values in a dictionary</span>
+
+<span class="ss">        Returns:</span>
+
+<span class="ss">            dictionary of personality traits</span>
+
+<span class="ss">        &quot;&quot;&quot;</span>
+
+        <span class="n">traits</span> <span class="o">=</span> <span class="err">{</span>
+
+            <span class="ss">&quot;ambition&quot;</span><span class="p">:</span> <span class="k">self</span><span class="p">.</span><span class="n">ambition</span><span class="p">,</span>
+
+            <span class="ss">&quot;insight&quot;</span><span class="p">:</span> <span class="k">self</span><span class="p">.</span><span class="n">insight</span><span class="p">,</span>
+
+            <span class="ss">&quot;willpower&quot;</span><span class="p">:</span> <span class="k">self</span><span class="p">.</span><span class="n">willpower</span><span class="p">,</span>
+
+            <span class="ss">&quot;diligence&quot;</span><span class="p">:</span> <span class="k">self</span><span class="p">.</span><span class="n">diligence</span><span class="p">,</span>
+
+            <span class="ss">&quot;empathy&quot;</span><span class="p">:</span> <span class="k">self</span><span class="p">.</span><span class="n">empathy</span><span class="p">,</span>
+
+            <span class="ss">&quot;charm&quot;</span><span class="p">:</span> <span class="k">self</span><span class="p">.</span><span class="n">charm</span><span class="p">,</span>
+
+        <span class="err">}</span>
+
+        <span class="k">return</span> <span class="n">traits</span>
 </code></pre></div>
 
 </details>
@@ -4180,47 +4205,47 @@ a new Account object instance, with the relevant attributes from the database.</
     Account object with attributes identical to its corresponding entry in the database
 Raises:
     Generic error on failure - handled by the utility.get_db_first_hit() method</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_account</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_account</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="sd">&quot;&quot;&quot;Fetch a dictionary of account attributes from AzureMS&#39;s DB and use it to instantiate a new Account object</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetch a dictionary of account attributes from AzureMS&#39;s DB and use it to instantiate a new Account object</span>
 
-<span class="sd">        Runs at the end of Character::__init__(char_stats, database_config).</span>
+<span class="s2">        Runs at the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="sd">        Checks the account ID associated with the character instance, and uses the Account class constructor to create</span>
+<span class="s2">        Checks the account ID associated with the character instance, and uses the Account class constructor to create</span>
 
-<span class="sd">        a new Account object instance, with the relevant attributes from the database.</span>
+<span class="s2">        a new Account object instance, with the relevant attributes from the database.</span>
 
-<span class="sd">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="sd">            Account object with attributes identical to its corresponding entry in the database</span>
+<span class="s2">            Account object with attributes identical to its corresponding entry in the database</span>
 
-<span class="sd">        Raises:</span>
+<span class="s2">        Raises:</span>
 
-<span class="sd">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s2">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">account_id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
+        <span class="n">account_id</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;SELECT * FROM characters WHERE id = &#39;{self.character_id}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
-        <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>  <span class="c1"># get_db() returns a Dictionary, so get() is used to fetch only the value</span>
+        <span class="p">).</span><span class="k">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>  <span class="c1"># get_db() returns a Dictionary, so get() is used to fetch only the value</span>
 
         <span class="c1"># The row will always be 0 because there should be no characters with the same character ID (Primary Key)</span>
 
-        <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
+        <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;SELECT * FROM accounts WHERE id = &#39;{account_id}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
         <span class="p">)</span>  <span class="c1"># The row will always be 0 because there should be no characters with the same account ID (Primary Key)</span>
 
-        <span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">)</span>
+        <span class="k">account</span> <span class="o">=</span> <span class="k">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">account</span>
+        <span class="k">return</span> <span class="k">account</span>
 </code></pre></div>
 
 </details>
@@ -4362,49 +4387,49 @@ Not recommended to use this alone, as it won't update the character object which
     A boolean representing whether the operation was successful</p>
 <p>Raises:
     Generic error, handled in utility.write_to_db</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Update a character&#39;s stats from column name in database</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Update a character&#39;s stats from column name in database</span>
 
-<span class="ss">        Grabs the database attributes provided through the class constructor.</span>
+<span class="s2">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="ss">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
 
-<span class="ss">        Attempts to update the field represented by the provided column in characterstats, with the provided value.</span>
+<span class="s2">        Attempts to update the field represented by the provided column in characterstats, with the provided value.</span>
 
-<span class="ss">        Not recommended to use this alone, as it won&#39;t update the character object which this was used from.</span>
+<span class="s2">        Not recommended to use this alone, as it won&#39;t update the character object which this was used from.</span>
 
-<span class="ss">        Args:</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">            value: int or string, representing the value to be set in the database</span>
+<span class="s2">            value: int or string, representing the value to be set in the database</span>
 
-<span class="ss">            column: string, representing the column in the database that is to be updated</span>
+<span class="s2">            column: string, representing the column in the database that is to be updated</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            A boolean representing whether the operation was successful</span>
+<span class="s2">            A boolean representing whether the operation was successful</span>
 
-<span class="ss">        Raises:</span>
+<span class="s2">        Raises:</span>
 
-<span class="ss">            Generic error, handled in utility.write_to_db</span>
+<span class="s2">            Generic error, handled in utility.write_to_db</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span><span class="w"></span>
+        <span class="k">status</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span>
 
-<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-<span class="w">            </span><span class="n">f</span><span class="ss">&quot;UPDATE characters SET {column} = &#39;{value}&#39; WHERE name = &#39;{self.name}&#39;&quot;</span><span class="w"></span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{self.name}&#39;&quot;</span>
 
-<span class="w">        </span><span class="p">)</span><span class="w"></span>
+        <span class="p">)</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"></span>
+        <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Successfully updated {column} value for character: {self.name}.&quot;</span><span class="p">)</span><span class="w"></span>
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for character: {self.name}.&quot;</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>  <span class="c1"># Update the stats in the dictionary</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="w"></span>
+        <span class="k">return</span> <span class="k">status</span>
 </code></pre></div>
 
 </details>

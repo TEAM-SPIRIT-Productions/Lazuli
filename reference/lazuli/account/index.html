@@ -808,9 +808,33 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+        <span class="c1"># Check for length:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_name</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is too long!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Check for clashes</span>
+
+            <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">,</span>
+
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
+
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>  <span class="c1"># if the list of accounts with clashing names is not empty</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>  <span class="c1"># set name in DB</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>  <span class="c1"># refreshes account instance in memory</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
     <span class="nd">@property</span>
 
@@ -822,9 +846,23 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">logged_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+        <span class="k">try</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
+
+                <span class="c1"># Message to be passed along on failure:</span>
+
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That `logged_in` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
     <span class="nd">@property</span>
 
@@ -836,9 +874,23 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">banned</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+        <span class="k">try</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
+
+                <span class="c1"># Message to be passed along on failure:</span>
+
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That `banned` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
     <span class="nd">@property</span>
 
@@ -850,7 +902,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">ban_reason</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banreason&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banreason&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># type `text`; 65k chars</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="n">value</span>
 
@@ -864,9 +916,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">nx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;nxCash&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep NX within 2.1b!&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;nxCash&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">add_nx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
@@ -892,9 +950,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">maple_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;mPoints&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Maple Points within 2.1b!&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;mPoints&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">add_maple_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
@@ -920,9 +984,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">vp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;vpoints&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Vote Points within 2.1b!&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;vpoints&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">add_vp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
@@ -948,9 +1018,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;realcash&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep DPs within 2.1b!&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;realcash&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">add_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
@@ -976,9 +1052,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">char_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chrslot&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">52</span><span class="p">:</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Character Slots within 52!&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chrslot&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">add_char_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
@@ -1090,7 +1172,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
 
         <span class="p">)</span>
 
@@ -1128,437 +1210,519 @@ This class contains the appropriate getter and setter methods for said attribute
         vp:Integer, representing the amount of Vote Points the user has
         dp: Integer, representing the amount of Donation Points the user has
         char_slots: Integer, representing the number of character slots the user has</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nl">Account</span><span class="p">:</span><span class="w"></span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="k">Account</span><span class="o">:</span>
 
-<span class="w">    </span><span class="ss">&quot;&quot;&quot;Account object; models AzureMS accounts.</span>
+    <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Account object; models AzureMS accounts.</span>
 
-<span class="ss">    Using instance method Lazuli::get_account_by_username(username) or the Lazuli::get_char_by_name(name).account getter</span>
+<span class="s2">    Using instance method Lazuli::get_account_by_username(username) or the Lazuli::get_char_by_name(name).account getter</span>
 
-<span class="ss">    will create an Account object instance with attributes identical to the account with username &quot;</span><span class="n">username</span><span class="ss">&quot;</span>
+<span class="s2">    will create an Account object instance with attributes identical to the account with username &quot;</span><span class="n">username</span><span class="s2">&quot;</span>
 
-<span class="ss">    (or IGN &quot;</span><span class="n">name</span><span class="ss">&quot; for the latter) in the connected AzureMS-based database.</span>
+<span class="s2">    (or IGN &quot;</span><span class="k">name</span><span class="s2">&quot; for the latter) in the connected AzureMS-based database.</span>
 
-<span class="ss">    This class contains the appropriate getter and setter methods for said attributes.</span>
+<span class="s2">    This class contains the appropriate getter and setter methods for said attributes.</span>
 
-<span class="ss">    Attributes:</span>
+<span class="s2">    Attributes:</span>
 
-<span class="ss">        account_id: Integer, representing Primary Key for account - Do NOT set manually</span>
+<span class="s2">        account_id: Integer, representing Primary Key for account - Do NOT set manually</span>
 
-<span class="ss">        username: String, representing account username; varchar(64)</span>
+<span class="s2">        username: String, representing account username; varchar(64)</span>
 
-<span class="ss">        logged_in: Integer, represents login status of the account; int(1) and not bool for some reason</span>
+<span class="s2">        logged_in: Integer, represents login status of the account; int(1) and not bool for some reason</span>
 
-<span class="ss">        banned: Integer, represents ban status of the account; int(1) and not bool for some reason</span>
+<span class="s2">        banned: Integer, represents ban status of the account; int(1) and not bool for some reason</span>
 
-<span class="ss">        ban_reason: String, representing account ban reason; text</span>
+<span class="s2">        ban_reason: String, representing account ban reason; text</span>
 
-<span class="ss">        nx: Integer, representing the amount of NX Prepaid the user has</span>
+<span class="s2">        nx: Integer, representing the amount of NX Prepaid the user has</span>
 
-<span class="ss">        maple_points: Integer, representing the amount of Maple Points the user has</span>
+<span class="s2">        maple_points: Integer, representing the amount of Maple Points the user has</span>
 
-<span class="ss">        vp:Integer, representing the amount of Vote Points the user has</span>
+<span class="s2">        vp:Integer, representing the amount of Vote Points the user has</span>
 
-<span class="ss">        dp: Integer, representing the amount of Donation Points the user has</span>
+<span class="s2">        dp: Integer, representing the amount of Donation Points the user has</span>
 
-<span class="ss">        char_slots: Integer, representing the number of character slots the user has</span>
+<span class="s2">        char_slots: Integer, representing the number of character slots the user has</span>
 
-<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">account_info</span><span class="p">,</span><span class="w"> </span><span class="n">database_config</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">account_info</span><span class="p">,</span> <span class="n">database_config</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Emulates how account object is handled server-sided</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Emulates how account object is handled server-sided</span>
 
-<span class="ss">        Args:</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">            account_info: dictionary of user attributes, formatted in AzureMS style</span>
+<span class="s2">            account_info: dictionary of user attributes, formatted in AzureMS style</span>
 
-<span class="ss">            database_config: dictionary of protected attributes from a Lazuli object</span>
+<span class="s2">            database_config: dictionary of protected attributes from a Lazuli object</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">account_info</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span> <span class="o">=</span> <span class="n">account_info</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">database_config</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="n">database_config</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Primary</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Do</span><span class="w"> </span><span class="ow">NOT</span><span class="w"> </span><span class="k">set</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Primary Key - Do NOT set</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;&quot;</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nc">varchar</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># varchar(64)</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="ow">some</span><span class="w"> </span><span class="n">reason</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># int(1) and not bool for some reason</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_banned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="ow">some</span><span class="w"> </span><span class="n">reason</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># int(1) and not bool for some reason</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;&quot;</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nc">text</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># text</span>
 
-<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_gm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">There</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">conflicting</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">character</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ignored</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">now</span><span class="w"></span>
+        <span class="c1"># self._gm = 0  # There are conflicting values in character and accounts - ignored for now</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_vp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">init_account_stats</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">init_account_stats</span><span class="p">()</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_account_stats</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_account_stats</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Given a dictionary of stats from AzureMS&#39;s DB we add them to Account object&#39;s attributes</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a dictionary of stats from AzureMS&#39;s DB we add them to Account object&#39;s attributes</span>
 
-<span class="ss">        Runs near the end of Account::__init__(account_info, database_config).</span>
+<span class="s2">        Runs near the end of Account::__init__(account_info, database_config).</span>
 
-<span class="ss">        It assigns the account attributes in account_info to their respective protected attributes belonging to</span>
+<span class="s2">        It assigns the account attributes in account_info to their respective protected attributes belonging to</span>
 
-<span class="ss">        the Account object instance.</span>
+<span class="s2">        the Account object instance.</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;id&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;id&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;name&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;loggedin&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;loggedin&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_banned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;banned&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;banned&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;banreason&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;banreason&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_gm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;gm&#39;</span><span class="o">]</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">There</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">conflicting</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">character</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ignored</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">now</span><span class="w"></span>
+        <span class="c1"># self._gm = self._account_info[&#39;gm&#39;]  # There are conflicting values in character and accounts - ignored for now</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;nxCash&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;nxCash&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;mPoints&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;mPoints&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_vp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;vpoints&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;vpoints&#39;</span><span class="err">]</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;realcash&#39;</span><span class="o">]</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Best</span><span class="w"> </span><span class="n">guess</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Might</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">wrong</span><span class="err">!</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;realcash&#39;</span><span class="err">]</span>  <span class="c1"># Best guess - Might be wrong!</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">&#39;chrslot&#39;</span><span class="o">]</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;chrslot&#39;</span><span class="err">]</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">account_info</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">account_info</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">database_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">database_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">account_id</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">account_id</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_account_id</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Primary</span><span class="w"> </span><span class="k">Key</span><span class="p">;</span><span class="w"> </span><span class="n">DO</span><span class="w"> </span><span class="ow">NOT</span><span class="w"> </span><span class="k">set</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_id</span>  <span class="c1"># Primary Key; DO NOT set</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">username</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">username</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_username</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_username</span>
 
-<span class="w">    </span><span class="nv">@username</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+    <span class="nv">@username.setter</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">username</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">new_name</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">username</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">new_name</span><span class="p">)</span><span class="w"></span>
+        <span class="c1"># Check for length:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_name</span><span class="w"></span>
+        <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">new_name</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">64</span><span class="o">:</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is too long!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">logged_in</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+        <span class="k">else</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span><span class="w"></span>
+            <span class="c1"># Check for clashes</span>
 
-<span class="w">    </span><span class="nv">@logged_in</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+            <span class="k">data</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">logged_in</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;loggedin&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Use</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">caution</span><span class="err">!</span><span class="w"></span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+            <span class="p">)</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+            <span class="k">if</span> <span class="k">not</span> <span class="k">data</span><span class="o">:</span>  <span class="c1"># if the list of accounts with clashing names is not empty</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">banned</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>  <span class="c1"># set name in DB</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_banned</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>  <span class="c1"># refreshes account instance in memory</span>
 
-<span class="w">    </span><span class="nv">@banned</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+            <span class="k">else</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">banned</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;banned&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Use</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">caution</span><span class="err">!</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_banned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">logged_in</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">ban_reason</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="nv">@logged_in.setter</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">logged_in</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="nv">@ban_reason</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+        <span class="n">try</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">ban_reason</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="o">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;banreason&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+                <span class="c1"># Message to be passed along on failure:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That `logged_in` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+            <span class="k">else</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">nx</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_nx</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="w">    </span><span class="nv">@nx</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+        <span class="k">except</span> <span class="n">Exception</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">nx</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;nxCash&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">banned</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">add_nx</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_banned</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Adds the specified amount to the current NX pool</span>
+    <span class="nv">@banned.setter</span>
 
-<span class="ss">        Args:</span>
+    <span class="n">def</span> <span class="n">banned</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">            amount: Int, representing the amount of NX to be added to the NX pool</span>
+        <span class="n">try</span><span class="o">:</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+            <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="o">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
 
-<span class="w">        </span><span class="n">new_nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">nx</span><span class="w"></span>
+                <span class="c1"># Message to be passed along on failure:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_nx</span><span class="w"></span>
+                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That `banned` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+            <span class="k">else</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">maple_points</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span><span class="w"></span>
+                <span class="n">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="w">    </span><span class="nv">@maple_points</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+        <span class="k">except</span> <span class="n">Exception</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">maple_points</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;mPoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">ban_reason</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">add_maple_points</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Adds the specified amount to the current Maple Points pool</span>
+    <span class="nv">@ban_reason.setter</span>
 
-<span class="ss">        Args:</span>
+    <span class="n">def</span> <span class="n">ban_reason</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">            amount: Int, representing the number of Maple Points to be added to the current pool</span>
+        <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banreason&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># type `text`; 65k chars</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="w">        </span><span class="n">new_maple_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">maple_points</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">maple_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_maple_points</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">nx</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_nx</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">vp</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="nv">@nx.setter</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_vp</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">nx</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="nv">@vp</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+        <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">vp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep NX within 2.1b!&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;vpoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+        <span class="k">else</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_vp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;nxCash&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">add_vp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Adds the specified amount to the current VP count</span>
+    <span class="n">def</span> <span class="n">add_nx</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">        Args:</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Adds the specified amount to the current NX pool</span>
 
-<span class="ss">            amount: Int, representing the number of vote points to be added to the current count</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">            amount: Int, representing the amount of NX to be added to the NX pool</span>
 
-<span class="w">        </span><span class="n">new_vp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">vp</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">vp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_vp</span><span class="w"></span>
+        <span class="n">new_nx</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">nx</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">nx</span> <span class="o">=</span> <span class="n">new_nx</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">dp</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_dp</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">maple_points</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">    </span><span class="nv">@dp</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">dp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="nv">@maple_points.setter</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;realcash&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">maple_points</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+        <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">add_dp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Maple Points within 2.1b!&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Adds the specified amount to the current DP count</span>
+        <span class="k">else</span><span class="o">:</span>
 
-<span class="ss">        Args:</span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;mPoints&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>
 
-<span class="ss">            amount: Int, representing the number of DPs to be added to the current count</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">add_maple_points</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">new_dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">dp</span><span class="w"></span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Adds the specified amount to the current Maple Points pool</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_dp</span><span class="w"></span>
+<span class="s2">        Args:</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+<span class="s2">            amount: Int, representing the number of Maple Points to be added to the current pool</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span><span class="w"></span>
+        <span class="n">new_maple_points</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">maple_points</span>
 
-<span class="w">    </span><span class="nv">@char_slots</span><span class="p">.</span><span class="n">setter</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">maple_points</span> <span class="o">=</span> <span class="n">new_maple_points</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;chrslot&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">vp</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_vp</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">add_char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="nv">@vp.setter</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Adds the specified amount to the current character slot count</span>
+    <span class="n">def</span> <span class="n">vp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">        Args:</span>
+        <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="o">:</span>
 
-<span class="ss">            amount: Int, representing the number of slots to be added to the current count</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Vote Points within 2.1b!&quot;</span><span class="p">)</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+        <span class="k">else</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">new_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">char_slots</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;vpoints&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">char_slots</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_count</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">is_online</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">add_vp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks if the &#39;loggedin&#39; column is greater than 0 (they are online if &gt; 0)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Adds the specified amount to the current VP count</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">            Boolean, representing the online status of the account</span>
+<span class="s2">            amount: Int, representing the number of vote points to be added to the current count</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">logged_in</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="err">:</span><span class="w"></span>
+        <span class="n">new_vp</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">vp</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">True</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">vp</span> <span class="o">=</span> <span class="n">new_vp</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">False</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">unstuck</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">dp</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Sets loggedin column in database to 0</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_dp</span>
 
-<span class="ss">        This unstucks the account as server checks loggedin value to decided whether they are &quot;</span><span class="n">logged</span><span class="w"> </span><span class="ow">in</span><span class="ss">&quot;</span>
+    <span class="nv">@dp.setter</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">dp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">logged_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+        <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">change_password</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">new_pass</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep DPs within 2.1b!&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Changes the current password to the given one.</span>
+        <span class="k">else</span><span class="o">:</span>
 
-<span class="ss">        WARNING: INHERENTLY UNSAFE</span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;realcash&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>
 
-<span class="ss">        Azure316 does not hash passwords by default, therefore this function is technically functional.</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="ss">        As &quot;</span><span class="n">safe</span><span class="ss">&quot; as any website registration or auto register.</span>
+    <span class="n">def</span> <span class="n">add_dp</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">        Args:</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Adds the specified amount to the current DP count</span>
 
-<span class="ss">            new_pass: string, representing the new password</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">            amount: Int, representing the number of DPs to be added to the current count</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;password&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">new_pass</span><span class="p">)</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+        <span class="n">new_dp</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">dp</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Fetches account attribute by column name</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dp</span> <span class="o">=</span> <span class="n">new_dp</span>
 
-<span class="ss">        Args:</span>
+    <span class="nv">@property</span>
 
-<span class="ss">            column: String, representing column name in DB</span>
+    <span class="n">def</span> <span class="n">char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">        Returns:</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span>
 
-<span class="ss">            Int or String, representing user attribute queried</span>
+    <span class="nv">@char_slots.setter</span>
 
-<span class="ss">        Raises:</span>
+    <span class="n">def</span> <span class="n">char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">            Generic error on failure, handled by utils.get_stat_by_column</span>
+        <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">52</span><span class="o">:</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Character Slots within 52!&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">account_info</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="w"></span>
+        <span class="k">else</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chrslot&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Sets a account&#39;s attributes by column name in database</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="k">value</span>
 
-<span class="ss">        Grabs the database attributes provided through the class constructor.</span>
+    <span class="n">def</span> <span class="n">add_char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Adds the specified amount to the current character slot count</span>
 
-<span class="ss">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
+<span class="s2">            amount: Int, representing the number of slots to be added to the current count</span>
 
-<span class="ss">        Args:</span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="ss">            value: int or string, representing the value to be set in the database</span>
+        <span class="n">new_count</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">char_slots</span>
 
-<span class="ss">            column: string, representing the column in the database that is to be updated</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">char_slots</span> <span class="o">=</span> <span class="n">new_count</span>
 
-<span class="ss">        Returns:</span>
+    <span class="n">def</span> <span class="n">is_online</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="ss">            A boolean representing whether the operation was successful.</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks if the &#39;loggedin&#39; column is greater than 0 (they are online if &gt; 0)</span>
 
-<span class="ss">        Raises:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Generic error, handled in utility.write_to_db</span>
+<span class="s2">            Boolean, representing the online status of the account</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span><span class="w"></span>
+        <span class="k">if</span> <span class="kt">int</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">logged_in</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">:</span>
 
-<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span><span class="w"></span>
+            <span class="k">return</span> <span class="no">True</span>
 
-<span class="w">            </span><span class="n">f</span><span class="ss">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="w"></span>
+        <span class="k">return</span> <span class="no">False</span>
 
-<span class="w">        </span><span class="p">)</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">unstuck</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"></span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Sets loggedin column in database to 0</span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="s2">        This unstucks the account as server checks loggedin value to decided whether they are &quot;</span><span class="n">logged</span> <span class="k">in</span><span class="s2">&quot;</span>
 
-<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">logged_in</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">def</span> <span class="n">change_password</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Changes the current password to the given one.</span>
+
+<span class="s2">        WARNING: INHERENTLY UNSAFE</span>
+
+<span class="s2">        Azure316 does not hash passwords by default, therefore this function is technically functional.</span>
+
+<span class="s2">        As &quot;</span><span class="n">safe</span><span class="s2">&quot; as any website registration or auto register.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            new_pass: string, representing the new password</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span>
+
+    <span class="n">def</span> <span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches account attribute by column name</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            column: String, representing column name in DB</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            Int or String, representing user attribute queried</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure, handled by utils.get_stat_by_column</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">account_info</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
+
+    <span class="n">def</span> <span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Sets a account&#39;s attributes by column name in database</span>
+
+<span class="s2">        Grabs the database attributes provided through the class constructor.</span>
+
+<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+
+<span class="s2">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
+
+<span class="s2">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            value: int or string, representing the value to be set in the database</span>
+
+<span class="s2">            column: string, representing the column in the database that is to be updated</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            A boolean representing whether the operation was successful.</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error, handled in utility.write_to_db</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="k">status</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
+
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
+
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>  <span class="c1"># Update the stats in the dictionary</span>
+
+        <span class="k">return</span> <span class="k">status</span>
 </code></pre></div>
 
 </details>
@@ -1893,49 +2057,49 @@ Not recommended to use this alone, as it won't update the account object which t
         A boolean representing whether the operation was successful.</p>
 <p>Raises:
         Generic error, handled in utility.write_to_db</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Sets a account&#39;s attributes by column name in database</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Sets a account&#39;s attributes by column name in database</span>
 
-<span class="ss">        Grabs the database attributes provided through the class constructor.</span>
+<span class="s2">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="ss">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
 
-<span class="ss">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
+<span class="s2">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
 
-<span class="ss">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
+<span class="s2">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
 
-<span class="ss">        Args:</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">            value: int or string, representing the value to be set in the database</span>
+<span class="s2">            value: int or string, representing the value to be set in the database</span>
 
-<span class="ss">            column: string, representing the column in the database that is to be updated</span>
+<span class="s2">            column: string, representing the column in the database that is to be updated</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            A boolean representing whether the operation was successful.</span>
+<span class="s2">            A boolean representing whether the operation was successful.</span>
 
-<span class="ss">        Raises:</span>
+<span class="s2">        Raises:</span>
 
-<span class="ss">            Generic error, handled in utility.write_to_db</span>
+<span class="s2">            Generic error, handled in utility.write_to_db</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span><span class="w"></span>
+        <span class="k">status</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">write_to_db</span><span class="p">(</span>
 
-<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-<span class="w">            </span><span class="n">f</span><span class="ss">&quot;UPDATE accounts SET {column} = &#39;{value}&#39; WHERE id = &#39;{self.account_id}&#39;&quot;</span><span class="w"></span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
 
-<span class="w">        </span><span class="p">)</span><span class="w"></span>
+        <span class="p">)</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"></span>
+        <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span><span class="w"></span>
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"></span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>  <span class="c1"># Update the stats in the dictionary</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="w"></span>
+        <span class="k">return</span> <span class="k">status</span>
 </code></pre></div>
 
 </details>

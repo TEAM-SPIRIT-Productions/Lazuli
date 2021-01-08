@@ -852,7 +852,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 
-                <span class="n">f</span><span class="s2">&quot;SELECT * FROM inventoryitems WHERE characterid = &#39;{self.character_id}&#39; AND inventorytype = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
 
             <span class="n">inventory</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
@@ -1026,307 +1026,307 @@ this module offers NO inventory-write operations (aka setters).</p>
         install_inv: list of dictionaries, representing in-game items contained by the SETUP tab
         cash_inv: list of dictionaries, representing in-game items contained by the CASH tab
         equipped_inv: list of dictionaries, representing in-game items currently equipped by the character</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nl">Inventory</span><span class="p">:</span><span class="w"></span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="n">Inventory</span><span class="o">:</span>
 
-<span class="w">    </span><span class="ss">&quot;&quot;&quot;Inventory object; quasi-models AzureMS inventories.</span>
+    <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Inventory object; quasi-models AzureMS inventories.</span>
 
-<span class="ss">    The instance method Lazuli::get_char_by_name(name) creates a Character object; as part of</span>
+<span class="s2">    The instance method Lazuli::get_char_by_name(name) creates a Character object; as part of</span>
 
-<span class="ss">    lazuli Character object instantiation, an Inventory object instance containing inventory attributes of</span>
+<span class="s2">    lazuli Character object instantiation, an Inventory object instance containing inventory attributes of</span>
 
-<span class="ss">    the character with IGN &quot;</span><span class="n">name</span><span class="ss">&quot; in the connected AzureMS-based database is created.</span>
+<span class="s2">    the character with IGN &quot;</span><span class="k">name</span><span class="s2">&quot; in the connected AzureMS-based database is created.</span>
 
-<span class="ss">    This class contains the appropriate getter methods for said attributes.</span>
+<span class="s2">    This class contains the appropriate getter methods for said attributes.</span>
 
-<span class="ss">    As a consequence of the inherent complexity of MapleStory&#39;s item system, for safety reasons,</span>
+<span class="s2">    As a consequence of the inherent complexity of MapleStory&#39;s item system, for safety reasons,</span>
 
-<span class="ss">    this module offers NO inventory-write operations (aka setters).</span>
+<span class="s2">    this module offers NO inventory-write operations (aka setters).</span>
 
-<span class="ss">    Attributes:</span>
+<span class="s2">    Attributes:</span>
 
-<span class="ss">        equip_inv: list of dictionaries, representing in-game items contained by the EQUIP tab</span>
+<span class="s2">        equip_inv: list of dictionaries, representing in-game items contained by the EQUIP tab</span>
 
-<span class="ss">        consume_inv: list of dictionaries, representing in-game items contained by the USE tab</span>
+<span class="s2">        consume_inv: list of dictionaries, representing in-game items contained by the USE tab</span>
 
-<span class="ss">        etc_inv: list of dictionaries, representing in-game items contained by the ETC tab</span>
+<span class="s2">        etc_inv: list of dictionaries, representing in-game items contained by the ETC tab</span>
 
-<span class="ss">        install_inv: list of dictionaries, representing in-game items contained by the SETUP tab</span>
+<span class="s2">        install_inv: list of dictionaries, representing in-game items contained by the SETUP tab</span>
 
-<span class="ss">        cash_inv: list of dictionaries, representing in-game items contained by the CASH tab</span>
+<span class="s2">        cash_inv: list of dictionaries, representing in-game items contained by the CASH tab</span>
 
-<span class="ss">        equipped_inv: list of dictionaries, representing in-game items currently equipped by the character</span>
+<span class="s2">        equipped_inv: list of dictionaries, representing in-game items currently equipped by the character</span>
 
-<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">character_id</span><span class="p">,</span><span class="w"> </span><span class="n">db_config</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">character_id</span><span class="p">,</span> <span class="n">db_config</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Inventory object; quasi-models AzureMS inventories.</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Inventory object; quasi-models AzureMS inventories.</span>
 
-<span class="ss">        Modelled after SwordieDB project&#39;s Inventory class init method.</span>
+<span class="s2">        Modelled after SwordieDB project&#39;s Inventory class init method.</span>
 
-<span class="ss">        Due to the inherent complexity of MapleStory&#39;s inventory system, this Inventory object will</span>
+<span class="s2">        Due to the inherent complexity of MapleStory&#39;s inventory system, this Inventory object will</span>
 
-<span class="ss">        attempt to contain attributes of all 6 of AzureMS&#39;s inventory types, using a custom object.</span>
+<span class="s2">        attempt to contain attributes of all 6 of AzureMS&#39;s inventory types, using a custom object.</span>
 
-<span class="ss">        Every inventory attribute is a dictionary of dictionaries, the latter of which models the contents of</span>
+<span class="s2">        Every inventory attribute is a dictionary of dictionaries, the latter of which models the contents of</span>
 
-<span class="ss">        the `inventoryitems` table in a AzureMS-based database.</span>
+<span class="s2">        the `inventoryitems` table in a AzureMS-based database.</span>
 
-<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_character_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">character_id</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_character_id</span> <span class="o">=</span> <span class="n">character_id</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db_config</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="n">db_config</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_equip_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">init_equip_items</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_equip_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_equip_items</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_use_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">init_use_inv</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_use_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_use_inv</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_etc_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">init_etc_inv</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_etc_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_etc_inv</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_cash_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">init_cash_inv</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_cash_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_cash_inv</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_install_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">init_install_inv</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_install_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_install_inv</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">_equipped_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">init_equipped_inv</span><span class="p">()</span><span class="w"></span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_equipped_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_equipped_inv</span><span class="p">()</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">database_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">database_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">character_id</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">character_id</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_character_id</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_character_id</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">equip_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">equip_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_equip_inv</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_equip_inv</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">consume_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">consume_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_use_inv</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_use_inv</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">etc_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">etc_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_etc_inv</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_etc_inv</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">cash_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">cash_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_cash_inv</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_cash_inv</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">install_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">install_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_install_inv</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_install_inv</span>
 
-<span class="w">    </span><span class="nv">@property</span><span class="w"></span>
+    <span class="nv">@property</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">equipped_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">equipped_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_equipped_inv</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_equipped_inv</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">inv_type</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
 
-<span class="ss">        Args:</span>
+<span class="s2">        Args:</span>
 
-<span class="ss">            inv_type: int</span>
+<span class="s2">            inv_type: int</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
+<span class="s2">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
 
-<span class="ss">        Raises:</span>
+<span class="s2">        Raises:</span>
 
-<span class="ss">            Generic error on failure</span>
+<span class="s2">            Generic error on failure</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
+        <span class="n">try</span><span class="o">:</span>
 
-<span class="w">            </span><span class="k">database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="k">connect</span><span class="p">(</span><span class="w"></span>
+            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
 
-<span class="w">                </span><span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;host&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
 
-<span class="w">                </span><span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;user&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
 
-<span class="w">                </span><span class="n">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;password&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
 
-<span class="w">                </span><span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;schema&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
 
-<span class="w">                </span><span class="n">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;port&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
 
-<span class="w">                </span><span class="n">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;charset&#39;</span><span class="o">]</span><span class="w"></span>
+                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
 
-<span class="w">            </span><span class="p">)</span><span class="w"></span>
+            <span class="p">)</span>
 
-<span class="w">            </span><span class="nc">cursor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">database</span><span class="p">.</span><span class="nc">cursor</span><span class="p">(</span><span class="k">dictionary</span><span class="o">=</span><span class="k">True</span><span class="p">)</span><span class="w"></span>
+            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
 
-<span class="w">            </span><span class="nc">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="w"></span>
+            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span>
 
-<span class="w">                </span><span class="n">f</span><span class="ss">&quot;SELECT * FROM inventoryitems WHERE characterid = &#39;{self.character_id}&#39; AND inventorytype = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span><span class="w"></span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span><span class="w"></span>
+            <span class="n">inventory</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-<span class="w">            </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="w"></span>
+            <span class="n">inv</span> <span class="o">=</span> <span class="err">{}</span>
 
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">inventory</span><span class="p">:</span><span class="w"></span>
+            <span class="k">for</span> <span class="n">items</span> <span class="k">in</span> <span class="n">inventory</span><span class="o">:</span>
 
-<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">needed</span><span class="p">.</span><span class="w"></span>
+                <span class="c1"># More to add if needed.</span>
 
-<span class="w">                </span><span class="n">bag_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;position&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">bag_index</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;position&quot;</span><span class="err">]</span>
 
-<span class="w">                </span><span class="n">item_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;itemid&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;itemid&quot;</span><span class="err">]</span>
 
-<span class="w">                </span><span class="n">quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;quantity&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">quantity</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;quantity&quot;</span><span class="err">]</span>
 
-<span class="w">                </span><span class="n">is_cash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;isCash&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">is_cash</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;isCash&quot;</span><span class="err">]</span>
 
-<span class="w">                </span><span class="n">inventory_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;inventorytype&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">inventory_type</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;inventorytype&quot;</span><span class="err">]</span>
 
-<span class="w">                </span><span class="n">item_stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+                <span class="n">item_stats</span> <span class="o">=</span> <span class="err">{</span>
 
-<span class="w">                    </span><span class="ss">&quot;itemid&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">item_id</span><span class="p">,</span><span class="w"></span>
+                    <span class="s2">&quot;itemid&quot;</span><span class="o">:</span> <span class="n">item_id</span><span class="p">,</span>
 
-<span class="w">                    </span><span class="ss">&quot;quantity&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">quantity</span><span class="p">,</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">used</span><span class="w"></span>
+                    <span class="s2">&quot;quantity&quot;</span><span class="o">:</span> <span class="n">quantity</span><span class="p">,</span>  <span class="c1"># Never used</span>
 
-<span class="w">                    </span><span class="ss">&quot;inventorytype&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">inventory_type</span><span class="p">,</span><span class="w"></span>
+                    <span class="s2">&quot;inventorytype&quot;</span><span class="o">:</span> <span class="n">inventory_type</span><span class="p">,</span>
 
-<span class="w">                    </span><span class="ss">&quot;iscash&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">is_cash</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">used</span><span class="w"></span>
+                    <span class="s2">&quot;iscash&quot;</span><span class="o">:</span> <span class="n">is_cash</span>  <span class="c1"># Never used</span>
 
-<span class="w">                </span><span class="err">}</span><span class="w"></span>
+                <span class="err">}</span>
 
-<span class="w">                </span><span class="n">inv</span><span class="o">[</span><span class="n">bag_index</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item_stats</span><span class="w"></span>
+                <span class="n">inv</span><span class="err">[</span><span class="n">bag_index</span><span class="err">]</span> <span class="o">=</span> <span class="n">item_stats</span>
 
-<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="k">value</span><span class="p">,</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">bag_index</span><span class="w"> </span><span class="n">aka</span><span class="w"> </span><span class="k">position</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">inventory</span><span class="p">.</span><span class="w"></span>
+                <span class="c1"># Key value, we set as the bag_index aka position of the item in the inventory.</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">inv</span><span class="w"></span>
+            <span class="k">return</span> <span class="n">inv</span>
 
-<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
+        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[ERROR] Error trying to load inventory type {inv_type}\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_equip_items</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_equip_items</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="ss">&quot;equip&quot;</span><span class="p">))</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="s2">&quot;equip&quot;</span><span class="p">))</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_use_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_use_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="ss">&quot;use&quot;</span><span class="p">))</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="s2">&quot;use&quot;</span><span class="p">))</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_etc_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_etc_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="ss">&quot;etc&#39;&quot;</span><span class="p">))</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="s2">&quot;etc&#39;&quot;</span><span class="p">))</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_cash_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_cash_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="ss">&quot;cash&quot;</span><span class="p">))</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="s2">&quot;cash&quot;</span><span class="p">))</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_equipped_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_equipped_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="ss">&quot;equipped&quot;</span><span class="p">))</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="s2">&quot;equipped&quot;</span><span class="p">))</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">init_install_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">init_install_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="ss">&quot;setup&quot;</span><span class="p">))</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">load_inv</span><span class="p">(</span><span class="n">utils</span><span class="p">.</span><span class="n">get_inv_type_by_name</span><span class="p">(</span><span class="s2">&quot;setup&quot;</span><span class="p">))</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">has_item_in_equip</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">has_item_in_equip</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks whether the EQUIP tab of the inventory has an item</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the EQUIP tab of the inventory has an item</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Boolean, representing whether the specified item was found</span>
+<span class="s2">            Boolean, representing whether the specified item was found</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">equip_inv</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">equip_inv</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">has_item_in_consume</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">has_item_in_consume</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks whether the USE tab of the inventory has an item</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the USE tab of the inventory has an item</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Boolean, representing whether the specified item was found</span>
+<span class="s2">            Boolean, representing whether the specified item was found</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">consume_inv</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">consume_inv</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">has_item_in_etc</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">has_item_in_etc</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks whether the ETC tab of the inventory has an item</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the ETC tab of the inventory has an item</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Boolean, representing whether the specified item was found</span>
+<span class="s2">            Boolean, representing whether the specified item was found</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">etc_inv</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">etc_inv</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">has_item_in_install</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">has_item_in_install</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks whether the SETUP tab of the inventory has an item</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the SETUP tab of the inventory has an item</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Boolean, representing whether the specified item was found</span>
+<span class="s2">            Boolean, representing whether the specified item was found</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">install_inv</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">install_inv</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">has_item_in_cash</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">has_item_in_cash</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks whether the CASH tab of the inventory has an item</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the CASH tab of the inventory has an item</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Boolean, representing whether the specified item was found</span>
+<span class="s2">            Boolean, representing whether the specified item was found</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">cash_inv</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">cash_inv</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">is_equipping</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+    <span class="n">def</span> <span class="n">is_equipping</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Checks whether the EQUIP window (i.e. Hotkey &quot;</span><span class="n">E</span><span class="ss">&quot;) has an item (i.e. item is equipped)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the EQUIP window (i.e. Hotkey &quot;</span><span class="n">E</span><span class="s2">&quot;) has an item (i.e. item is equipped)</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
 
-<span class="ss">        Returns:</span>
+<span class="s2">        Returns:</span>
 
-<span class="ss">            Boolean, representing whether the specified item was found</span>
+<span class="s2">            Boolean, representing whether the specified item was found</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">equipped_inv</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="w"></span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">equipped_inv</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1605,87 +1605,87 @@ Returns:
         Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</p>
 <p>Raises:
         Generic error on failure</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">inv_type</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">):</span>
 
-<span class="w">        </span><span class="ss">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
+        <span class="sd">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
 
-<span class="ss">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="ss">            inv_type: int</span>
+<span class="sd">            inv_type: int</span>
 
-<span class="ss">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="ss">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
+<span class="sd">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
 
-<span class="ss">        Raises:</span>
+<span class="sd">        Raises:</span>
 
-<span class="ss">            Generic error on failure</span>
+<span class="sd">            Generic error on failure</span>
 
-<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
+        <span class="n">try</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="k">connect</span><span class="p">(</span><span class="w"></span>
+            <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
 
-<span class="w">                </span><span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;host&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
 
-<span class="w">                </span><span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;user&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
 
-<span class="w">                </span><span class="n">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;password&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
 
-<span class="w">                </span><span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;schema&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
 
-<span class="w">                </span><span class="n">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;port&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"></span>
+                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
 
-<span class="w">                </span><span class="n">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="o">[</span><span class="n">&#39;charset&#39;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">charset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
 
-<span class="w">            </span><span class="p">)</span><span class="w"></span>
+            <span class="p">)</span>
 
-<span class="w">            </span><span class="nc">cursor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">database</span><span class="p">.</span><span class="nc">cursor</span><span class="p">(</span><span class="k">dictionary</span><span class="o">=</span><span class="k">True</span><span class="p">)</span><span class="w"></span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
 
-<span class="w">            </span><span class="nc">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="w"></span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 
-<span class="w">                </span><span class="n">f</span><span class="ss">&quot;SELECT * FROM inventoryitems WHERE characterid = &#39;{self.character_id}&#39; AND inventorytype = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span><span class="w"></span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span><span class="w"></span>
+            <span class="n">inventory</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-<span class="w">            </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="w"></span>
+            <span class="n">inv</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">inventory</span><span class="p">:</span><span class="w"></span>
+            <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">inventory</span><span class="p">:</span>
 
-<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">needed</span><span class="p">.</span><span class="w"></span>
+                <span class="c1"># More to add if needed.</span>
 
-<span class="w">                </span><span class="n">bag_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;position&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">bag_index</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
 
-<span class="w">                </span><span class="n">item_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;itemid&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;itemid&quot;</span><span class="p">]</span>
 
-<span class="w">                </span><span class="n">quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;quantity&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">quantity</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">]</span>
 
-<span class="w">                </span><span class="n">is_cash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;isCash&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">is_cash</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;isCash&quot;</span><span class="p">]</span>
 
-<span class="w">                </span><span class="n">inventory_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;inventorytype&quot;</span><span class="o">]</span><span class="w"></span>
+                <span class="n">inventory_type</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;inventorytype&quot;</span><span class="p">]</span>
 
-<span class="w">                </span><span class="n">item_stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+                <span class="n">item_stats</span> <span class="o">=</span> <span class="p">{</span>
 
-<span class="w">                    </span><span class="ss">&quot;itemid&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">item_id</span><span class="p">,</span><span class="w"></span>
+                    <span class="s2">&quot;itemid&quot;</span><span class="p">:</span> <span class="n">item_id</span><span class="p">,</span>
 
-<span class="w">                    </span><span class="ss">&quot;quantity&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">quantity</span><span class="p">,</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">used</span><span class="w"></span>
+                    <span class="s2">&quot;quantity&quot;</span><span class="p">:</span> <span class="n">quantity</span><span class="p">,</span>  <span class="c1"># Never used</span>
 
-<span class="w">                    </span><span class="ss">&quot;inventorytype&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">inventory_type</span><span class="p">,</span><span class="w"></span>
+                    <span class="s2">&quot;inventorytype&quot;</span><span class="p">:</span> <span class="n">inventory_type</span><span class="p">,</span>
 
-<span class="w">                    </span><span class="ss">&quot;iscash&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">is_cash</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">used</span><span class="w"></span>
+                    <span class="s2">&quot;iscash&quot;</span><span class="p">:</span> <span class="n">is_cash</span>  <span class="c1"># Never used</span>
 
-<span class="w">                </span><span class="err">}</span><span class="w"></span>
+                <span class="p">}</span>
 
-<span class="w">                </span><span class="n">inv</span><span class="o">[</span><span class="n">bag_index</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item_stats</span><span class="w"></span>
+                <span class="n">inv</span><span class="p">[</span><span class="n">bag_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_stats</span>
 
-<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="k">value</span><span class="p">,</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">bag_index</span><span class="w"> </span><span class="n">aka</span><span class="w"> </span><span class="k">position</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">inventory</span><span class="p">.</span><span class="w"></span>
+                <span class="c1"># Key value, we set as the bag_index aka position of the item in the inventory.</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">inv</span><span class="w"></span>
+            <span class="k">return</span> <span class="n">inv</span>
 
-<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
+        <span class="n">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[ERROR] Error trying to load inventory type {inv_type}\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
