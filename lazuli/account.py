@@ -1,7 +1,8 @@
 """This module holds the Account class for the lazuli package.
 
 Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
 
@@ -11,29 +12,46 @@ import lazuli.utility as utils
 class Account:
 	"""Account object; models AzureMS accounts.
 
-	Using instance method Lazuli::get_account_by_username(username) or the Lazuli::get_char_by_name(name).account getter
-	will create an Account object instance with attributes identical to the account with username "username"
-	(or IGN "name" for the latter) in the connected AzureMS-based database.
-	This class contains the appropriate getter and setter methods for said attributes.
+	Using instance method Lazuli::get_account_by_username(username) or
+	the Lazuli::get_char_by_name(name).account getter will create an
+	Account object instance with attributes identical to the account
+	with username "username" (or IGN "name" for the latter) in
+	the connected AzureMS-based database. This class contains the
+	appropriate getter and setter methods for said attributes.
 
 	Attributes:
-		account_id: Integer, representing Primary Key for account - Do NOT set manually
-		username: String, representing account username; varchar(64)
-		logged_in: Integer, represents login status of the account; int(1) and not bool for some reason
-		banned: Integer, represents ban status of the account; int(1) and not bool for some reason
-		ban_reason: String, representing account ban reason; text
-		nx: Integer, representing the amount of NX Prepaid the user has
-		maple_points: Integer, representing the amount of Maple Points the user has
-		vp:Integer, representing the amount of Vote Points the user has
-		dp: Integer, representing the amount of Donation Points the user has
-		char_slots: Integer, representing the number of character slots the user has
+		account_id:
+			Integer, representing Primary Key for account - Do NOT set manually
+		username:
+			String, representing account username; varchar(64)
+		logged_in:
+			Integer, represents login status of the account;
+			int(1) and not bool for some reason
+		banned:
+			Integer, represents ban status of the account;
+			int(1) and not bool for some reason
+		ban_reason:
+			String, representing account ban reason; text
+		nx:
+			Integer, representing the amount of NX Prepaid the user has
+		maple_points:
+			Integer, representing the amount of Maple Points the user has
+		vp:
+			Integer, representing the amount of Vote Points the user has
+		dp:
+			Integer, representing the amount of Donation Points the user has
+		char_slots:
+			Integer, representing the number of character slots the user has
 	"""
+
 	def __init__(self, account_info, database_config):
 		"""Emulates how account object is handled server-sided
 
 		Args:
-			account_info: dictionary of user attributes, formatted in AzureMS style
-			database_config: dictionary of protected attributes from a Lazuli object
+			account_info:
+				dictionary of user attributes, formatted in AzureMS style
+			database_config:
+				dictionary of protected attributes from a Lazuli object
 		"""
 
 		self._account_info = account_info
@@ -44,7 +62,9 @@ class Account:
 		self._logged_in = 0  # int(1) and not bool for some reason
 		self._banned = 0  # int(1) and not bool for some reason
 		self._ban_reason = ""  # text
-		# self._gm = 0  # There are conflicting values in character and accounts - ignored for now
+		# The GM attribute has nothing to do with
+		# in-game GM command level - excluded for now
+		# self._gm = 0
 		self._nx = 0
 		self._maple_points = 0
 		self._vp = 0
@@ -54,22 +74,24 @@ class Account:
 		self.init_account_stats()
 
 	def init_account_stats(self):
-		"""Given a dictionary of stats from AzureMS's DB we add them to Account object's attributes
+		"""Initialises Account instance attributes' values.
 
 		Runs near the end of Account::__init__(account_info, database_config).
-		It assigns the account attributes in account_info to their respective protected attributes belonging to
-		the Account object instance.
+		Assigns values contained in account_info (a dictionary of
+		account-related attributes from AzureMS's DB) to the Account object's
+		corresponding attributes.
 		"""
 		self._account_id = self._account_info['id']
 		self._username = self._account_info['name']
 		self._logged_in = self._account_info['loggedin']
 		self._banned = self._account_info['banned']
 		self._ban_reason = self._account_info['banreason']
-		# self._gm = self._account_info['gm']  # There are conflicting values in character and accounts - ignored for now
+		# self._gm = self._account_info['gm']  # See __innit__
 		self._nx = self._account_info['nxCash']
 		self._maple_points = self._account_info['mPoints']
 		self._vp = self._account_info['vpoints']
-		self._dp = self._account_info['realcash']  # Best guess - Might be wrong!
+		# 'realcash' corresponding to DP is a guess - Might be wrong!
+		self._dp = self._account_info['realcash']
 		self._char_slots = self._account_info['chrslot']
 
 	@property
@@ -92,18 +114,22 @@ class Account:
 	def username(self, new_name):
 		# Check for length:
 		if len(str(new_name)) > 64:
-			raise ValueError("That name is too long!")  # Message to be passed along on failure
+			# Message to be passed along on failure:
+			raise ValueError("That name is too long!")
 		else:
 			# Check for clashes
 			data = utils.get_db_all_hits(
 				self.database_config,
 				f"SELECT * FROM `accounts` WHERE `name` = '{new_name}'"
 			)
-			if not data:  # if the list of accounts with clashing names is not empty
+			if not data:
+				# if the list of accounts with clashing names is not empty
 				self.set_stat_by_column("name", new_name)  # set name in DB
-				self._username = new_name  # refreshes account instance in memory
+				# then refresh instance variable in memory:
+				self._username = new_name
 			else:
-				raise ValueError("That name is already taken!")  # Message to be passed along on failure
+				# Message to be passed along on failure:
+				raise ValueError("That name is already taken!")
 
 	@property
 	def logged_in(self):
@@ -113,13 +139,14 @@ class Account:
 	def logged_in(self, value):
 		try:
 			if value > 127:  # DB only accepts 1-byte int
-				# Message to be passed along on failure:
-				raise ValueError("That `logged_in` value is too large! Stick to either 0 or 1!")
+				raise ValueError(
+					"That `logged_in` value is too large! "
+					"Stick to either 0 or 1!")
 			else:
 				self.set_stat_by_column("loggedin", value)  # Use with caution!
 				self._logged_in = value
 		except Exception:
-			raise ValueError("Invalid input! Stick to either 0 or 1!")  # Message to be passed along on failure
+			raise ValueError("Invalid input! Stick to either 0 or 1!") from None
 
 	@property
 	def banned(self):
@@ -129,13 +156,14 @@ class Account:
 	def banned(self, value):
 		try:
 			if value > 127:  # DB only accepts 1-byte int
-				# Message to be passed along on failure:
-				raise ValueError("That `banned` value is too large! Stick to either 0 or 1!")
+				raise ValueError(
+					"That `banned` value is too large! "
+					"Stick to either 0 or 1!")
 			else:
 				self.set_stat_by_column("banned", value)  # Use with caution!
 				self._banned = value
 		except Exception:
-			raise ValueError("Invalid input! Stick to either 0 or 1!")  # Message to be passed along on failure
+			raise ValueError("Invalid input! Stick to either 0 or 1!") from None
 
 	@property
 	def ban_reason(self):
@@ -162,7 +190,8 @@ class Account:
 		"""Adds the specified amount to the current NX pool
 
 		Args:
-			amount: Int, representing the amount of NX to be added to the NX pool
+			amount:
+				Int, representing the amount of NX to be added to the NX pool
 		"""
 		new_nx = int(amount) + self.nx
 		self.nx = new_nx
@@ -174,7 +203,9 @@ class Account:
 	@maple_points.setter
 	def maple_points(self, value):
 		if value > 2147483647:
-			raise ValueError("Invalid input! Please keep Maple Points within 2.1b!")
+			raise ValueError(
+				"Invalid input! "
+				"Please keep Maple Points within 2.1b!")
 		else:
 			self.set_stat_by_column("mPoints", value)
 			self._maple_points = value
@@ -183,7 +214,9 @@ class Account:
 		"""Adds the specified amount to the current Maple Points pool
 
 		Args:
-			amount: Int, representing the number of Maple Points to be added to the current pool
+			amount:
+				Int, representing the number of Maple Points
+				to be added to the current pool
 		"""
 		new_maple_points = int(amount) + self.maple_points
 		self.maple_points = new_maple_points
@@ -195,7 +228,9 @@ class Account:
 	@vp.setter
 	def vp(self, value):
 		if value > 2147483647:
-			raise ValueError("Invalid input! Please keep Vote Points within 2.1b!")
+			raise ValueError(
+				"Invalid input! "
+				"Please keep Vote Points within 2.1b!")
 		else:
 			self.set_stat_by_column("vpoints", value)
 			self._vp = value
@@ -204,7 +239,9 @@ class Account:
 		"""Adds the specified amount to the current VP count
 
 		Args:
-			amount: Int, representing the number of vote points to be added to the current count
+			amount:
+				Int, representing the number of vote points (VP) to be added
+				to the current VP count
 		"""
 		new_vp = int(amount) + self.vp
 		self.vp = new_vp
@@ -225,7 +262,9 @@ class Account:
 		"""Adds the specified amount to the current DP count
 
 		Args:
-			amount: Int, representing the number of DPs to be added to the current count
+			amount:
+				Int, representing the number of DPs to be added
+				to the current DP count
 		"""
 		new_dp = int(amount) + self.dp
 		self.dp = new_dp
@@ -237,7 +276,9 @@ class Account:
 	@char_slots.setter
 	def char_slots(self, value):
 		if value > 52:
-			raise ValueError("Invalid input! Please keep Character Slots within 52!")
+			raise ValueError(
+				"Invalid input! "
+				"Please keep Character Slots within 52!")
 		else:
 			self.set_stat_by_column("chrslot", value)
 			self._char_slots = value
@@ -246,13 +287,15 @@ class Account:
 		"""Adds the specified amount to the current character slot count
 
 		Args:
-			amount: Int, representing the number of slots to be added to the current count
+			amount:
+				Int, representing the number of slots to be added
+				to the current count
 		"""
 		new_count = int(amount) + self.char_slots
 		self.char_slots = new_count
 
 	def is_online(self):
-		"""Checks if the 'loggedin' column is greater than 0 (they are online if > 0)
+		"""Checks if the 'loggedin' column is greater than 0
 
 		Returns:
 			Boolean, representing the online status of the account
@@ -264,7 +307,8 @@ class Account:
 	def unstuck(self):
 		"""Sets loggedin column in database to 0
 
-		This unstucks the account as server checks loggedin value to decided whether they are "logged in"
+		This unstucks the account, since server checks loggedin value
+		to decided whether they are "logged in"
 		"""
 		self.logged_in = 0
 
@@ -272,8 +316,8 @@ class Account:
 		"""Changes the current password to the given one.
 
 		WARNING: INHERENTLY UNSAFE
-		Azure316 does not hash passwords by default, therefore this function is technically functional.
-		As "safe" as any website registration or auto register.
+		Azure316 does not hash passwords by default, so this function
+		is technically functional for the open source version.
 
 		Args:
 			new_pass: string, representing the new password
@@ -298,13 +342,18 @@ class Account:
 		"""Sets a account's attributes by column name in database
 
 		Grabs the database attributes provided through the class constructor.
-		Uses these attributes to attempt a database connection through utility.write_to_db.
-		Attempts to update the field represented by the provided column in the accounts table, with the provided value.
-		Not recommended to use this alone, as it won't update the account object which this was used from
+		Uses these attributes to attempt a database connection through
+		utility.write_to_db. Attempts to update the field represented by
+		the provided column in the accounts table, with the provided value.
+		Not recommended to use this method on it's own, as it will not update
+		the account instance variables (in memory) post-change.
 
 		Args:
-			value: int or string, representing the value to be set in the database
-			column: string, representing the column in the database that is to be updated
+			value:
+				int or string, representing the value to be set in the database
+			column:
+				string, representing the column in the database
+				that is to be updated
 
 		Returns:
 			A boolean representing whether the operation was successful.
@@ -314,9 +363,13 @@ class Account:
 		"""
 		status = utils.write_to_db(
 			self._database_config,
-			f"UPDATE `accounts` SET {column} = '{value}' WHERE `id` = '{self.account_id}'"
+			f"UPDATE `accounts` SET {column} = '{value}' "
+			f"WHERE `id` = '{self.account_id}'"
 		)
 		if status:
-			print(f"Successfully updated {column} value for user id: {self.account_id}.")
-			self._account_info[column] = value  # Update the stats in the dictionary
+			print(
+				f"Successfully updated {column} value "
+				f"for user id: {self.account_id}.")
+			# Update the stats in the dictionary:
+			self._account_info[column] = value
 		return status

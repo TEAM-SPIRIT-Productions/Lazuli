@@ -1,10 +1,12 @@
 """This is the init file for the package - Compiled by KOOKIIE
 
 Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
-This module provides a dictionary mapping all Job IDs to their respective Job names.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file. This module provides a dictionary mapping all Job IDs
+to their respective Job names.
+
 All efforts have been made to trace Job IDs in both GMS and KMS accurately.
-Notable ommissions (Plase contribute if you have their Job IDs):  
+Notable ommissions (Plase contribute if you have their Job IDs):
  - SAO Classes: Kirito, Asuna, Leafa
  - Sengoku Class (Special): Ayame
  - Explorer Class (Special): Zen
@@ -177,7 +179,8 @@ JOBS = {
 	'3000': 'Citizen',  # Non-Demon/Xenon Resistance
 
 	# Resistance classes have 300X beginner job IDs
-	'3001': 'Demon',  # Demon classes Beginner (Demons have their own beginner classes)
+	# Demon classes Beginner (Demons have their own beginner classes)
+	'3001': 'Demon',
 	'3100': 'Demon Slayer',  # DS 1
 	'3110': 'Demon Slayer',  # DS 2
 	'3111': 'Demon Slayer',  # DS 3
