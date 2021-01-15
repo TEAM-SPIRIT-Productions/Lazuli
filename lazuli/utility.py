@@ -1,13 +1,15 @@
 """This module holds the utility functions and constants for the lazuli package.
 
 Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
 import mysql.connector as con
 
-# CONSTANTS -------------------------------------------------------------------------------
-# Dictionary that maps inventory tabs' names to their corresponding index in the DB/source
+# CONSTANTS -------------------------------------------------------------------
+# Dictionary that maps inventory tabs' names to
+# their corresponding index in the DB/source
 map_inv_types = {
 	'equipped': -1,
 	'equip': 1,
@@ -21,21 +23,24 @@ map_inv_types = {
 }
 
 
-# UTILITY FUNCTIONS ------------------------------------------------------------------------
+# UTILITY FUNCTIONS -----------------------------------------------------------
 def get_key(dictionary, val):
 	"""Generic function to return the key for a given value
 
-	Iterates through the dictionary, comparing values to see if it matches the desired value.
-	If so, return the corresponding key. If no matches are found by the end, return False.
+	Iterates through the dictionary, comparing values to see if it matches
+	the desired value. If so, return the corresponding key. If no matches are
+	found by the end, return False.
 	This function short-circuits (i.e. returns with the first match found).
-	Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is preserved automagically.
+	Note: OrderedDict is no longer necessary for this as of Python 3.6,
+	as order is preserved automagically.
 
 	Args:
 		dictionary: Dictionary, representing the dictionary to be searched
 		val: Var, representing the desired/target value to search for
 
 	Returns:
-		Var, representing the corresponding key (if any); defaults to False, if none are found
+		Var, representing the corresponding key (if any)
+		Defaults to False, if none are found
 
 	Raises:
 		Generic error for any failures
@@ -47,19 +52,26 @@ def get_key(dictionary, val):
 		print("No corresponding key found")
 		return False
 	except Exception as e:
-		print(f"Unexpected error encountered whilst attempting to perform dictionary search:\n{e}")
+		print(
+			f"Unexpected error encountered whilst attempting "
+			f"to perform dictionary search:\n{e}"
+		)
 		return False
 
 
 def get_db_all_hits(config, query):
-	"""Generic top level function for fetching all matching data from DB using the provided DB config and query
+	"""Generic function for fetching all matching data from the DB
+
+	Generic top level function for fetching all matching data from DB,
+	using the provided DB config and query
 
 	Args:
-		config: dictionary, representing database config attributes
+		config: Dictionary, representing database config attributes
 		query: String, representing SQL query
 
 	Returns:
-		List of objects, representing the result of the provided SQL query, using the provided DB connection attributes
+		List of objects, representing the result of the provided SQL query,
+		using the provided DB connection attributes
 
 	Raises:
 		SQL Error 2003: Can't cannect to DB
@@ -84,16 +96,20 @@ def get_db_all_hits(config, query):
 		return data
 
 	except Exception as e:
-		print(f"CRITICAL: Error encountered whilst attempting to connect to the database! \n{e}")
+		print(
+			f"CRITICAL: Error encountered whilst attempting "
+			f"to connect to the database! \n{e}"
+		)
 
 
 def get_db_first_hit(config, query):
-	"""Generic top level function for fetching data (first hit) from DB using the provided DB config and query
+	"""Generic function for fetching the first result from DB
 
-	This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.
+	This function grabs the first hit from get_db_all_hits;
+	errors handled in get_db_all_hits.
 
 	Args:
-		config: dictionary, representing database config attributes
+		config: Dictionary, representing database config attributes
 		query: String, representing SQL query
 
 	Returns:
@@ -118,21 +134,23 @@ def get_stat_by_column(data, column):
 	try:
 		return data[column]
 	except Exception as e:
-		print(f"ERROR: Unable to extract the given column for table users.\n{e}")
+		print(
+			f"ERROR: Unable to extract the given column for table users.\n{e}"
+		)
 
 
 def write_to_db(config, query):
-	"""Performs write operations to DB using the provided DB config and query (generic)
+	"""Performs write operations to DB using the provided DB config and query
 
 	Args:
 		config: Dictionary, representing database config attributes
-		query: string, representing SQL query
+		query: String, representing SQL query
 
 	Returns:
-		A boolean representing whether the operation was successful
+		A Boolean representing whether the operation was successful
 
 	Raises:
-		SQL Error 2003: Can't cannect to DB
+		SQL Error 2003: Can't connect to DB
 		WinError 10060: No response from DB
 		List index out of range: Wrong column name
 	"""
@@ -169,14 +187,14 @@ def get_inv_name_by_type(inv_type):  # Never used
 def has_item_in_inv_type(inv_type, item_id):
 	"""Checks whether the particular tab of the inventory has an item
 
-	Generic top level function used by Inventory::has_item_in_XXX() methods, and the
-	Inventory::is_equipping() method.
-	Iterates through the dictionary of items associated with the specified tab, and check if
+	Generic top level function used by Inventory::has_item_in_XXX() methods,
+	and the Inventory::is_equipping() method. Iterates through the dictionary
+	of items associated with the specified tab, and check if
 	the provided item ID can be found as a value.
 
 	Args:
-		inv_type: inventory object, representing inventory tab to search
-		item_id: int, representing the ID of the item to search for
+		inv_type: Inventory object, representing inventory tab to search
+		item_id: Int, representing the ID of the item to search for
 
 	Returns:
 		Boolean, representing whether the specified item was found
@@ -191,40 +209,44 @@ def extract_name(player_list):
 	"""Extracts a list of players from SQL data, via the name column
 
 	Args:
-		player_list: List of dicts, representing list of all players
+		player_list: List of Dictionaries, representing list of all players
 
 	Returns:
 		List of Strings, representing player names
 	"""
-	try:
-		if not player_list[0]['name']:  # if empty or null; sanity check
-			raise RuntimeError
+	if not player_list[0]['name']:  # if empty or null; sanity check
+		raise RuntimeError("No players found!")
 
+	else:
 		players = []
+		# player_list contains unnecessary data
 		for player in player_list:
-			players.append(player['name'])
+			players.append(player['name'])  # Only retrieve name
 		return players
-	except Exception as e:
-		print(f"ERROR: Error encountered whilst attempting extract list of player names!\n{e}")
 
 
 def extract_name_and_value(player_list, column):
-	"""Extracts a list of players (and a specified value) from SQL data, via the name column
+	"""Extracts a list of players and their corresponding attribute
+
+	Extracts a list of players and their corresponding attribute value from
+	SQL data, via the name column and another provided column
 
 	Args:
-		player_list: List of dicts, representing list of all players
+		player_list: List of Dictionaries, representing list of all players
 		column: String, representing column name to extract
 
 	Returns:
-		List of Tuples, representing player names and their corresponding values (e.g. level)
+		List of Tuples, representing player names and
+		their corresponding values (e.g. level)
 	"""
-	try:
-		if not player_list[0]['name']:  # if empty or null; sanity check
-			raise RuntimeError
+	if not player_list[0]['name']:  # if empty or null; sanity check
+		raise RuntimeError("No such players found!")
 
+	else:
 		players = []
+		# player_list contains unnecessary data
 		for player in player_list:
-			players.append((player['name'], player[column]))  # List of Tuples, as per Brandon's request
+			players.append((player['name'], player[column]))
+			# Only retrieve (name, value)
+			# List of Tuples, as per Brandon's request
 		return players
-	except Exception as e:
-		print(f"ERROR: Error encountered whilst attempting extract list of player names!\n{e}")
