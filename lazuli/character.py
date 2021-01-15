@@ -775,6 +775,33 @@ class Character:
 	def inventory(self):
 		return self._inventory
 
+	def get_deep_copy(self):
+		"""Returns all known info about the character as a Dictionary"""
+		attributes = [
+			f"Character {self.name}'s attributes:\n",
+			f"Character ID: {self.character_id}, ",
+			f"Account ID: {self.account_id}, ",
+			f"Job: {self.get_job_name()}, ",
+			f"Rebirth Count: {self.rebirths}, ",
+			f"Level: {self.level}, ",
+			f"Meso Count: {self.meso}, ",
+			f"Fame: {self.fame}, ",
+			f"Gender: {self.gender}, ",
+			f"HP/MP: {self.max_hp}, {self.max_mp}, ",
+			f"Stats: {self.get_primary_stats()}, ",
+			f"Free AP Pool: {self.ap}, ",
+			f"EXP Pool: {self.exp}, ",
+			f"Honour: {self.honour}, ",
+			f"Traits: {self.get_personality_traits()}, ",
+			f"Total Buddy List Slots: {self.bl_slots}, ",
+			f"Map ID: {self.map}, ",
+			f"Mute Status: {self.mute}, ",
+		]
+
+		attributes.extend(self.account.get_deep_copy()[2:])
+
+		return attributes
+
 	def get_char_img(self):
 		"""Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!
 

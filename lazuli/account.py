@@ -325,6 +325,22 @@ class Account:
 		"""
 		self.set_stat_by_column("password", new_pass)
 
+	def get_deep_copy(self):
+		"""Returns all known info about the Account as a Dictionary"""
+		attributes = [
+			f"Username {self.username}'s attributes:\n",
+			f"Account ID: {self.account_id}, ",
+			f"Login Status: {self.is_online()}, ",
+			f"Ban Status: {self.banned}, ",
+			f"Ban Reason: {self.ban_reason}, ",
+			f"Total Character Slots: {self.char_slots}, ",
+			f"DP: {self.dp}, ",
+			f"VP: {self.vp}, ",
+			f"NX: {self.nx}, ",
+			f"Maple Points: {self.maple_points}",
+		]
+		return attributes
+
 	def get_stat_by_column(self, column):
 		"""Fetches account attribute by column name
 
