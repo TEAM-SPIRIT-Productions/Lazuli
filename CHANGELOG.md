@@ -1,7 +1,13 @@
 ## CHANGELOG:  
 
+### v2.0.0
+- Made Inventory lazy-instantiation by:
+  - refactoring to a method in Lazuli, instead of Character
+- Update unit test WRT breaking API changes
+
 ### v1.1.0
 - Add getter methods that return all attributes together
+- Made Inventory instantiation more efficient by reducing SQL calls
 
 ### v1.0.1
 - Perform general linting

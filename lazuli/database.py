@@ -16,6 +16,7 @@ Refer to the project wiki on GitHub for more in-depth examples.
 """
 from lazuli.character import Character
 from lazuli.account import Account
+from lazuli.inventory import Inventory
 import lazuli.utility as utils
 
 
@@ -186,6 +187,33 @@ class Lazuli:
 
 		character = Character(character_stats, self._database_config)
 		return character
+
+	def get_inv_by_name(self, char_name):
+		"""Create an Inventory instance from the given character name
+
+		Uses the Character ID associated with the character name, and the
+		Inventory class constructor to create a new Inventory object instance,
+		with the relevant inventory attributes from the database.
+
+		Args:
+			char_name: string, representing character name (aka IGN)
+
+		Returns:
+			Inventory object instantiated with corresponding data from the
+			connected database.
+			Defaults to None if the operation fails.
+
+		Raises:
+			Generic error on failure - handled by the get_db_first_hit() method
+		"""
+		# Fetch first result because there should only be one character
+		# with that name
+		char_id = self.get_db_first_hit(
+			f"SELECT * FROM `characters` WHERE `name` = '{char_name}'"
+		)['id']
+
+		inventory = Inventory(char_id, self._database_config)
+		return inventory
 
 	def get_account_by_username(self, username):
 		"""Given a username (NOT IGN), create a new account object instance

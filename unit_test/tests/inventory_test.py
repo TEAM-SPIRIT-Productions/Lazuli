@@ -21,11 +21,10 @@ def inventory():
 		azure = Lazuli()  # Use defaults - these should be the same as Azure v316 repository defaults
 	except Exception as e:
 		raise SystemExit(f"Error has occurred whist attempting to load DB: \n{e}")
-	character = azure.get_char_by_name("tester0x00")
-	if character is None:
-		raise SystemExit("CRITICAL ERROR: UNABLE TO FETCH CHARACTER BY NAME! TERMINATING...")
 
-	inventory = character.inventory
+	inventory = azure.get_inv_by_name("tester0x00")
+	if inventory is None:
+		raise SystemExit("CRITICAL ERROR: UNABLE TO FETCH INVENTORY BY NAME! TERMINATING...")
 	return inventory
 
 

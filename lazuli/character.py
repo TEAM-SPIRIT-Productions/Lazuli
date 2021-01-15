@@ -7,7 +7,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 """
 
 from lazuli import JOBS
-from lazuli.inventory import Inventory
 from lazuli.account import Account
 import lazuli.utility as utils
 
@@ -102,10 +101,6 @@ class Character:
 
 		self.init_stats()  # Assign instance variables
 
-		# Create Inventory object instance via class constructor,
-		# using details from Character object instance
-		self._inventory = self.init_inventory()
-
 		# Create Account object instance via class constructor,
 		# using details from Character object instance
 		self._account = self.init_account()
@@ -183,21 +178,6 @@ class Character:
 
 		account = Account(account_info, self.database_config)
 		return account
-
-	def init_inventory(self):
-		"""Instantiate a Inventory object corresponding to the character
-
-		Runs near the end of Character::__init__(char_stats, database_config).
-		Uses the Character ID associated with the character instance, and the
-		Inventory class constructor to create a new Inventory object instance,
-		with the relevant inventory attributes from the database.
-
-		Raises:
-			Generic error on failure - handled by the
-			utility.get_db_first_hit() method
-		"""
-		inventory = Inventory(self.character_id, self.database_config)
-		return inventory
 
 	@property
 	def database_config(self):
@@ -770,10 +750,6 @@ class Character:
 	@property
 	def account(self):
 		return self._account
-
-	@property
-	def inventory(self):
-		return self._inventory
 
 	def get_deep_copy(self):
 		"""Returns all known info about the character as a Dictionary"""
