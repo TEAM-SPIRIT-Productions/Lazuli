@@ -485,6 +485,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_deep_copy" class="md-nav__link">
+    get_deep_copy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_job_name" class="md-nav__link">
     get_job_name
   </a>
@@ -515,13 +522,6 @@
           <li class="md-nav__item">
   <a href="#init_account" class="md-nav__link">
     init_account
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#init_inventory" class="md-nav__link">
-    init_inventory
   </a>
   
 </li>
@@ -829,6 +829,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_deep_copy" class="md-nav__link">
+    get_deep_copy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_job_name" class="md-nav__link">
     get_job_name
   </a>
@@ -859,13 +866,6 @@
           <li class="md-nav__item">
   <a href="#init_account" class="md-nav__link">
     init_account
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#init_inventory" class="md-nav__link">
-    init_inventory
   </a>
   
 </li>
@@ -938,8 +938,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span> <span class="s s-Atom">import</span> <span class="nv">JOBS</span>
-
-<span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span><span class="p">.</span><span class="s s-Atom">inventory</span> <span class="s s-Atom">import</span> <span class="nv">Inventory</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span><span class="p">.</span><span class="s s-Atom">account</span> <span class="s s-Atom">import</span> <span class="nv">Account</span>
 
@@ -1109,12 +1107,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">init_stats</span><span class="p">()</span>  <span class="s s-Atom">#</span> <span class="nv">Assign</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">variables</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">Create</span> <span class="nv">Inventory</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">via</span> <span class="s s-Atom">class</span> <span class="s s-Atom">constructor</span><span class="p">,</span>
-
-        <span class="s s-Atom">#</span> <span class="s s-Atom">using</span> <span class="s s-Atom">details</span> <span class="s s-Atom">from</span> <span class="nv">Character</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span>
-
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">inventory</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">init_inventory</span><span class="p">()</span>
-
         <span class="s s-Atom">#</span> <span class="nv">Create</span> <span class="nv">Account</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">via</span> <span class="s s-Atom">class</span> <span class="s s-Atom">constructor</span><span class="p">,</span>
 
         <span class="s s-Atom">#</span> <span class="s s-Atom">using</span> <span class="s s-Atom">details</span> <span class="s s-Atom">from</span> <span class="nv">Character</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span>
@@ -1254,30 +1246,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
         <span class="s s-Atom">account</span> <span class="o">=</span> <span class="nv">Account</span><span class="p">(</span><span class="s s-Atom">account_info</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">)</span>
 
         <span class="s s-Atom">return</span> <span class="s s-Atom">account</span>
-
-    <span class="s s-Atom">def</span> <span class="nf">init_inventory</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s2">&quot;&quot;&quot;Instantiate a Inventory object corresponding to the character</span>
-
-<span class="s2">        Runs near the end of Character::__init__(char_stats, database_config).</span>
-
-<span class="s2">        Uses the Character ID associated with the character instance, and the</span>
-
-<span class="s2">        Inventory class constructor to create a new Inventory object instance,</span>
-
-<span class="s2">        with the relevant inventory attributes from the database.</span>
-
-<span class="s2">        Raises:</span>
-
-<span class="s2">            Generic error on failure - handled by the</span>
-
-<span class="s2">            utility.get_db_first_hit() method</span>
-
-<span class="s2">        &quot;&quot;&quot;</span>
-
-        <span class="s s-Atom">inventory</span> <span class="o">=</span> <span class="nv">Inventory</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">character_id</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">)</span>
-
-        <span class="s s-Atom">return</span> <span class="s s-Atom">inventory</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -2225,11 +2193,53 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">account</span>
 
-    <span class="s s-Atom">@property</span>
+    <span class="s s-Atom">def</span> <span class="nf">get_deep_copy</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-    <span class="s s-Atom">def</span> <span class="nf">inventory</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
+        <span class="s2">&quot;&quot;&quot;Returns all known info about the character as a Dictionary&quot;&quot;&quot;</span>
 
-        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">inventory</span>
+        <span class="s s-Atom">attributes</span> <span class="o">=</span> <span class="p">[</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Character {self.name}&#39;s attributes:\n&quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Character ID: {self.character_id}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Account ID: {self.account_id}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Job: {self.get_job_name()}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Rebirth Count: {self.rebirths}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Level: {self.level}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Meso Count: {self.meso}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Fame: {self.fame}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Gender: {self.gender}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;HP/MP: {self.max_hp}, {self.max_mp}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Stats: {self.get_primary_stats()}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Free AP Pool: {self.ap}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;EXP Pool: {self.exp}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Honour: {self.honour}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Traits: {self.get_personality_traits()}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Total Buddy List Slots: {self.bl_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Map ID: {self.map}, &quot;</span><span class="p">,</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;Mute Status: {self.mute}, &quot;</span><span class="p">,</span>
+
+        <span class="p">]</span>
+
+        <span class="s s-Atom">attributes</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">account</span><span class="p">.</span><span class="nf">get_deep_copy</span><span class="p">()[</span><span class="mi">2</span><span class="s s-Atom">:</span><span class="p">])</span>
+
+        <span class="s s-Atom">return</span> <span class="s s-Atom">attributes</span>
 
     <span class="s s-Atom">def</span> <span class="nf">get_char_img</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
@@ -2551,12 +2561,6 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="nb">self</span>.<span class="n">init_stats</span>()  <span class="c1"># Assign instance variables</span>
 
-        <span class="c1"># Create Inventory object instance via class constructor,</span>
-
-        <span class="c1"># using details from Character object instance</span>
-
-        <span class="nb">self</span>.<span class="n">_inventory</span> = <span class="nb">self</span>.<span class="n">init_inventory</span>()
-
         <span class="c1"># Create Account object instance via class constructor,</span>
 
         <span class="c1"># using details from Character object instance</span>
@@ -2696,30 +2700,6 @@ the appropriate getter and setter methods for said attributes.</p>
         <span class="n">account</span> = <span class="n">Account</span>(<span class="n">account_info</span>, <span class="nb">self</span>.<span class="n">database_config</span>)
 
         <span class="k">return</span> <span class="n">account</span>
-
-    <span class="n">def</span> <span class="n">init_inventory</span>(<span class="nb">self</span>):
-
-        <span class="s">&quot;&quot;&quot;Instantiate a Inventory object corresponding to the character</span>
-
-<span class="s">        Runs near the end of Character::__init__(char_stats, database_config).</span>
-
-<span class="s">        Uses the Character ID associated with the character instance, and the</span>
-
-<span class="s">        Inventory class constructor to create a new Inventory object instance,</span>
-
-<span class="s">        with the relevant inventory attributes from the database.</span>
-
-<span class="s">        Raises:</span>
-
-<span class="s">            Generic error on failure - handled by the</span>
-
-<span class="s">            utility.get_db_first_hit() method</span>
-
-<span class="s">        &quot;&quot;&quot;</span>
-
-        <span class="n">inventory</span> = <span class="n">Inventory</span>(<span class="nb">self</span>.<span class="n">character_id</span>, <span class="nb">self</span>.<span class="n">database_config</span>)
-
-        <span class="k">return</span> <span class="n">inventory</span>
 
     <span class="nv">@property</span>
 
@@ -3667,11 +3647,53 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="k">return</span> <span class="nb">self</span>.<span class="n">_account</span>
 
-    <span class="nv">@property</span>
+    <span class="n">def</span> <span class="n">get_deep_copy</span>(<span class="nb">self</span>):
 
-    <span class="n">def</span> <span class="n">inventory</span>(<span class="nb">self</span>):
+        <span class="s">&quot;&quot;&quot;Returns all known info about the character as a Dictionary&quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_inventory</span>
+        <span class="nb">attributes</span> = [
+
+            <span class="nb">f</span><span class="s">&quot;Character {self.name}&#39;s attributes:\n&quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Character ID: {self.character_id}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Account ID: {self.account_id}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Job: {self.get_job_name()}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Rebirth Count: {self.rebirths}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Level: {self.level}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Meso Count: {self.meso}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Fame: {self.fame}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Gender: {self.gender}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;HP/MP: {self.max_hp}, {self.max_mp}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Stats: {self.get_primary_stats()}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Free AP Pool: {self.ap}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;EXP Pool: {self.exp}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Honour: {self.honour}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Traits: {self.get_personality_traits()}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Total Buddy List Slots: {self.bl_slots}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Map ID: {self.map}, &quot;</span>,
+
+            <span class="nb">f</span><span class="s">&quot;Mute Status: {self.mute}, &quot;</span>,
+
+        ]
+
+        <span class="nb">attributes</span>.<span class="n">extend</span>(<span class="nb">self</span>.<span class="n">account</span>.<span class="n">get_deep_copy</span>()[<span class="mi">2</span>:])
+
+        <span class="k">return</span> <span class="nb">attributes</span>
 
     <span class="n">def</span> <span class="n">get_char_img</span>(<span class="nb">self</span>):
 
@@ -3838,9 +3860,6 @@ the appropriate getter and setter methods for said attributes.</p>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">inte</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">inventory</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">job</span>
@@ -4408,6 +4427,63 @@ the appropriate getter and setter methods for said attributes.</p>
 </code></pre></div>
 
 </details>
+<h5 id="get_deep_copy">get_deep_copy</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_deep_copy</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Returns all known info about the character as a Dictionary</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_deep_copy</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
+
+        <span class="ss">&quot;&quot;&quot;Returns all known info about the character as a Dictionary&quot;&quot;&quot;</span>
+
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span>
+
+            <span class="n">f</span><span class="ss">&quot;Character {self.name}&#39;s attributes:\n&quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Character ID: {self.character_id}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Account ID: {self.account_id}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Job: {self.get_job_name()}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Rebirth Count: {self.rebirths}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Level: {self.level}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Meso Count: {self.meso}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Fame: {self.fame}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Gender: {self.gender}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;HP/MP: {self.max_hp}, {self.max_mp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Stats: {self.get_primary_stats()}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Free AP Pool: {self.ap}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;EXP Pool: {self.exp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Honour: {self.honour}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Traits: {self.get_personality_traits()}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Total Buddy List Slots: {self.bl_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Map ID: {self.map}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Mute Status: {self.mute}, &quot;</span><span class="p">,</span>
+
+        <span class="p">]</span>
+
+        <span class="n">attributes</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">account</span><span class="p">.</span><span class="n">get_deep_copy</span><span class="p">()[</span><span class="mi">2</span><span class="p">:])</span>
+
+        <span class="k">return</span> <span class="n">attributes</span>
+</code></pre></div>
+
+</details>
 <h5 id="get_job_name">get_job_name</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_job_name</span><span class="p">(</span>
     <span class="bp">self</span>
@@ -4616,46 +4692,6 @@ Raises:
         <span class="k">account</span> <span class="o">=</span> <span class="k">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">account</span>
-</code></pre></div>
-
-</details>
-<h5 id="init_inventory">init_inventory</h5>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">init_inventory</span><span class="p">(</span>
-    <span class="bp">self</span>
-<span class="p">)</span>
-</code></pre></div>
-
-<p>Instantiate a Inventory object corresponding to the character</p>
-<p>Runs near the end of Character::<strong>init</strong>(char_stats, database_config).
-Uses the Character ID associated with the character instance, and the
-Inventory class constructor to create a new Inventory object instance,
-with the relevant inventory attributes from the database.</p>
-<p>Raises:
-        Generic error on failure - handled by the
-        utility.get_db_first_hit() method</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_inventory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot;Instantiate a Inventory object corresponding to the character</span>
-
-<span class="sd">        Runs near the end of Character::__init__(char_stats, database_config).</span>
-
-<span class="sd">        Uses the Character ID associated with the character instance, and the</span>
-
-<span class="sd">        Inventory class constructor to create a new Inventory object instance,</span>
-
-<span class="sd">        with the relevant inventory attributes from the database.</span>
-
-<span class="sd">        Raises:</span>
-
-<span class="sd">            Generic error on failure - handled by the</span>
-
-<span class="sd">            utility.get_db_first_hit() method</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">inventory</span> <span class="o">=</span> <span class="n">Inventory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">character_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">inventory</span>
 </code></pre></div>
 
 </details>

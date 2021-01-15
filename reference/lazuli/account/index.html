@@ -361,6 +361,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_deep_copy" class="md-nav__link">
+    get_deep_copy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_stat_by_column" class="md-nav__link">
     get_stat_by_column
   </a>
@@ -579,6 +586,13 @@
           <li class="md-nav__item">
   <a href="#change_password" class="md-nav__link">
     change_password
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_deep_copy" class="md-nav__link">
+    get_deep_copy
   </a>
   
 </li>
@@ -1202,6 +1216,36 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_deep_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Returns all known info about the Account as a Dictionary&quot;&quot;&quot;</span>
+
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span>
+
+            <span class="n">f</span><span class="s2">&quot;Username {self.username}&#39;s attributes:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Account ID: {self.account_id}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Login Status: {self.is_online()}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Ban Status: {self.banned}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Ban Reason: {self.ban_reason}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Total Character Slots: {self.char_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;DP: {self.dp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;VP: {self.vp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;NX: {self.nx}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Maple Points: {self.maple_points}&quot;</span><span class="p">,</span>
+
+        <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">attributes</span>
 
     <span class="k">def</span> <span class="nf">get_stat_by_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
 
@@ -1855,6 +1899,36 @@ appropriate getter and setter methods for said attributes.</p>
 
         <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span>
 
+    <span class="n">def</span> <span class="n">get_deep_copy</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Returns all known info about the Account as a Dictionary</span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">attributes</span> <span class="o">=</span> <span class="err">[</span>
+
+            <span class="n">f</span><span class="s2">&quot;Username {self.username}&#39;s attributes:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Account ID: {self.account_id}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Login Status: {self.is_online()}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Ban Status: {self.banned}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Ban Reason: {self.ban_reason}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Total Character Slots: {self.char_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;DP: {self.dp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;VP: {self.vp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;NX: {self.nx}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Maple Points: {self.maple_points}&quot;</span><span class="p">,</span>
+
+        <span class="err">]</span>
+
+        <span class="k">return</span> <span class="n">attributes</span>
+
     <span class="n">def</span> <span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span><span class="o">:</span>
 
         <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches account attribute by column name</span>
@@ -2165,6 +2239,45 @@ is technically functional for the open source version.</p>
 <span class="ss">        &quot;&quot;&quot;</span>
 
         <span class="k">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;password&quot;</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_deep_copy">get_deep_copy</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_deep_copy</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Returns all known info about the Account as a Dictionary</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_deep_copy</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
+
+        <span class="ss">&quot;&quot;&quot;Returns all known info about the Account as a Dictionary&quot;&quot;&quot;</span>
+
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span>
+
+            <span class="n">f</span><span class="ss">&quot;Username {self.username}&#39;s attributes:\n&quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Account ID: {self.account_id}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Login Status: {self.is_online()}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Ban Status: {self.banned}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Ban Reason: {self.ban_reason}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Total Character Slots: {self.char_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;DP: {self.dp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;VP: {self.vp}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;NX: {self.nx}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Maple Points: {self.maple_points}&quot;</span><span class="p">,</span>
+
+        <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">attributes</span>
 </code></pre></div>
 
 </details>

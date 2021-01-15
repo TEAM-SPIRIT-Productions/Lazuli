@@ -367,6 +367,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#fetch_all_inv_items" class="md-nav__link">
+    fetch_all_inv_items
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#has_item_in_cash" class="md-nav__link">
     has_item_in_cash
   </a>
@@ -554,6 +561,13 @@
   
     <nav class="md-nav" aria-label="Methods">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fetch_all_inv_items" class="md-nav__link">
+    fetch_all_inv_items
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#has_item_in_cash" class="md-nav__link">
@@ -785,6 +799,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="n">db_config</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_all_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_all_inv_items</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_equip_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_equip_items</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_use_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_use_inv</span><span class="p">()</span>
@@ -845,27 +861,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_equipped_inv</span>
 
-    <span class="k">def</span> <span class="nf">load_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fetch_all_inv_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it</span>
-
-<span class="sd">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
-
-<span class="sd">        Args:</span>
-
-<span class="sd">            inv_type: Int</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">            Dictionary of Dictionaries, representing all the in-game items</span>
-
-<span class="sd">            that are in the specified inventory type</span>
-
-<span class="sd">        Raises:</span>
-
-<span class="sd">            Generic error on failure</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Fetch all items associated with the character&quot;&quot;&quot;</span>
 
         <span class="k">try</span><span class="p">:</span>
 
@@ -891,11 +889,53 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
 
-                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span>
+                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39;&quot;</span>
 
             <span class="p">)</span>
 
             <span class="n">inventory</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">inventory</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to fetch inventory items</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it</span>
+
+<span class="sd">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            inv_type: Int</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            Dictionary of Dictionaries, representing all the in-game items</span>
+
+<span class="sd">            that are in the specified inventory type</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">all_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_items</span>
+
+            <span class="n">inventory</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># Extract the relevant inventory for the type</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">all_items</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inventorytype&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">inv_type</span><span class="p">:</span>
+
+                    <span class="n">inventory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
             <span class="n">inv</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -1167,6 +1207,8 @@ for safety reasons, this module offers NO inventory-write operations
 
         <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="n">db_config</span>
 
+        <span class="n">self</span><span class="p">.</span><span class="n">_all_items</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">fetch_all_inv_items</span><span class="p">()</span>
+
         <span class="n">self</span><span class="p">.</span><span class="n">_equip_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_equip_items</span><span class="p">()</span>
 
         <span class="n">self</span><span class="p">.</span><span class="n">_use_inv</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">init_use_inv</span><span class="p">()</span>
@@ -1227,27 +1269,9 @@ for safety reasons, this module offers NO inventory-write operations
 
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_equipped_inv</span>
 
-    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">def</span> <span class="n">fetch_all_inv_items</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it</span>
-
-<span class="s2">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
-
-<span class="s2">        Args:</span>
-
-<span class="s2">            inv_type: Int</span>
-
-<span class="s2">        Returns:</span>
-
-<span class="s2">            Dictionary of Dictionaries, representing all the in-game items</span>
-
-<span class="s2">            that are in the specified inventory type</span>
-
-<span class="s2">        Raises:</span>
-
-<span class="s2">            Generic error on failure</span>
-
-<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetch all items associated with the character</span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
         <span class="n">try</span><span class="o">:</span>
 
@@ -1273,11 +1297,53 @@ for safety reasons, this module offers NO inventory-write operations
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
 
-                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span>
+                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39;&quot;</span>
 
             <span class="p">)</span>
 
             <span class="n">inventory</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">inventory</span>
+
+        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
+
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to fetch inventory items</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+
+    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it</span>
+
+<span class="s2">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            inv_type: Int</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            Dictionary of Dictionaries, representing all the in-game items</span>
+
+<span class="s2">            that are in the specified inventory type</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">try</span><span class="o">:</span>
+
+            <span class="n">all_items</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_all_items</span>
+
+            <span class="n">inventory</span> <span class="o">=</span> <span class="err">[]</span>
+
+            <span class="c1"># Extract the relevant inventory for the type</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="k">in</span> <span class="n">all_items</span><span class="o">:</span>
+
+                <span class="k">if</span> <span class="n">item</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="s2">&quot;inventorytype&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">inv_type</span><span class="o">:</span>
+
+                    <span class="n">inventory</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
             <span class="n">inv</span> <span class="o">=</span> <span class="err">{}</span>
 
@@ -1458,6 +1524,55 @@ for safety reasons, this module offers NO inventory-write operations
 </code></pre></div>
 
 <h4 id="methods">Methods</h4>
+<h5 id="fetch_all_inv_items">fetch_all_inv_items</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fetch_all_inv_items</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Fetch all items associated with the character</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">fetch_all_inv_items</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetch all items associated with the character</span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">try</span><span class="o">:</span>
+
+            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+
+                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
+
+            <span class="p">)</span>
+
+            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
+
+            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span>
+
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39;&quot;</span>
+
+            <span class="p">)</span>
+
+            <span class="n">inventory</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">inventory</span>
+
+        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
+
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to fetch inventory items</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
 <h5 id="has_item_in_cash">has_item_in_cash</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">has_item_in_cash</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -1711,97 +1826,81 @@ EQUIP window (i.e. Hotkey "E") has an item (i.e. item is equipped)</p>
         that are in the specified inventory type</p>
 <p>Raises:
         Generic error on failure</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span><span class="o">:</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">inv_type</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it</span>
+<span class="w">        </span><span class="ss">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it</span>
 
-<span class="s2">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
+<span class="ss">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
 
-<span class="s2">        Args:</span>
+<span class="ss">        Args:</span>
 
-<span class="s2">            inv_type: Int</span>
+<span class="ss">            inv_type: Int</span>
 
-<span class="s2">        Returns:</span>
+<span class="ss">        Returns:</span>
 
-<span class="s2">            Dictionary of Dictionaries, representing all the in-game items</span>
+<span class="ss">            Dictionary of Dictionaries, representing all the in-game items</span>
 
-<span class="s2">            that are in the specified inventory type</span>
+<span class="ss">            that are in the specified inventory type</span>
 
-<span class="s2">        Raises:</span>
+<span class="ss">        Raises:</span>
 
-<span class="s2">            Generic error on failure</span>
+<span class="ss">            Generic error on failure</span>
 
-<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+<span class="ss">        &quot;&quot;&quot;</span><span class="w"></span>
 
-        <span class="n">try</span><span class="o">:</span>
+<span class="w">        </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
 
-            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+<span class="w">            </span><span class="n">all_items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_all_items</span><span class="w"></span>
 
-                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
+<span class="w">            </span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"></span>
 
-                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
+<span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="k">Extract</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">relevant</span><span class="w"> </span><span class="n">inventory</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">type</span><span class="w"></span>
 
-                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">all_items</span><span class="p">:</span><span class="w"></span>
 
-                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="ss">&quot;inventorytype&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nl">inv_type</span><span class="p">:</span><span class="w"></span>
 
-                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">inventory</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="w"></span>
 
-                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
+<span class="w">            </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="w"></span>
 
-            <span class="p">)</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">inventory</span><span class="p">:</span><span class="w"></span>
 
-            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
+<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">needed</span><span class="p">.</span><span class="w"></span>
 
-            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span>
+<span class="w">                </span><span class="n">bag_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;position&quot;</span><span class="o">]</span><span class="w"></span>
 
-                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
+<span class="w">                </span><span class="n">item_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;itemid&quot;</span><span class="o">]</span><span class="w"></span>
 
-                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span>
+<span class="w">                </span><span class="n">quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;quantity&quot;</span><span class="o">]</span><span class="w"></span>
 
-            <span class="p">)</span>
+<span class="w">                </span><span class="n">is_cash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;isCash&quot;</span><span class="o">]</span><span class="w"></span>
 
-            <span class="n">inventory</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="w">                </span><span class="n">inventory_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">[</span><span class="n">&quot;inventorytype&quot;</span><span class="o">]</span><span class="w"></span>
 
-            <span class="n">inv</span> <span class="o">=</span> <span class="err">{}</span>
+<span class="w">                </span><span class="n">item_stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
 
-            <span class="k">for</span> <span class="n">items</span> <span class="k">in</span> <span class="n">inventory</span><span class="o">:</span>
+<span class="w">                    </span><span class="ss">&quot;itemid&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">item_id</span><span class="p">,</span><span class="w"></span>
 
-                <span class="c1"># More to add if needed.</span>
+<span class="w">                    </span><span class="ss">&quot;quantity&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">quantity</span><span class="p">,</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">used</span><span class="w"></span>
 
-                <span class="n">bag_index</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;position&quot;</span><span class="err">]</span>
+<span class="w">                    </span><span class="ss">&quot;inventorytype&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">inventory_type</span><span class="p">,</span><span class="w"></span>
 
-                <span class="n">item_id</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;itemid&quot;</span><span class="err">]</span>
+<span class="w">                    </span><span class="ss">&quot;iscash&quot;</span><span class="err">:</span><span class="w"> </span><span class="n">is_cash</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">used</span><span class="w"></span>
 
-                <span class="n">quantity</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;quantity&quot;</span><span class="err">]</span>
+<span class="w">                </span><span class="err">}</span><span class="w"></span>
 
-                <span class="n">is_cash</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;isCash&quot;</span><span class="err">]</span>
+<span class="w">                </span><span class="n">inv</span><span class="o">[</span><span class="n">bag_index</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item_stats</span><span class="w"></span>
 
-                <span class="n">inventory_type</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;inventorytype&quot;</span><span class="err">]</span>
+<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="k">Use</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">bag</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.</span><span class="w"> </span><span class="k">position</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">inventory</span><span class="p">)</span><span class="w"></span>
 
-                <span class="n">item_stats</span> <span class="o">=</span> <span class="err">{</span>
+<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"></span>
 
-                    <span class="s2">&quot;itemid&quot;</span><span class="o">:</span> <span class="n">item_id</span><span class="p">,</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">inv</span><span class="w"></span>
 
-                    <span class="s2">&quot;quantity&quot;</span><span class="o">:</span> <span class="n">quantity</span><span class="p">,</span>  <span class="c1"># Never used</span>
+<span class="w">        </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
 
-                    <span class="s2">&quot;inventorytype&quot;</span><span class="o">:</span> <span class="n">inventory_type</span><span class="p">,</span>
-
-                    <span class="s2">&quot;iscash&quot;</span><span class="o">:</span> <span class="n">is_cash</span>  <span class="c1"># Never used</span>
-
-                <span class="err">}</span>
-
-                <span class="n">inv</span><span class="err">[</span><span class="n">bag_index</span><span class="err">]</span> <span class="o">=</span> <span class="n">item_stats</span>
-
-                <span class="c1"># Use the bag index (i.e. position of the item in the inventory)</span>
-
-                <span class="c1"># as the key for the dictionary</span>
-
-            <span class="k">return</span> <span class="n">inv</span>
-
-        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
-
-            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Unable to load inventory type {inv_type}\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 </details>
