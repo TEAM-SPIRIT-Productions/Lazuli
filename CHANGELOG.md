@@ -1,5 +1,8 @@
 ## CHANGELOG:  
 
+### v1.0.1
+- Perform general linting
+
 ### v1.0.0
 - Remove unnecessary checks
 - Added checks to more setters

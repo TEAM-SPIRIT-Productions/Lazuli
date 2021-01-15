@@ -23,7 +23,7 @@ classifiers = [
 
 setup(
 	name="lazuli",
-	version="1.0.0",
+	version="1.0.1",
 	description="A Python-based tool for interacting with AzureMSv316-based databases.",
 	long_description=long_description,
 	long_description_content_type="text/markdown",
