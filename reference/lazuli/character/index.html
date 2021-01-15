@@ -922,13 +922,16 @@
                 <h1 id="module-lazulicharacter">Module lazuli.character</h1>
 <p>This module holds the Character class for the lazuli package.</p>
 <p>Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="s2">&quot;&quot;&quot;This module holds the Character class for the lazuli package.</span>
 
 <span class="s2">Copyright 2020 TEAM SPIRIT. All rights reserved.</span>
 
-<span class="s2">Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.</span>
+<span class="s2">Use of this source code is governed by a AGPL-style license that can be found</span>
+
+<span class="s2">in the LICENSE file.</span>
 
 <span class="s2">Refer to database.py or the project wiki on GitHub for usage examples.</span>
 
@@ -946,11 +949,13 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s2">&quot;&quot;&quot;Character object; models AzureMS characters.</span>
 
-<span class="s2">    Using instance method Lazuli::get_char_by_name(name) will create a Character object instance with</span>
+<span class="s2">    Using instance method Lazuli::get_char_by_name(name) will create a</span>
 
-<span class="s2">    attributes identical to the character with IGN &quot;</span><span class="s s-Atom">name</span><span class="s2">&quot; in the connected AzureMS-based database.</span>
+<span class="s2">    Character object instance with attributes identical to the character with</span>
 
-<span class="s2">    This class contains the appropriate getter and setter methods for said attributes.</span>
+<span class="s2">    IGN &quot;</span><span class="s s-Atom">name</span><span class="s2">&quot; in the connected AzureMS-based database. This class contains</span>
+
+<span class="s2">    the appropriate getter and setter methods for said attributes.</span>
 
 <span class="s2">    Attributes:</span>
 
@@ -992,7 +997,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        ap: Integer, representing Character free Ability Points (AP) pool</span>
 
-<span class="s2">        map: Integer, representing Map ID of the map that the character is currently in</span>
+<span class="s2">        map: Integer, representing Map ID of the map that the character is in</span>
 
 <span class="s2">        bl_slots: Integer, representing Character Buddy List slots</span>
 
@@ -1020,13 +1025,19 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s2">&quot;&quot;&quot;Emulates how character object is handled server-sided</span>
 
-<span class="s2">        Not all character attributes are inherited, as the database table design in AzureMS is quite verbose</span>
+<span class="s2">        Not all character attributes are inherited, as the database</span>
+
+<span class="s2">        table design in AzureMS is quite verbose</span>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            char_stats: dictionary of character stats, formatted in AzureMS style</span>
+<span class="s2">            char_stats:</span>
 
-<span class="s2">            database_config: dictionary of protected attributes from a Lazuli object</span>
+<span class="s2">                Dictionary of character stats, formatted in AzureMS style</span>
+
+<span class="s2">            database_config:</span>
+
+<span class="s2">                Dictionary of protected attributes from a Lazuli object</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1092,15 +1103,21 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">honour</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">mute</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="s s-Atom">#</span> <span class="nv">Takes</span> <span class="s s-Atom">lower</span> <span class="s s-Atom">case</span> <span class="s s-Atom">true</span><span class="o">/</span><span class="s s-Atom">false</span> <span class="s s-Atom">but</span> <span class="o">is</span> <span class="s s-Atom">a</span> <span class="nf">varchar</span> <span class="p">(</span><span class="mi">45</span><span class="p">)</span> <span class="s s-Atom">and</span> <span class="o">not</span> <span class="s s-Atom">a</span> <span class="nv">Bool</span>
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">mute</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="s s-Atom">#</span> <span class="nv">Takes</span> <span class="s s-Atom">lower</span> <span class="s s-Atom">case</span> <span class="nv">String</span> <span class="s2">&quot;true&quot;</span><span class="s s-Atom">/</span><span class="s2">&quot;false&quot;</span> <span class="s s-Atom">but</span>
+
+        <span class="s s-Atom">#</span> <span class="o">is</span> <span class="s s-Atom">a</span> <span class="nf">varchar</span> <span class="p">(</span><span class="mi">45</span><span class="p">)</span> <span class="s s-Atom">and</span> <span class="o">not</span> <span class="s s-Atom">a</span> <span class="nv">Bool</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">init_stats</span><span class="p">()</span>  <span class="s s-Atom">#</span> <span class="nv">Assign</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">variables</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">Create</span> <span class="nv">Inventory</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">via</span> <span class="s s-Atom">class</span> <span class="s s-Atom">constructor</span><span class="p">,</span> <span class="s s-Atom">using</span> <span class="s s-Atom">details</span> <span class="s s-Atom">from</span> <span class="nv">Character</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span>
+        <span class="s s-Atom">#</span> <span class="nv">Create</span> <span class="nv">Inventory</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">via</span> <span class="s s-Atom">class</span> <span class="s s-Atom">constructor</span><span class="p">,</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">using</span> <span class="s s-Atom">details</span> <span class="s s-Atom">from</span> <span class="nv">Character</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">inventory</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">init_inventory</span><span class="p">()</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">Create</span> <span class="nv">Account</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">via</span> <span class="s s-Atom">class</span> <span class="s s-Atom">constructor</span><span class="p">,</span> <span class="s s-Atom">using</span> <span class="s s-Atom">details</span> <span class="s s-Atom">from</span> <span class="nv">Character</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span>
+        <span class="s s-Atom">#</span> <span class="nv">Create</span> <span class="nv">Account</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">via</span> <span class="s s-Atom">class</span> <span class="s s-Atom">constructor</span><span class="p">,</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">using</span> <span class="s s-Atom">details</span> <span class="s s-Atom">from</span> <span class="nv">Character</span> <span class="s s-Atom">object</span> <span class="s s-Atom">instance</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">account</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">init_account</span><span class="p">()</span>
 
@@ -1108,13 +1125,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">init_stats</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Given a dictionary of stats from AzureMS&#39;s DB we add them to Character object&#39;s attributes</span>
+        <span class="s2">&quot;&quot;&quot;Initialises Character instance attributes&#39; values.</span>
 
 <span class="s2">        Runs near the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s2">        It assigns the character attributes in char_stats to their respective protected attributes belonging to</span>
+<span class="s2">        Assigns values contained in char_stats (a dictionary of</span>
 
-<span class="s2">        the Character object instance.</span>
+<span class="s2">        character-related attributes from AzureMS&#39;s DB) to the Character</span>
+
+<span class="s2">        object&#39;s corresponding attributes.</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1180,21 +1199,29 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">init_account</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Fetch a dictionary of account attributes from AzureMS&#39;s DB and use it to instantiate a new Account object</span>
+        <span class="s2">&quot;&quot;&quot;Instantiate a Account object corresponding to the character</span>
 
 <span class="s2">        Runs at the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s2">        Checks the account ID associated with the character instance, and uses the Account class constructor to create</span>
+<span class="s2">        Fetch the account ID associated with the character instance; use the</span>
 
-<span class="s2">        a new Account object instance, with the relevant attributes from the database.</span>
+<span class="s2">        account ID to fetch the account attributes as a dictionary.</span>
+
+<span class="s2">        Then use the Account class constructor to create a new Account object</span>
+
+<span class="s2">        instance, with the relevant attributes from the database.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            Account object with attributes identical to its corresponding entry in the database</span>
+<span class="s2">            Account object with attributes identical to its</span>
+
+<span class="s2">            corresponding entry in the database</span>
 
 <span class="s2">        Raises:</span>
 
-<span class="s2">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s2">            Generic error on failure - handled by the</span>
+
+<span class="s2">            utility.get_db_first_hit() method</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1204,9 +1231,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
-        <span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nf">get_db</span><span class="p">()</span> <span class="s s-Atom">returns</span> <span class="s s-Atom">a</span> <span class="nv">Dictionary</span><span class="p">,</span> <span class="s s-Atom">so</span> <span class="nf">get</span><span class="p">()</span> <span class="o">is</span> <span class="s s-Atom">used</span> <span class="s s-Atom">to</span> <span class="s s-Atom">fetch</span> <span class="s s-Atom">only</span> <span class="s s-Atom">the</span> <span class="s s-Atom">value</span>
+        <span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">The</span> <span class="s s-Atom">row</span> <span class="s s-Atom">will</span> <span class="s s-Atom">always</span> <span class="s s-Atom">be</span> <span class="mi">0</span> <span class="s s-Atom">because</span> <span class="s s-Atom">there</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">no</span> <span class="s s-Atom">characters</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">same</span> <span class="s s-Atom">character</span> <span class="nv">ID</span> <span class="p">(</span><span class="nv">Primary</span> <span class="nv">Key</span><span class="p">)</span>
+        <span class="s s-Atom">#</span> <span class="nf">get_db</span><span class="p">()</span> <span class="s s-Atom">returns</span> <span class="s s-Atom">a</span> <span class="nv">Dictionary</span><span class="p">,</span> <span class="s s-Atom">so</span> <span class="nf">get</span><span class="p">()</span> <span class="o">is</span> <span class="s s-Atom">used</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">to</span> <span class="s s-Atom">fetch</span> <span class="s s-Atom">only</span> <span class="s s-Atom">the</span> <span class="s s-Atom">account</span> <span class="nv">ID</span>
+
+        <span class="s s-Atom">#</span> <span class="nv">The</span> <span class="s s-Atom">row</span> <span class="s s-Atom">index</span> <span class="s s-Atom">will</span> <span class="s s-Atom">always</span> <span class="s s-Atom">be</span> <span class="mi">0</span> <span class="s s-Atom">because</span> <span class="s s-Atom">there</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">no</span> <span class="s s-Atom">characters</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">same</span> <span class="s s-Atom">character</span> <span class="nv">ID</span> <span class="p">(</span><span class="nv">Primary</span> <span class="nv">Key</span><span class="p">)</span>
 
         <span class="s s-Atom">account_info</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_first_hit</span><span class="p">(</span>
 
@@ -1214,7 +1247,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
-        <span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">The</span> <span class="s s-Atom">row</span> <span class="s s-Atom">will</span> <span class="s s-Atom">always</span> <span class="s s-Atom">be</span> <span class="mi">0</span> <span class="s s-Atom">because</span> <span class="s s-Atom">there</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">no</span> <span class="s s-Atom">characters</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">same</span> <span class="s s-Atom">account</span> <span class="nv">ID</span> <span class="p">(</span><span class="nv">Primary</span> <span class="nv">Key</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">The</span> <span class="s s-Atom">row</span> <span class="s s-Atom">index</span> <span class="s s-Atom">will</span> <span class="s s-Atom">always</span> <span class="s s-Atom">be</span> <span class="mi">0</span> <span class="s s-Atom">because</span> <span class="s s-Atom">there</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">no</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">accounts</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">same</span> <span class="s s-Atom">account</span> <span class="nv">ID</span> <span class="p">(</span><span class="nv">Primary</span> <span class="nv">Key</span><span class="p">)</span>
 
         <span class="s s-Atom">account</span> <span class="o">=</span> <span class="nv">Account</span><span class="p">(</span><span class="s s-Atom">account_info</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">)</span>
 
@@ -1222,17 +1257,21 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">init_inventory</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Fetch a dictionary of user attributes from AzureMS&#39;s DB and use it to instantiate a new (custom) Inventory object</span>
+        <span class="s2">&quot;&quot;&quot;Instantiate a Inventory object corresponding to the character</span>
 
 <span class="s2">        Runs near the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s2">        Uses the Character ID associated with the character instance, and the Inventory class constructor to create</span>
+<span class="s2">        Uses the Character ID associated with the character instance, and the</span>
 
-<span class="s2">        a new Inventory object instance, with the relevant inventory attributes from the database.</span>
+<span class="s2">        Inventory class constructor to create a new Inventory object instance,</span>
+
+<span class="s2">        with the relevant inventory attributes from the database.</span>
 
 <span class="s2">        Raises:</span>
 
-<span class="s2">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s2">            Generic error on failure - handled by the</span>
+
+<span class="s2">            utility.get_db_first_hit() method</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1256,13 +1295,17 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">character_id</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">character_id</span>  <span class="s s-Atom">#</span> <span class="nv">Only</span> <span class="s s-Atom">getter</span><span class="p">,</span> <span class="s s-Atom">no</span> <span class="s s-Atom">setter</span><span class="p">;</span> <span class="nv">Primary</span> <span class="nv">Key</span> <span class="s s-Atom">must</span> <span class="o">not</span> <span class="s s-Atom">be</span> <span class="s s-Atom">set</span> <span class="s s-Atom">manually</span><span class="p">!</span>
+        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">character_id</span>
+
+        <span class="s s-Atom">#</span> <span class="nv">Only</span> <span class="s s-Atom">getter</span><span class="p">,</span> <span class="s s-Atom">no</span> <span class="s s-Atom">setter</span><span class="p">;</span> <span class="nv">Primary</span> <span class="nv">Key</span> <span class="s s-Atom">must</span> <span class="o">not</span> <span class="s s-Atom">be</span> <span class="s s-Atom">set</span> <span class="s s-Atom">manually</span><span class="p">!</span>
 
     <span class="s s-Atom">@property</span>
 
     <span class="s s-Atom">def</span> <span class="nf">account_id</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">account_id</span>  <span class="s s-Atom">#</span> <span class="nv">Only</span> <span class="s s-Atom">getter</span><span class="p">,</span> <span class="s s-Atom">no</span> <span class="s s-Atom">setter</span><span class="p">;</span> <span class="nv">Primary</span> <span class="nv">Key</span> <span class="s s-Atom">must</span> <span class="o">not</span> <span class="s s-Atom">be</span> <span class="s s-Atom">set</span> <span class="s s-Atom">manually</span><span class="p">!</span>
+        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">account_id</span>
+
+        <span class="s s-Atom">#</span> <span class="nv">Only</span> <span class="s s-Atom">getter</span><span class="p">,</span> <span class="s s-Atom">no</span> <span class="s s-Atom">setter</span><span class="p">;</span> <span class="nv">Primary</span> <span class="nv">Key</span> <span class="s s-Atom">must</span> <span class="o">not</span> <span class="s s-Atom">be</span> <span class="s s-Atom">set</span> <span class="s s-Atom">manually</span><span class="p">!</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1290,7 +1333,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the number of levels to be added to the current count</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the number of levels to be added</span>
+
+<span class="s2">                to the current count</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1344,7 +1391,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            new_name: string, representing the new character name that will be set in the database</span>
+<span class="s2">            new_name:</span>
+
+<span class="s2">                String, representing the new character name that</span>
+
+<span class="s2">                will be set in the database</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1370,11 +1421,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s s-Atom">new_name</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">set</span> <span class="nv">IGN</span> <span class="s s-Atom">in</span> <span class="nv">DB</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">name</span> <span class="o">=</span> <span class="s s-Atom">new_name</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">refresh</span> <span class="s s-Atom">character</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">attributes</span> <span class="s s-Atom">in</span> <span class="s s-Atom">memory</span>
+            <span class="s s-Atom">#</span> <span class="nv">Refresh</span> <span class="s s-Atom">character</span> <span class="s s-Atom">instance</span> <span class="s s-Atom">attributes</span> <span class="s s-Atom">in</span> <span class="nn">memory</span><span class="p">:</span>
+
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">name</span> <span class="o">=</span> <span class="s s-Atom">new_name</span>
 
         <span class="nn">else</span><span class="p">:</span>
 
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nv">Message</span> <span class="s s-Atom">to</span> <span class="s s-Atom">be</span> <span class="s s-Atom">passed</span> <span class="s s-Atom">along</span> <span class="s s-Atom">on</span> <span class="s s-Atom">failure</span>
+            <span class="s s-Atom">#</span> <span class="nv">Message</span> <span class="s s-Atom">to</span> <span class="s s-Atom">be</span> <span class="s s-Atom">passed</span> <span class="s s-Atom">along</span> <span class="s s-Atom">on</span> <span class="nn">failure</span><span class="p">:</span>
+
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1402,7 +1457,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of mesos to be added to the current count</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of mesos to be added</span>
+
+<span class="s2">                to the current count</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1436,7 +1495,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the number of fames to be added to the current count</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the number of fames to be added</span>
+
+<span class="s2">                to the current count</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1454,7 +1517,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">map</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">map_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">map_id</span> <span class="o">&lt;</span> <span class="mi">100000000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">map_id</span> <span class="o">&gt;</span> <span class="mi">999999999</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+        <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="s s-Atom">for</span> <span class="s s-Atom">map</span> <span class="nv">ID</span> <span class="s s-Atom">limits</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+
+        <span class="s s-Atom">if</span> <span class="s s-Atom">map_id</span> <span class="o">&lt;</span> <span class="mi">100000000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">map_id</span> <span class="o">&gt;</span> <span class="mi">999999999</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong map ID!&quot;</span><span class="p">)</span>
 
@@ -1474,7 +1539,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">face</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">face_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">face_id</span> <span class="o">&lt;</span> <span class="mi">20000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">face_id</span> <span class="o">&gt;</span> <span class="mi">29999</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+        <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="s s-Atom">for</span> <span class="s s-Atom">face</span> <span class="nv">ID</span> <span class="s s-Atom">limits</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+
+        <span class="s s-Atom">if</span> <span class="s s-Atom">face_id</span> <span class="o">&lt;</span> <span class="mi">20000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">face_id</span> <span class="o">&gt;</span> <span class="mi">29999</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong face ID!&quot;</span><span class="p">)</span>
 
@@ -1494,7 +1561,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">hair</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">hair_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">hair_id</span> <span class="o">&lt;</span> <span class="mi">30000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">hair_id</span> <span class="o">&gt;</span> <span class="mi">49999</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+        <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="s s-Atom">for</span> <span class="s s-Atom">hair</span> <span class="nv">ID</span> <span class="s s-Atom">limits</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+
+        <span class="s s-Atom">if</span> <span class="s s-Atom">hair_id</span> <span class="o">&lt;</span> <span class="mi">30000</span> <span class="s s-Atom">or</span> <span class="s s-Atom">hair_id</span> <span class="o">&gt;</span> <span class="mi">49999</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong hair ID!&quot;</span><span class="p">)</span>
 
@@ -1514,7 +1583,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">skin</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">skin_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">skin_id</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="s s-Atom">or</span> <span class="s s-Atom">skin_id</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+        <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="s s-Atom">for</span> <span class="s s-Atom">skin</span> <span class="nv">ID</span> <span class="s s-Atom">limits</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+
+        <span class="s s-Atom">if</span> <span class="s s-Atom">skin_id</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="s s-Atom">or</span> <span class="s s-Atom">skin_id</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong skin colour ID!&quot;</span><span class="p">)</span>
 
@@ -1534,7 +1605,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">gender</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">gender_id</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">gender_id</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="s s-Atom">or</span> <span class="s s-Atom">gender_id</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+        <span class="s s-Atom">#</span> <span class="nv">Best</span> <span class="s s-Atom">guess</span> <span class="s s-Atom">for</span> <span class="s s-Atom">gender</span> <span class="nv">ID</span> <span class="s s-Atom">limits</span> <span class="o">-</span> <span class="s s-Atom">might</span> <span class="s s-Atom">be</span> <span class="s s-Atom">wrong</span><span class="p">!</span>
+
+        <span class="s s-Atom">if</span> <span class="s s-Atom">gender_id</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="s s-Atom">or</span> <span class="s s-Atom">gender_id</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong gender ID!&quot;</span><span class="p">)</span>
 
@@ -1556,7 +1629,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">if</span> <span class="s s-Atom">exp_amount</span> <span class="o">&gt;</span> <span class="mi">9223372036854775807</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Azure</span> <span class="nv">DB</span> <span class="s s-Atom">uses</span> <span class="nv">Bigint</span> <span class="s s-Atom">for</span> <span class="nv">EXP</span>
 
-            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set EXP above 9.2 Quintillion!&quot;</span><span class="p">)</span>
+            <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;You should not try to set EXP above 9.2 Quintillion!&quot;</span>
+
+            <span class="p">)</span>
 
         <span class="nn">else</span><span class="p">:</span>
 
@@ -1570,7 +1647,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of EXP to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of EXP to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1588,7 +1669,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">strength</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nv">Azure</span> <span class="nv">DB</span> <span class="s s-Atom">uses</span> <span class="nv">Int</span> <span class="s s-Atom">for</span> <span class="s s-Atom">stats</span><span class="p">,</span> <span class="s s-Atom">but</span> <span class="s s-Atom">it</span> <span class="s s-Atom">may</span> <span class="s s-Atom">cause</span> <span class="s s-Atom">problems</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">client</span> <span class="s s-Atom">past</span> <span class="s s-Atom">signed</span> <span class="s s-Atom">shorts</span>
+        <span class="s s-Atom">#</span> <span class="nv">Azure</span> <span class="nv">DB</span> <span class="s s-Atom">uses</span> <span class="nv">Int</span> <span class="p">(</span><span class="s s-Atom">max</span> <span class="mf">2.1</span><span class="s s-Atom">b</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">stats</span><span class="p">,</span> <span class="s s-Atom">but</span> <span class="s s-Atom">it</span> <span class="s s-Atom">may</span> <span class="s s-Atom">cause</span> <span class="s s-Atom">problems</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">client</span> <span class="s s-Atom">if</span> <span class="s s-Atom">one</span> <span class="s s-Atom">exceeds</span> <span class="s s-Atom">signed</span> <span class="nf">shorts</span> <span class="p">(</span><span class="s s-Atom">max</span> <span class="mi">32</span><span class="s s-Atom">k</span><span class="p">)</span>
+
+        <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set STR above 30k!&quot;</span><span class="p">)</span>
 
@@ -1604,7 +1689,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of STR to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of STR to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1638,7 +1727,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of DEX to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of DEX to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1672,7 +1765,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of INT to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of INT to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1706,7 +1803,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of LUK to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of LUK to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1720,7 +1821,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            dictionary of primary stats</span>
+<span class="s2">            A Dictionary of the 4 primary stats</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1748,6 +1849,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">max_hp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
+        <span class="s s-Atom">#</span> <span class="nv">Client</span><span class="o">-</span><span class="s s-Atom">sided</span> <span class="s s-Atom">cap</span> <span class="s s-Atom">of</span> <span class="mi">500</span><span class="s s-Atom">k</span>
+
         <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">500000</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set HP above 500k!&quot;</span><span class="p">)</span>
@@ -1764,7 +1867,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of Max HP to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of Max HP to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1782,6 +1889,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">max_mp</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
+        <span class="s s-Atom">#</span> <span class="nv">Client</span><span class="o">-</span><span class="s s-Atom">sided</span> <span class="s s-Atom">cap</span> <span class="s s-Atom">of</span> <span class="mi">500</span><span class="s s-Atom">k</span>
+
         <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">500000</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set MP above 500k!&quot;</span><span class="p">)</span>
@@ -1798,7 +1907,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of max MP to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of max MP to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1816,6 +1929,10 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">ap</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
+        <span class="s s-Atom">#</span> <span class="nv">Azure</span> <span class="nv">DB</span> <span class="s s-Atom">uses</span> <span class="nv">Int</span> <span class="p">(</span><span class="s s-Atom">max</span> <span class="mf">2.1</span><span class="s s-Atom">b</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">stats</span><span class="p">,</span> <span class="s s-Atom">but</span> <span class="s s-Atom">it</span> <span class="s s-Atom">may</span> <span class="s s-Atom">cause</span> <span class="s s-Atom">problems</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">client</span> <span class="s s-Atom">if</span> <span class="s s-Atom">one</span> <span class="s s-Atom">exceeds</span> <span class="s s-Atom">signed</span> <span class="nf">shorts</span> <span class="p">(</span><span class="s s-Atom">max</span> <span class="mi">32</span><span class="s s-Atom">k</span><span class="p">)</span>
+
         <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">raise</span> <span class="nv">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not try to set AP above 30k!&quot;</span><span class="p">)</span>
@@ -1832,7 +1949,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of free AP to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of free AP to be added to</span>
+
+<span class="s2">                the current pool</span>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
@@ -1849,6 +1970,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
     <span class="s s-Atom">@bl_slots</span><span class="p">.</span><span class="s s-Atom">setter</span>
 
     <span class="s s-Atom">def</span> <span class="nf">bl_slots</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+        <span class="s s-Atom">#</span> <span class="nv">Client</span><span class="o">-</span><span class="s s-Atom">sided</span> <span class="s s-Atom">cap</span> <span class="s s-Atom">of</span> <span class="mi">100</span>
 
         <span class="s s-Atom">if</span> <span class="s s-Atom">amount</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="s s-Atom">:</span>
 
@@ -1902,7 +2025,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">ambition</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span><span class="p">;</span> <span class="nv">DB</span> <span class="s s-Atom">allows</span> <span class="mf">2.1</span><span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">but</span> <span class="o">not</span> <span class="s s-Atom">sure</span> <span class="s s-Atom">what</span> <span class="s s-Atom">the</span> <span class="s s-Atom">actual</span> <span class="s s-Atom">cap</span> <span class="s s-Atom">in</span> <span class="s s-Atom">source</span> <span class="o">is</span>
+        <span class="s s-Atom">#</span> <span class="nv">TODO</span><span class="s s-Atom">:</span> <span class="nv">Add</span> <span class="s s-Atom">checks</span><span class="p">;</span> <span class="nv">DB</span> <span class="s s-Atom">allows</span> <span class="mf">2.1</span><span class="s s-Atom">b</span><span class="p">,</span>
+
+        <span class="s s-Atom">#</span>  <span class="s s-Atom">but</span> <span class="o">not</span> <span class="s s-Atom">sure</span> <span class="s s-Atom">what</span> <span class="s s-Atom">the</span> <span class="s s-Atom">actual</span> <span class="s s-Atom">cap</span> <span class="s s-Atom">in</span> <span class="s s-Atom">source</span> <span class="o">is</span>
 
         <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;ambition&quot;</span><span class="p">,</span> <span class="s s-Atom">amount</span><span class="p">)</span>
 
@@ -2026,7 +2151,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">get_personality_traits</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Returns the 6 personality trait values in a dictionary</span>
+        <span class="s2">&quot;&quot;&quot;Returns the 6 personality traits&#39; values in a dictionary</span>
 
 <span class="s2">        Returns:</span>
 
@@ -2084,7 +2209,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">mute</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s s-Atom">if</span> <span class="s s-Atom">status</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="s s-Atom">or</span> <span class="s s-Atom">status</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="s s-Atom">status</span> <span class="nf">in</span> <span class="p">(</span><span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;chatban&quot;</span><span class="p">,</span> <span class="s s-Atom">status</span><span class="p">)</span>
 
@@ -2108,7 +2233,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="s s-Atom">def</span> <span class="nf">get_char_img</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</span>
+        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!</span>
 
 <span class="s2">        Returns:</span>
 
@@ -2136,21 +2261,31 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s2">        Uses these attributes to attempt a database connection through</span>
 
-<span class="s2">        Attempts to update the field represented by the provided column in characterstats, with the provided value.</span>
+<span class="s2">        utility.write_to_db. Attempts to update the field represented by the</span>
 
-<span class="s2">        Not recommended to use this alone, as it won&#39;t update the character object which this was used from.</span>
+<span class="s2">        provided column in the characters table, with the provided value.</span>
+
+<span class="s2">        Not recommended to use this alone, as it won&#39;t update the</span>
+
+<span class="s2">        character instance variables (in memory) post-change.</span>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            value: int or string, representing the value to be set in the database</span>
+<span class="s2">            value:</span>
 
-<span class="s2">            column: string, representing the column in the database that is to be updated</span>
+<span class="s2">                Int or String, representing the value to be set in the database</span>
+
+<span class="s2">            column:</span>
+
+<span class="s2">                String, representing the column in the database</span>
+
+<span class="s2">                that is to be updated</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            A boolean representing whether the operation was successful</span>
+<span class="s2">            A Boolean representing whether the operation was successful</span>
 
 <span class="s2">        Raises:</span>
 
@@ -2162,13 +2297,21 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
-            <span class="s s-Atom">f</span><span class="s2">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{self.name}&#39;&quot;</span>
+            <span class="s s-Atom">f</span><span class="s2">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; &quot;</span>
+
+            <span class="s s-Atom">f</span><span class="s2">&quot;WHERE `name` = &#39;{self.name}&#39;&quot;</span>
 
         <span class="p">)</span>
 
         <span class="s s-Atom">if</span> <span class="nn">status</span><span class="p">:</span>
 
-            <span class="nf">print</span><span class="p">(</span><span class="s s-Atom">f</span><span class="s2">&quot;Successfully updated {column} value for character: {self.name}.&quot;</span><span class="p">)</span>
+            <span class="nf">print</span><span class="p">(</span>
+
+                <span class="s s-Atom">f</span><span class="s2">&quot;Successfully updated {column} value &quot;</span>
+
+                <span class="s s-Atom">f</span><span class="s2">&quot;for character: {self.name}.&quot;</span>
+
+            <span class="p">)</span>
 
             <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">stats</span><span class="p">[</span><span class="s s-Atom">column</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">value</span>  <span class="s s-Atom">#</span> <span class="nv">Update</span> <span class="s s-Atom">the</span> <span class="s s-Atom">stats</span> <span class="s s-Atom">in</span> <span class="s s-Atom">the</span> <span class="s s-Atom">dictionary</span>
 
@@ -2209,49 +2352,52 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 </code></pre></div>
 
 <p>Character object; models AzureMS characters.</p>
-<p>Using instance method Lazuli::get_char_by_name(name) will create a Character object instance with
-attributes identical to the character with IGN "name" in the connected AzureMS-based database.
-This class contains the appropriate getter and setter methods for said attributes.</p>
+<p>Using instance method Lazuli::get_char_by_name(name) will create a
+Character object instance with attributes identical to the character with
+IGN "name" in the connected AzureMS-based database. This class contains
+the appropriate getter and setter methods for said attributes.</p>
 <p>Attributes:
-    character_id: Integer, representing Primary Key for Character; int(11)
-    account_id: Integer, representing Primary Key for Account (FK); int(11)
-    name: String, representing Character IGN; varchar(13)
-    level: Integer, representing Character level
-    exp: Integer, representing Character EXP; bigint(20)
-    strength: Integer, representing Character STR stat pool
-    dex: Integer, representing Character DEX stat pool
-    luk: Integer, representing Character LUK stat pool
-    inte: Integer, representing Character INT stat pool
-    max_hp: Integer, representing Character Max HP stat pool
-    max_mp: Integer, representing Character Max MP stat pool
-    meso: Integer, representing character wealth (aka Meso count)
-    job: Integer, representing Job ID of the character
-    skin: Integer, representing Skin ID of the character
-    gender: Integer, representing Gender ID of the character
-    fame: Integer, representing Character fame count
-    hair: Integer, representing Hair ID of the character
-    face: Integer, representing Face ID of the character
-    ap: Integer, representing Character free Ability Points (AP) pool
-    map: Integer, representing Map ID of the map that the character is currently in
-    bl_slots: Integer, representing Character Buddy List slots
-    rebirths: Integer, representing Character rebirth count
-    ambition: Integer, representing Character Ambition pool
-    insight: Integer, representing Character Insight pool
-    willpower: Integer, representing Character Willpower pool
-    diligence: Integer, representing Character Diligence pool
-    empathy: Integer, representing Character Empathy pool
-    charm: Integer, representing Character Charm pool
-    honour: Integer, representing Character Honour pool
-    mute: String, representing whether a character is chat-banned</p>
+        character_id: Integer, representing Primary Key for Character; int(11)
+        account_id: Integer, representing Primary Key for Account (FK); int(11)
+        name: String, representing Character IGN; varchar(13)
+        level: Integer, representing Character level
+        exp: Integer, representing Character EXP; bigint(20)
+        strength: Integer, representing Character STR stat pool
+        dex: Integer, representing Character DEX stat pool
+        luk: Integer, representing Character LUK stat pool
+        inte: Integer, representing Character INT stat pool
+        max_hp: Integer, representing Character Max HP stat pool
+        max_mp: Integer, representing Character Max MP stat pool
+        meso: Integer, representing character wealth (aka Meso count)
+        job: Integer, representing Job ID of the character
+        skin: Integer, representing Skin ID of the character
+        gender: Integer, representing Gender ID of the character
+        fame: Integer, representing Character fame count
+        hair: Integer, representing Hair ID of the character
+        face: Integer, representing Face ID of the character
+        ap: Integer, representing Character free Ability Points (AP) pool
+        map: Integer, representing Map ID of the map that the character is in
+        bl_slots: Integer, representing Character Buddy List slots
+        rebirths: Integer, representing Character rebirth count
+        ambition: Integer, representing Character Ambition pool
+        insight: Integer, representing Character Insight pool
+        willpower: Integer, representing Character Willpower pool
+        diligence: Integer, representing Character Diligence pool
+        empathy: Integer, representing Character Empathy pool
+        charm: Integer, representing Character Charm pool
+        honour: Integer, representing Character Honour pool
+        mute: String, representing whether a character is chat-banned</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">Character:</span>
 
     <span class="s">&quot;&quot;&quot;Character object; models AzureMS characters.</span>
 
-<span class="s">    Using instance method Lazuli::get_char_by_name(name) will create a Character object instance with</span>
+<span class="s">    Using instance method Lazuli::get_char_by_name(name) will create a</span>
 
-<span class="s">    attributes identical to the character with IGN &quot;</span><span class="nb">name</span><span class="s">&quot; in the connected AzureMS-based database.</span>
+<span class="s">    Character object instance with attributes identical to the character with</span>
 
-<span class="s">    This class contains the appropriate getter and setter methods for said attributes.</span>
+<span class="s">    IGN &quot;</span><span class="nb">name</span><span class="s">&quot; in the connected AzureMS-based database. This class contains</span>
+
+<span class="s">    the appropriate getter and setter methods for said attributes.</span>
 
 <span class="s">    Attributes:</span>
 
@@ -2293,7 +2439,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        ap: Integer, representing Character free Ability Points (AP) pool</span>
 
-<span class="s">        map: Integer, representing Map ID of the map that the character is currently in</span>
+<span class="s">        map: Integer, representing Map ID of the map that the character is in</span>
 
 <span class="s">        bl_slots: Integer, representing Character Buddy List slots</span>
 
@@ -2321,13 +2467,19 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="s">&quot;&quot;&quot;Emulates how character object is handled server-sided</span>
 
-<span class="s">        Not all character attributes are inherited, as the database table design in AzureMS is quite verbose</span>
+<span class="s">        Not all character attributes are inherited, as the database</span>
+
+<span class="s">        table design in AzureMS is quite verbose</span>
 
 <span class="s">        Args:</span>
 
-<span class="s">            char_stats: dictionary of character stats, formatted in AzureMS style</span>
+<span class="s">            char_stats:</span>
 
-<span class="s">            database_config: dictionary of protected attributes from a Lazuli object</span>
+<span class="s">                Dictionary of character stats, formatted in AzureMS style</span>
+
+<span class="s">            database_config:</span>
+
+<span class="s">                Dictionary of protected attributes from a Lazuli object</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2393,15 +2545,21 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="nb">self</span>.<span class="n">_honour</span> = <span class="mi">0</span>
 
-        <span class="nb">self</span>.<span class="n">_mute</span> = <span class="s">&quot;&quot;</span>  <span class="c1"># Takes lower case true/false but is a varchar (45) and not a Bool</span>
+        <span class="nb">self</span>.<span class="n">_mute</span> = <span class="s">&quot;&quot;</span>  <span class="c1"># Takes lower case String &quot;true&quot;/&quot;false&quot; but</span>
+
+        <span class="c1"># is a varchar (45) and not a Bool</span>
 
         <span class="nb">self</span>.<span class="n">init_stats</span>()  <span class="c1"># Assign instance variables</span>
 
-        <span class="c1"># Create Inventory object instance via class constructor, using details from Character object instance</span>
+        <span class="c1"># Create Inventory object instance via class constructor,</span>
+
+        <span class="c1"># using details from Character object instance</span>
 
         <span class="nb">self</span>.<span class="n">_inventory</span> = <span class="nb">self</span>.<span class="n">init_inventory</span>()
 
-        <span class="c1"># Create Account object instance via class constructor, using details from Character object instance</span>
+        <span class="c1"># Create Account object instance via class constructor,</span>
+
+        <span class="c1"># using details from Character object instance</span>
 
         <span class="nb">self</span>.<span class="n">_account</span> = <span class="nb">self</span>.<span class="n">init_account</span>()
 
@@ -2409,13 +2567,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">init_stats</span>(<span class="nb">self</span>):
 
-        <span class="s">&quot;&quot;&quot;Given a dictionary of stats from AzureMS&#39;s DB we add them to Character object&#39;s attributes</span>
+        <span class="s">&quot;&quot;&quot;Initialises Character instance attributes&#39; values.</span>
 
 <span class="s">        Runs near the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s">        It assigns the character attributes in char_stats to their respective protected attributes belonging to</span>
+<span class="s">        Assigns values contained in char_stats (a dictionary of</span>
 
-<span class="s">        the Character object instance.</span>
+<span class="s">        character-related attributes from AzureMS&#39;s DB) to the Character</span>
+
+<span class="s">        object&#39;s corresponding attributes.</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2481,21 +2641,29 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">init_account</span>(<span class="nb">self</span>):
 
-        <span class="s">&quot;&quot;&quot;Fetch a dictionary of account attributes from AzureMS&#39;s DB and use it to instantiate a new Account object</span>
+        <span class="s">&quot;&quot;&quot;Instantiate a Account object corresponding to the character</span>
 
 <span class="s">        Runs at the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s">        Checks the account ID associated with the character instance, and uses the Account class constructor to create</span>
+<span class="s">        Fetch the account ID associated with the character instance; use the</span>
 
-<span class="s">        a new Account object instance, with the relevant attributes from the database.</span>
+<span class="s">        account ID to fetch the account attributes as a dictionary.</span>
+
+<span class="s">        Then use the Account class constructor to create a new Account object</span>
+
+<span class="s">        instance, with the relevant attributes from the database.</span>
 
 <span class="s">        Returns:</span>
 
-<span class="s">            Account object with attributes identical to its corresponding entry in the database</span>
+<span class="s">            Account object with attributes identical to its</span>
+
+<span class="s">            corresponding entry in the database</span>
 
 <span class="s">        Raises:</span>
 
-<span class="s">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s">            Generic error on failure - handled by the</span>
+
+<span class="s">            utility.get_db_first_hit() method</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2505,9 +2673,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="nb">f</span><span class="s">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
-        ).<span class="nb">get</span>(<span class="s">&quot;accountid&quot;</span>)  <span class="c1"># get_db() returns a Dictionary, so get() is used to fetch only the value</span>
+        ).<span class="nb">get</span>(<span class="s">&quot;accountid&quot;</span>)
 
-        <span class="c1"># The row will always be 0 because there should be no characters with the same character ID (Primary Key)</span>
+        <span class="c1"># get_db() returns a Dictionary, so get() is used</span>
+
+        <span class="c1"># to fetch only the account ID</span>
+
+        <span class="c1"># The row index will always be 0 because there should be no characters</span>
+
+        <span class="c1"># with the same character ID (Primary Key)</span>
 
         <span class="n">account_info</span> = <span class="n">utils</span>.<span class="n">get_db_first_hit</span>(
 
@@ -2515,7 +2689,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="nb">f</span><span class="s">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
-        )  <span class="c1"># The row will always be 0 because there should be no characters with the same account ID (Primary Key)</span>
+        )  <span class="c1"># The row index will always be 0 because there should be no</span>
+
+        <span class="c1"># accounts with the same account ID (Primary Key)</span>
 
         <span class="n">account</span> = <span class="n">Account</span>(<span class="n">account_info</span>, <span class="nb">self</span>.<span class="n">database_config</span>)
 
@@ -2523,17 +2699,21 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">init_inventory</span>(<span class="nb">self</span>):
 
-        <span class="s">&quot;&quot;&quot;Fetch a dictionary of user attributes from AzureMS&#39;s DB and use it to instantiate a new (custom) Inventory object</span>
+        <span class="s">&quot;&quot;&quot;Instantiate a Inventory object corresponding to the character</span>
 
 <span class="s">        Runs near the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s">        Uses the Character ID associated with the character instance, and the Inventory class constructor to create</span>
+<span class="s">        Uses the Character ID associated with the character instance, and the</span>
 
-<span class="s">        a new Inventory object instance, with the relevant inventory attributes from the database.</span>
+<span class="s">        Inventory class constructor to create a new Inventory object instance,</span>
+
+<span class="s">        with the relevant inventory attributes from the database.</span>
 
 <span class="s">        Raises:</span>
 
-<span class="s">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s">            Generic error on failure - handled by the</span>
+
+<span class="s">            utility.get_db_first_hit() method</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2557,13 +2737,17 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">character_id</span>(<span class="nb">self</span>):
 
-        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_character_id</span>  <span class="c1"># Only getter, no setter; Primary Key must not be set manually!</span>
+        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_character_id</span>
+
+        <span class="c1"># Only getter, no setter; Primary Key must not be set manually!</span>
 
     <span class="nv">@property</span>
 
     <span class="n">def</span> <span class="n">account_id</span>(<span class="nb">self</span>):
 
-        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_account_id</span>  <span class="c1"># Only getter, no setter; Primary Key must not be set manually!</span>
+        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_account_id</span>
+
+        <span class="c1"># Only getter, no setter; Primary Key must not be set manually!</span>
 
     <span class="nv">@property</span>
 
@@ -2591,7 +2775,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the number of levels to be added to the current count</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the number of levels to be added</span>
+
+<span class="s">                to the current count</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2645,7 +2833,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            new_name: string, representing the new character name that will be set in the database</span>
+<span class="s">            new_name:</span>
+
+<span class="s">                String, representing the new character name that</span>
+
+<span class="s">                will be set in the database</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2671,11 +2863,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;name&quot;</span>, <span class="n">new_name</span>)  <span class="c1"># set IGN in DB</span>
 
-            <span class="nb">self</span>.<span class="n">_name</span> = <span class="n">new_name</span>  <span class="c1"># refresh character instance attributes in memory</span>
+            <span class="c1"># Refresh character instance attributes in memory:</span>
+
+            <span class="nb">self</span>.<span class="n">_name</span> = <span class="n">new_name</span>
 
         <span class="n">else:</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;That name is already taken!&quot;</span>)  <span class="c1"># Message to be passed along on failure</span>
+            <span class="c1"># Message to be passed along on failure:</span>
+
+            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;That name is already taken!&quot;</span>)
 
     <span class="nv">@property</span>
 
@@ -2703,7 +2899,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of mesos to be added to the current count</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of mesos to be added</span>
+
+<span class="s">                to the current count</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2737,7 +2937,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the number of fames to be added to the current count</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the number of fames to be added</span>
+
+<span class="s">                to the current count</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2755,7 +2959,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">map</span>(<span class="nb">self</span>, <span class="n">map_id</span>):
 
-        <span class="k">if</span> <span class="n">map_id</span> &lt; <span class="mi">100000000</span> <span class="o">or</span> <span class="n">map_id</span> &gt; <span class="mi">999999999</span>:  <span class="c1"># Best guess - might be wrong!</span>
+        <span class="c1"># Best guess for map ID limits - might be wrong!</span>
+
+        <span class="k">if</span> <span class="n">map_id</span> &lt; <span class="mi">100000000</span> <span class="o">or</span> <span class="n">map_id</span> &gt; <span class="mi">999999999</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong map ID!&quot;</span>)
 
@@ -2775,7 +2981,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">face</span>(<span class="nb">self</span>, <span class="n">face_id</span>):
 
-        <span class="k">if</span> <span class="n">face_id</span> &lt; <span class="mi">20000</span> <span class="o">or</span> <span class="n">face_id</span> &gt; <span class="mi">29999</span>:  <span class="c1"># Best guess - might be wrong!</span>
+        <span class="c1"># Best guess for face ID limits - might be wrong!</span>
+
+        <span class="k">if</span> <span class="n">face_id</span> &lt; <span class="mi">20000</span> <span class="o">or</span> <span class="n">face_id</span> &gt; <span class="mi">29999</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong face ID!&quot;</span>)
 
@@ -2795,7 +3003,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">hair</span>(<span class="nb">self</span>, <span class="n">hair_id</span>):
 
-        <span class="k">if</span> <span class="n">hair_id</span> &lt; <span class="mi">30000</span> <span class="o">or</span> <span class="n">hair_id</span> &gt; <span class="mi">49999</span>:  <span class="c1"># Best guess - might be wrong!</span>
+        <span class="c1"># Best guess for hair ID limits - might be wrong!</span>
+
+        <span class="k">if</span> <span class="n">hair_id</span> &lt; <span class="mi">30000</span> <span class="o">or</span> <span class="n">hair_id</span> &gt; <span class="mi">49999</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong hair ID!&quot;</span>)
 
@@ -2815,7 +3025,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">skin</span>(<span class="nb">self</span>, <span class="n">skin_id</span>):
 
-        <span class="k">if</span> <span class="n">skin_id</span> &lt; <span class="mi">0</span> <span class="o">or</span> <span class="n">skin_id</span> &gt; <span class="mi">16</span>:  <span class="c1"># Best guess - might be wrong!</span>
+        <span class="c1"># Best guess for skin ID limits - might be wrong!</span>
+
+        <span class="k">if</span> <span class="n">skin_id</span> &lt; <span class="mi">0</span> <span class="o">or</span> <span class="n">skin_id</span> &gt; <span class="mi">16</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong skin colour ID!&quot;</span>)
 
@@ -2835,7 +3047,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">gender</span>(<span class="nb">self</span>, <span class="n">gender_id</span>):
 
-        <span class="k">if</span> <span class="n">gender_id</span> &lt; -<span class="mi">1</span> <span class="o">or</span> <span class="n">gender_id</span> &gt; <span class="mi">1</span>:  <span class="c1"># Best guess - might be wrong!</span>
+        <span class="c1"># Best guess for gender ID limits - might be wrong!</span>
+
+        <span class="k">if</span> <span class="n">gender_id</span> &lt; -<span class="mi">1</span> <span class="o">or</span> <span class="n">gender_id</span> &gt; <span class="mi">1</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;Wrong gender ID!&quot;</span>)
 
@@ -2857,7 +3071,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="k">if</span> <span class="n">exp_amount</span> &gt; <span class="mi">9223372036854775807</span>:  <span class="c1"># Azure DB uses Bigint for EXP</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set EXP above 9.2 Quintillion!&quot;</span>)
+            <span class="n">raise</span> <span class="n">ValueError</span>(
+
+                <span class="s">&quot;You should not try to set EXP above 9.2 Quintillion!&quot;</span>
+
+            )
 
         <span class="n">else:</span>
 
@@ -2871,7 +3089,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of EXP to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of EXP to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2889,7 +3111,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">strength</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">32767</span>:  <span class="c1"># Azure DB uses Int for stats, but it may cause problems with the client past signed shorts</span>
+        <span class="c1"># Azure DB uses Int (max 2.1b) for stats, but it may cause problems</span>
+
+        <span class="c1"># with the client if one exceeds signed shorts (max 32k)</span>
+
+        <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">32767</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set STR above 30k!&quot;</span>)
 
@@ -2905,7 +3131,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of STR to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of STR to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2939,7 +3169,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of DEX to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of DEX to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -2973,7 +3207,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of INT to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of INT to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -3007,7 +3245,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of LUK to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of LUK to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -3021,7 +3263,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Returns:</span>
 
-<span class="s">            dictionary of primary stats</span>
+<span class="s">            A Dictionary of the 4 primary stats</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -3049,6 +3291,8 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">max_hp</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
+        <span class="c1"># Client-sided cap of 500k</span>
+
         <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">500000</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set HP above 500k!&quot;</span>)
@@ -3065,7 +3309,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of Max HP to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of Max HP to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -3083,6 +3331,8 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">max_mp</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
+        <span class="c1"># Client-sided cap of 500k</span>
+
         <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">500000</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set MP above 500k!&quot;</span>)
@@ -3099,7 +3349,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of max MP to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of max MP to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -3117,6 +3371,10 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">ap</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
+        <span class="c1"># Azure DB uses Int (max 2.1b) for stats, but it may cause problems</span>
+
+        <span class="c1"># with the client if one exceeds signed shorts (max 32k)</span>
+
         <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">32767</span>:
 
             <span class="n">raise</span> <span class="n">ValueError</span>(<span class="s">&quot;You should not try to set AP above 30k!&quot;</span>)
@@ -3133,7 +3391,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Args:</span>
 
-<span class="s">            amount: Int, representing the amount of free AP to be added to the current pool</span>
+<span class="s">            amount:</span>
+
+<span class="s">                Int, representing the amount of free AP to be added to</span>
+
+<span class="s">                the current pool</span>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
@@ -3150,6 +3412,8 @@ This class contains the appropriate getter and setter methods for said attribute
     <span class="nv">@bl_slots</span>.<span class="n">setter</span>
 
     <span class="n">def</span> <span class="n">bl_slots</span>(<span class="nb">self</span>, <span class="n">amount</span>):
+
+        <span class="c1"># Client-sided cap of 100</span>
 
         <span class="k">if</span> <span class="n">amount</span> &gt; <span class="mi">100</span>:
 
@@ -3203,7 +3467,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">ambition</span>(<span class="nb">self</span>, <span class="n">amount</span>):
 
-        <span class="c1"># TODO: Add checks; DB allows 2.1b, but not sure what the actual cap in source is</span>
+        <span class="c1"># TODO: Add checks; DB allows 2.1b,</span>
+
+        <span class="c1">#  but not sure what the actual cap in source is</span>
 
         <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;ambition&quot;</span>, <span class="n">amount</span>)
 
@@ -3327,7 +3593,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">get_personality_traits</span>(<span class="nb">self</span>):
 
-        <span class="s">&quot;&quot;&quot;Returns the 6 personality trait values in a dictionary</span>
+        <span class="s">&quot;&quot;&quot;Returns the 6 personality traits&#39; values in a dictionary</span>
 
 <span class="s">        Returns:</span>
 
@@ -3385,7 +3651,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">mute</span>(<span class="nb">self</span>, <span class="nb">status</span>):
 
-        <span class="k">if</span> <span class="nb">status</span> == <span class="s">&quot;false&quot;</span> <span class="o">or</span> <span class="nb">status</span> == <span class="s">&quot;true&quot;</span>:
+        <span class="k">if</span> <span class="nb">status</span> <span class="nb">in</span> (<span class="s">&quot;false&quot;</span>, <span class="s">&quot;true&quot;</span>):
 
             <span class="nb">self</span>.<span class="n">set_stat_by_column</span>(<span class="s">&quot;chatban&quot;</span>, <span class="nb">status</span>)
 
@@ -3409,7 +3675,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">get_char_img</span>(<span class="nb">self</span>):
 
-        <span class="s">&quot;&quot;&quot;Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</span>
+        <span class="s">&quot;&quot;&quot;Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!</span>
 
 <span class="s">        Returns:</span>
 
@@ -3437,21 +3703,31 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="s">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s">        Uses these attributes to attempt a database connection through</span>
 
-<span class="s">        Attempts to update the field represented by the provided column in characterstats, with the provided value.</span>
+<span class="s">        utility.write_to_db. Attempts to update the field represented by the</span>
 
-<span class="s">        Not recommended to use this alone, as it won&#39;t update the character object which this was used from.</span>
+<span class="s">        provided column in the characters table, with the provided value.</span>
+
+<span class="s">        Not recommended to use this alone, as it won&#39;t update the</span>
+
+<span class="s">        character instance variables (in memory) post-change.</span>
 
 <span class="s">        Args:</span>
 
-<span class="s">            value: int or string, representing the value to be set in the database</span>
+<span class="s">            value:</span>
 
-<span class="s">            column: string, representing the column in the database that is to be updated</span>
+<span class="s">                Int or String, representing the value to be set in the database</span>
+
+<span class="s">            column:</span>
+
+<span class="s">                String, representing the column in the database</span>
+
+<span class="s">                that is to be updated</span>
 
 <span class="s">        Returns:</span>
 
-<span class="s">            A boolean representing whether the operation was successful</span>
+<span class="s">            A Boolean representing whether the operation was successful</span>
 
 <span class="s">        Raises:</span>
 
@@ -3463,13 +3739,21 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="nb">self</span>.<span class="n">_database_config</span>,
 
-            <span class="nb">f</span><span class="s">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{self.name}&#39;&quot;</span>
+            <span class="nb">f</span><span class="s">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; &quot;</span>
+
+            <span class="nb">f</span><span class="s">&quot;WHERE `name` = &#39;{self.name}&#39;&quot;</span>
 
         )
 
         <span class="k">if</span> <span class="n">status:</span>
 
-            <span class="nb">print</span>(<span class="nb">f</span><span class="s">&quot;Successfully updated {column} value for character: {self.name}.&quot;</span>)
+            <span class="nb">print</span>(
+
+                <span class="nb">f</span><span class="s">&quot;Successfully updated {column} value &quot;</span>
+
+                <span class="nb">f</span><span class="s">&quot;for character: {self.name}.&quot;</span>
+
+            )
 
             <span class="nb">self</span>.<span class="n">_stats</span>[<span class="nb">column</span>] = <span class="nb">value</span>  <span class="c1"># Update the stats in the dictionary</span>
 
@@ -3626,14 +3910,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing free AP pool</p>
 <p>Args:
-    amount: Int, representing the amount of free AP to be added to the current pool</p>
+        amount:
+                Int, representing the amount of free AP to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_ap</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing free AP pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of free AP to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of free AP to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3682,14 +3972,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing DEX pool</p>
 <p>Args:
-    amount: Int, representing the amount of DEX to be added to the current pool</p>
+        amount:
+                Int, representing the amount of DEX to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_dex</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing DEX pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of DEX to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of DEX to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3738,14 +4034,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing EXP pool</p>
 <p>Args:
-    amount: Int, representing the amount of EXP to be added to the current pool</p>
+        amount:
+                Int, representing the amount of EXP to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_exp</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing EXP pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of EXP to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of EXP to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3764,14 +4066,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current fame count</p>
 <p>Args:
-    amount: Int, representing the number of fames to be added to the current count</p>
+        amount:
+                Int, representing the number of fames to be added
+                to the current count</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_fame</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current fame count</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the number of fames to be added to the current count</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the number of fames to be added</span>
+
+<span class="ss">                to the current count</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3820,14 +4128,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing INT pool</p>
 <p>Args:
-    amount: Int, representing the amount of INT to be added to the current pool</p>
+        amount:
+                Int, representing the amount of INT to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_inte</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing INT pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of INT to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of INT to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3846,14 +4160,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current level count</p>
 <p>Args:
-    amount: Int, representing the number of levels to be added to the current count</p>
+        amount:
+                Int, representing the number of levels to be added
+                to the current count</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_level</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current level count</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the number of levels to be added to the current count</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the number of levels to be added</span>
+
+<span class="ss">                to the current count</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3872,14 +4192,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing LUK pool</p>
 <p>Args:
-    amount: Int, representing the amount of LUK to be added to the current pool</p>
+        amount:
+                Int, representing the amount of LUK to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_luk</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing LUK pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of LUK to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of LUK to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3898,14 +4224,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing Max HP pool</p>
 <p>Args:
-    amount: Int, representing the amount of Max HP to be added to the current pool</p>
+        amount:
+                Int, representing the amount of Max HP to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_max_hp</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing Max HP pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of Max HP to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of Max HP to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3924,14 +4256,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing Max MP pool</p>
 <p>Args:
-    amount: Int, representing the amount of max MP to be added to the current pool</p>
+        amount:
+                Int, representing the amount of max MP to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_max_mp</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing Max MP pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of max MP to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of max MP to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3950,14 +4288,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current meso count</p>
 <p>Args:
-    amount: Int, representing the amount of mesos to be added to the current count</p>
+        amount:
+                Int, representing the amount of mesos to be added
+                to the current count</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_mesos</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current meso count</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of mesos to be added to the current count</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of mesos to be added</span>
+
+<span class="ss">                to the current count</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -3991,14 +4335,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Add the specified amount to the current existing STR pool</p>
 <p>Args:
-    amount: Int, representing the amount of STR to be added to the current pool</p>
+        amount:
+                Int, representing the amount of STR to be added to
+                the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_str</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Add the specified amount to the current existing STR pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of STR to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of STR to be added to</span>
+
+<span class="ss">                the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -4029,12 +4379,12 @@ This class contains the appropriate getter and setter methods for said attribute
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</p>
+<p>Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!</p>
 <p>Returns:
-    url: String, a link to the generated avatar</p>
+        url: String, a link to the generated avatar</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="s s-Atom">def</span> <span class="nf">get_char_img</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
-        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!</span>
+        <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!</span>
 
 <span class="s2">        Returns:</span>
 
@@ -4066,7 +4416,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Returns the actual name of the job from job id</p>
 <p>Returns:
-    String, representing the job name corresponding to a job ID</p>
+        String, representing the job name corresponding to a job ID</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_job_name</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Returns the actual name of the job from job id</span>
@@ -4087,12 +4437,12 @@ This class contains the appropriate getter and setter methods for said attribute
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Returns the 6 personality trait values in a dictionary</p>
+<p>Returns the 6 personality traits' values in a dictionary</p>
 <p>Returns:
-    dictionary of personality traits</p>
+        dictionary of personality traits</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_personality_traits</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
-        <span class="ss">&quot;&quot;&quot;Returns the 6 personality trait values in a dictionary</span>
+        <span class="ss">&quot;&quot;&quot;Returns the 6 personality traits&#39; values in a dictionary</span>
 
 <span class="ss">        Returns:</span>
 
@@ -4128,14 +4478,14 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Returns str, int, dex, luk values in a dictionary</p>
 <p>Returns:
-    dictionary of primary stats</p>
+        A Dictionary of the 4 primary stats</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_primary_stats</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Returns str, int, dex, luk values in a dictionary</span>
 
 <span class="ss">        Returns:</span>
 
-<span class="ss">            dictionary of primary stats</span>
+<span class="ss">            A Dictionary of the 4 primary stats</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -4164,11 +4514,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Fetches account attribute by column name</p>
 <p>Args:
-    column: String, representing column name in DB</p>
+        column: String, representing column name in DB</p>
 <p>Returns:
-    Int or String, representing user attribute queried</p>
+        Int or String, representing user attribute queried</p>
 <p>Raises:
-    Generic error on failure, handled by utils.get_stat_by_column</p>
+        Generic error on failure, handled by utils.get_stat_by_column</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="k">column</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Fetches account attribute by column name</span>
@@ -4197,31 +4547,43 @@ This class contains the appropriate getter and setter methods for said attribute
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetch a dictionary of account attributes from AzureMS's DB and use it to instantiate a new Account object</p>
+<p>Instantiate a Account object corresponding to the character</p>
 <p>Runs at the end of Character::<strong>init</strong>(char_stats, database_config).
-Checks the account ID associated with the character instance, and uses the Account class constructor to create
-a new Account object instance, with the relevant attributes from the database.</p>
+Fetch the account ID associated with the character instance; use the
+account ID to fetch the account attributes as a dictionary.
+Then use the Account class constructor to create a new Account object
+instance, with the relevant attributes from the database.</p>
 <p>Returns:
-    Account object with attributes identical to its corresponding entry in the database
+        Account object with attributes identical to its
+        corresponding entry in the database
 Raises:
-    Generic error on failure - handled by the utility.get_db_first_hit() method</p>
+        Generic error on failure - handled by the
+        utility.get_db_first_hit() method</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_account</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetch a dictionary of account attributes from AzureMS&#39;s DB and use it to instantiate a new Account object</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Instantiate a Account object corresponding to the character</span>
 
 <span class="s2">        Runs at the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="s2">        Checks the account ID associated with the character instance, and uses the Account class constructor to create</span>
+<span class="s2">        Fetch the account ID associated with the character instance; use the</span>
 
-<span class="s2">        a new Account object instance, with the relevant attributes from the database.</span>
+<span class="s2">        account ID to fetch the account attributes as a dictionary.</span>
+
+<span class="s2">        Then use the Account class constructor to create a new Account object</span>
+
+<span class="s2">        instance, with the relevant attributes from the database.</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            Account object with attributes identical to its corresponding entry in the database</span>
+<span class="s2">            Account object with attributes identical to its</span>
+
+<span class="s2">            corresponding entry in the database</span>
 
 <span class="s2">        Raises:</span>
 
-<span class="s2">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="s2">            Generic error on failure - handled by the</span>
+
+<span class="s2">            utility.get_db_first_hit() method</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -4231,9 +4593,15 @@ Raises:
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
-        <span class="p">).</span><span class="k">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>  <span class="c1"># get_db() returns a Dictionary, so get() is used to fetch only the value</span>
+        <span class="p">).</span><span class="k">get</span><span class="p">(</span><span class="s2">&quot;accountid&quot;</span><span class="p">)</span>
 
-        <span class="c1"># The row will always be 0 because there should be no characters with the same character ID (Primary Key)</span>
+        <span class="c1"># get_db() returns a Dictionary, so get() is used</span>
+
+        <span class="c1"># to fetch only the account ID</span>
+
+        <span class="c1"># The row index will always be 0 because there should be no characters</span>
+
+        <span class="c1"># with the same character ID (Primary Key)</span>
 
         <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
@@ -4241,7 +4609,9 @@ Raises:
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
-        <span class="p">)</span>  <span class="c1"># The row will always be 0 because there should be no characters with the same account ID (Primary Key)</span>
+        <span class="p">)</span>  <span class="c1"># The row index will always be 0 because there should be no</span>
+
+        <span class="c1"># accounts with the same account ID (Primary Key)</span>
 
         <span class="k">account</span> <span class="o">=</span> <span class="k">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">)</span>
 
@@ -4255,25 +4625,31 @@ Raises:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Fetch a dictionary of user attributes from AzureMS's DB and use it to instantiate a new (custom) Inventory object</p>
+<p>Instantiate a Inventory object corresponding to the character</p>
 <p>Runs near the end of Character::<strong>init</strong>(char_stats, database_config).
-Uses the Character ID associated with the character instance, and the Inventory class constructor to create
-a new Inventory object instance, with the relevant inventory attributes from the database.</p>
+Uses the Character ID associated with the character instance, and the
+Inventory class constructor to create a new Inventory object instance,
+with the relevant inventory attributes from the database.</p>
 <p>Raises:
-    Generic error on failure - handled by the utility.get_db_first_hit() method</p>
+        Generic error on failure - handled by the
+        utility.get_db_first_hit() method</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_inventory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Fetch a dictionary of user attributes from AzureMS&#39;s DB and use it to instantiate a new (custom) Inventory object</span>
+        <span class="sd">&quot;&quot;&quot;Instantiate a Inventory object corresponding to the character</span>
 
 <span class="sd">        Runs near the end of Character::__init__(char_stats, database_config).</span>
 
-<span class="sd">        Uses the Character ID associated with the character instance, and the Inventory class constructor to create</span>
+<span class="sd">        Uses the Character ID associated with the character instance, and the</span>
 
-<span class="sd">        a new Inventory object instance, with the relevant inventory attributes from the database.</span>
+<span class="sd">        Inventory class constructor to create a new Inventory object instance,</span>
+
+<span class="sd">        with the relevant inventory attributes from the database.</span>
 
 <span class="sd">        Raises:</span>
 
-<span class="sd">            Generic error on failure - handled by the utility.get_db_first_hit() method</span>
+<span class="sd">            Generic error on failure - handled by the</span>
+
+<span class="sd">            utility.get_db_first_hit() method</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -4289,81 +4665,84 @@ a new Inventory object instance, with the relevant inventory attributes from the
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Given a dictionary of stats from AzureMS's DB we add them to Character object's attributes</p>
+<p>Initialises Character instance attributes' values.</p>
 <p>Runs near the end of Character::<strong>init</strong>(char_stats, database_config).
-It assigns the character attributes in char_stats to their respective protected attributes belonging to
-the Character object instance.</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_stats</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+Assigns values contained in char_stats (a dictionary of
+character-related attributes from AzureMS's DB) to the Character
+object's corresponding attributes.</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_stats</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
-        <span class="s">&quot;&quot;&quot;Given a dictionary of stats from AzureMS&#39;s DB we add them to Character object&#39;s attributes</span>
+        <span class="ss">&quot;&quot;&quot;Initialises Character instance attributes&#39; values.</span>
 
-        <span class="n">Runs</span> <span class="n">near</span> <span class="n">the</span> <span class="k">end</span> <span class="n">of</span> <span class="n">Character</span><span class="o">::</span><span class="n">__init__</span><span class="p">(</span><span class="n">char_stats</span><span class="p">,</span> <span class="n">database_config</span><span class="p">).</span>
+<span class="ss">        Runs near the end of Character::__init__(char_stats, database_config).</span>
 
-        <span class="n">It</span> <span class="n">assigns</span> <span class="n">the</span> <span class="n">character</span> <span class="n">attributes</span> <span class="n">in</span> <span class="n">char_stats</span> <span class="n">to</span> <span class="n">their</span> <span class="n">respective</span> <span class="n">protected</span> <span class="n">attributes</span> <span class="n">belonging</span> <span class="n">to</span>
+<span class="ss">        Assigns values contained in char_stats (a dictionary of</span>
 
-        <span class="n">the</span> <span class="n">Character</span> <span class="n">object</span> <span class="n">instance</span><span class="p">.</span>
+<span class="ss">        character-related attributes from AzureMS&#39;s DB) to the Character</span>
 
-        <span class="s">&quot;&quot;&quot;</span>
+<span class="ss">        object&#39;s corresponding attributes.</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_character_id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">id</span><span class="p">&#39;]</span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">accountid</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_character_id</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">name</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;accountid&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_level</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">level</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_name</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_exp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">exp</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_level</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_strength</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">str</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_exp</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_dex</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">dex</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_strength</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;str&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_luk</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">luk</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_dex</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;dex&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_inte</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="kt">int</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_luk</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;luk&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_max_hp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">maxhp</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_inte</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_max_mp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">maxmp</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_max_hp</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;maxhp&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_meso</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">meso</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_max_mp</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;maxmp&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_job</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">job</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_meso</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;meso&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_skin</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">skincolor</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_job</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;job&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_gender</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">gender</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_skin</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;skincolor&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_fame</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">fame</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_gender</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_hair</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="mh">&#39;ha</span><span class="n">ir</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_fame</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;fame&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_face</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">face</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_hair</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;hair&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_ap</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">ap</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_face</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;face&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_map</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">map</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_ap</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;ap&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_bl_slots</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">buddyCapacity</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_map</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_rebirths</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">reborns</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_bl_slots</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;buddyCapacity&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_ambition</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">ambition</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_rebirths</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;reborns&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_insight</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">insight</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_ambition</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;ambition&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_willpower</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">willpower</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_insight</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;insight&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_diligence</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">diligence</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_willpower</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;willpower&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_empathy</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">empathy</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_diligence</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;diligence&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_charm</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">charm</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_empathy</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;empathy&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_honour</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">innerExp</span><span class="p">&#39;]</span>  <span class="p">#</span> <span class="n">Best</span> <span class="n">guess</span> <span class="o">-</span> <span class="n">might</span> <span class="n">be</span> <span class="n">wrong</span><span class="o">!</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_charm</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;charm&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_mute</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[&#39;</span><span class="n">chatban</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_honour</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;innerExp&#39;</span><span class="p">]</span>  <span class="o">#</span> <span class="n">Best</span> <span class="n">guess</span> <span class="o">-</span> <span class="n">might</span> <span class="n">be</span> <span class="n">wrong</span><span class="o">!</span>
+
+        <span class="k">self</span><span class="p">.</span><span class="n">_mute</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">[</span><span class="s1">&#39;chatban&#39;</span><span class="p">]</span>
 </code></pre></div>
 
 </details>
@@ -4377,37 +4756,52 @@ the Character object instance.</p>
 
 <p>Update a character's stats from column name in database</p>
 <p>Grabs the database attributes provided through the class constructor.
-Uses these attributes to attempt a database connection through utility.write_to_db.
-Attempts to update the field represented by the provided column in characterstats, with the provided value.
-Not recommended to use this alone, as it won't update the character object which this was used from.</p>
+Uses these attributes to attempt a database connection through
+utility.write_to_db. Attempts to update the field represented by the
+provided column in the characters table, with the provided value.
+Not recommended to use this alone, as it won't update the
+character instance variables (in memory) post-change.</p>
 <p>Args:
-    value: int or string, representing the value to be set in the database
-    column: string, representing the column in the database that is to be updated</p>
+        value:
+                Int or String, representing the value to be set in the database
+        column:
+                String, representing the column in the database
+                that is to be updated</p>
 <p>Returns:
-    A boolean representing whether the operation was successful</p>
+        A Boolean representing whether the operation was successful</p>
 <p>Raises:
-    Generic error, handled in utility.write_to_db</p>
+        Generic error, handled in utility.write_to_db</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
         <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Update a character&#39;s stats from column name in database</span>
 
 <span class="s2">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s2">        Uses these attributes to attempt a database connection through</span>
 
-<span class="s2">        Attempts to update the field represented by the provided column in characterstats, with the provided value.</span>
+<span class="s2">        utility.write_to_db. Attempts to update the field represented by the</span>
 
-<span class="s2">        Not recommended to use this alone, as it won&#39;t update the character object which this was used from.</span>
+<span class="s2">        provided column in the characters table, with the provided value.</span>
+
+<span class="s2">        Not recommended to use this alone, as it won&#39;t update the</span>
+
+<span class="s2">        character instance variables (in memory) post-change.</span>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            value: int or string, representing the value to be set in the database</span>
+<span class="s2">            value:</span>
 
-<span class="s2">            column: string, representing the column in the database that is to be updated</span>
+<span class="s2">                Int or String, representing the value to be set in the database</span>
+
+<span class="s2">            column:</span>
+
+<span class="s2">                String, representing the column in the database</span>
+
+<span class="s2">                that is to be updated</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            A boolean representing whether the operation was successful</span>
+<span class="s2">            A Boolean representing whether the operation was successful</span>
 
 <span class="s2">        Raises:</span>
 
@@ -4419,13 +4813,21 @@ Not recommended to use this alone, as it won't update the character object which
 
             <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; WHERE `name` = &#39;{self.name}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `characters` SET {column} = &#39;{value}&#39; &quot;</span>
+
+            <span class="n">f</span><span class="s2">&quot;WHERE `name` = &#39;{self.name}&#39;&quot;</span>
 
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
 
-            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for character: {self.name}.&quot;</span><span class="p">)</span>
+            <span class="n">print</span><span class="p">(</span>
+
+                <span class="n">f</span><span class="s2">&quot;Successfully updated {column} value &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;for character: {self.name}.&quot;</span>
+
+            <span class="p">)</span>
 
             <span class="n">self</span><span class="p">.</span><span class="n">_stats</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>  <span class="c1"># Update the stats in the dictionary</span>
 

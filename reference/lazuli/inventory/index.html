@@ -684,13 +684,16 @@
                 <h1 id="module-lazuliinventory">Module lazuli.inventory</h1>
 <p>This module holds the Inventory class for the lazuli package.</p>
 <p>Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;This module holds the Inventory class for the lazuli package.</span>
 
 <span class="sd">Copyright 2020 TEAM SPIRIT. All rights reserved.</span>
 
-<span class="sd">Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.</span>
+<span class="sd">Use of this source code is governed by a AGPL-style license that can be found</span>
+
+<span class="sd">in the LICENSE file.</span>
 
 <span class="sd">Refer to database.py or the project wiki on GitHub for usage examples.</span>
 
@@ -704,31 +707,59 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="sd">&quot;&quot;&quot;Inventory object; quasi-models AzureMS inventories.</span>
 
-<span class="sd">    The instance method Lazuli::get_char_by_name(name) creates a Character object; as part of</span>
+<span class="sd">    The instance method Lazuli::get_char_by_name(name) creates a Character</span>
 
-<span class="sd">    lazuli Character object instantiation, an Inventory object instance containing inventory attributes of</span>
+<span class="sd">    object; as part of lazuli Character object instantiation, an Inventory</span>
 
-<span class="sd">    the character with IGN &quot;name&quot; in the connected AzureMS-based database is created.</span>
+<span class="sd">    object instance containing inventory attributes of the character with</span>
+
+<span class="sd">    IGN &quot;name&quot; in the connected AzureMS-based database is created.</span>
 
 <span class="sd">    This class contains the appropriate getter methods for said attributes.</span>
 
-<span class="sd">    As a consequence of the inherent complexity of MapleStory&#39;s item system, for safety reasons,</span>
+<span class="sd">    As a consequence of the inherent complexity of MapleStory&#39;s item system,</span>
 
-<span class="sd">    this module offers NO inventory-write operations (aka setters).</span>
+<span class="sd">    for safety reasons, this module offers NO inventory-write operations</span>
+
+<span class="sd">    (aka setter methods).</span>
 
 <span class="sd">    Attributes:</span>
 
-<span class="sd">        equip_inv: list of dictionaries, representing in-game items contained by the EQUIP tab</span>
+<span class="sd">        equip_inv:</span>
 
-<span class="sd">        consume_inv: list of dictionaries, representing in-game items contained by the USE tab</span>
+<span class="sd">            List of Dictionaries, representing in-game items contained</span>
 
-<span class="sd">        etc_inv: list of dictionaries, representing in-game items contained by the ETC tab</span>
+<span class="sd">            within the EQUIP tab</span>
 
-<span class="sd">        install_inv: list of dictionaries, representing in-game items contained by the SETUP tab</span>
+<span class="sd">        consume_inv:</span>
 
-<span class="sd">        cash_inv: list of dictionaries, representing in-game items contained by the CASH tab</span>
+<span class="sd">            List of Dictionaries, representing in-game items contained</span>
 
-<span class="sd">        equipped_inv: list of dictionaries, representing in-game items currently equipped by the character</span>
+<span class="sd">            within the USE tab</span>
+
+<span class="sd">        etc_inv:</span>
+
+<span class="sd">            List of Dictionaries, representing in-game items contained</span>
+
+<span class="sd">            within the ETC tab</span>
+
+<span class="sd">        install_inv:</span>
+
+<span class="sd">            List of Dictionaries, representing in-game items contained</span>
+
+<span class="sd">            within the SETUP tab</span>
+
+<span class="sd">        cash_inv:</span>
+
+<span class="sd">            List of Dictionaries, representing in-game items contained</span>
+
+<span class="sd">            within the CASH tab</span>
+
+<span class="sd">        equipped_inv:</span>
+
+<span class="sd">            List of Dictionaries, representing in-game items currently</span>
+
+<span class="sd">            equipped by the character</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -738,13 +769,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Modelled after SwordieDB project&#39;s Inventory class init method.</span>
 
-<span class="sd">        Due to the inherent complexity of MapleStory&#39;s inventory system, this Inventory object will</span>
+<span class="sd">        This Inventory object attempts to model attributes of all 6 of</span>
 
-<span class="sd">        attempt to contain attributes of all 6 of AzureMS&#39;s inventory types, using a custom object.</span>
+<span class="sd">        AzureMS&#39;s inventory types, using a custom object.</span>
 
-<span class="sd">        Every inventory attribute is a dictionary of dictionaries, the latter of which models the contents of</span>
+<span class="sd">        Every inventory attribute is a dictionary of dictionaries,</span>
 
-<span class="sd">        the `inventoryitems` table in a AzureMS-based database.</span>
+<span class="sd">        the latter of which models the contents of the `inventoryitems` table</span>
+
+<span class="sd">        in a AzureMS-based database.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -814,15 +847,19 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">load_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
+        <span class="sd">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it</span>
+
+<span class="sd">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            inv_type: int</span>
+<span class="sd">            inv_type: Int</span>
 
 <span class="sd">        Returns:</span>
 
-<span class="sd">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
+<span class="sd">            Dictionary of Dictionaries, representing all the in-game items</span>
+
+<span class="sd">            that are in the specified inventory type</span>
 
 <span class="sd">        Raises:</span>
 
@@ -852,7 +889,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 
-                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span>
+
+            <span class="p">)</span>
 
             <span class="n">inventory</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
@@ -886,13 +927,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
                 <span class="n">inv</span><span class="p">[</span><span class="n">bag_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_stats</span>
 
-                <span class="c1"># Key value, we set as the bag_index aka position of the item in the inventory.</span>
+                <span class="c1"># Use the bag index (i.e. position of the item in the inventory)</span>
+
+                <span class="c1"># as the key for the dictionary</span>
 
             <span class="k">return</span> <span class="n">inv</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">init_equip_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -990,9 +1033,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">is_equipping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Checks whether the EQUIP window (i.e. Hotkey &quot;E&quot;) has an item (i.e. item is equipped)</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether the an item is currently equipped</span>
 
-<span class="sd">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="sd">        Uses Inventory::has_item_in_inv_type() to check whether the</span>
+
+<span class="sd">        EQUIP window (i.e. Hotkey &quot;E&quot;) has an item (i.e. item is equipped)</span>
 
 <span class="sd">        Returns:</span>
 
@@ -1013,48 +1058,90 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 </code></pre></div>
 
 <p>Inventory object; quasi-models AzureMS inventories.</p>
-<p>The instance method Lazuli::get_char_by_name(name) creates a Character object; as part of
-lazuli Character object instantiation, an Inventory object instance containing inventory attributes of
-the character with IGN "name" in the connected AzureMS-based database is created.
+<p>The instance method Lazuli::get_char_by_name(name) creates a Character
+object; as part of lazuli Character object instantiation, an Inventory
+object instance containing inventory attributes of the character with
+IGN "name" in the connected AzureMS-based database is created.
 This class contains the appropriate getter methods for said attributes.
-As a consequence of the inherent complexity of MapleStory's item system, for safety reasons,
-this module offers NO inventory-write operations (aka setters).</p>
+As a consequence of the inherent complexity of MapleStory's item system,
+for safety reasons, this module offers NO inventory-write operations
+(aka setter methods).</p>
 <p>Attributes:
-        equip_inv: list of dictionaries, representing in-game items contained by the EQUIP tab
-        consume_inv: list of dictionaries, representing in-game items contained by the USE tab
-        etc_inv: list of dictionaries, representing in-game items contained by the ETC tab
-        install_inv: list of dictionaries, representing in-game items contained by the SETUP tab
-        cash_inv: list of dictionaries, representing in-game items contained by the CASH tab
-        equipped_inv: list of dictionaries, representing in-game items currently equipped by the character</p>
+        equip_inv:
+                List of Dictionaries, representing in-game items contained
+                within the EQUIP tab
+        consume_inv:
+                List of Dictionaries, representing in-game items contained
+                within the USE tab
+        etc_inv:
+                List of Dictionaries, representing in-game items contained
+                within the ETC tab
+        install_inv:
+                List of Dictionaries, representing in-game items contained
+                within the SETUP tab
+        cash_inv:
+                List of Dictionaries, representing in-game items contained
+                within the CASH tab
+        equipped_inv:
+                List of Dictionaries, representing in-game items currently
+                equipped by the character</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="n">Inventory</span><span class="o">:</span>
 
     <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Inventory object; quasi-models AzureMS inventories.</span>
 
-<span class="s2">    The instance method Lazuli::get_char_by_name(name) creates a Character object; as part of</span>
+<span class="s2">    The instance method Lazuli::get_char_by_name(name) creates a Character</span>
 
-<span class="s2">    lazuli Character object instantiation, an Inventory object instance containing inventory attributes of</span>
+<span class="s2">    object; as part of lazuli Character object instantiation, an Inventory</span>
 
-<span class="s2">    the character with IGN &quot;</span><span class="k">name</span><span class="s2">&quot; in the connected AzureMS-based database is created.</span>
+<span class="s2">    object instance containing inventory attributes of the character with</span>
+
+<span class="s2">    IGN &quot;</span><span class="k">name</span><span class="s2">&quot; in the connected AzureMS-based database is created.</span>
 
 <span class="s2">    This class contains the appropriate getter methods for said attributes.</span>
 
-<span class="s2">    As a consequence of the inherent complexity of MapleStory&#39;s item system, for safety reasons,</span>
+<span class="s2">    As a consequence of the inherent complexity of MapleStory&#39;s item system,</span>
 
-<span class="s2">    this module offers NO inventory-write operations (aka setters).</span>
+<span class="s2">    for safety reasons, this module offers NO inventory-write operations</span>
+
+<span class="s2">    (aka setter methods).</span>
 
 <span class="s2">    Attributes:</span>
 
-<span class="s2">        equip_inv: list of dictionaries, representing in-game items contained by the EQUIP tab</span>
+<span class="s2">        equip_inv:</span>
 
-<span class="s2">        consume_inv: list of dictionaries, representing in-game items contained by the USE tab</span>
+<span class="s2">            List of Dictionaries, representing in-game items contained</span>
 
-<span class="s2">        etc_inv: list of dictionaries, representing in-game items contained by the ETC tab</span>
+<span class="s2">            within the EQUIP tab</span>
 
-<span class="s2">        install_inv: list of dictionaries, representing in-game items contained by the SETUP tab</span>
+<span class="s2">        consume_inv:</span>
 
-<span class="s2">        cash_inv: list of dictionaries, representing in-game items contained by the CASH tab</span>
+<span class="s2">            List of Dictionaries, representing in-game items contained</span>
 
-<span class="s2">        equipped_inv: list of dictionaries, representing in-game items currently equipped by the character</span>
+<span class="s2">            within the USE tab</span>
+
+<span class="s2">        etc_inv:</span>
+
+<span class="s2">            List of Dictionaries, representing in-game items contained</span>
+
+<span class="s2">            within the ETC tab</span>
+
+<span class="s2">        install_inv:</span>
+
+<span class="s2">            List of Dictionaries, representing in-game items contained</span>
+
+<span class="s2">            within the SETUP tab</span>
+
+<span class="s2">        cash_inv:</span>
+
+<span class="s2">            List of Dictionaries, representing in-game items contained</span>
+
+<span class="s2">            within the CASH tab</span>
+
+<span class="s2">        equipped_inv:</span>
+
+<span class="s2">            List of Dictionaries, representing in-game items currently</span>
+
+<span class="s2">            equipped by the character</span>
 
 <span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1064,13 +1151,15 @@ this module offers NO inventory-write operations (aka setters).</p>
 
 <span class="s2">        Modelled after SwordieDB project&#39;s Inventory class init method.</span>
 
-<span class="s2">        Due to the inherent complexity of MapleStory&#39;s inventory system, this Inventory object will</span>
+<span class="s2">        This Inventory object attempts to model attributes of all 6 of</span>
 
-<span class="s2">        attempt to contain attributes of all 6 of AzureMS&#39;s inventory types, using a custom object.</span>
+<span class="s2">        AzureMS&#39;s inventory types, using a custom object.</span>
 
-<span class="s2">        Every inventory attribute is a dictionary of dictionaries, the latter of which models the contents of</span>
+<span class="s2">        Every inventory attribute is a dictionary of dictionaries,</span>
 
-<span class="s2">        the `inventoryitems` table in a AzureMS-based database.</span>
+<span class="s2">        the latter of which models the contents of the `inventoryitems` table</span>
+
+<span class="s2">        in a AzureMS-based database.</span>
 
 <span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1140,15 +1229,19 @@ this module offers NO inventory-write operations (aka setters).</p>
 
     <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it</span>
+
+<span class="s2">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            inv_type: int</span>
+<span class="s2">            inv_type: Int</span>
 
 <span class="s2">        Returns:</span>
 
-<span class="s2">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
+<span class="s2">            Dictionary of Dictionaries, representing all the in-game items</span>
+
+<span class="s2">            that are in the specified inventory type</span>
 
 <span class="s2">        Raises:</span>
 
@@ -1178,7 +1271,11 @@ this module offers NO inventory-write operations (aka setters).</p>
 
             <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span>
 
-                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span>
+
+            <span class="p">)</span>
 
             <span class="n">inventory</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
 
@@ -1212,13 +1309,15 @@ this module offers NO inventory-write operations (aka setters).</p>
 
                 <span class="n">inv</span><span class="err">[</span><span class="n">bag_index</span><span class="err">]</span> <span class="o">=</span> <span class="n">item_stats</span>
 
-                <span class="c1"># Key value, we set as the bag_index aka position of the item in the inventory.</span>
+                <span class="c1"># Use the bag index (i.e. position of the item in the inventory)</span>
+
+                <span class="c1"># as the key for the dictionary</span>
 
             <span class="k">return</span> <span class="n">inv</span>
 
         <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
 
-            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 
     <span class="n">def</span> <span class="n">init_equip_items</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
@@ -1316,9 +1415,11 @@ this module offers NO inventory-write operations (aka setters).</p>
 
     <span class="n">def</span> <span class="n">is_equipping</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the EQUIP window (i.e. Hotkey &quot;</span><span class="n">E</span><span class="s2">&quot;) has an item (i.e. item is equipped)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks whether the an item is currently equipped</span>
 
-<span class="s2">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="s2">        Uses Inventory::has_item_in_inv_type() to check whether the</span>
+
+<span class="s2">        EQUIP window (i.e. Hotkey &quot;</span><span class="n">E</span><span class="s2">&quot;) has an item (i.e. item is equipped)</span>
 
 <span class="s2">        Returns:</span>
 
@@ -1364,9 +1465,9 @@ this module offers NO inventory-write operations (aka setters).</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks whether the CASH tab of the inventory has an item
-Uses Inventory::has_item_in_inv_type()
-Returns:
+<p>Checks whether the CASH tab of the inventory has an item</p>
+<p>Uses Inventory::has_item_in_inv_type()</p>
+<p>Returns:
         Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">has_item_in_cash</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
@@ -1391,9 +1492,9 @@ Returns:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks whether the USE tab of the inventory has an item
-Uses Inventory::has_item_in_inv_type()
-Returns:
+<p>Checks whether the USE tab of the inventory has an item</p>
+<p>Uses Inventory::has_item_in_inv_type()</p>
+<p>Returns:
         Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">has_item_in_consume</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
@@ -1418,9 +1519,9 @@ Returns:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks whether the EQUIP tab of the inventory has an item
-Uses Inventory::has_item_in_inv_type()
-Returns:
+<p>Checks whether the EQUIP tab of the inventory has an item</p>
+<p>Uses Inventory::has_item_in_inv_type()</p>
+<p>Returns:
         Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">has_item_in_equip</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
@@ -1445,9 +1546,9 @@ Returns:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks whether the ETC tab of the inventory has an item
-Uses Inventory::has_item_in_inv_type()
-Returns:
+<p>Checks whether the ETC tab of the inventory has an item</p>
+<p>Uses Inventory::has_item_in_inv_type()</p>
+<p>Returns:
         Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">has_item_in_etc</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
@@ -1472,9 +1573,9 @@ Returns:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks whether the SETUP tab of the inventory has an item
-Uses Inventory::has_item_in_inv_type()
-Returns:
+<p>Checks whether the SETUP tab of the inventory has an item</p>
+<p>Uses Inventory::has_item_in_inv_type()</p>
+<p>Returns:
         Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">has_item_in_install</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
@@ -1571,15 +1672,18 @@ Returns:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks whether the EQUIP window (i.e. Hotkey "E") has an item (i.e. item is equipped)
-Uses Inventory::has_item_in_inv_type()
-Returns:
+<p>Checks whether the an item is currently equipped</p>
+<p>Uses Inventory::has_item_in_inv_type() to check whether the
+EQUIP window (i.e. Hotkey "E") has an item (i.e. item is equipped)</p>
+<p>Returns:
         Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">is_equipping</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
 
-        <span class="ss">&quot;&quot;&quot;Checks whether the EQUIP window (i.e. Hotkey &quot;</span><span class="n">E</span><span class="ss">&quot;) has an item (i.e. item is equipped)</span>
+        <span class="ss">&quot;&quot;&quot;Checks whether the an item is currently equipped</span>
 
-<span class="ss">        Uses Inventory::has_item_in_inv_type()</span>
+<span class="ss">        Uses Inventory::has_item_in_inv_type() to check whether the</span>
+
+<span class="ss">        EQUIP window (i.e. Hotkey &quot;</span><span class="n">E</span><span class="ss">&quot;) has an item (i.e. item is equipped)</span>
 
 <span class="ss">        Returns:</span>
 
@@ -1598,94 +1702,106 @@ Returns:
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</p>
+<p>Given an inventory_type, fetch every item associated with it</p>
+<p>Examples of inventory types: -1, 1, 2, 3, 4, 5</p>
 <p>Args:
-        inv_type: int</p>
+        inv_type: Int</p>
 <p>Returns:
-        Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</p>
+        Dictionary of Dictionaries, representing all the in-game items
+        that are in the specified inventory type</p>
 <p>Raises:
         Generic error on failure</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">):</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">load_inv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inv_type</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="sd">&quot;&quot;&quot;Given an inventory_type, fetch every item associated with it (i.e. -1, 1, 2, 3, 4, 5)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given an inventory_type, fetch every item associated with it</span>
 
-<span class="sd">        Args:</span>
+<span class="s2">        Examples of inventory types: -1, 1, 2, 3, 4, 5</span>
 
-<span class="sd">            inv_type: int</span>
+<span class="s2">        Args:</span>
 
-<span class="sd">        Returns:</span>
+<span class="s2">            inv_type: Int</span>
 
-<span class="sd">            Dictionary of Dictionaries, representing all the in-game items that in the specified inventory type</span>
+<span class="s2">        Returns:</span>
 
-<span class="sd">        Raises:</span>
+<span class="s2">            Dictionary of Dictionaries, representing all the in-game items</span>
 
-<span class="sd">            Generic error on failure</span>
+<span class="s2">            that are in the specified inventory type</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="s2">        Raises:</span>
 
-        <span class="n">try</span><span class="p">:</span>
+<span class="s2">            Generic error on failure</span>
 
-            <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-                <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
+        <span class="n">try</span><span class="o">:</span>
 
-                <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
+            <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
 
-                <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
+                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
+                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="n">charset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
+                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
+
+                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
 
             <span class="p">)</span>
 
-            <span class="n">cursor</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+            <span class="k">cursor</span> <span class="o">=</span> <span class="k">database</span><span class="p">.</span><span class="k">cursor</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="no">True</span><span class="p">)</span>
 
-            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="k">cursor</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span>
 
-                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
 
-            <span class="n">inventory</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39; AND `inventorytype` = &#39;{inv_type}&#39;&quot;</span>
 
-            <span class="n">inv</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">inventory</span><span class="p">:</span>
+            <span class="n">inventory</span> <span class="o">=</span> <span class="k">cursor</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+            <span class="n">inv</span> <span class="o">=</span> <span class="err">{}</span>
+
+            <span class="k">for</span> <span class="n">items</span> <span class="k">in</span> <span class="n">inventory</span><span class="o">:</span>
 
                 <span class="c1"># More to add if needed.</span>
 
-                <span class="n">bag_index</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+                <span class="n">bag_index</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;position&quot;</span><span class="err">]</span>
 
-                <span class="n">item_id</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;itemid&quot;</span><span class="p">]</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;itemid&quot;</span><span class="err">]</span>
 
-                <span class="n">quantity</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">]</span>
+                <span class="n">quantity</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;quantity&quot;</span><span class="err">]</span>
 
-                <span class="n">is_cash</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;isCash&quot;</span><span class="p">]</span>
+                <span class="n">is_cash</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;isCash&quot;</span><span class="err">]</span>
 
-                <span class="n">inventory_type</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s2">&quot;inventorytype&quot;</span><span class="p">]</span>
+                <span class="n">inventory_type</span> <span class="o">=</span> <span class="n">items</span><span class="err">[</span><span class="s2">&quot;inventorytype&quot;</span><span class="err">]</span>
 
-                <span class="n">item_stats</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">item_stats</span> <span class="o">=</span> <span class="err">{</span>
 
-                    <span class="s2">&quot;itemid&quot;</span><span class="p">:</span> <span class="n">item_id</span><span class="p">,</span>
+                    <span class="s2">&quot;itemid&quot;</span><span class="o">:</span> <span class="n">item_id</span><span class="p">,</span>
 
-                    <span class="s2">&quot;quantity&quot;</span><span class="p">:</span> <span class="n">quantity</span><span class="p">,</span>  <span class="c1"># Never used</span>
+                    <span class="s2">&quot;quantity&quot;</span><span class="o">:</span> <span class="n">quantity</span><span class="p">,</span>  <span class="c1"># Never used</span>
 
-                    <span class="s2">&quot;inventorytype&quot;</span><span class="p">:</span> <span class="n">inventory_type</span><span class="p">,</span>
+                    <span class="s2">&quot;inventorytype&quot;</span><span class="o">:</span> <span class="n">inventory_type</span><span class="p">,</span>
 
-                    <span class="s2">&quot;iscash&quot;</span><span class="p">:</span> <span class="n">is_cash</span>  <span class="c1"># Never used</span>
+                    <span class="s2">&quot;iscash&quot;</span><span class="o">:</span> <span class="n">is_cash</span>  <span class="c1"># Never used</span>
 
-                <span class="p">}</span>
+                <span class="err">}</span>
 
-                <span class="n">inv</span><span class="p">[</span><span class="n">bag_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_stats</span>
+                <span class="n">inv</span><span class="err">[</span><span class="n">bag_index</span><span class="err">]</span> <span class="o">=</span> <span class="n">item_stats</span>
 
-                <span class="c1"># Key value, we set as the bag_index aka position of the item in the inventory.</span>
+                <span class="c1"># Use the bag index (i.e. position of the item in the inventory)</span>
+
+                <span class="c1"># as the key for the dictionary</span>
 
             <span class="k">return</span> <span class="n">inv</span>
 
-        <span class="n">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="o">:</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;[ERROR] Error trying to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to load inventory type {inv_type}</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>

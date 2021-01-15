@@ -590,13 +590,16 @@
                 <h1 id="module-lazuliutility">Module lazuli.utility</h1>
 <p>This module holds the utility functions and constants for the lazuli package.</p>
 <p>Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;This module holds the utility functions and constants for the lazuli package.</span>
 
 <span class="sd">Copyright 2020 TEAM SPIRIT. All rights reserved.</span>
 
-<span class="sd">Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.</span>
+<span class="sd">Use of this source code is governed by a AGPL-style license that can be found</span>
+
+<span class="sd">in the LICENSE file.</span>
 
 <span class="sd">Refer to database.py or the project wiki on GitHub for usage examples.</span>
 
@@ -604,9 +607,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="kn">import</span> <span class="nn">mysql.connector</span> <span class="kn">as</span> <span class="nn">con</span>
 
-<span class="c1"># CONSTANTS -------------------------------------------------------------------------------</span>
+<span class="c1"># CONSTANTS -------------------------------------------------------------------</span>
 
-<span class="c1"># Dictionary that maps inventory tabs&#39; names to their corresponding index in the DB/source</span>
+<span class="c1"># Dictionary that maps inventory tabs&#39; names to</span>
+
+<span class="c1"># their corresponding index in the DB/source</span>
 
 <span class="n">map_inv_types</span> <span class="o">=</span> <span class="p">{</span>
 
@@ -630,19 +635,23 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="p">}</span>
 
-<span class="c1"># UTILITY FUNCTIONS ------------------------------------------------------------------------</span>
+<span class="c1"># UTILITY FUNCTIONS -----------------------------------------------------------</span>
 
 <span class="k">def</span> <span class="nf">get_key</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;Generic function to return the key for a given value</span>
 
-<span class="sd">    Iterates through the dictionary, comparing values to see if it matches the desired value.</span>
+<span class="sd">    Iterates through the dictionary, comparing values to see if it matches</span>
 
-<span class="sd">    If so, return the corresponding key. If no matches are found by the end, return False.</span>
+<span class="sd">    the desired value. If so, return the corresponding key. If no matches are</span>
+
+<span class="sd">    found by the end, return False.</span>
 
 <span class="sd">    This function short-circuits (i.e. returns with the first match found).</span>
 
-<span class="sd">    Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is preserved automagically.</span>
+<span class="sd">    Note: OrderedDict is no longer necessary for this as of Python 3.6,</span>
+
+<span class="sd">    as order is preserved automagically.</span>
 
 <span class="sd">    Args:</span>
 
@@ -652,7 +661,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">    Returns:</span>
 
-<span class="sd">        Var, representing the corresponding key (if any); defaults to False, if none are found</span>
+<span class="sd">        Var, representing the corresponding key (if any)</span>
+
+<span class="sd">        Defaults to False, if none are found</span>
 
 <span class="sd">    Raises:</span>
 
@@ -674,23 +685,35 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Unexpected error encountered whilst attempting to perform dictionary search:</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span>
+
+            <span class="n">f</span><span class="s2">&quot;Unexpected error encountered whilst attempting &quot;</span>
+
+            <span class="n">f</span><span class="s2">&quot;to perform dictionary search:</span><span class="se">\n</span><span class="s2">{e}&quot;</span>
+
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">False</span>
 
 <span class="k">def</span> <span class="nf">get_db_all_hits</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Generic top level function for fetching all matching data from DB using the provided DB config and query</span>
+    <span class="sd">&quot;&quot;&quot;Generic function for fetching all matching data from the DB</span>
+
+<span class="sd">    Generic top level function for fetching all matching data from DB,</span>
+
+<span class="sd">    using the provided DB config and query</span>
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        config: dictionary, representing database config attributes</span>
+<span class="sd">        config: Dictionary, representing database config attributes</span>
 
 <span class="sd">        query: String, representing SQL query</span>
 
 <span class="sd">    Returns:</span>
 
-<span class="sd">        List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</span>
+<span class="sd">        List of objects, representing the result of the provided SQL query,</span>
+
+<span class="sd">        using the provided DB connection attributes</span>
 
 <span class="sd">    Raises:</span>
 
@@ -734,17 +757,25 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;CRITICAL: Error encountered whilst attempting to connect to the database! </span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span>
+
+            <span class="n">f</span><span class="s2">&quot;CRITICAL: Error encountered whilst attempting &quot;</span>
+
+            <span class="n">f</span><span class="s2">&quot;to connect to the database! </span><span class="se">\n</span><span class="s2">{e}&quot;</span>
+
+        <span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">get_db_first_hit</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Generic top level function for fetching data (first hit) from DB using the provided DB config and query</span>
+    <span class="sd">&quot;&quot;&quot;Generic function for fetching the first result from DB</span>
 
-<span class="sd">    This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.</span>
+<span class="sd">    This function grabs the first hit from get_db_all_hits;</span>
+
+<span class="sd">    errors handled in get_db_all_hits.</span>
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        config: dictionary, representing database config attributes</span>
+<span class="sd">        config: Dictionary, representing database config attributes</span>
 
 <span class="sd">        query: String, representing SQL query</span>
 
@@ -782,25 +813,29 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Unable to extract the given column for table users.</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span>
+
+            <span class="n">f</span><span class="s2">&quot;ERROR: Unable to extract the given column for table users.</span><span class="se">\n</span><span class="s2">{e}&quot;</span>
+
+        <span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">write_to_db</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Performs write operations to DB using the provided DB config and query (generic)</span>
+    <span class="sd">&quot;&quot;&quot;Performs write operations to DB using the provided DB config and query</span>
 
 <span class="sd">    Args:</span>
 
 <span class="sd">        config: Dictionary, representing database config attributes</span>
 
-<span class="sd">        query: string, representing SQL query</span>
+<span class="sd">        query: String, representing SQL query</span>
 
 <span class="sd">    Returns:</span>
 
-<span class="sd">        A boolean representing whether the operation was successful</span>
+<span class="sd">        A Boolean representing whether the operation was successful</span>
 
 <span class="sd">    Raises:</span>
 
-<span class="sd">        SQL Error 2003: Can&#39;t cannect to DB</span>
+<span class="sd">        SQL Error 2003: Can&#39;t connect to DB</span>
 
 <span class="sd">        WinError 10060: No response from DB</span>
 
@@ -858,19 +893,19 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="sd">&quot;&quot;&quot;Checks whether the particular tab of the inventory has an item</span>
 
-<span class="sd">    Generic top level function used by Inventory::has_item_in_XXX() methods, and the</span>
+<span class="sd">    Generic top level function used by Inventory::has_item_in_XXX() methods,</span>
 
-<span class="sd">    Inventory::is_equipping() method.</span>
+<span class="sd">    and the Inventory::is_equipping() method. Iterates through the dictionary</span>
 
-<span class="sd">    Iterates through the dictionary of items associated with the specified tab, and check if</span>
+<span class="sd">    of items associated with the specified tab, and check if</span>
 
 <span class="sd">    the provided item ID can be found as a value.</span>
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        inv_type: inventory object, representing inventory tab to search</span>
+<span class="sd">        inv_type: Inventory object, representing inventory tab to search</span>
 
-<span class="sd">        item_id: int, representing the ID of the item to search for</span>
+<span class="sd">        item_id: Int, representing the ID of the item to search for</span>
 
 <span class="sd">    Returns:</span>
 
@@ -892,7 +927,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        player_list: List of dicts, representing list of all players</span>
+<span class="sd">        player_list: List of Dictionaries, representing list of all players</span>
 
 <span class="sd">    Returns:</span>
 
@@ -900,57 +935,63 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="c1"># if empty or null; sanity check</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="c1"># if empty or null; sanity check</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No players found!&quot;</span><span class="p">)</span>
 
-            <span class="k">raise</span> <span class="ne">RuntimeError</span>
+    <span class="k">else</span><span class="p">:</span>
 
         <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
 
+        <span class="c1"># player_list contains unnecessary data</span>
+
         <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">player_list</span><span class="p">:</span>
 
-            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>  <span class="c1"># Only retrieve name</span>
 
         <span class="k">return</span> <span class="n">players</span>
 
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Error encountered whilst attempting extract list of player names!</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
-
 <span class="k">def</span> <span class="nf">extract_name_and_value</span><span class="p">(</span><span class="n">player_list</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Extracts a list of players (and a specified value) from SQL data, via the name column</span>
+    <span class="sd">&quot;&quot;&quot;Extracts a list of players and their corresponding attribute</span>
+
+<span class="sd">    Extracts a list of players and their corresponding attribute value from</span>
+
+<span class="sd">    SQL data, via the name column and another provided column</span>
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        player_list: List of dicts, representing list of all players</span>
+<span class="sd">        player_list: List of Dictionaries, representing list of all players</span>
 
 <span class="sd">        column: String, representing column name to extract</span>
 
 <span class="sd">    Returns:</span>
 
-<span class="sd">        List of Tuples, representing player names and their corresponding values (e.g. level)</span>
+<span class="sd">        List of Tuples, representing player names and</span>
+
+<span class="sd">        their corresponding values (e.g. level)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="c1"># if empty or null; sanity check</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="c1"># if empty or null; sanity check</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No such players found!&quot;</span><span class="p">)</span>
 
-            <span class="k">raise</span> <span class="ne">RuntimeError</span>
+    <span class="k">else</span><span class="p">:</span>
 
         <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
 
+        <span class="c1"># player_list contains unnecessary data</span>
+
         <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">player_list</span><span class="p">:</span>
 
-            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">player</span><span class="p">[</span><span class="n">column</span><span class="p">]))</span>  <span class="c1"># List of Tuples, as per Brandon&#39;s request</span>
+            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">player</span><span class="p">[</span><span class="n">column</span><span class="p">]))</span>
+
+            <span class="c1"># Only retrieve (name, value)</span>
+
+            <span class="c1"># List of Tuples, as per Brandon&#39;s request</span>
 
         <span class="k">return</span> <span class="n">players</span>
-
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;ERROR: Error encountered whilst attempting extract list of player names!</span><span class="se">\n</span><span class="s2">{e}&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -967,16 +1008,16 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <p>Extracts a list of players from SQL data, via the name column</p>
 <p>Args:
-    player_list: List of dicts, representing list of all players</p>
+        player_list: List of Dictionaries, representing list of all players</p>
 <p>Returns:
-    List of Strings, representing player names</p>
+        List of Strings, representing player names</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">extract_name</span><span class="p">(</span><span class="n">player_list</span><span class="p">):</span>
 
     <span class="ss">&quot;&quot;&quot;Extracts a list of players from SQL data, via the name column</span>
 
 <span class="ss">    Args:</span>
 
-<span class="ss">        player_list: List of dicts, representing list of all players</span>
+<span class="ss">        player_list: List of Dictionaries, representing list of all players</span>
 
 <span class="ss">    Returns:</span>
 
@@ -984,23 +1025,21 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="ss">    &quot;&quot;&quot;</span>
 
-    <span class="n">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="k">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="o">#</span> <span class="k">if</span> <span class="n">empty</span> <span class="k">or</span> <span class="k">null</span><span class="p">;</span> <span class="n">sanity</span> <span class="k">check</span>
 
-        <span class="k">if</span> <span class="k">not</span> <span class="n">player_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>  <span class="o">#</span> <span class="k">if</span> <span class="n">empty</span> <span class="k">or</span> <span class="k">null</span><span class="p">;</span> <span class="n">sanity</span> <span class="k">check</span>
+        <span class="n">raise</span> <span class="n">RuntimeError</span><span class="p">(</span><span class="ss">&quot;No players found!&quot;</span><span class="p">)</span>
 
-            <span class="n">raise</span> <span class="n">RuntimeError</span>
+    <span class="k">else</span><span class="p">:</span>
 
         <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
 
+        <span class="o">#</span> <span class="n">player_list</span> <span class="k">contains</span> <span class="n">unnecessary</span> <span class="k">data</span>
+
         <span class="k">for</span> <span class="n">player</span> <span class="k">in</span> <span class="n">player_list</span><span class="p">:</span>
 
-            <span class="n">players</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="n">players</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">player</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>  <span class="o">#</span> <span class="k">Only</span> <span class="n">retrieve</span> <span class="n">name</span>
 
         <span class="k">return</span> <span class="n">players</span>
-
-    <span class="k">except</span> <span class="k">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-
-        <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Error encountered whilst attempting extract list of player names!\n{e}&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1011,45 +1050,56 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Extracts a list of players (and a specified value) from SQL data, via the name column</p>
+<p>Extracts a list of players and their corresponding attribute</p>
+<p>Extracts a list of players and their corresponding attribute value from
+SQL data, via the name column and another provided column</p>
 <p>Args:
-    player_list: List of dicts, representing list of all players
-    column: String, representing column name to extract</p>
+        player_list: List of Dictionaries, representing list of all players
+        column: String, representing column name to extract</p>
 <p>Returns:
-    List of Tuples, representing player names and their corresponding values (e.g. level)</p>
+        List of Tuples, representing player names and
+        their corresponding values (e.g. level)</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">extract_name_and_value</span><span class="p">(</span><span class="n">player_list</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
-<span class="w">    </span><span class="ss">&quot;&quot;&quot;Extracts a list of players (and a specified value) from SQL data, via the name column</span>
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;Extracts a list of players and their corresponding attribute</span>
+
+<span class="ss">    Extracts a list of players and their corresponding attribute value from</span>
+
+<span class="ss">    SQL data, via the name column and another provided column</span>
 
 <span class="ss">    Args:</span>
 
-<span class="ss">        player_list: List of dicts, representing list of all players</span>
+<span class="ss">        player_list: List of Dictionaries, representing list of all players</span>
 
 <span class="ss">        column: String, representing column name to extract</span>
 
 <span class="ss">    Returns:</span>
 
-<span class="ss">        List of Tuples, representing player names and their corresponding values (e.g. level)</span>
+<span class="ss">        List of Tuples, representing player names and</span>
+
+<span class="ss">        their corresponding values (e.g. level)</span>
 
 <span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
 
-<span class="w">    </span><span class="k">try</span><span class="err">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">player_list</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">null</span><span class="p">;</span><span class="w"> </span><span class="n">sanity</span><span class="w"> </span><span class="k">check</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">player_list</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">null</span><span class="p">;</span><span class="w"> </span><span class="n">sanity</span><span class="w"> </span><span class="k">check</span><span class="w"></span>
+<span class="w">        </span><span class="n">raise</span><span class="w"> </span><span class="n">RuntimeError</span><span class="p">(</span><span class="ss">&quot;No such players found!&quot;</span><span class="p">)</span><span class="w"></span>
 
-<span class="w">            </span><span class="n">raise</span><span class="w"> </span><span class="n">RuntimeError</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="err">:</span><span class="w"></span>
 
 <span class="w">        </span><span class="n">players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"></span>
 
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">player_list</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">unnecessary</span><span class="w"> </span><span class="k">data</span><span class="w"></span>
+
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">player_list</span><span class="p">:</span><span class="w"></span>
 
-<span class="w">            </span><span class="n">players</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">player</span><span class="o">[</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">player</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="p">))</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">Tuples</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">Brandon</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">request</span><span class="w"></span>
+<span class="w">            </span><span class="n">players</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">player</span><span class="o">[</span><span class="n">&#39;name&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">player</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="p">))</span><span class="w"></span>
+
+<span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="k">Only</span><span class="w"> </span><span class="n">retrieve</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">Tuples</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">Brandon</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">request</span><span class="w"></span>
 
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">players</span><span class="w"></span>
-
-<span class="w">    </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Error encountered whilst attempting extract list of player names!\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 </details>
@@ -1060,30 +1110,39 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Generic top level function for fetching all matching data from DB using the provided DB config and query</p>
+<p>Generic function for fetching all matching data from the DB</p>
+<p>Generic top level function for fetching all matching data from DB,
+using the provided DB config and query</p>
 <p>Args:
-    config: dictionary, representing database config attributes
-    query: String, representing SQL query</p>
+        config: Dictionary, representing database config attributes
+        query: String, representing SQL query</p>
 <p>Returns:
-    List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</p>
+        List of objects, representing the result of the provided SQL query,
+        using the provided DB connection attributes</p>
 <p>Raises:
-    SQL Error 2003: Can't cannect to DB
-    WinError 10060: No response from DB
-    List index out of range: Wrong column name
-    Generic error as a final catch-all</p>
+        SQL Error 2003: Can't cannect to DB
+        WinError 10060: No response from DB
+        List index out of range: Wrong column name
+        Generic error as a final catch-all</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
-    <span class="ss">&quot;&quot;&quot;Generic top level function for fetching all matching data from DB using the provided DB config and query</span>
+    <span class="ss">&quot;&quot;&quot;Generic function for fetching all matching data from the DB</span>
+
+<span class="ss">    Generic top level function for fetching all matching data from DB,</span>
+
+<span class="ss">    using the provided DB config and query</span>
 
 <span class="ss">    Args:</span>
 
-<span class="ss">        config: dictionary, representing database config attributes</span>
+<span class="ss">        config: Dictionary, representing database config attributes</span>
 
 <span class="ss">        query: String, representing SQL query</span>
 
 <span class="ss">    Returns:</span>
 
-<span class="ss">        List of objects, representing the result of the provided SQL query, using the provided DB connection attributes</span>
+<span class="ss">        List of objects, representing the result of the provided SQL query,</span>
+
+<span class="ss">        using the provided DB connection attributes</span>
 
 <span class="ss">    Raises:</span>
 
@@ -1127,7 +1186,13 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">except</span> <span class="k">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;CRITICAL: Error encountered whilst attempting to connect to the database! \n{e}&quot;</span><span class="p">)</span>
+        <span class="n">print</span><span class="p">(</span>
+
+            <span class="n">f</span><span class="ss">&quot;CRITICAL: Error encountered whilst attempting &quot;</span>
+
+            <span class="n">f</span><span class="ss">&quot;to connect to the database! \n{e}&quot;</span>
+
+        <span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1138,22 +1203,25 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Generic top level function for fetching data (first hit) from DB using the provided DB config and query</p>
-<p>This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.</p>
+<p>Generic function for fetching the first result from DB</p>
+<p>This function grabs the first hit from get_db_all_hits;
+errors handled in get_db_all_hits.</p>
 <p>Args:
-    config: dictionary, representing database config attributes
-    query: String, representing SQL query</p>
+        config: Dictionary, representing database config attributes
+        query: String, representing SQL query</p>
 <p>Returns:
-    Var, representing first result</p>
+        Var, representing first result</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">get_db_first_hit</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
-    <span class="ss">&quot;&quot;&quot;Generic top level function for fetching data (first hit) from DB using the provided DB config and query</span>
+    <span class="ss">&quot;&quot;&quot;Generic function for fetching the first result from DB</span>
 
-<span class="ss">    This function grabs the first hit from get_db_all_hits; errors handled in get_db_all_hits.</span>
+<span class="ss">    This function grabs the first hit from get_db_all_hits;</span>
+
+<span class="ss">    errors handled in get_db_all_hits.</span>
 
 <span class="ss">    Args:</span>
 
-<span class="ss">        config: dictionary, representing database config attributes</span>
+<span class="ss">        config: Dictionary, representing database config attributes</span>
 
 <span class="ss">        query: String, representing SQL query</span>
 
@@ -1203,28 +1271,35 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 </code></pre></div>
 
 <p>Generic function to return the key for a given value</p>
-<p>Iterates through the dictionary, comparing values to see if it matches the desired value.
-If so, return the corresponding key. If no matches are found by the end, return False.
+<p>Iterates through the dictionary, comparing values to see if it matches
+the desired value. If so, return the corresponding key. If no matches are
+found by the end, return False.
 This function short-circuits (i.e. returns with the first match found).
-Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is preserved automagically.</p>
+Note: OrderedDict is no longer necessary for this as of Python 3.6,
+as order is preserved automagically.</p>
 <p>Args:
-    dictionary: Dictionary, representing the dictionary to be searched
-    val: Var, representing the desired/target value to search for</p>
+        dictionary: Dictionary, representing the dictionary to be searched
+        val: Var, representing the desired/target value to search for</p>
 <p>Returns:
-    Var, representing the corresponding key (if any); defaults to False, if none are found</p>
+        Var, representing the corresponding key (if any)
+        Defaults to False, if none are found</p>
 <p>Raises:
-    Generic error for any failures</p>
+        Generic error for any failures</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">get_key</span><span class="p">(</span><span class="k">dictionary</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
 
     <span class="ss">&quot;&quot;&quot;Generic function to return the key for a given value</span>
 
-<span class="ss">    Iterates through the dictionary, comparing values to see if it matches the desired value.</span>
+<span class="ss">    Iterates through the dictionary, comparing values to see if it matches</span>
 
-<span class="ss">    If so, return the corresponding key. If no matches are found by the end, return False.</span>
+<span class="ss">    the desired value. If so, return the corresponding key. If no matches are</span>
+
+<span class="ss">    found by the end, return False.</span>
 
 <span class="ss">    This function short-circuits (i.e. returns with the first match found).</span>
 
-<span class="ss">    Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is preserved automagically.</span>
+<span class="ss">    Note: OrderedDict is no longer necessary for this as of Python 3.6,</span>
+
+<span class="ss">    as order is preserved automagically.</span>
 
 <span class="ss">    Args:</span>
 
@@ -1234,7 +1309,9 @@ Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is 
 
 <span class="ss">    Returns:</span>
 
-<span class="ss">        Var, representing the corresponding key (if any); defaults to False, if none are found</span>
+<span class="ss">        Var, representing the corresponding key (if any)</span>
+
+<span class="ss">        Defaults to False, if none are found</span>
 
 <span class="ss">    Raises:</span>
 
@@ -1256,7 +1333,13 @@ Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is 
 
     <span class="k">except</span> <span class="k">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-        <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;Unexpected error encountered whilst attempting to perform dictionary search:\n{e}&quot;</span><span class="p">)</span>
+        <span class="n">print</span><span class="p">(</span>
+
+            <span class="n">f</span><span class="ss">&quot;Unexpected error encountered whilst attempting &quot;</span>
+
+            <span class="n">f</span><span class="ss">&quot;to perform dictionary search:\n{e}&quot;</span>
+
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="k">False</span>
 </code></pre></div>
@@ -1271,12 +1354,12 @@ Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is 
 
 <p>Fetches dictionary attribute by key (wrapper)</p>
 <p>Args:
-    data: Dictionary, representing account or character attributes
-    column: String, representing column name in DB</p>
+        data: Dictionary, representing account or character attributes
+        column: String, representing column name in DB</p>
 <p>Returns:
-    Int or String, representing user attribute queried</p>
+        Int or String, representing user attribute queried</p>
 <p>Raises:
-    Generic error on failure</p>
+        Generic error on failure</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="k">column</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
 <span class="w">    </span><span class="ss">&quot;&quot;&quot;Fetches dictionary attribute by key (wrapper)</span>
@@ -1303,7 +1386,11 @@ Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is 
 
 <span class="w">    </span><span class="ow">except</span><span class="w"> </span><span class="k">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nl">e</span><span class="p">:</span><span class="w"></span>
 
-<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;ERROR: Unable to extract the given column for table users.\n{e}&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="w"></span>
+
+<span class="w">            </span><span class="n">f</span><span class="ss">&quot;ERROR: Unable to extract the given column for table users.\n{e}&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 </details>
@@ -1315,32 +1402,32 @@ Note: OrderedDict is no longer necessary for this as of Python 3.6, as order is 
 </code></pre></div>
 
 <p>Checks whether the particular tab of the inventory has an item</p>
-<p>Generic top level function used by Inventory::has_item_in_XXX() methods, and the
-Inventory::is_equipping() method.
-Iterates through the dictionary of items associated with the specified tab, and check if
+<p>Generic top level function used by Inventory::has_item_in_XXX() methods,
+and the Inventory::is_equipping() method. Iterates through the dictionary
+of items associated with the specified tab, and check if
 the provided item ID can be found as a value.</p>
 <p>Args:
-    inv_type: inventory object, representing inventory tab to search
-    item_id: int, representing the ID of the item to search for</p>
+        inv_type: Inventory object, representing inventory tab to search
+        item_id: Int, representing the ID of the item to search for</p>
 <p>Returns:
-    Boolean, representing whether the specified item was found</p>
+        Boolean, representing whether the specified item was found</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">has_item_in_inv_type</span><span class="p">(</span><span class="n">inv_type</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
 <span class="w">    </span><span class="ss">&quot;&quot;&quot;Checks whether the particular tab of the inventory has an item</span>
 
-<span class="ss">    Generic top level function used by Inventory::has_item_in_XXX() methods, and the</span>
+<span class="ss">    Generic top level function used by Inventory::has_item_in_XXX() methods,</span>
 
-<span class="ss">    Inventory::is_equipping() method.</span>
+<span class="ss">    and the Inventory::is_equipping() method. Iterates through the dictionary</span>
 
-<span class="ss">    Iterates through the dictionary of items associated with the specified tab, and check if</span>
+<span class="ss">    of items associated with the specified tab, and check if</span>
 
 <span class="ss">    the provided item ID can be found as a value.</span>
 
 <span class="ss">    Args:</span>
 
-<span class="ss">        inv_type: inventory object, representing inventory tab to search</span>
+<span class="ss">        inv_type: Inventory object, representing inventory tab to search</span>
 
-<span class="ss">        item_id: int, representing the ID of the item to search for</span>
+<span class="ss">        item_id: Int, representing the ID of the item to search for</span>
 
 <span class="ss">    Returns:</span>
 
@@ -1365,33 +1452,33 @@ the provided item ID can be found as a value.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Performs write operations to DB using the provided DB config and query (generic)</p>
+<p>Performs write operations to DB using the provided DB config and query</p>
 <p>Args:
-    config: Dictionary, representing database config attributes
-    query: string, representing SQL query</p>
+        config: Dictionary, representing database config attributes
+        query: String, representing SQL query</p>
 <p>Returns:
-    A boolean representing whether the operation was successful</p>
+        A Boolean representing whether the operation was successful</p>
 <p>Raises:
-    SQL Error 2003: Can't cannect to DB
-    WinError 10060: No response from DB
-    List index out of range: Wrong column name</p>
+        SQL Error 2003: Can't connect to DB
+        WinError 10060: No response from DB
+        List index out of range: Wrong column name</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">write_to_db</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
-    <span class="ss">&quot;&quot;&quot;Performs write operations to DB using the provided DB config and query (generic)</span>
+    <span class="ss">&quot;&quot;&quot;Performs write operations to DB using the provided DB config and query</span>
 
 <span class="ss">    Args:</span>
 
 <span class="ss">        config: Dictionary, representing database config attributes</span>
 
-<span class="ss">        query: string, representing SQL query</span>
+<span class="ss">        query: String, representing SQL query</span>
 
 <span class="ss">    Returns:</span>
 
-<span class="ss">        A boolean representing whether the operation was successful</span>
+<span class="ss">        A Boolean representing whether the operation was successful</span>
 
 <span class="ss">    Raises:</span>
 
-<span class="ss">        SQL Error 2003: Can&#39;t cannect to DB</span>
+<span class="ss">        SQL Error 2003: Can&#39;t connect to DB</span>
 
 <span class="ss">        WinError 10060: No response from DB</span>
 

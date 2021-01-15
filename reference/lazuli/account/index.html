@@ -656,13 +656,16 @@
                 <h1 id="module-lazuliaccount">Module lazuli.account</h1>
 <p>This module holds the Account class for the lazuli package.</p>
 <p>Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;This module holds the Account class for the lazuli package.</span>
 
 <span class="sd">Copyright 2020 TEAM SPIRIT. All rights reserved.</span>
 
-<span class="sd">Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.</span>
+<span class="sd">Use of this source code is governed by a AGPL-style license that can be found</span>
+
+<span class="sd">in the LICENSE file.</span>
 
 <span class="sd">Refer to database.py or the project wiki on GitHub for usage examples.</span>
 
@@ -674,35 +677,63 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="sd">&quot;&quot;&quot;Account object; models AzureMS accounts.</span>
 
-<span class="sd">    Using instance method Lazuli::get_account_by_username(username) or the Lazuli::get_char_by_name(name).account getter</span>
+<span class="sd">    Using instance method Lazuli::get_account_by_username(username) or</span>
 
-<span class="sd">    will create an Account object instance with attributes identical to the account with username &quot;username&quot;</span>
+<span class="sd">    the Lazuli::get_char_by_name(name).account getter will create an</span>
 
-<span class="sd">    (or IGN &quot;name&quot; for the latter) in the connected AzureMS-based database.</span>
+<span class="sd">    Account object instance with attributes identical to the account</span>
 
-<span class="sd">    This class contains the appropriate getter and setter methods for said attributes.</span>
+<span class="sd">    with username &quot;username&quot; (or IGN &quot;name&quot; for the latter) in</span>
+
+<span class="sd">    the connected AzureMS-based database. This class contains the</span>
+
+<span class="sd">    appropriate getter and setter methods for said attributes.</span>
 
 <span class="sd">    Attributes:</span>
 
-<span class="sd">        account_id: Integer, representing Primary Key for account - Do NOT set manually</span>
+<span class="sd">        account_id:</span>
 
-<span class="sd">        username: String, representing account username; varchar(64)</span>
+<span class="sd">            Integer, representing Primary Key for account - Do NOT set manually</span>
 
-<span class="sd">        logged_in: Integer, represents login status of the account; int(1) and not bool for some reason</span>
+<span class="sd">        username:</span>
 
-<span class="sd">        banned: Integer, represents ban status of the account; int(1) and not bool for some reason</span>
+<span class="sd">            String, representing account username; varchar(64)</span>
 
-<span class="sd">        ban_reason: String, representing account ban reason; text</span>
+<span class="sd">        logged_in:</span>
 
-<span class="sd">        nx: Integer, representing the amount of NX Prepaid the user has</span>
+<span class="sd">            Integer, represents login status of the account;</span>
 
-<span class="sd">        maple_points: Integer, representing the amount of Maple Points the user has</span>
+<span class="sd">            int(1) and not bool for some reason</span>
 
-<span class="sd">        vp:Integer, representing the amount of Vote Points the user has</span>
+<span class="sd">        banned:</span>
 
-<span class="sd">        dp: Integer, representing the amount of Donation Points the user has</span>
+<span class="sd">            Integer, represents ban status of the account;</span>
 
-<span class="sd">        char_slots: Integer, representing the number of character slots the user has</span>
+<span class="sd">            int(1) and not bool for some reason</span>
+
+<span class="sd">        ban_reason:</span>
+
+<span class="sd">            String, representing account ban reason; text</span>
+
+<span class="sd">        nx:</span>
+
+<span class="sd">            Integer, representing the amount of NX Prepaid the user has</span>
+
+<span class="sd">        maple_points:</span>
+
+<span class="sd">            Integer, representing the amount of Maple Points the user has</span>
+
+<span class="sd">        vp:</span>
+
+<span class="sd">            Integer, representing the amount of Vote Points the user has</span>
+
+<span class="sd">        dp:</span>
+
+<span class="sd">            Integer, representing the amount of Donation Points the user has</span>
+
+<span class="sd">        char_slots:</span>
+
+<span class="sd">            Integer, representing the number of character slots the user has</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -712,9 +743,13 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            account_info: dictionary of user attributes, formatted in AzureMS style</span>
+<span class="sd">            account_info:</span>
 
-<span class="sd">            database_config: dictionary of protected attributes from a Lazuli object</span>
+<span class="sd">                dictionary of user attributes, formatted in AzureMS style</span>
+
+<span class="sd">            database_config:</span>
+
+<span class="sd">                dictionary of protected attributes from a Lazuli object</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -732,7 +767,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># text</span>
 
-        <span class="c1"># self._gm = 0  # There are conflicting values in character and accounts - ignored for now</span>
+        <span class="c1"># The GM attribute has nothing to do with</span>
+
+        <span class="c1"># in-game GM command level - excluded for now</span>
+
+        <span class="c1"># self._gm = 0</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -748,13 +787,15 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">init_account_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Given a dictionary of stats from AzureMS&#39;s DB we add them to Account object&#39;s attributes</span>
+        <span class="sd">&quot;&quot;&quot;Initialises Account instance attributes&#39; values.</span>
 
 <span class="sd">        Runs near the end of Account::__init__(account_info, database_config).</span>
 
-<span class="sd">        It assigns the account attributes in account_info to their respective protected attributes belonging to</span>
+<span class="sd">        Assigns values contained in account_info (a dictionary of</span>
 
-<span class="sd">        the Account object instance.</span>
+<span class="sd">        account-related attributes from AzureMS&#39;s DB) to the Account object&#39;s</span>
+
+<span class="sd">        corresponding attributes.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -768,7 +809,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;banreason&#39;</span><span class="p">]</span>
 
-        <span class="c1"># self._gm = self._account_info[&#39;gm&#39;]  # There are conflicting values in character and accounts - ignored for now</span>
+        <span class="c1"># self._gm = self._account_info[&#39;gm&#39;]  # See __innit__</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;nxCash&#39;</span><span class="p">]</span>
 
@@ -776,7 +817,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;vpoints&#39;</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;realcash&#39;</span><span class="p">]</span>  <span class="c1"># Best guess - Might be wrong!</span>
+        <span class="c1"># &#39;realcash&#39; corresponding to DP is a guess - Might be wrong!</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;realcash&#39;</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;chrslot&#39;</span><span class="p">]</span>
 
@@ -812,7 +855,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_name</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is too long!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+            <span class="c1"># Message to be passed along on failure:</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is too long!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
 
@@ -826,15 +871,21 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="p">)</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>  <span class="c1"># if the list of accounts with clashing names is not empty</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+
+                <span class="c1"># if the list of accounts with clashing names is not empty</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>  <span class="c1"># set name in DB</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>  <span class="c1"># refreshes account instance in memory</span>
+                <span class="c1"># then refresh instance variable in memory:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>
 
             <span class="k">else</span><span class="p">:</span>
 
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+                <span class="c1"># Message to be passed along on failure:</span>
+
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
 
@@ -846,23 +897,23 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">logged_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
 
-            <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="c1"># Message to be passed along on failure:</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
 
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That `logged_in` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
 
-            <span class="k">else</span><span class="p">:</span>
+                <span class="s2">&quot;That `logged_in` value is too large! &quot;</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+                <span class="s2">&quot;Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
 
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
 
@@ -874,23 +925,23 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">banned</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-        <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
 
-            <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="c1"># Message to be passed along on failure:</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
 
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;That `banned` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
 
-            <span class="k">else</span><span class="p">:</span>
+                <span class="s2">&quot;That `banned` value is too large! &quot;</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+                <span class="s2">&quot;Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
 
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
 
@@ -932,7 +983,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            amount: Int, representing the amount of NX to be added to the NX pool</span>
+<span class="sd">            amount:</span>
+
+<span class="sd">                Int, representing the amount of NX to be added to the NX pool</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -952,7 +1005,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Maple Points within 2.1b!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;Invalid input! &quot;</span>
+
+                <span class="s2">&quot;Please keep Maple Points within 2.1b!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
 
@@ -966,7 +1023,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            amount: Int, representing the number of Maple Points to be added to the current pool</span>
+<span class="sd">            amount:</span>
+
+<span class="sd">                Int, representing the number of Maple Points</span>
+
+<span class="sd">                to be added to the current pool</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -986,7 +1047,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Vote Points within 2.1b!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;Invalid input! &quot;</span>
+
+                <span class="s2">&quot;Please keep Vote Points within 2.1b!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
 
@@ -1000,7 +1065,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            amount: Int, representing the number of vote points to be added to the current count</span>
+<span class="sd">            amount:</span>
+
+<span class="sd">                Int, representing the number of vote points (VP) to be added</span>
+
+<span class="sd">                to the current VP count</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1034,7 +1103,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            amount: Int, representing the number of DPs to be added to the current count</span>
+<span class="sd">            amount:</span>
+
+<span class="sd">                Int, representing the number of DPs to be added</span>
+
+<span class="sd">                to the current DP count</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1054,7 +1127,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">52</span><span class="p">:</span>
 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Character Slots within 52!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;Invalid input! &quot;</span>
+
+                <span class="s2">&quot;Please keep Character Slots within 52!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
 
@@ -1068,7 +1145,11 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            amount: Int, representing the number of slots to be added to the current count</span>
+<span class="sd">            amount:</span>
+
+<span class="sd">                Int, representing the number of slots to be added</span>
+
+<span class="sd">                to the current count</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1078,7 +1159,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="k">def</span> <span class="nf">is_online</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot;Checks if the &#39;loggedin&#39; column is greater than 0 (they are online if &gt; 0)</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the &#39;loggedin&#39; column is greater than 0</span>
 
 <span class="sd">        Returns:</span>
 
@@ -1096,7 +1177,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="sd">&quot;&quot;&quot;Sets loggedin column in database to 0</span>
 
-<span class="sd">        This unstucks the account as server checks loggedin value to decided whether they are &quot;logged in&quot;</span>
+<span class="sd">        This unstucks the account, since server checks loggedin value</span>
+
+<span class="sd">        to decided whether they are &quot;logged in&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1108,9 +1191,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        WARNING: INHERENTLY UNSAFE</span>
 
-<span class="sd">        Azure316 does not hash passwords by default, therefore this function is technically functional.</span>
+<span class="sd">        Azure316 does not hash passwords by default, so this function</span>
 
-<span class="sd">        As &quot;safe&quot; as any website registration or auto register.</span>
+<span class="sd">        is technically functional for the open source version.</span>
 
 <span class="sd">        Args:</span>
 
@@ -1146,17 +1229,27 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="sd">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="sd">        Uses these attributes to attempt a database connection through</span>
 
-<span class="sd">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
+<span class="sd">        utility.write_to_db. Attempts to update the field represented by</span>
 
-<span class="sd">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
+<span class="sd">        the provided column in the accounts table, with the provided value.</span>
+
+<span class="sd">        Not recommended to use this method on it&#39;s own, as it will not update</span>
+
+<span class="sd">        the account instance variables (in memory) post-change.</span>
 
 <span class="sd">        Args:</span>
 
-<span class="sd">            value: int or string, representing the value to be set in the database</span>
+<span class="sd">            value:</span>
 
-<span class="sd">            column: string, representing the column in the database that is to be updated</span>
+<span class="sd">                int or string, representing the value to be set in the database</span>
+
+<span class="sd">            column:</span>
+
+<span class="sd">                string, representing the column in the database</span>
+
+<span class="sd">                that is to be updated</span>
 
 <span class="sd">        Returns:</span>
 
@@ -1172,15 +1265,23 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; &quot;</span>
+
+            <span class="n">f</span><span class="s2">&quot;WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
 
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
 
-            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># Update the stats in the dictionary</span>
+                <span class="n">f</span><span class="s2">&quot;Successfully updated {column} value &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Update the stats in the dictionary:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
         <span class="k">return</span> <span class="n">status</span>
 </code></pre></div>
@@ -1195,54 +1296,96 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 </code></pre></div>
 
 <p>Account object; models AzureMS accounts.</p>
-<p>Using instance method Lazuli::get_account_by_username(username) or the Lazuli::get_char_by_name(name).account getter
-will create an Account object instance with attributes identical to the account with username "username"
-(or IGN "name" for the latter) in the connected AzureMS-based database.
-This class contains the appropriate getter and setter methods for said attributes.</p>
+<p>Using instance method Lazuli::get_account_by_username(username) or
+the Lazuli::get_char_by_name(name).account getter will create an
+Account object instance with attributes identical to the account
+with username "username" (or IGN "name" for the latter) in
+the connected AzureMS-based database. This class contains the
+appropriate getter and setter methods for said attributes.</p>
 <p>Attributes:
-        account_id: Integer, representing Primary Key for account - Do NOT set manually
-        username: String, representing account username; varchar(64)
-        logged_in: Integer, represents login status of the account; int(1) and not bool for some reason
-        banned: Integer, represents ban status of the account; int(1) and not bool for some reason
-        ban_reason: String, representing account ban reason; text
-        nx: Integer, representing the amount of NX Prepaid the user has
-        maple_points: Integer, representing the amount of Maple Points the user has
-        vp:Integer, representing the amount of Vote Points the user has
-        dp: Integer, representing the amount of Donation Points the user has
-        char_slots: Integer, representing the number of character slots the user has</p>
+        account_id:
+                Integer, representing Primary Key for account - Do NOT set manually
+        username:
+                String, representing account username; varchar(64)
+        logged_in:
+                Integer, represents login status of the account;
+                int(1) and not bool for some reason
+        banned:
+                Integer, represents ban status of the account;
+                int(1) and not bool for some reason
+        ban_reason:
+                String, representing account ban reason; text
+        nx:
+                Integer, representing the amount of NX Prepaid the user has
+        maple_points:
+                Integer, representing the amount of Maple Points the user has
+        vp:
+                Integer, representing the amount of Vote Points the user has
+        dp:
+                Integer, representing the amount of Donation Points the user has
+        char_slots:
+                Integer, representing the number of character slots the user has</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="k">Account</span><span class="o">:</span>
 
     <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Account object; models AzureMS accounts.</span>
 
-<span class="s2">    Using instance method Lazuli::get_account_by_username(username) or the Lazuli::get_char_by_name(name).account getter</span>
+<span class="s2">    Using instance method Lazuli::get_account_by_username(username) or</span>
 
-<span class="s2">    will create an Account object instance with attributes identical to the account with username &quot;</span><span class="n">username</span><span class="s2">&quot;</span>
+<span class="s2">    the Lazuli::get_char_by_name(name).account getter will create an</span>
 
-<span class="s2">    (or IGN &quot;</span><span class="k">name</span><span class="s2">&quot; for the latter) in the connected AzureMS-based database.</span>
+<span class="s2">    Account object instance with attributes identical to the account</span>
 
-<span class="s2">    This class contains the appropriate getter and setter methods for said attributes.</span>
+<span class="s2">    with username &quot;</span><span class="n">username</span><span class="s2">&quot; (or IGN &quot;</span><span class="k">name</span><span class="s2">&quot; for the latter) in</span>
+
+<span class="s2">    the connected AzureMS-based database. This class contains the</span>
+
+<span class="s2">    appropriate getter and setter methods for said attributes.</span>
 
 <span class="s2">    Attributes:</span>
 
-<span class="s2">        account_id: Integer, representing Primary Key for account - Do NOT set manually</span>
+<span class="s2">        account_id:</span>
 
-<span class="s2">        username: String, representing account username; varchar(64)</span>
+<span class="s2">            Integer, representing Primary Key for account - Do NOT set manually</span>
 
-<span class="s2">        logged_in: Integer, represents login status of the account; int(1) and not bool for some reason</span>
+<span class="s2">        username:</span>
 
-<span class="s2">        banned: Integer, represents ban status of the account; int(1) and not bool for some reason</span>
+<span class="s2">            String, representing account username; varchar(64)</span>
 
-<span class="s2">        ban_reason: String, representing account ban reason; text</span>
+<span class="s2">        logged_in:</span>
 
-<span class="s2">        nx: Integer, representing the amount of NX Prepaid the user has</span>
+<span class="s2">            Integer, represents login status of the account;</span>
 
-<span class="s2">        maple_points: Integer, representing the amount of Maple Points the user has</span>
+<span class="s2">            int(1) and not bool for some reason</span>
 
-<span class="s2">        vp:Integer, representing the amount of Vote Points the user has</span>
+<span class="s2">        banned:</span>
 
-<span class="s2">        dp: Integer, representing the amount of Donation Points the user has</span>
+<span class="s2">            Integer, represents ban status of the account;</span>
 
-<span class="s2">        char_slots: Integer, representing the number of character slots the user has</span>
+<span class="s2">            int(1) and not bool for some reason</span>
+
+<span class="s2">        ban_reason:</span>
+
+<span class="s2">            String, representing account ban reason; text</span>
+
+<span class="s2">        nx:</span>
+
+<span class="s2">            Integer, representing the amount of NX Prepaid the user has</span>
+
+<span class="s2">        maple_points:</span>
+
+<span class="s2">            Integer, representing the amount of Maple Points the user has</span>
+
+<span class="s2">        vp:</span>
+
+<span class="s2">            Integer, representing the amount of Vote Points the user has</span>
+
+<span class="s2">        dp:</span>
+
+<span class="s2">            Integer, representing the amount of Donation Points the user has</span>
+
+<span class="s2">        char_slots:</span>
+
+<span class="s2">            Integer, representing the number of character slots the user has</span>
 
 <span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1252,9 +1395,13 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            account_info: dictionary of user attributes, formatted in AzureMS style</span>
+<span class="s2">            account_info:</span>
 
-<span class="s2">            database_config: dictionary of protected attributes from a Lazuli object</span>
+<span class="s2">                dictionary of user attributes, formatted in AzureMS style</span>
+
+<span class="s2">            database_config:</span>
+
+<span class="s2">                dictionary of protected attributes from a Lazuli object</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1272,7 +1419,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># text</span>
 
-        <span class="c1"># self._gm = 0  # There are conflicting values in character and accounts - ignored for now</span>
+        <span class="c1"># The GM attribute has nothing to do with</span>
+
+        <span class="c1"># in-game GM command level - excluded for now</span>
+
+        <span class="c1"># self._gm = 0</span>
 
         <span class="n">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -1288,13 +1439,15 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">init_account_stats</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Given a dictionary of stats from AzureMS&#39;s DB we add them to Account object&#39;s attributes</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Initialises Account instance attributes&#39; values.</span>
 
 <span class="s2">        Runs near the end of Account::__init__(account_info, database_config).</span>
 
-<span class="s2">        It assigns the account attributes in account_info to their respective protected attributes belonging to</span>
+<span class="s2">        Assigns values contained in account_info (a dictionary of</span>
 
-<span class="s2">        the Account object instance.</span>
+<span class="s2">        account-related attributes from AzureMS&#39;s DB) to the Account object&#39;s</span>
+
+<span class="s2">        corresponding attributes.</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1308,7 +1461,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;banreason&#39;</span><span class="err">]</span>
 
-        <span class="c1"># self._gm = self._account_info[&#39;gm&#39;]  # There are conflicting values in character and accounts - ignored for now</span>
+        <span class="c1"># self._gm = self._account_info[&#39;gm&#39;]  # See __innit__</span>
 
         <span class="n">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;nxCash&#39;</span><span class="err">]</span>
 
@@ -1316,7 +1469,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="n">self</span><span class="p">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;vpoints&#39;</span><span class="err">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;realcash&#39;</span><span class="err">]</span>  <span class="c1"># Best guess - Might be wrong!</span>
+        <span class="c1"># &#39;realcash&#39; corresponding to DP is a guess - Might be wrong!</span>
+
+        <span class="n">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;realcash&#39;</span><span class="err">]</span>
 
         <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="s1">&#39;chrslot&#39;</span><span class="err">]</span>
 
@@ -1352,7 +1507,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">new_name</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">64</span><span class="o">:</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is too long!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+            <span class="c1"># Message to be passed along on failure:</span>
+
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is too long!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="o">:</span>
 
@@ -1366,15 +1523,21 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="p">)</span>
 
-            <span class="k">if</span> <span class="k">not</span> <span class="k">data</span><span class="o">:</span>  <span class="c1"># if the list of accounts with clashing names is not empty</span>
+            <span class="k">if</span> <span class="k">not</span> <span class="k">data</span><span class="o">:</span>
+
+                <span class="c1"># if the list of accounts with clashing names is not empty</span>
 
                 <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>  <span class="c1"># set name in DB</span>
 
-                <span class="n">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>  <span class="c1"># refreshes account instance in memory</span>
+                <span class="c1"># then refresh instance variable in memory:</span>
+
+                <span class="n">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">new_name</span>
 
             <span class="k">else</span><span class="o">:</span>
 
-                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+                <span class="c1"># Message to be passed along on failure:</span>
+
+                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That name is already taken!&quot;</span><span class="p">)</span>
 
     <span class="nv">@property</span>
 
@@ -1386,23 +1549,23 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">logged_in</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="n">try</span><span class="o">:</span>
+        <span class="k">if</span> <span class="k">not</span> <span class="n">isinstance</span><span class="p">(</span><span class="k">value</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">:</span>
 
-            <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="o">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="c1"># Message to be passed along on failure:</span>
+        <span class="n">elif</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="o">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
 
-                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That `logged_in` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span>
 
-            <span class="k">else</span><span class="o">:</span>
+                <span class="s2">&quot;That `logged_in` value is too large! &quot;</span>
 
-                <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+                <span class="s2">&quot;Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="k">value</span>
+        <span class="k">else</span><span class="o">:</span>
 
-        <span class="k">except</span> <span class="n">Exception</span><span class="o">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;loggedin&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="k">value</span>
 
     <span class="nv">@property</span>
 
@@ -1414,23 +1577,23 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">banned</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="n">try</span><span class="o">:</span>
+        <span class="k">if</span> <span class="k">not</span> <span class="n">isinstance</span><span class="p">(</span><span class="k">value</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">:</span>
 
-            <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="o">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="c1"># Message to be passed along on failure:</span>
+        <span class="n">elif</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="o">:</span>  <span class="c1"># DB only accepts 1-byte int</span>
 
-                <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;That `banned` value is too large! Stick to either 0 or 1!&quot;</span><span class="p">)</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span>
 
-            <span class="k">else</span><span class="o">:</span>
+                <span class="s2">&quot;That `banned` value is too large! &quot;</span>
 
-                <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
+                <span class="s2">&quot;Stick to either 0 or 1!&quot;</span><span class="p">)</span>
 
-                <span class="n">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="k">value</span>
+        <span class="k">else</span><span class="o">:</span>
 
-        <span class="k">except</span> <span class="n">Exception</span><span class="o">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="s2">&quot;banned&quot;</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span>  <span class="c1"># Use with caution!</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Stick to either 0 or 1!&quot;</span><span class="p">)</span>  <span class="c1"># Message to be passed along on failure</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="k">value</span>
 
     <span class="nv">@property</span>
 
@@ -1472,7 +1635,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the amount of NX to be added to the NX pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the amount of NX to be added to the NX pool</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1492,7 +1657,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="o">:</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Maple Points within 2.1b!&quot;</span><span class="p">)</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;Invalid input! &quot;</span>
+
+                <span class="s2">&quot;Please keep Maple Points within 2.1b!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="o">:</span>
 
@@ -1506,7 +1675,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the number of Maple Points to be added to the current pool</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the number of Maple Points</span>
+
+<span class="s2">                to be added to the current pool</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1526,7 +1699,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="o">:</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Vote Points within 2.1b!&quot;</span><span class="p">)</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;Invalid input! &quot;</span>
+
+                <span class="s2">&quot;Please keep Vote Points within 2.1b!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="o">:</span>
 
@@ -1540,7 +1717,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the number of vote points to be added to the current count</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the number of vote points (VP) to be added</span>
+
+<span class="s2">                to the current VP count</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1574,7 +1755,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the number of DPs to be added to the current count</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the number of DPs to be added</span>
+
+<span class="s2">                to the current DP count</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1594,7 +1779,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="k">if</span> <span class="k">value</span> <span class="o">&gt;</span> <span class="mi">52</span><span class="o">:</span>
 
-            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please keep Character Slots within 52!&quot;</span><span class="p">)</span>
+            <span class="n">raise</span> <span class="n">ValueError</span><span class="p">(</span>
+
+                <span class="s2">&quot;Invalid input! &quot;</span>
+
+                <span class="s2">&quot;Please keep Character Slots within 52!&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="o">:</span>
 
@@ -1608,7 +1797,11 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            amount: Int, representing the number of slots to be added to the current count</span>
+<span class="s2">            amount:</span>
+
+<span class="s2">                Int, representing the number of slots to be added</span>
+
+<span class="s2">                to the current count</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1618,7 +1811,7 @@ This class contains the appropriate getter and setter methods for said attribute
 
     <span class="n">def</span> <span class="n">is_online</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
-        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks if the &#39;loggedin&#39; column is greater than 0 (they are online if &gt; 0)</span>
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks if the &#39;loggedin&#39; column is greater than 0</span>
 
 <span class="s2">        Returns:</span>
 
@@ -1636,7 +1829,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
         <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Sets loggedin column in database to 0</span>
 
-<span class="s2">        This unstucks the account as server checks loggedin value to decided whether they are &quot;</span><span class="n">logged</span> <span class="k">in</span><span class="s2">&quot;</span>
+<span class="s2">        This unstucks the account, since server checks loggedin value</span>
+
+<span class="s2">        to decided whether they are &quot;</span><span class="n">logged</span> <span class="k">in</span><span class="s2">&quot;</span>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
@@ -1648,9 +1843,9 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        WARNING: INHERENTLY UNSAFE</span>
 
-<span class="s2">        Azure316 does not hash passwords by default, therefore this function is technically functional.</span>
+<span class="s2">        Azure316 does not hash passwords by default, so this function</span>
 
-<span class="s2">        As &quot;</span><span class="n">safe</span><span class="s2">&quot; as any website registration or auto register.</span>
+<span class="s2">        is technically functional for the open source version.</span>
 
 <span class="s2">        Args:</span>
 
@@ -1686,17 +1881,27 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <span class="s2">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s2">        Uses these attributes to attempt a database connection through</span>
 
-<span class="s2">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
+<span class="s2">        utility.write_to_db. Attempts to update the field represented by</span>
 
-<span class="s2">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
+<span class="s2">        the provided column in the accounts table, with the provided value.</span>
+
+<span class="s2">        Not recommended to use this method on it&#39;s own, as it will not update</span>
+
+<span class="s2">        the account instance variables (in memory) post-change.</span>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            value: int or string, representing the value to be set in the database</span>
+<span class="s2">            value:</span>
 
-<span class="s2">            column: string, representing the column in the database that is to be updated</span>
+<span class="s2">                int or string, representing the value to be set in the database</span>
+
+<span class="s2">            column:</span>
+
+<span class="s2">                string, representing the column in the database</span>
+
+<span class="s2">                that is to be updated</span>
 
 <span class="s2">        Returns:</span>
 
@@ -1712,15 +1917,23 @@ This class contains the appropriate getter and setter methods for said attribute
 
             <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; &quot;</span>
+
+            <span class="n">f</span><span class="s2">&quot;WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
 
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
 
-            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+            <span class="n">print</span><span class="p">(</span>
 
-            <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>  <span class="c1"># Update the stats in the dictionary</span>
+                <span class="n">f</span><span class="s2">&quot;Successfully updated {column} value &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Update the stats in the dictionary:</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>
 
         <span class="k">return</span> <span class="k">status</span>
 </code></pre></div>
@@ -1774,14 +1987,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current character slot count</p>
 <p>Args:
-        amount: Int, representing the number of slots to be added to the current count</p>
+        amount:
+                Int, representing the number of slots to be added
+                to the current count</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_char_slots</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current character slot count</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the number of slots to be added to the current count</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the number of slots to be added</span>
+
+<span class="ss">                to the current count</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -1800,14 +2019,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current DP count</p>
 <p>Args:
-        amount: Int, representing the number of DPs to be added to the current count</p>
+        amount:
+                Int, representing the number of DPs to be added
+                to the current DP count</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_dp</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current DP count</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the number of DPs to be added to the current count</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the number of DPs to be added</span>
+
+<span class="ss">                to the current DP count</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -1826,14 +2051,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current Maple Points pool</p>
 <p>Args:
-        amount: Int, representing the number of Maple Points to be added to the current pool</p>
+        amount:
+                Int, representing the number of Maple Points
+                to be added to the current pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_maple_points</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current Maple Points pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the number of Maple Points to be added to the current pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the number of Maple Points</span>
+
+<span class="ss">                to be added to the current pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -1852,14 +2083,17 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current NX pool</p>
 <p>Args:
-        amount: Int, representing the amount of NX to be added to the NX pool</p>
+        amount:
+                Int, representing the amount of NX to be added to the NX pool</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_nx</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current NX pool</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the amount of NX to be added to the NX pool</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the amount of NX to be added to the NX pool</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -1878,14 +2112,20 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Adds the specified amount to the current VP count</p>
 <p>Args:
-        amount: Int, representing the number of vote points to be added to the current count</p>
+        amount:
+                Int, representing the number of vote points (VP) to be added
+                to the current VP count</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">add_vp</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Adds the specified amount to the current VP count</span>
 
 <span class="ss">        Args:</span>
 
-<span class="ss">            amount: Int, representing the number of vote points to be added to the current count</span>
+<span class="ss">            amount:</span>
+
+<span class="ss">                Int, representing the number of vote points (VP) to be added</span>
+
+<span class="ss">                to the current VP count</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
@@ -1904,27 +2144,27 @@ This class contains the appropriate getter and setter methods for said attribute
 
 <p>Changes the current password to the given one.</p>
 <p>WARNING: INHERENTLY UNSAFE
-Azure316 does not hash passwords by default, therefore this function is technically functional.
-As "safe" as any website registration or auto register.</p>
+Azure316 does not hash passwords by default, so this function
+is technically functional for the open source version.</p>
 <p>Args:
         new_pass: string, representing the new password</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">change_password</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span><span class="o">:</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">change_password</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">):</span>
 
-        <span class="s">&quot;&quot;&quot;Changes the current password to the given one.</span>
+        <span class="ss">&quot;&quot;&quot;Changes the current password to the given one.</span>
 
-        <span class="nl">WARNING:</span> <span class="n">INHERENTLY</span> <span class="n">UNSAFE</span>
+<span class="ss">        WARNING: INHERENTLY UNSAFE</span>
 
-        <span class="n">Azure316</span> <span class="n">does</span> <span class="k">not</span> <span class="n">hash</span> <span class="n">passwords</span> <span class="n">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">therefore</span> <span class="n">this</span> <span class="k">function</span> <span class="n">is</span> <span class="n">technically</span> <span class="n">functional</span><span class="p">.</span>
+<span class="ss">        Azure316 does not hash passwords by default, so this function</span>
 
-        <span class="n">As</span> <span class="s">&quot;safe&quot;</span> <span class="n">as</span> <span class="n">any</span> <span class="n">website</span> <span class="n">registration</span> <span class="k">or</span> <span class="n">auto</span> <span class="n">register</span><span class="p">.</span>
+<span class="ss">        is technically functional for the open source version.</span>
 
-        <span class="nl">Args:</span>
+<span class="ss">        Args:</span>
 
-            <span class="nl">new_pass:</span> <span class="k">string</span><span class="p">,</span> <span class="n">representing</span> <span class="n">the</span> <span class="n">new</span> <span class="n">password</span>
+<span class="ss">            new_pass: string, representing the new password</span>
 
-        <span class="s">&quot;&quot;&quot;</span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">set_stat_by_column</span><span class="p">(</span><span class="ss">&quot;password&quot;</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -1970,43 +2210,48 @@ As "safe" as any website registration or auto register.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Given a dictionary of stats from AzureMS's DB we add them to Account object's attributes</p>
+<p>Initialises Account instance attributes' values.</p>
 <p>Runs near the end of Account::<strong>init</strong>(account_info, database_config).
-It assigns the account attributes in account_info to their respective protected attributes belonging to
-the Account object instance.</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_account_stats</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+Assigns values contained in account_info (a dictionary of
+account-related attributes from AzureMS's DB) to the Account object's
+corresponding attributes.</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">init_account_stats</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
-        <span class="s">&quot;&quot;&quot;Given a dictionary of stats from AzureMS&#39;s DB we add them to Account object&#39;s attributes</span>
+        <span class="ss">&quot;&quot;&quot;Initialises Account instance attributes&#39; values.</span>
 
-        <span class="n">Runs</span> <span class="n">near</span> <span class="n">the</span> <span class="k">end</span> <span class="n">of</span> <span class="n">Account</span><span class="o">::</span><span class="n">__init__</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">database_config</span><span class="p">).</span>
+<span class="ss">        Runs near the end of Account::__init__(account_info, database_config).</span>
 
-        <span class="n">It</span> <span class="n">assigns</span> <span class="n">the</span> <span class="n">account</span> <span class="n">attributes</span> <span class="n">in</span> <span class="n">account_info</span> <span class="n">to</span> <span class="n">their</span> <span class="n">respective</span> <span class="n">protected</span> <span class="n">attributes</span> <span class="n">belonging</span> <span class="n">to</span>
+<span class="ss">        Assigns values contained in account_info (a dictionary of</span>
 
-        <span class="n">the</span> <span class="n">Account</span> <span class="n">object</span> <span class="n">instance</span><span class="p">.</span>
+<span class="ss">        account-related attributes from AzureMS&#39;s DB) to the Account object&#39;s</span>
 
-        <span class="s">&quot;&quot;&quot;</span>
+<span class="ss">        corresponding attributes.</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">id</span><span class="p">&#39;]</span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">name</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">loggedin</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_username</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">banned</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_logged_in</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;loggedin&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">banreason</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_banned</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;banned&#39;</span><span class="p">]</span>
 
-        <span class="p">#</span> <span class="n">self</span><span class="p">.</span><span class="n">_gm</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">gm</span><span class="p">&#39;]</span>  <span class="p">#</span> <span class="n">There</span> <span class="n">are</span> <span class="n">conflicting</span> <span class="n">values</span> <span class="n">in</span> <span class="n">character</span> <span class="k">and</span> <span class="n">accounts</span> <span class="o">-</span> <span class="n">ignored</span> <span class="k">for</span> <span class="n">now</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_ban_reason</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;banreason&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">nxCash</span><span class="p">&#39;]</span>
+        <span class="o">#</span> <span class="k">self</span><span class="p">.</span><span class="n">_gm</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;gm&#39;</span><span class="p">]</span>  <span class="o">#</span> <span class="n">See</span> <span class="n">__innit__</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">mPoints</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_nx</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;nxCash&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">vpoints</span><span class="p">&#39;]</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_maple_points</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;mPoints&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">realcash</span><span class="p">&#39;]</span>  <span class="p">#</span> <span class="n">Best</span> <span class="n">guess</span> <span class="o">-</span> <span class="n">Might</span> <span class="n">be</span> <span class="n">wrong</span><span class="o">!</span>
+        <span class="k">self</span><span class="p">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;vpoints&#39;</span><span class="p">]</span>
 
-        <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[&#39;</span><span class="n">chrslot</span><span class="p">&#39;]</span>
+        <span class="o">#</span> <span class="s1">&#39;realcash&#39;</span> <span class="n">corresponding</span> <span class="k">to</span> <span class="n">DP</span> <span class="k">is</span> <span class="n">a</span> <span class="n">guess</span> <span class="o">-</span> <span class="n">Might</span> <span class="n">be</span> <span class="n">wrong</span><span class="o">!</span>
+
+        <span class="k">self</span><span class="p">.</span><span class="n">_dp</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;realcash&#39;</span><span class="p">]</span>
+
+        <span class="k">self</span><span class="p">.</span><span class="n">_char_slots</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">[</span><span class="s1">&#39;chrslot&#39;</span><span class="p">]</span>
 </code></pre></div>
 
 </details>
@@ -2016,12 +2261,12 @@ the Account object instance.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>Checks if the 'loggedin' column is greater than 0 (they are online if &gt; 0)</p>
+<p>Checks if the 'loggedin' column is greater than 0</p>
 <p>Returns:
         Boolean, representing the online status of the account</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">is_online</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
-        <span class="ss">&quot;&quot;&quot;Checks if the &#39;loggedin&#39; column is greater than 0 (they are online if &gt; 0)</span>
+        <span class="ss">&quot;&quot;&quot;Checks if the &#39;loggedin&#39; column is greater than 0</span>
 
 <span class="ss">        Returns:</span>
 
@@ -2047,12 +2292,17 @@ the Account object instance.</p>
 
 <p>Sets a account's attributes by column name in database</p>
 <p>Grabs the database attributes provided through the class constructor.
-Uses these attributes to attempt a database connection through utility.write_to_db.
-Attempts to update the field represented by the provided column in the accounts table, with the provided value.
-Not recommended to use this alone, as it won't update the account object which this was used from</p>
+Uses these attributes to attempt a database connection through
+utility.write_to_db. Attempts to update the field represented by
+the provided column in the accounts table, with the provided value.
+Not recommended to use this method on it's own, as it will not update
+the account instance variables (in memory) post-change.</p>
 <p>Args:
-        value: int or string, representing the value to be set in the database
-        column: string, representing the column in the database that is to be updated</p>
+        value:
+                int or string, representing the value to be set in the database
+        column:
+                string, representing the column in the database
+                that is to be updated</p>
 <p>Returns:
         A boolean representing whether the operation was successful.</p>
 <p>Raises:
@@ -2063,17 +2313,27 @@ Not recommended to use this alone, as it won't update the account object which t
 
 <span class="s2">        Grabs the database attributes provided through the class constructor.</span>
 
-<span class="s2">        Uses these attributes to attempt a database connection through utility.write_to_db.</span>
+<span class="s2">        Uses these attributes to attempt a database connection through</span>
 
-<span class="s2">        Attempts to update the field represented by the provided column in the accounts table, with the provided value.</span>
+<span class="s2">        utility.write_to_db. Attempts to update the field represented by</span>
 
-<span class="s2">        Not recommended to use this alone, as it won&#39;t update the account object which this was used from</span>
+<span class="s2">        the provided column in the accounts table, with the provided value.</span>
+
+<span class="s2">        Not recommended to use this method on it&#39;s own, as it will not update</span>
+
+<span class="s2">        the account instance variables (in memory) post-change.</span>
 
 <span class="s2">        Args:</span>
 
-<span class="s2">            value: int or string, representing the value to be set in the database</span>
+<span class="s2">            value:</span>
 
-<span class="s2">            column: string, representing the column in the database that is to be updated</span>
+<span class="s2">                int or string, representing the value to be set in the database</span>
+
+<span class="s2">            column:</span>
+
+<span class="s2">                string, representing the column in the database</span>
+
+<span class="s2">                that is to be updated</span>
 
 <span class="s2">        Returns:</span>
 
@@ -2089,15 +2349,23 @@ Not recommended to use this alone, as it won't update the account object which t
 
             <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
-            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
+            <span class="n">f</span><span class="s2">&quot;UPDATE `accounts` SET {column} = &#39;{value}&#39; &quot;</span>
+
+            <span class="n">f</span><span class="s2">&quot;WHERE `id` = &#39;{self.account_id}&#39;&quot;</span>
 
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="k">status</span><span class="o">:</span>
 
-            <span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Successfully updated {column} value for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+            <span class="n">print</span><span class="p">(</span>
 
-            <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>  <span class="c1"># Update the stats in the dictionary</span>
+                <span class="n">f</span><span class="s2">&quot;Successfully updated {column} value &quot;</span>
+
+                <span class="n">f</span><span class="s2">&quot;for user id: {self.account_id}.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Update the stats in the dictionary:</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="err">[</span><span class="k">column</span><span class="err">]</span> <span class="o">=</span> <span class="k">value</span>
 
         <span class="k">return</span> <span class="k">status</span>
 </code></pre></div>
@@ -2110,12 +2378,15 @@ Not recommended to use this alone, as it won't update the account object which t
 </code></pre></div>
 
 <p>Sets loggedin column in database to 0</p>
-<p>This unstucks the account as server checks loggedin value to decided whether they are "logged in"</p>
+<p>This unstucks the account, since server checks loggedin value
+to decided whether they are "logged in"</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">unstuck</span><span class="p">(</span><span class="k">self</span><span class="p">):</span>
 
         <span class="ss">&quot;&quot;&quot;Sets loggedin column in database to 0</span>
 
-<span class="ss">        This unstucks the account as server checks loggedin value to decided whether they are &quot;</span><span class="n">logged</span> <span class="k">in</span><span class="ss">&quot;</span>
+<span class="ss">        This unstucks the account, since server checks loggedin value</span>
+
+<span class="ss">        to decided whether they are &quot;</span><span class="n">logged</span> <span class="k">in</span><span class="ss">&quot;</span>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
