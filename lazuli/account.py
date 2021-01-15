@@ -137,16 +137,17 @@ class Account:
 
 	@logged_in.setter
 	def logged_in(self, value):
-		try:
-			if value > 127:  # DB only accepts 1-byte int
-				raise ValueError(
-					"That `logged_in` value is too large! "
-					"Stick to either 0 or 1!")
-			else:
-				self.set_stat_by_column("loggedin", value)  # Use with caution!
-				self._logged_in = value
-		except Exception:
-			raise ValueError("Invalid input! Stick to either 0 or 1!") from None
+		if not isinstance(value, int):
+			raise ValueError("Invalid input! Stick to either 0 or 1!")
+
+		elif value > 127:  # DB only accepts 1-byte int
+			raise ValueError(
+				"That `logged_in` value is too large! "
+				"Stick to either 0 or 1!")
+
+		else:
+			self.set_stat_by_column("loggedin", value)  # Use with caution!
+			self._logged_in = value
 
 	@property
 	def banned(self):
@@ -154,16 +155,16 @@ class Account:
 
 	@banned.setter
 	def banned(self, value):
-		try:
-			if value > 127:  # DB only accepts 1-byte int
-				raise ValueError(
-					"That `banned` value is too large! "
-					"Stick to either 0 or 1!")
-			else:
-				self.set_stat_by_column("banned", value)  # Use with caution!
-				self._banned = value
-		except Exception:
-			raise ValueError("Invalid input! Stick to either 0 or 1!") from None
+		if not isinstance(value, int):
+			raise ValueError("Invalid input! Stick to either 0 or 1!")
+
+		elif value > 127:  # DB only accepts 1-byte int
+			raise ValueError(
+				"That `banned` value is too large! "
+				"Stick to either 0 or 1!")
+		else:
+			self.set_stat_by_column("banned", value)  # Use with caution!
+			self._banned = value
 
 	@property
 	def ban_reason(self):
