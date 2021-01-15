@@ -1,5 +1,8 @@
 ## CHANGELOG:  
 
+### v1.1.0
+- Add getter methods that return all attributes together
+
 ### v1.0.1
 - Perform general linting
 
