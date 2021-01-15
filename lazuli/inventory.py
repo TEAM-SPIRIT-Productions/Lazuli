@@ -55,6 +55,8 @@ class Inventory:
 		self._character_id = character_id
 		self._database_config = db_config
 
+		self._all_items = self.fetch_all_inv_items()
+
 		self._equip_inv = self.init_equip_items()
 		self._use_inv = self.init_use_inv()
 		self._etc_inv = self.init_etc_inv()
@@ -95,6 +97,27 @@ class Inventory:
 	def equipped_inv(self):
 		return self._equipped_inv
 
+	def fetch_all_inv_items(self):
+		"""Fetch all items associated with the character"""
+		try:
+			database = con.connect(
+				host=self.database_config['host'],
+				user=self.database_config['user'],
+				password=self.database_config['password'],
+				database=self.database_config['schema'],
+				port=self.database_config['port'],
+				charset=self.database_config['charset']
+			)
+			cursor = database.cursor(dictionary=True)
+			cursor.execute(
+				f"SELECT * FROM `inventoryitems` WHERE `characterid` = "
+				f"'{self.character_id}'"
+			)
+			inventory = cursor.fetchall()
+			return inventory
+		except Exception as e:
+			print(f"ERROR: Unable to fetch inventory items\n{e}")
+
 	def load_inv(self, inv_type):
 		"""Given an inventory_type, fetch every item associated with it
 
@@ -111,20 +134,12 @@ class Inventory:
 			Generic error on failure
 		"""
 		try:
-			database = con.connect(
-				host=self.database_config['host'],
-				user=self.database_config['user'],
-				password=self.database_config['password'],
-				database=self.database_config['schema'],
-				port=self.database_config['port'],
-				charset=self.database_config['charset']
-			)
-			cursor = database.cursor(dictionary=True)
-			cursor.execute(
-				f"SELECT * FROM `inventoryitems` WHERE `characterid` = "
-				f"'{self.character_id}' AND `inventorytype` = '{inv_type}'"
-			)
-			inventory = cursor.fetchall()
+			all_items = self._all_items
+			inventory = []
+			# Extract the relevant inventory for the type
+			for item in all_items:
+				if item.get("inventorytype") == inv_type:
+					inventory.append(item)
 
 			inv = {}
 
