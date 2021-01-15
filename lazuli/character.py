@@ -1,7 +1,8 @@
 """This module holds the Character class for the lazuli package.
 
 Copyright 2020 TEAM SPIRIT. All rights reserved.
-Use of this source code is governed by a AGPL-style license that can be found in the LICENSE file.
+Use of this source code is governed by a AGPL-style license that can be found
+in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
 
@@ -14,9 +15,10 @@ import lazuli.utility as utils
 class Character:
 	"""Character object; models AzureMS characters.
 
-	Using instance method Lazuli::get_char_by_name(name) will create a Character object instance with
-	attributes identical to the character with IGN "name" in the connected AzureMS-based database.
-	This class contains the appropriate getter and setter methods for said attributes.
+	Using instance method Lazuli::get_char_by_name(name) will create a
+	Character object instance with attributes identical to the character with
+	IGN "name" in the connected AzureMS-based database. This class contains
+	the appropriate getter and setter methods for said attributes.
 
 	Attributes:
 		character_id: Integer, representing Primary Key for Character; int(11)
@@ -38,7 +40,7 @@ class Character:
 		hair: Integer, representing Hair ID of the character
 		face: Integer, representing Face ID of the character
 		ap: Integer, representing Character free Ability Points (AP) pool
-		map: Integer, representing Map ID of the map that the character is currently in
+		map: Integer, representing Map ID of the map that the character is in
 		bl_slots: Integer, representing Character Buddy List slots
 		rebirths: Integer, representing Character rebirth count
 		ambition: Integer, representing Character Ambition pool
@@ -54,11 +56,14 @@ class Character:
 	def __init__(self, char_stats, database_config):
 		"""Emulates how character object is handled server-sided
 
-		Not all character attributes are inherited, as the database table design in AzureMS is quite verbose
+		Not all character attributes are inherited, as the database
+		table design in AzureMS is quite verbose
 
 		Args:
-			char_stats: dictionary of character stats, formatted in AzureMS style
-			database_config: dictionary of protected attributes from a Lazuli object
+			char_stats:
+				Dictionary of character stats, formatted in AzureMS style
+			database_config:
+				Dictionary of protected attributes from a Lazuli object
 		"""
 		self._stats = char_stats
 		self._database_config = database_config
@@ -92,23 +97,27 @@ class Character:
 		self._empathy = 0
 		self._charm = 0
 		self._honour = 0
-		self._mute = ""  # Takes lower case true/false but is a varchar (45) and not a Bool
+		self._mute = ""  # Takes lower case String "true"/"false" but
+		# is a varchar (45) and not a Bool
 
 		self.init_stats()  # Assign instance variables
 
-		# Create Inventory object instance via class constructor, using details from Character object instance
+		# Create Inventory object instance via class constructor,
+		# using details from Character object instance
 		self._inventory = self.init_inventory()
 
-		# Create Account object instance via class constructor, using details from Character object instance
+		# Create Account object instance via class constructor,
+		# using details from Character object instance
 		self._account = self.init_account()
 
 	# fill with attributes from init
 	def init_stats(self):
-		"""Given a dictionary of stats from AzureMS's DB we add them to Character object's attributes
+		"""Initialises Character instance attributes' values.
 
 		Runs near the end of Character::__init__(char_stats, database_config).
-		It assigns the character attributes in char_stats to their respective protected attributes belonging to
-		the Character object instance.
+		Assigns values contained in char_stats (a dictionary of
+		character-related attributes from AzureMS's DB) to the Character
+		object's corresponding attributes.
 		"""
 		self._character_id = self._stats['id']
 		self._account_id = self._stats['accountid']
@@ -142,40 +151,50 @@ class Character:
 		self._mute = self._stats['chatban']
 
 	def init_account(self):
-		"""Fetch a dictionary of account attributes from AzureMS's DB and use it to instantiate a new Account object
+		"""Instantiate a Account object corresponding to the character
 
 		Runs at the end of Character::__init__(char_stats, database_config).
-		Checks the account ID associated with the character instance, and uses the Account class constructor to create
-		a new Account object instance, with the relevant attributes from the database.
+		Fetch the account ID associated with the character instance; use the
+		account ID to fetch the account attributes as a dictionary.
+		Then use the Account class constructor to create a new Account object
+		instance, with the relevant attributes from the database.
 
 		Returns:
-			Account object with attributes identical to its corresponding entry in the database
+			Account object with attributes identical to its
+			corresponding entry in the database
 		Raises:
-			Generic error on failure - handled by the utility.get_db_first_hit() method
+			Generic error on failure - handled by the
+			utility.get_db_first_hit() method
 		"""
 		account_id = utils.get_db_first_hit(
 			self.database_config,
 			f"SELECT * FROM `characters` WHERE `id` = '{self.character_id}'"
-		).get("accountid")  # get_db() returns a Dictionary, so get() is used to fetch only the value
-		# The row will always be 0 because there should be no characters with the same character ID (Primary Key)
+		).get("accountid")
+		# get_db() returns a Dictionary, so get() is used
+		# to fetch only the account ID
+		# The row index will always be 0 because there should be no characters
+		# with the same character ID (Primary Key)
 
 		account_info = utils.get_db_first_hit(
 			self.database_config,
 			f"SELECT * FROM `accounts` WHERE `id` = '{account_id}'"
-		)  # The row will always be 0 because there should be no characters with the same account ID (Primary Key)
+		)  # The row index will always be 0 because there should be no
+		# accounts with the same account ID (Primary Key)
 
 		account = Account(account_info, self.database_config)
 		return account
 
 	def init_inventory(self):
-		"""Fetch a dictionary of user attributes from AzureMS's DB and use it to instantiate a new (custom) Inventory object
+		"""Instantiate a Inventory object corresponding to the character
 
 		Runs near the end of Character::__init__(char_stats, database_config).
-		Uses the Character ID associated with the character instance, and the Inventory class constructor to create
-		a new Inventory object instance, with the relevant inventory attributes from the database.
+		Uses the Character ID associated with the character instance, and the
+		Inventory class constructor to create a new Inventory object instance,
+		with the relevant inventory attributes from the database.
 
 		Raises:
-			Generic error on failure - handled by the utility.get_db_first_hit() method
+			Generic error on failure - handled by the
+			utility.get_db_first_hit() method
 		"""
 		inventory = Inventory(self.character_id, self.database_config)
 		return inventory
@@ -190,11 +209,13 @@ class Character:
 
 	@property
 	def character_id(self):
-		return self._character_id  # Only getter, no setter; Primary Key must not be set manually!
+		return self._character_id
+		# Only getter, no setter; Primary Key must not be set manually!
 
 	@property
 	def account_id(self):
-		return self._account_id  # Only getter, no setter; Primary Key must not be set manually!
+		return self._account_id
+		# Only getter, no setter; Primary Key must not be set manually!
 
 	@property
 	def level(self):
@@ -212,7 +233,9 @@ class Character:
 		"""Adds the specified amount to the current level count
 
 		Args:
-			amount: Int, representing the number of levels to be added to the current count
+			amount:
+				Int, representing the number of levels to be added
+				to the current count
 		"""
 		new_level = int(self.level) + amount
 		self.level = new_level
@@ -246,7 +269,9 @@ class Character:
 		"""Set a new name for the character
 
 		Args:
-			new_name: string, representing the new character name that will be set in the database
+			new_name:
+				String, representing the new character name that
+				will be set in the database
 		"""
 		# Check length against max length in Azure DB
 		# Not checking for special symbols etc, since this is an admin command
@@ -259,9 +284,11 @@ class Character:
 		)
 		if not data:  # if the list of accounts with clashing names is not empty
 			self.set_stat_by_column("name", new_name)  # set IGN in DB
-			self._name = new_name  # refresh character instance attributes in memory
+			# Refresh character instance attributes in memory:
+			self._name = new_name
 		else:
-			raise ValueError("That name is already taken!")  # Message to be passed along on failure
+			# Message to be passed along on failure:
+			raise ValueError("That name is already taken!")
 
 	@property
 	def meso(self):
@@ -279,7 +306,9 @@ class Character:
 		"""Adds the specified amount to the current meso count
 
 		Args:
-			amount: Int, representing the amount of mesos to be added to the current count
+			amount:
+				Int, representing the amount of mesos to be added
+				to the current count
 		"""
 		new_amount = int(self.meso) + amount
 		self.meso = new_amount
@@ -300,7 +329,9 @@ class Character:
 		"""Adds the specified amount to the current fame count
 
 		Args:
-			amount: Int, representing the number of fames to be added to the current count
+			amount:
+				Int, representing the number of fames to be added
+				to the current count
 		"""
 		new_fame = int(self.fame) + amount
 		self.fame = new_fame
@@ -311,7 +342,8 @@ class Character:
 
 	@map.setter
 	def map(self, map_id):
-		if map_id < 100000000 or map_id > 999999999:  # Best guess - might be wrong!
+		# Best guess for map ID limits - might be wrong!
+		if map_id < 100000000 or map_id > 999999999:
 			raise ValueError("Wrong map ID!")
 		else:
 			self.set_stat_by_column("map", map_id)
@@ -323,7 +355,8 @@ class Character:
 
 	@face.setter
 	def face(self, face_id):
-		if face_id < 20000 or face_id > 29999:  # Best guess - might be wrong!
+		# Best guess for face ID limits - might be wrong!
+		if face_id < 20000 or face_id > 29999:
 			raise ValueError("Wrong face ID!")
 		else:
 			self.set_stat_by_column("face", face_id)
@@ -335,7 +368,8 @@ class Character:
 
 	@hair.setter
 	def hair(self, hair_id):
-		if hair_id < 30000 or hair_id > 49999:  # Best guess - might be wrong!
+		# Best guess for hair ID limits - might be wrong!
+		if hair_id < 30000 or hair_id > 49999:
 			raise ValueError("Wrong hair ID!")
 		else:
 			self.set_stat_by_column("hair", hair_id)
@@ -347,7 +381,8 @@ class Character:
 
 	@skin.setter
 	def skin(self, skin_id):
-		if skin_id < 0 or skin_id > 16:  # Best guess - might be wrong!
+		# Best guess for skin ID limits - might be wrong!
+		if skin_id < 0 or skin_id > 16:
 			raise ValueError("Wrong skin colour ID!")
 		else:
 			self.set_stat_by_column("skincolor", skin_id)
@@ -359,7 +394,8 @@ class Character:
 
 	@gender.setter
 	def gender(self, gender_id):
-		if gender_id < -1 or gender_id > 1:  # Best guess - might be wrong!
+		# Best guess for gender ID limits - might be wrong!
+		if gender_id < -1 or gender_id > 1:
 			raise ValueError("Wrong gender ID!")
 		else:
 			self.set_stat_by_column("gender", gender_id)
@@ -372,7 +408,9 @@ class Character:
 	@exp.setter
 	def exp(self, exp_amount):
 		if exp_amount > 9223372036854775807:  # Azure DB uses Bigint for EXP
-			raise ValueError("You should not try to set EXP above 9.2 Quintillion!")
+			raise ValueError(
+				"You should not try to set EXP above 9.2 Quintillion!"
+			)
 		else:
 			self.set_stat_by_column("exp", exp_amount)
 			self._exp = exp_amount
@@ -381,7 +419,9 @@ class Character:
 		"""Add the specified amount to the current existing EXP pool
 
 		Args:
-			amount: Int, representing the amount of EXP to be added to the current pool
+			amount:
+				Int, representing the amount of EXP to be added to
+				the current pool
 		"""
 		new_exp = int(self.exp) + amount
 		self.exp = new_exp
@@ -392,7 +432,9 @@ class Character:
 
 	@strength.setter
 	def strength(self, amount):
-		if amount > 32767:  # Azure DB uses Int for stats, but it may cause problems with the client past signed shorts
+		# Azure DB uses Int (max 2.1b) for stats, but it may cause problems
+		# with the client if one exceeds signed shorts (max 32k)
+		if amount > 32767:
 			raise ValueError("You should not try to set STR above 30k!")
 		else:
 			self.set_stat_by_column("str", amount)
@@ -402,7 +444,9 @@ class Character:
 		"""Add the specified amount to the current existing STR pool
 
 		Args:
-			amount: Int, representing the amount of STR to be added to the current pool
+			amount:
+				Int, representing the amount of STR to be added to
+				the current pool
 		"""
 		new_str = int(self.strength) + amount
 		self.strength = new_str
@@ -423,7 +467,9 @@ class Character:
 		"""Add the specified amount to the current existing DEX pool
 
 		Args:
-			amount: Int, representing the amount of DEX to be added to the current pool
+			amount:
+				Int, representing the amount of DEX to be added to
+				the current pool
 		"""
 		new_dex = int(self.dex) + amount
 		self.dex = new_dex
@@ -444,7 +490,9 @@ class Character:
 		"""Add the specified amount to the current existing INT pool
 
 		Args:
-			amount: Int, representing the amount of INT to be added to the current pool
+			amount:
+				Int, representing the amount of INT to be added to
+				the current pool
 		"""
 		new_inte = int(self.inte) + amount
 		self.inte = new_inte
@@ -465,7 +513,9 @@ class Character:
 		"""Add the specified amount to the current existing LUK pool
 
 		Args:
-			amount: Int, representing the amount of LUK to be added to the current pool
+			amount:
+				Int, representing the amount of LUK to be added to
+				the current pool
 		"""
 		new_luk = int(self.luk) + amount
 		self.luk = new_luk
@@ -474,7 +524,7 @@ class Character:
 		"""Returns str, int, dex, luk values in a dictionary
 
 		Returns:
-			dictionary of primary stats
+			A Dictionary of the 4 primary stats
 		"""
 		primary_stats = {
 			"str": self.strength,
@@ -490,6 +540,7 @@ class Character:
 
 	@max_hp.setter
 	def max_hp(self, amount):
+		# Client-sided cap of 500k
 		if amount > 500000:
 			raise ValueError("You should not try to set HP above 500k!")
 		else:
@@ -500,7 +551,9 @@ class Character:
 		"""Add the specified amount to the current existing Max HP pool
 
 		Args:
-			amount: Int, representing the amount of Max HP to be added to the current pool
+			amount:
+				Int, representing the amount of Max HP to be added to
+				the current pool
 		"""
 		new_hp = int(self.max_hp) + amount
 		self.max_hp = new_hp
@@ -511,6 +564,7 @@ class Character:
 
 	@max_mp.setter
 	def max_mp(self, amount):
+		# Client-sided cap of 500k
 		if amount > 500000:
 			raise ValueError("You should not try to set MP above 500k!")
 		else:
@@ -521,7 +575,9 @@ class Character:
 		"""Add the specified amount to the current existing Max MP pool
 
 		Args:
-			amount: Int, representing the amount of max MP to be added to the current pool
+			amount:
+				Int, representing the amount of max MP to be added to
+				the current pool
 		"""
 		new_mp = int(self.max_mp) + amount
 		self.max_mp = new_mp
@@ -532,6 +588,8 @@ class Character:
 
 	@ap.setter
 	def ap(self, amount):
+		# Azure DB uses Int (max 2.1b) for stats, but it may cause problems
+		# with the client if one exceeds signed shorts (max 32k)
 		if amount > 32767:
 			raise ValueError("You should not try to set AP above 30k!")
 		else:
@@ -542,7 +600,9 @@ class Character:
 		"""Add the specified amount to the current existing free AP pool
 
 		Args:
-			amount: Int, representing the amount of free AP to be added to the current pool
+			amount:
+				Int, representing the amount of free AP to be added to
+				the current pool
 		"""
 		new_ap = int(self.ap) + amount
 		self.ap = new_ap
@@ -553,6 +613,7 @@ class Character:
 
 	@bl_slots.setter
 	def bl_slots(self, amount):
+		# Client-sided cap of 100
 		if amount > 100:
 			raise ValueError("You should not try to set BL slots above 100!")
 		else:
@@ -585,7 +646,8 @@ class Character:
 
 	@ambition.setter
 	def ambition(self, amount):
-		# TODO: Add checks; DB allows 2.1b, but not sure what the actual cap in source is
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
 		self.set_stat_by_column("ambition", amount)
 		self._ambition = amount
 
@@ -664,7 +726,7 @@ class Character:
 		self.charm = new_amount
 
 	def get_personality_traits(self):
-		"""Returns the 6 personality trait values in a dictionary
+		"""Returns the 6 personality traits' values in a dictionary
 
 		Returns:
 			dictionary of personality traits
@@ -699,7 +761,7 @@ class Character:
 
 	@mute.setter
 	def mute(self, status):
-		if status == "false" or status == "true":
+		if status in ("false", "true"):
 			self.set_stat_by_column("chatban", status)
 			self._mute = status
 		else:
@@ -714,7 +776,7 @@ class Character:
 		return self._inventory
 
 	def get_char_img(self):
-		"""Generates character avatar using MapleStory.io API; PLEASE USE SPARINGLY!
+		"""Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!
 
 		Returns:
 			url: String, a link to the generated avatar
@@ -726,8 +788,7 @@ class Character:
 			item_id = equipped_inv[item]["itemid"]
 			equipped_items.append(item_id)
 
-		url = f"https://maplestory.io/api/GMS/216/Character/200{self.skin}/{str(equipped_items)[1:-1]}/stand1/1".replace(
-			" ", "")
+		url = f"https://maplestory.io/api/GMS/216/Character/200{self.skin}/{str(equipped_items)[1:-1]}/stand1/1".replace(" ", "")
 
 		return url
 
@@ -735,26 +796,35 @@ class Character:
 		"""Update a character's stats from column name in database
 
 		Grabs the database attributes provided through the class constructor.
-		Uses these attributes to attempt a database connection through utility.write_to_db.
-		Attempts to update the field represented by the provided column in characterstats, with the provided value.
-		Not recommended to use this alone, as it won't update the character object which this was used from.
+		Uses these attributes to attempt a database connection through
+		utility.write_to_db. Attempts to update the field represented by the
+		provided column in the characters table, with the provided value.
+		Not recommended to use this alone, as it won't update the
+		character instance variables (in memory) post-change.
 
 		Args:
-			value: int or string, representing the value to be set in the database
-			column: string, representing the column in the database that is to be updated
+			value:
+				Int or String, representing the value to be set in the database
+			column:
+				String, representing the column in the database
+				that is to be updated
 
 		Returns:
-			A boolean representing whether the operation was successful
+			A Boolean representing whether the operation was successful
 
 		Raises:
 			Generic error, handled in utility.write_to_db
 		"""
 		status = utils.write_to_db(
 			self._database_config,
-			f"UPDATE `characters` SET {column} = '{value}' WHERE `name` = '{self.name}'"
+			f"UPDATE `characters` SET {column} = '{value}' "
+			f"WHERE `name` = '{self.name}'"
 		)
 		if status:
-			print(f"Successfully updated {column} value for character: {self.name}.")
+			print(
+				f"Successfully updated {column} value "
+				f"for character: {self.name}."
+			)
 			self._stats[column] = value  # Update the stats in the dictionary
 		return status
 
