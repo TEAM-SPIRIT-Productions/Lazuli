@@ -1,5 +1,9 @@
 ## CHANGELOG:  
 
+### v2.0.1
+- Fixed char image method in Character
+  - Previously broken due to faulty refactor of Inventory instantiation
+
 ### v2.0.0
 - Made Inventory lazy-instantiation by:
   - refactoring to a method in Lazuli, instead of Character
