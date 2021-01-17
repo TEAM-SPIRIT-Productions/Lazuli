@@ -8,6 +8,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 
 from lazuli import JOBS
 from lazuli.account import Account
+from lazuli.inventory import Inventory
 import lazuli.utility as utils
 
 
@@ -778,6 +779,24 @@ class Character:
 
 		return attributes
 
+	def get_inv(self):
+		"""Create an Inventory instance from the Character ID attribute
+
+		Uses the Character ID associated with the character, and the
+		Inventory class constructor to create a new Inventory object instance,
+		with the relevant inventory attributes from the database.
+
+		Returns:
+			Inventory object instantiated with corresponding data from the
+			connected database.
+			Defaults to None if the operation fails.
+
+		Raises:
+			Generic error on failure - handled by the get_db_first_hit() method
+		"""
+		inventory = Inventory(self.character_id, self._database_config)
+		return inventory
+
 	def get_char_img(self):
 		"""Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!
 
@@ -785,7 +804,7 @@ class Character:
 			url: String, a link to the generated avatar
 		"""
 		equipped_items = [self.face, self.hair]
-		equipped_inv = self.inventory.equipped_inv
+		equipped_inv = self.get_inv().equipped_inv
 
 		for item in equipped_inv:
 			item_id = equipped_inv[item]["itemid"]
