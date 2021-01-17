@@ -492,6 +492,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_inv" class="md-nav__link">
+    get_inv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_job_name" class="md-nav__link">
     get_job_name
   </a>
@@ -836,6 +843,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_inv" class="md-nav__link">
+    get_inv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#get_job_name" class="md-nav__link">
     get_job_name
   </a>
@@ -940,6 +954,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 <span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span> <span class="s s-Atom">import</span> <span class="nv">JOBS</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span><span class="p">.</span><span class="s s-Atom">account</span> <span class="s s-Atom">import</span> <span class="nv">Account</span>
+
+<span class="s s-Atom">from</span> <span class="s s-Atom">lazuli</span><span class="p">.</span><span class="s s-Atom">inventory</span> <span class="s s-Atom">import</span> <span class="nv">Inventory</span>
 
 <span class="s s-Atom">import</span> <span class="s s-Atom">lazuli</span><span class="p">.</span><span class="s s-Atom">utility</span> <span class="s s-Atom">as</span> <span class="s s-Atom">utils</span>
 
@@ -2241,6 +2257,34 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">return</span> <span class="s s-Atom">attributes</span>
 
+    <span class="s s-Atom">def</span> <span class="nf">get_inv</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+        <span class="s2">&quot;&quot;&quot;Create an Inventory instance from the Character ID attribute</span>
+
+<span class="s2">        Uses the Character ID associated with the character, and the</span>
+
+<span class="s2">        Inventory class constructor to create a new Inventory object instance,</span>
+
+<span class="s2">        with the relevant inventory attributes from the database.</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            Inventory object instantiated with corresponding data from the</span>
+
+<span class="s2">            connected database.</span>
+
+<span class="s2">            Defaults to None if the operation fails.</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure - handled by the get_db_first_hit() method</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="s s-Atom">inventory</span> <span class="o">=</span> <span class="nv">Inventory</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">character_id</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">)</span>
+
+        <span class="s s-Atom">return</span> <span class="s s-Atom">inventory</span>
+
     <span class="s s-Atom">def</span> <span class="nf">get_char_img</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
         <span class="s2">&quot;&quot;&quot;Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!</span>
@@ -2253,7 +2297,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">equipped_items</span> <span class="o">=</span> <span class="p">[</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">face</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">hair</span><span class="p">]</span>
 
-        <span class="s s-Atom">equipped_inv</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">inventory</span><span class="p">.</span><span class="s s-Atom">equipped_inv</span>
+        <span class="s s-Atom">equipped_inv</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">get_inv</span><span class="p">().</span><span class="s s-Atom">equipped_inv</span>
 
         <span class="s s-Atom">for</span> <span class="s s-Atom">item</span> <span class="s s-Atom">in</span> <span class="s s-Atom">equipped_inv:</span>
 
@@ -3695,6 +3739,34 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="k">return</span> <span class="nb">attributes</span>
 
+    <span class="n">def</span> <span class="n">get_inv</span>(<span class="nb">self</span>):
+
+        <span class="s">&quot;&quot;&quot;Create an Inventory instance from the Character ID attribute</span>
+
+<span class="s">        Uses the Character ID associated with the character, and the</span>
+
+<span class="s">        Inventory class constructor to create a new Inventory object instance,</span>
+
+<span class="s">        with the relevant inventory attributes from the database.</span>
+
+<span class="s">        Returns:</span>
+
+<span class="s">            Inventory object instantiated with corresponding data from the</span>
+
+<span class="s">            connected database.</span>
+
+<span class="s">            Defaults to None if the operation fails.</span>
+
+<span class="s">        Raises:</span>
+
+<span class="s">            Generic error on failure - handled by the get_db_first_hit() method</span>
+
+<span class="s">        &quot;&quot;&quot;</span>
+
+        <span class="n">inventory</span> = <span class="n">Inventory</span>(<span class="nb">self</span>.<span class="n">character_id</span>, <span class="nb">self</span>.<span class="n">_database_config</span>)
+
+        <span class="k">return</span> <span class="n">inventory</span>
+
     <span class="n">def</span> <span class="n">get_char_img</span>(<span class="nb">self</span>):
 
         <span class="s">&quot;&quot;&quot;Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!</span>
@@ -3707,7 +3779,7 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="n">equipped_items</span> = [<span class="nb">self</span>.<span class="n">face</span>, <span class="nb">self</span>.<span class="n">hair</span>]
 
-        <span class="n">equipped_inv</span> = <span class="nb">self</span>.<span class="n">inventory</span>.<span class="n">equipped_inv</span>
+        <span class="n">equipped_inv</span> = <span class="nb">self</span>.<span class="n">get_inv</span>().<span class="n">equipped_inv</span>
 
         <span class="k">for</span> <span class="nb">item</span> <span class="nb">in</span> <span class="n">equipped_inv:</span>
 
@@ -4413,7 +4485,7 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="s s-Atom">equipped_items</span> <span class="o">=</span> <span class="p">[</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">face</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">hair</span><span class="p">]</span>
 
-        <span class="s s-Atom">equipped_inv</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">inventory</span><span class="p">.</span><span class="s s-Atom">equipped_inv</span>
+        <span class="s s-Atom">equipped_inv</span> <span class="o">=</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="nf">get_inv</span><span class="p">().</span><span class="s s-Atom">equipped_inv</span>
 
         <span class="s s-Atom">for</span> <span class="s s-Atom">item</span> <span class="s s-Atom">in</span> <span class="s s-Atom">equipped_inv:</span>
 
@@ -4481,6 +4553,52 @@ the appropriate getter and setter methods for said attributes.</p>
         <span class="n">attributes</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">account</span><span class="p">.</span><span class="n">get_deep_copy</span><span class="p">()[</span><span class="mi">2</span><span class="p">:])</span>
 
         <span class="k">return</span> <span class="n">attributes</span>
+</code></pre></div>
+
+</details>
+<h5 id="get_inv">get_inv</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_inv</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Create an Inventory instance from the Character ID attribute</p>
+<p>Uses the Character ID associated with the character, and the
+Inventory class constructor to create a new Inventory object instance,
+with the relevant inventory attributes from the database.</p>
+<p>Returns:
+        Inventory object instantiated with corresponding data from the
+        connected database.
+        Defaults to None if the operation fails.</p>
+<p>Raises:
+        Generic error on failure - handled by the get_db_first_hit() method</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code>    <span class="n">def</span> <span class="n">get_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create an Inventory instance from the Character ID attribute</span>
+
+<span class="sd">        Uses the Character ID associated with the character, and the</span>
+
+<span class="sd">        Inventory class constructor to create a new Inventory object instance,</span>
+
+<span class="sd">        with the relevant inventory attributes from the database.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            Inventory object instantiated with corresponding data from the</span>
+
+<span class="sd">            connected database.</span>
+
+<span class="sd">            Defaults to None if the operation fails.</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure - handled by the get_db_first_hit() method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">inventory</span> <span class="o">=</span> <span class="n">Inventory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">character_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">inventory</span>
 </code></pre></div>
 
 </details>
