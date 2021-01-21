@@ -6,8 +6,15 @@ Lazuli is a pip-compatible, Python-based package for interacting with [AzureMSv3
 Lazuli is inspired by and based on the [SwordieDB](https://github.com/Bratah123/SwordieDB) project.  
 
 Lazuli allows access to character and inventory attributes in [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
+This makes it possible to produce not only feature-rich Discord bots, but also integrated websites.  
 
-#### Current Status: Now Available on PyPi (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))
+Perks:
+    - Easy to set-up - *simply install with pip!*
+    - Lovingly commented
+    - API docs and example code provided
+    - Already used in [Lapis](https://github.com/TEAM-SPIRIT-Productions/Lapis)
+
+#### Current Status: Now Available on [PyPi](https://pypi.org/project/lazuli/) (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))
 ---
 ### Quick Start
 Installation via PyPi/Pip:
@@ -26,3 +33,12 @@ Installation via PyPi/Pip:
 Kindly refer to the [Project Wiki](https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki) for detailed documentation.  
 The [Discussions Page](https://github.com/TEAM-SPIRIT-Productions/Lazuli/discussions) is currently open for any questions!  
 Please report any [issues](https://github.com/TEAM-SPIRIT-Productions/Lazuli/issues)!  
+
+## Acknowledgements:
+The [SwordieDB](https://github.com/Bratah123/SwordieDB) project by [Bratah123](https://github.com/Bratah123)
+      - This project is inspired by and based on SwordieDB
+[**MapleStory:**IO](https://maplestory.io/) by [Senpai#1337](https://discord.gg/3SyrbAs)
+      - The character sprite generation makes use of MapleStory.IO APIs
+
+## AOB:
+Lazuli is an open-source third-party implementation of APIs for a particular MapleStory server emulation project [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)). Lazuli is non-monetised, provided as is, and is unaffiliated with NEXON. Every effort has been taken to ensure correctness and reliability of Lazuli. We will not be liable for any special, direct, indirect, or consequential damages or any damages whatsoever resulting from loss of use, data or profits, whether in an action if contract, negligence or other tortious action, arising out of or in connection with the use of Lazuli (in part or in whole).
