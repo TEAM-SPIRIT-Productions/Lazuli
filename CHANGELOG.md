@@ -1,5 +1,12 @@
 ## CHANGELOG:  
 
+### v2.1.0
+- Make the use of pre-underscores in variables consistent
+  - Remove accessor for variables like _database_config 
+  - These are now always be used with the pre-underscore internally
+    - Reason: These variables should NOT be accessed manually when using Lazuli's API
+  - These changes are not considered breaking, since the removed properties weren't intended to be manually accessed in the first place
+
 ### v2.0.1
 - Fixed char image method in Character
   - Previously broken due to faulty refactor of Inventory instantiation
