@@ -163,7 +163,7 @@ class Character:
 			utility.get_db_first_hit() method
 		"""
 		account_id = utils.get_db_first_hit(
-			self.database_config,
+			self._database_config,
 			f"SELECT * FROM `characters` WHERE `id` = '{self.character_id}'"
 		).get("accountid")
 		# get_db() returns a Dictionary, so get() is used
@@ -172,21 +172,13 @@ class Character:
 		# with the same character ID (Primary Key)
 
 		account_info = utils.get_db_first_hit(
-			self.database_config,
+			self._database_config,
 			f"SELECT * FROM `accounts` WHERE `id` = '{account_id}'"
 		)  # The row index will always be 0 because there should be no
 		# accounts with the same account ID (Primary Key)
 
-		account = Account(account_info, self.database_config)
+		account = Account(account_info, self._database_config)
 		return account
-
-	@property
-	def database_config(self):
-		return self._database_config
-
-	@property
-	def stats(self):
-		return self._stats
 
 	@property
 	def character_id(self):
@@ -260,7 +252,7 @@ class Character:
 			raise ValueError("Character names can only be 13 characters long!")
 		# Check clashes
 		data = utils.get_db_all_hits(
-			self.database_config,
+			self._database_config,
 			f"SELECT * FROM `characters` WHERE `name` = '{new_name}'"
 		)
 		if not data:  # if the list of accounts with clashing names is not empty
@@ -862,4 +854,4 @@ class Character:
 		Raises:
 			Generic error on failure, handled by utils.get_stat_by_column
 		"""
-		return utils.get_stat_by_column(self.stats, column)
+		return utils.get_stat_by_column(self._stats, column)

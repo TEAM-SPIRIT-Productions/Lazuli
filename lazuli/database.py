@@ -65,61 +65,13 @@ class Lazuli:
 		self._charset = charset
 
 		self._database_config = {
-			'host': self.host,
-			'user': self.user,
-			'password': self.password,
-			'schema': self.schema,
-			'port': self.port,
-			'charset': self.charset
+			'host': self._host,
+			'user': self._user,
+			'password': self._password,
+			'schema': self._schema,
+			'port': self._port,
+			'charset': self._charset
 		}
-
-	@property
-	def host(self):
-		return self._host
-
-	@host.setter
-	def host(self, x):
-		self._host = x
-
-	@property
-	def schema(self):
-		return self._schema
-
-	@schema.setter
-	def schema(self, x):
-		self._schema = x
-
-	@property
-	def user(self):
-		return self._user
-
-	@user.setter
-	def user(self, x):
-		self._user = x
-
-	@property
-	def password(self):
-		return self._password
-
-	@password.setter
-	def password(self, x):
-		self._password = x
-
-	@property
-	def port(self):
-		return self._port
-
-	@port.setter
-	def port(self, new_port):
-		self._port = new_port
-
-	@property
-	def charset(self):
-		return self._charset
-
-	@charset.setter
-	def charset(self, new_charset):
-		self._charset = new_charset
 
 	def get_db_all_hits(self, query):
 		"""Fetch all matching data from DB using the provided query

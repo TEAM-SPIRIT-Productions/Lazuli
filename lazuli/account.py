@@ -95,14 +95,6 @@ class Account:
 		self._char_slots = self._account_info['chrslot']
 
 	@property
-	def account_info(self):
-		return self._account_info
-
-	@property
-	def database_config(self):
-		return self._database_config
-
-	@property
 	def account_id(self):
 		return self._account_id  # Primary Key; DO NOT set
 
@@ -119,7 +111,7 @@ class Account:
 		else:
 			# Check for clashes
 			data = utils.get_db_all_hits(
-				self.database_config,
+				self._database_config,
 				f"SELECT * FROM `accounts` WHERE `name` = '{new_name}'"
 			)
 			if not data:
@@ -353,7 +345,7 @@ class Account:
 		Raises:
 			Generic error on failure, handled by utils.get_stat_by_column
 		"""
-		return utils.get_stat_by_column(self.account_info, column)
+		return utils.get_stat_by_column(self._account_info, column)
 
 	def set_stat_by_column(self, column, value):
 		"""Sets a account's attributes by column name in database

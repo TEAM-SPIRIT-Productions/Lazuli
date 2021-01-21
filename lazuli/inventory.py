@@ -66,14 +66,6 @@ class Inventory:
 		self._equipped_inv = self.init_equipped_inv()
 
 	@property
-	def database_config(self):
-		return self._database_config
-
-	@property
-	def character_id(self):
-		return self._character_id
-
-	@property
 	def equip_inv(self):
 		return self._equip_inv
 
@@ -101,17 +93,17 @@ class Inventory:
 		"""Fetch all items associated with the character"""
 		try:
 			database = con.connect(
-				host=self.database_config['host'],
-				user=self.database_config['user'],
-				password=self.database_config['password'],
-				database=self.database_config['schema'],
-				port=self.database_config['port'],
-				charset=self.database_config['charset']
+				host=self._database_config['host'],
+				user=self._database_config['user'],
+				password=self._database_config['password'],
+				database=self._database_config['schema'],
+				port=self._database_config['port'],
+				charset=self._database_config['charset']
 			)
 			cursor = database.cursor(dictionary=True)
 			cursor.execute(
 				f"SELECT * FROM `inventoryitems` WHERE `characterid` = "
-				f"'{self.character_id}'"
+				f"'{self._character_id}'"
 			)
 			inventory = cursor.fetchall()
 			return inventory
