@@ -1235,7 +1235,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">account_id</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">,</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
             <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
@@ -1251,7 +1251,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">account_info</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">,</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
             <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
@@ -1259,21 +1259,9 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">#</span> <span class="s s-Atom">accounts</span> <span class="s s-Atom">with</span> <span class="s s-Atom">the</span> <span class="s s-Atom">same</span> <span class="s s-Atom">account</span> <span class="nv">ID</span> <span class="p">(</span><span class="nv">Primary</span> <span class="nv">Key</span><span class="p">)</span>
 
-        <span class="s s-Atom">account</span> <span class="o">=</span> <span class="nv">Account</span><span class="p">(</span><span class="s s-Atom">account_info</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">)</span>
+        <span class="s s-Atom">account</span> <span class="o">=</span> <span class="nv">Account</span><span class="p">(</span><span class="s s-Atom">account_info</span><span class="p">,</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">)</span>
 
         <span class="s s-Atom">return</span> <span class="s s-Atom">account</span>
-
-    <span class="s s-Atom">@property</span>
-
-    <span class="s s-Atom">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span>
-
-    <span class="s s-Atom">@property</span>
-
-    <span class="s s-Atom">def</span> <span class="nf">stats</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
-
-        <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">stats</span>
 
     <span class="s s-Atom">@property</span>
 
@@ -1395,7 +1383,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">data</span> <span class="o">=</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_db_all_hits</span><span class="p">(</span>
 
-            <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">database_config</span><span class="p">,</span>
+            <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">database_config</span><span class="p">,</span>
 
             <span class="s s-Atom">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
 
@@ -2389,7 +2377,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        &quot;&quot;&quot;</span>
 
-        <span class="s s-Atom">return</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_stat_by_column</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">stats</span><span class="p">,</span> <span class="s s-Atom">column</span><span class="p">)</span>
+        <span class="s s-Atom">return</span> <span class="s s-Atom">utils</span><span class="p">.</span><span class="nf">get_stat_by_column</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">stats</span><span class="p">,</span> <span class="s s-Atom">column</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -2717,7 +2705,7 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="n">account_id</span> = <span class="n">utils</span>.<span class="n">get_db_first_hit</span>(
 
-            <span class="nb">self</span>.<span class="n">database_config</span>,
+            <span class="nb">self</span>.<span class="n">_database_config</span>,
 
             <span class="nb">f</span><span class="s">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
@@ -2733,7 +2721,7 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="n">account_info</span> = <span class="n">utils</span>.<span class="n">get_db_first_hit</span>(
 
-            <span class="nb">self</span>.<span class="n">database_config</span>,
+            <span class="nb">self</span>.<span class="n">_database_config</span>,
 
             <span class="nb">f</span><span class="s">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
@@ -2741,21 +2729,9 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="c1"># accounts with the same account ID (Primary Key)</span>
 
-        <span class="n">account</span> = <span class="n">Account</span>(<span class="n">account_info</span>, <span class="nb">self</span>.<span class="n">database_config</span>)
+        <span class="n">account</span> = <span class="n">Account</span>(<span class="n">account_info</span>, <span class="nb">self</span>.<span class="n">_database_config</span>)
 
         <span class="k">return</span> <span class="n">account</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="n">database_config</span>(<span class="nb">self</span>):
-
-        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_database_config</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="n">stats</span>(<span class="nb">self</span>):
-
-        <span class="k">return</span> <span class="nb">self</span>.<span class="n">_stats</span>
 
     <span class="nv">@property</span>
 
@@ -2877,7 +2853,7 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="n">data</span> = <span class="n">utils</span>.<span class="n">get_db_all_hits</span>(
 
-            <span class="nb">self</span>.<span class="n">database_config</span>,
+            <span class="nb">self</span>.<span class="n">_database_config</span>,
 
             <span class="nb">f</span><span class="s">&quot;SELECT * FROM `characters` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
 
@@ -3871,7 +3847,7 @@ the appropriate getter and setter methods for said attributes.</p>
 
 <span class="s">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">utils</span>.<span class="n">get_stat_by_column</span>(<span class="nb">self</span>.<span class="n">stats</span>, <span class="nb">column</span>)
+        <span class="k">return</span> <span class="n">utils</span>.<span class="n">get_stat_by_column</span>(<span class="nb">self</span>.<span class="n">_stats</span>, <span class="nb">column</span>)
 </code></pre></div>
 
 </details>
@@ -3896,9 +3872,6 @@ the appropriate getter and setter methods for said attributes.</p>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">charm</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">database_config</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">dex</span>
@@ -3965,9 +3938,6 @@ the appropriate getter and setter methods for said attributes.</p>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">skin</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">stats</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">strength</span>
@@ -4731,7 +4701,7 @@ with the relevant inventory attributes from the database.</p>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">stats</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">_stats</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -4783,7 +4753,7 @@ Raises:
 
         <span class="n">account_id</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `id` = &#39;{self.character_id}&#39;&quot;</span>
 
@@ -4799,7 +4769,7 @@ Raises:
 
         <span class="n">account_info</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_first_hit</span><span class="p">(</span>
 
-            <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
             <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `id` = &#39;{account_id}&#39;&quot;</span>
 
@@ -4807,7 +4777,7 @@ Raises:
 
         <span class="c1"># accounts with the same account ID (Primary Key)</span>
 
-        <span class="k">account</span> <span class="o">=</span> <span class="k">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">)</span>
+        <span class="k">account</span> <span class="o">=</span> <span class="k">Account</span><span class="p">(</span><span class="n">account_info</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">account</span>
 </code></pre></div>

@@ -328,13 +328,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#instance-variables" class="md-nav__link">
-    Instance variables
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     Methods
   </a>
@@ -546,13 +539,6 @@
   
     <nav class="md-nav" aria-label="Lazuli">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#instance-variables" class="md-nav__link">
-    Instance variables
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
@@ -827,91 +813,19 @@ Refer to the project wiki on GitHub for more in-depth examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="p">{</span>
 
-            <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+            <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span>
 
-            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="p">,</span>
 
-            <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+            <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span><span class="p">,</span>
 
-            <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+            <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">,</span>
 
-            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">,</span>
 
-            <span class="s1">&#39;charset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">charset</span>
+            <span class="s1">&#39;charset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span>
 
         <span class="p">}</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span>
-
-    <span class="nd">@host.setter</span>
-
-    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span>
-
-    <span class="nd">@schema.setter</span>
-
-    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span>
-
-    <span class="nd">@user.setter</span>
-
-    <span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span>
-
-    <span class="nd">@password.setter</span>
-
-    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span>
-
-    <span class="nd">@port.setter</span>
-
-    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_port</span><span class="p">):</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">new_port</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span>
-
-    <span class="nd">@charset.setter</span>
-
-    <span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_charset</span><span class="p">):</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">new_charset</span>
 
     <span class="k">def</span> <span class="nf">get_db_all_hits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 
@@ -1626,91 +1540,19 @@ EucKR charset (used in the DB) instead.</p>
 
         <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span> <span class="o">=</span> <span class="err">{</span>
 
-            <span class="s1">&#39;host&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="k">host</span><span class="p">,</span>
+            <span class="s1">&#39;host&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">_host</span><span class="p">,</span>
 
-            <span class="s1">&#39;user&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="k">user</span><span class="p">,</span>
+            <span class="s1">&#39;user&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">_user</span><span class="p">,</span>
 
-            <span class="s1">&#39;password&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="k">password</span><span class="p">,</span>
+            <span class="s1">&#39;password&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">_password</span><span class="p">,</span>
 
-            <span class="s1">&#39;schema&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="k">schema</span><span class="p">,</span>
+            <span class="s1">&#39;schema&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">_schema</span><span class="p">,</span>
 
-            <span class="s1">&#39;port&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="k">port</span><span class="p">,</span>
+            <span class="s1">&#39;port&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">_port</span><span class="p">,</span>
 
-            <span class="s1">&#39;charset&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="k">charset</span>
+            <span class="s1">&#39;charset&#39;</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">_charset</span>
 
         <span class="err">}</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="k">host</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_host</span>
-
-    <span class="nv">@host.setter</span>
-
-    <span class="n">def</span> <span class="k">host</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="n">self</span><span class="p">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="k">schema</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_schema</span>
-
-    <span class="nv">@schema.setter</span>
-
-    <span class="n">def</span> <span class="k">schema</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="n">self</span><span class="p">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="k">user</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_user</span>
-
-    <span class="nv">@user.setter</span>
-
-    <span class="n">def</span> <span class="k">user</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="n">self</span><span class="p">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="k">password</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_password</span>
-
-    <span class="nv">@password.setter</span>
-
-    <span class="n">def</span> <span class="k">password</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="n">self</span><span class="p">.</span><span class="n">_password</span> <span class="o">=</span> <span class="n">x</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="k">port</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_port</span>
-
-    <span class="nv">@port.setter</span>
-
-    <span class="n">def</span> <span class="k">port</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_port</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="n">self</span><span class="p">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">new_port</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="k">charset</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_charset</span>
-
-    <span class="nv">@charset.setter</span>
-
-    <span class="n">def</span> <span class="k">charset</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_charset</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="n">self</span><span class="p">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">new_charset</span>
 
     <span class="n">def</span> <span class="n">get_db_all_hits</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">query</span><span class="p">)</span><span class="o">:</span>
 
@@ -2309,25 +2151,6 @@ EucKR charset (used in the DB) instead.</p>
 
 </details>
 <hr />
-<h4 id="instance-variables">Instance variables</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">charset</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">host</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">password</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">port</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">schema</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">user</span>
-</code></pre></div>
-
 <h4 id="methods">Methods</h4>
 <h5 id="get_account_by_username">get_account_by_username</h5>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_account_by_username</span><span class="p">(</span>

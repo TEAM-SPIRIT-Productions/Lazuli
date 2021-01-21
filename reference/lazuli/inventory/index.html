@@ -815,18 +815,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="nd">@property</span>
 
-    <span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">character_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_character_id</span>
-
-    <span class="nd">@property</span>
-
     <span class="k">def</span> <span class="nf">equip_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_equip_inv</span>
@@ -869,17 +857,17 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="n">database</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
 
-                <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
+                <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
 
-                <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
+                <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
 
-                <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
+                <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
 
-                <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
+                <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s1">&#39;schema&#39;</span><span class="p">],</span>
 
-                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
 
-                <span class="n">charset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
+                <span class="n">charset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>
 
             <span class="p">)</span>
 
@@ -889,7 +877,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
 
-                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39;&quot;</span>
+                <span class="n">f</span><span class="s2">&quot;&#39;{self._character_id}&#39;&quot;</span>
 
             <span class="p">)</span>
 
@@ -1223,18 +1211,6 @@ for safety reasons, this module offers NO inventory-write operations
 
     <span class="nv">@property</span>
 
-    <span class="n">def</span> <span class="n">database_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="n">character_id</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_character_id</span>
-
-    <span class="nv">@property</span>
-
     <span class="n">def</span> <span class="n">equip_inv</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_equip_inv</span>
@@ -1277,17 +1253,17 @@ for safety reasons, this module offers NO inventory-write operations
 
             <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
 
-                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
+                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
 
             <span class="p">)</span>
 
@@ -1297,7 +1273,7 @@ for safety reasons, this module offers NO inventory-write operations
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
 
-                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39;&quot;</span>
+                <span class="n">f</span><span class="s2">&quot;&#39;{self._character_id}&#39;&quot;</span>
 
             <span class="p">)</span>
 
@@ -1502,13 +1478,7 @@ for safety reasons, this module offers NO inventory-write operations
 <div class="codehilite"><pre><span></span><code><span class="n">cash_inv</span>
 </code></pre></div>
 
-<div class="codehilite"><pre><span></span><code><span class="n">character_id</span>
-</code></pre></div>
-
 <div class="codehilite"><pre><span></span><code><span class="n">consume_inv</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">database_config</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">equip_inv</span>
@@ -1539,17 +1509,17 @@ for safety reasons, this module offers NO inventory-write operations
 
             <span class="k">database</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
 
-                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">host</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;host&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">user</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;user&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">password</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;password&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">database</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;schema&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
+                <span class="k">port</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;port&#39;</span><span class="err">]</span><span class="p">,</span>
 
-                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
+                <span class="k">charset</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="err">[</span><span class="s1">&#39;charset&#39;</span><span class="err">]</span>
 
             <span class="p">)</span>
 
@@ -1559,7 +1529,7 @@ for safety reasons, this module offers NO inventory-write operations
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `inventoryitems` WHERE `characterid` = &quot;</span>
 
-                <span class="n">f</span><span class="s2">&quot;&#39;{self.character_id}&#39;&quot;</span>
+                <span class="n">f</span><span class="s2">&quot;&#39;{self._character_id}&#39;&quot;</span>
 
             <span class="p">)</span>
 

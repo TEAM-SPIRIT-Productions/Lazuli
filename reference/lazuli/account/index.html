@@ -839,18 +839,6 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
     <span class="nd">@property</span>
 
-    <span class="k">def</span> <span class="nf">account_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span>
-
-    <span class="nd">@property</span>
-
-    <span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span>
-
-    <span class="nd">@property</span>
-
     <span class="k">def</span> <span class="nf">account_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_id</span>  <span class="c1"># Primary Key; DO NOT set</span>
@@ -879,7 +867,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
             <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">database_config</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
 
@@ -1265,7 +1253,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account_info</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_account_info</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">set_stat_by_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
@@ -1521,18 +1509,6 @@ appropriate getter and setter methods for said attributes.</p>
 
     <span class="nv">@property</span>
 
-    <span class="n">def</span> <span class="n">account_info</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_info</span>
-
-    <span class="nv">@property</span>
-
-    <span class="n">def</span> <span class="n">database_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-
-        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span>
-
-    <span class="nv">@property</span>
-
     <span class="n">def</span> <span class="n">account_id</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_account_id</span>  <span class="c1"># Primary Key; DO NOT set</span>
@@ -1561,7 +1537,7 @@ appropriate getter and setter methods for said attributes.</p>
 
             <span class="k">data</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span>
 
-                <span class="n">self</span><span class="p">.</span><span class="n">database_config</span><span class="p">,</span>
+                <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
 
                 <span class="n">f</span><span class="s2">&quot;SELECT * FROM `accounts` WHERE `name` = &#39;{new_name}&#39;&quot;</span>
 
@@ -1947,7 +1923,7 @@ appropriate getter and setter methods for said attributes.</p>
 
 <span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">account_info</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
 
     <span class="n">def</span> <span class="k">set</span><span class="n">_stat_by_column</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="k">column</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span><span class="o">:</span>
 
@@ -2018,9 +1994,6 @@ appropriate getter and setter methods for said attributes.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">account_id</span>
 </code></pre></div>
 
-<div class="codehilite"><pre><span></span><code><span class="n">account_info</span>
-</code></pre></div>
-
 <div class="codehilite"><pre><span></span><code><span class="n">ban_reason</span>
 </code></pre></div>
 
@@ -2028,9 +2001,6 @@ appropriate getter and setter methods for said attributes.</p>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">char_slots</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">database_config</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">dp</span>
@@ -2313,7 +2283,7 @@ is technically functional for the open source version.</p>
 
 <span class="ss">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">account_info</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_stat_by_column</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="n">_account_info</span><span class="p">,</span> <span class="k">column</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
