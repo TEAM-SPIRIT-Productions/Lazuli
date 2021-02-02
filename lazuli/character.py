@@ -744,6 +744,22 @@ class Character:
 	def account(self):
 		return self._account
 
+	@property
+	def currency(self):
+		"""Returns the values of the currencies held, in a dictionary
+
+		Returns:
+			dictionary of mesos, nx, maple points, vp, dp
+		"""
+		currencies = {
+			"mesos": self.meso,
+			"nx": self.account.nx,
+			"maplepoints": self.account.maple_points,
+			"vp": self.account.vp,
+			"dp": self.account.dp,
+		}
+		return currencies
+
 	def get_deep_copy(self):
 		"""Returns all known info about the character as a Dictionary"""
 		attributes = [
