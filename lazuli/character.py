@@ -51,6 +51,8 @@ class Character:
 		charm: Integer, representing Character Charm pool
 		honour: Integer, representing Character Honour pool
 		mute: String, representing whether a character is chat-banned
+		currency: Dictionary, representing all currencies associated with the
+			character, including Mesos, NX, Maple Points, VP, DP
 	"""
 
 	def __init__(self, char_stats, database_config):

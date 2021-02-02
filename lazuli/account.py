@@ -42,6 +42,11 @@ class Account:
 			Integer, representing the amount of Donation Points the user has
 		char_slots:
 			Integer, representing the number of character slots the user has
+		characters:
+			List of Strings, representing the IGNs of all the characters
+			the user has
+		free_char_slots:
+			Integer, representing the number of free character slots the user has
 	"""
 
 	def __init__(self, account_info, database_config):
