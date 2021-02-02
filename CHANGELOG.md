@@ -1,5 +1,13 @@
 ## CHANGELOG:  
 
+### v2.2.0
+- Add `currency` property to Character  
+  - The `currency` property is a dictionary of all the currencies (e.g. NX) associated with the account that contains the character.
+  - Dictionary keys: `mesos`, `nx`, `maplepoints`, `vp`, `dp`
+- Add `characters` & `free_char_slots` properties to Account
+  - `characters` is a list of the IGNs of all the characters in the account
+  - `free_char_slots` is an integer representing the number of free character slots in the account
+
 ### v2.1.0
 - Make the use of pre-underscores in variables consistent
   - Remove accessor for variables like _database_config 
