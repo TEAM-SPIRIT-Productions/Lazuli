@@ -298,6 +298,7 @@ class Account:
 			Generic error on failure
 		"""
 		data = utils.get_db_all_hits(
+			self._database_config,
 			f"SELECT * FROM `characters` WHERE `accountid` = {self.account_id}"
 		)
 		return data
