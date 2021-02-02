@@ -2197,6 +2197,34 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="s s-Atom">return</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="k">_</span><span class="s s-Atom">account</span>
 
+    <span class="s s-Atom">@property</span>
+
+    <span class="s s-Atom">def</span> <span class="nf">currency</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+        <span class="s2">&quot;&quot;&quot;Returns the values of the currencies held, in a dictionary</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            dictionary of mesos, nx, maple points, vp, dp</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="s s-Atom">currencies</span> <span class="o">=</span> <span class="p">{</span>
+
+            <span class="s2">&quot;mesos&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">meso</span><span class="p">,</span>
+
+            <span class="s2">&quot;nx&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">account</span><span class="p">.</span><span class="s s-Atom">nx</span><span class="p">,</span>
+
+            <span class="s2">&quot;maplepoints&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">account</span><span class="p">.</span><span class="s s-Atom">maple_points</span><span class="p">,</span>
+
+            <span class="s2">&quot;vp&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">account</span><span class="p">.</span><span class="s s-Atom">vp</span><span class="p">,</span>
+
+            <span class="s2">&quot;dp&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">account</span><span class="p">.</span><span class="s s-Atom">dp</span><span class="p">,</span>
+
+        <span class="p">}</span>
+
+        <span class="s s-Atom">return</span> <span class="s s-Atom">currencies</span>
+
     <span class="s s-Atom">def</span> <span class="nf">get_deep_copy</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span><span class="s s-Atom">:</span>
 
         <span class="s2">&quot;&quot;&quot;Returns all known info about the character as a Dictionary&quot;&quot;&quot;</span>
@@ -3667,6 +3695,34 @@ the appropriate getter and setter methods for said attributes.</p>
 
         <span class="k">return</span> <span class="nb">self</span>.<span class="n">_account</span>
 
+    <span class="nv">@property</span>
+
+    <span class="n">def</span> <span class="n">currency</span>(<span class="nb">self</span>):
+
+        <span class="s">&quot;&quot;&quot;Returns the values of the currencies held, in a dictionary</span>
+
+<span class="s">        Returns:</span>
+
+<span class="s">            dictionary of mesos, nx, maple points, vp, dp</span>
+
+<span class="s">        &quot;&quot;&quot;</span>
+
+        <span class="n">currencies</span> = {
+
+            <span class="s">&quot;mesos&quot;</span>: <span class="nb">self</span>.<span class="n">meso</span>,
+
+            <span class="s">&quot;nx&quot;</span>: <span class="nb">self</span>.<span class="n">account</span>.<span class="n">nx</span>,
+
+            <span class="s">&quot;maplepoints&quot;</span>: <span class="nb">self</span>.<span class="n">account</span>.<span class="n">maple_points</span>,
+
+            <span class="s">&quot;vp&quot;</span>: <span class="nb">self</span>.<span class="n">account</span>.<span class="n">vp</span>,
+
+            <span class="s">&quot;dp&quot;</span>: <span class="nb">self</span>.<span class="n">account</span>.<span class="n">dp</span>,
+
+        }
+
+        <span class="k">return</span> <span class="n">currencies</span>
+
     <span class="n">def</span> <span class="n">get_deep_copy</span>(<span class="nb">self</span>):
 
         <span class="s">&quot;&quot;&quot;Returns all known info about the character as a Dictionary&quot;&quot;&quot;</span>
@@ -3874,6 +3930,12 @@ the appropriate getter and setter methods for said attributes.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">charm</span>
 </code></pre></div>
 
+<div class="codehilite"><pre><span></span><code><span class="n">currency</span>
+</code></pre></div>
+
+<p>Returns the values of the currencies held, in a dictionary</p>
+<p>Returns:
+        dictionary of mesos, nx, maple points, vp, dp</p>
 <div class="codehilite"><pre><span></span><code><span class="n">dex</span>
 </code></pre></div>
 

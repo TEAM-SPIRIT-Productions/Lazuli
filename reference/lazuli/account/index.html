@@ -1159,6 +1159,66 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">char_slots</span> <span class="o">=</span> <span class="n">new_count</span>
 
+    <span class="k">def</span> <span class="nf">_get_char_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetch all rows with the same account ID, from DB</span>
+
+<span class="sd">        Returns</span>
+
+<span class="sd">            List, representing all characters in the same account</span>
+
+<span class="sd">            Defaults to False in the event of an error during execution</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_db_all_hits</span><span class="p">(</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `accountid` = {self.account_id}&quot;</span>
+
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">characters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Fetches the IGN of all characters in the same account</span>
+
+<span class="sd">        Returns</span>
+
+<span class="sd">            List, containing character names of all characters</span>
+
+<span class="sd">            in the same account</span>
+
+<span class="sd">            Defaults to False in the event of an error during execution</span>
+
+<span class="sd">        Raises:</span>
+
+<span class="sd">            Generic error on failure</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">char_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_char_list</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">char_data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+
+    <span class="k">def</span> <span class="nf">free_char_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">total_slots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_char_slots</span>
+
+        <span class="n">used_slots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_char_list</span><span class="p">())</span>  <span class="c1"># count the number of chars</span>
+
+        <span class="k">return</span> <span class="n">total_slots</span> <span class="o">-</span> <span class="n">used_slots</span>
+
     <span class="k">def</span> <span class="nf">is_online</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;Checks if the &#39;loggedin&#39; column is greater than 0</span>
@@ -1222,6 +1282,8 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
             <span class="n">f</span><span class="s2">&quot;Ban Reason: {self.ban_reason}, &quot;</span><span class="p">,</span>
 
             <span class="n">f</span><span class="s2">&quot;Total Character Slots: {self.char_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Free Character Slots: {self.free_char_slots}, &quot;</span><span class="p">,</span>
 
             <span class="n">f</span><span class="s2">&quot;DP: {self.dp}, &quot;</span><span class="p">,</span>
 
@@ -1829,6 +1891,66 @@ appropriate getter and setter methods for said attributes.</p>
 
         <span class="n">self</span><span class="p">.</span><span class="n">char_slots</span> <span class="o">=</span> <span class="n">new_count</span>
 
+    <span class="n">def</span> <span class="n">_get_char_list</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetch all rows with the same account ID, from DB</span>
+
+<span class="s2">        Returns</span>
+
+<span class="s2">            List, representing all characters in the same account</span>
+
+<span class="s2">            Defaults to False in the event of an error during execution</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="k">data</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_db_all_hits</span><span class="p">(</span>
+
+            <span class="n">self</span><span class="p">.</span><span class="n">_database_config</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;SELECT * FROM `characters` WHERE `accountid` = {self.account_id}&quot;</span>
+
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">data</span>
+
+    <span class="nv">@property</span>
+
+    <span class="n">def</span> <span class="n">characters</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Fetches the IGN of all characters in the same account</span>
+
+<span class="s2">        Returns</span>
+
+<span class="s2">            List, containing character names of all characters</span>
+
+<span class="s2">            in the same account</span>
+
+<span class="s2">            Defaults to False in the event of an error during execution</span>
+
+<span class="s2">        Raises:</span>
+
+<span class="s2">            Generic error on failure</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+        <span class="n">char_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_get_char_list</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">utils</span><span class="p">.</span><span class="n">extract_name</span><span class="p">(</span><span class="n">char_data</span><span class="p">)</span>
+
+    <span class="nv">@property</span>
+
+    <span class="n">def</span> <span class="n">free_char_slots</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+
+        <span class="n">total_slots</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_char_slots</span>
+
+        <span class="n">used_slots</span> <span class="o">=</span> <span class="n">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">_get_char_list</span><span class="p">())</span>  <span class="c1"># count the number of chars</span>
+
+        <span class="k">return</span> <span class="n">total_slots</span> <span class="o">-</span> <span class="n">used_slots</span>
+
     <span class="n">def</span> <span class="n">is_online</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
 
         <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Checks if the &#39;loggedin&#39; column is greater than 0</span>
@@ -1892,6 +2014,8 @@ appropriate getter and setter methods for said attributes.</p>
             <span class="n">f</span><span class="s2">&quot;Ban Reason: {self.ban_reason}, &quot;</span><span class="p">,</span>
 
             <span class="n">f</span><span class="s2">&quot;Total Character Slots: {self.char_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="s2">&quot;Free Character Slots: {self.free_char_slots}, &quot;</span><span class="p">,</span>
 
             <span class="n">f</span><span class="s2">&quot;DP: {self.dp}, &quot;</span><span class="p">,</span>
 
@@ -2003,7 +2127,20 @@ appropriate getter and setter methods for said attributes.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">char_slots</span>
 </code></pre></div>
 
+<div class="codehilite"><pre><span></span><code><span class="n">characters</span>
+</code></pre></div>
+
+<p>Fetches the IGN of all characters in the same account</p>
+<p>Returns
+        List, containing character names of all characters
+        in the same account
+        Defaults to False in the event of an error during execution</p>
+<p>Raises:
+        Generic error on failure</p>
 <div class="codehilite"><pre><span></span><code><span class="n">dp</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">free_char_slots</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="n">logged_in</span>
@@ -2236,6 +2373,8 @@ is technically functional for the open source version.</p>
             <span class="n">f</span><span class="ss">&quot;Ban Reason: {self.ban_reason}, &quot;</span><span class="p">,</span>
 
             <span class="n">f</span><span class="ss">&quot;Total Character Slots: {self.char_slots}, &quot;</span><span class="p">,</span>
+
+            <span class="n">f</span><span class="ss">&quot;Free Character Slots: {self.free_char_slots}, &quot;</span><span class="p">,</span>
 
             <span class="n">f</span><span class="ss">&quot;DP: {self.dp}, &quot;</span><span class="p">,</span>
 
