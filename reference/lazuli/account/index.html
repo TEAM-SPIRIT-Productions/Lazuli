@@ -749,6 +749,16 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="sd">            Integer, representing the number of character slots the user has</span>
 
+<span class="sd">        characters:</span>
+
+<span class="sd">            List of Strings, representing the IGNs of all the characters</span>
+
+<span class="sd">            the user has</span>
+
+<span class="sd">        free_char_slots:</span>
+
+<span class="sd">            Integer, representing the number of free character slots the user has</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account_info</span><span class="p">,</span> <span class="n">database_config</span><span class="p">):</span>
@@ -1418,7 +1428,12 @@ appropriate getter and setter methods for said attributes.</p>
         dp:
                 Integer, representing the amount of Donation Points the user has
         char_slots:
-                Integer, representing the number of character slots the user has</p>
+                Integer, representing the number of character slots the user has
+        characters:
+                List of Strings, representing the IGNs of all the characters
+                the user has
+        free_char_slots:
+                Integer, representing the number of free character slots the user has</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="n">class</span> <span class="k">Account</span><span class="o">:</span>
 
     <span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">Account object; models AzureMS accounts.</span>
@@ -1480,6 +1495,16 @@ appropriate getter and setter methods for said attributes.</p>
 <span class="s2">        char_slots:</span>
 
 <span class="s2">            Integer, representing the number of character slots the user has</span>
+
+<span class="s2">        characters:</span>
+
+<span class="s2">            List of Strings, representing the IGNs of all the characters</span>
+
+<span class="s2">            the user has</span>
+
+<span class="s2">        free_char_slots:</span>
+
+<span class="s2">            Integer, representing the number of free character slots the user has</span>
 
 <span class="s2">    </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
 

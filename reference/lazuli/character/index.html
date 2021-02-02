@@ -1033,6 +1033,10 @@ Refer to database.py or the project wiki on GitHub for usage examples.</p>
 
 <span class="s2">        mute: String, representing whether a character is chat-banned</span>
 
+<span class="s2">        currency: Dictionary, representing all currencies associated with the</span>
+
+<span class="s2">            character, including Mesos, NX, Maple Points, VP, DP</span>
+
 <span class="s2">    &quot;&quot;&quot;</span>
 
     <span class="s s-Atom">def</span> <span class="k">__</span><span class="nf">init__</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">,</span> <span class="s s-Atom">char_stats</span><span class="p">,</span> <span class="s s-Atom">database_config</span><span class="p">)</span><span class="s s-Atom">:</span>
@@ -2456,7 +2460,9 @@ the appropriate getter and setter methods for said attributes.</p>
         empathy: Integer, representing Character Empathy pool
         charm: Integer, representing Character Charm pool
         honour: Integer, representing Character Honour pool
-        mute: String, representing whether a character is chat-banned</p>
+        mute: String, representing whether a character is chat-banned
+        currency: Dictionary, representing all currencies associated with the
+                character, including Mesos, NX, Maple Points, VP, DP</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">Character:</span>
 
     <span class="s">&quot;&quot;&quot;Character object; models AzureMS characters.</span>
@@ -2530,6 +2536,10 @@ the appropriate getter and setter methods for said attributes.</p>
 <span class="s">        honour: Integer, representing Character Honour pool</span>
 
 <span class="s">        mute: String, representing whether a character is chat-banned</span>
+
+<span class="s">        currency: Dictionary, representing all currencies associated with the</span>
+
+<span class="s">            character, including Mesos, NX, Maple Points, VP, DP</span>
 
 <span class="s">    &quot;&quot;&quot;</span>
 
