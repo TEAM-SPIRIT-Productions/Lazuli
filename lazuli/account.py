@@ -287,6 +287,42 @@ class Account:
 		new_count = int(amount) + self.char_slots
 		self.char_slots = new_count
 
+	def _get_char_list(self):
+		"""Fetch all rows with the same account ID, from DB
+
+		Returns
+			List, representing all characters in the same account
+			Defaults to False in the event of an error during execution
+
+		Raises:
+			Generic error on failure
+		"""
+		data = utils.get_db_all_hits(
+			f"SELECT * FROM `characters` WHERE `accountid` = {self.account_id}"
+		)
+		return data
+
+	@property
+	def characters(self):
+		"""Fetches the IGN of all characters in the same account
+
+		Returns
+			List, containing character names of all characters
+			in the same account
+			Defaults to False in the event of an error during execution
+
+		Raises:
+			Generic error on failure
+		"""
+		char_data = self._get_char_list()
+		return utils.extract_name(char_data)
+
+	@property
+	def free_char_slots(self):
+		total_slots = self._char_slots
+		used_slots = len(self._get_char_list())  # count the number of chars
+		return total_slots - used_slots
+
 	def is_online(self):
 		"""Checks if the 'loggedin' column is greater than 0
 
@@ -326,6 +362,7 @@ class Account:
 			f"Ban Status: {self.banned}, ",
 			f"Ban Reason: {self.ban_reason}, ",
 			f"Total Character Slots: {self.char_slots}, ",
+			f"Free Character Slots: {self.free_char_slots}, ",
 			f"DP: {self.dp}, ",
 			f"VP: {self.vp}, ",
 			f"NX: {self.nx}, ",
