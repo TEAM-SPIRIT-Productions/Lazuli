@@ -1,5 +1,10 @@
 ## CHANGELOG:  
 
+### v2.2.1
+- Add setup and build scripts
+  - `setup.bat` automatically generates the venv folder with all dependencies
+  - `build.bat` re-generates API Docs, build distribution archives, and uploads them to PyPi
+
 ### v2.2.0
 - Add `currency` property to Character  
   - The `currency` property is a dictionary of all the currencies (e.g. NX) associated with the account that contains the character.
