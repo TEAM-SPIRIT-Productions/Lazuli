@@ -1,16 +1,30 @@
 """This is the init file for the package - Compiled by KOOKIIE
 
-Copyright 2020 TEAM SPIRIT. All rights reserved.
+Lazuli is a Python library for interacting with Odin-like MapleStory private
+server databases. Lazuli contains wrappers around MySQL Connector, and is
+meant to complement the Azure v316 MapleStory private server emulator source
+code.
+
+This module provides a dictionary mapping all Job IDs
+to their respective Job names. This docstring is also the landing page of the
+API documentation for Lazuli v2.
+
+*Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
-in the LICENSE file. This module provides a dictionary mapping all Job IDs
-to their respective Job names.
+in the LICENSE file.*
 
 All efforts have been made to trace Job IDs in both GMS and KMS accurately.
 Notable ommissions (Plase contribute if you have their Job IDs):
- - SAO Classes: Kirito, Asuna, Leafa
- - Sengoku Class (Special): Ayame
- - Explorer Class (Special): Zen
+  - SAO Classes: Kirito, Asuna, Leafa
+  - Sengoku Class (Special): Ayame
+  - Explorer Class (Special): Zen
+
+Todo:
+  - Add type hints
+  - Migrate JOBS dictionary to use SpiritSuite's YAML document
+.. include:: ../README.md
 """
+__docformat__ = "google"
 JOBS = {
 	# Explorer Classes (Aventurer in MSEA)
 	'0': 'Beginner',
