@@ -1,0 +1,12 @@
+atomicwrites==1.4.1
+attrs==22.1.0
+colorama==0.4.5
+iniconfig==1.1.1
+mysql-connector-python==8.0.30
+packaging==21.3
+pluggy==1.0.0
+protobuf==3.20.1
+py==1.11.0
+pyparsing==3.0.9
+pytest==7.1.2
+tomli==2.0.1
