@@ -1,5 +1,11 @@
 ## CHANGELOG:  
 
+### v2.2.2
+- Update dependencies
+  - Update MySQL Connector and protobuf, in view of CVE-2021-22570
+- Change dummy name for unit tests
+  - Use `tester0xFF` instead of the arbitrary `KOOKIE` for account and character name-change unit tests
+
 ### v2.2.1
 - Add setup and build scripts
   - `setup.bat` automatically generates the venv folder with all dependencies

@@ -18,12 +18,13 @@ classifiers = [
 	'Programming Language :: Python :: 3.7',
 	'Programming Language :: Python :: 3.8',
 	'Programming Language :: Python :: 3.9',
+	'Programming Language :: Python :: 3.10',
 	'Topic :: Games/Entertainment :: Side-Scrolling/Arcade Games',
 ]
 
 setup(
 	name="lazuli",
-	version="2.2.1",
+	version="2.2.2",
 	description="A Python-based tool for interacting with AzureMSv316-based databases.",
 	long_description=long_description,
 	long_description_content_type="text/markdown",
