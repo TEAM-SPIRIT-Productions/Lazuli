@@ -7,7 +7,7 @@ code.
 
 This module provides a dictionary mapping all Job IDs
 to their respective Job names. This docstring is also the landing page of the
-API documentation for Lazuli v2.
+API documentation for Lazuli v3.
 
 *Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
