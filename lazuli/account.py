@@ -1,62 +1,32 @@
 """This module holds the Account class for the lazuli package.
 
-Copyright 2020 TEAM SPIRIT. All rights reserved.
+Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.
-Refer to database.py or the project wiki on GitHub for usage examples.
+Refer to `database.py` or the project wiki on GitHub for usage examples.
 """
 
 import lazuli.utility as utils
 
 
 class Account:
-	"""Account object; models AzureMS accounts.
+	"""`Account` object; models AzureMS accounts.
 
-	Using instance method Lazuli::get_account_by_username(username) or
-	the Lazuli::get_char_by_name(name).account getter will create an
+	Using instance method `Lazuli::get_account_by_username(username)` or
+	the `Lazuli::get_char_by_name(name).account` getter will create an
 	Account object instance with attributes identical to the account
-	with username "username" (or IGN "name" for the latter) in
+	with username `username` (or IGN `name` for the latter) in
 	the connected AzureMS-based database. This class contains the
 	appropriate getter and setter methods for said attributes.
-
-	Attributes:
-		account_id:
-			Integer, representing Primary Key for account - Do NOT set manually
-		username:
-			String, representing account username; varchar(64)
-		logged_in:
-			Integer, represents login status of the account;
-			int(1) and not bool for some reason
-		banned:
-			Integer, represents ban status of the account;
-			int(1) and not bool for some reason
-		ban_reason:
-			String, representing account ban reason; text
-		nx:
-			Integer, representing the amount of NX Prepaid the user has
-		maple_points:
-			Integer, representing the amount of Maple Points the user has
-		vp:
-			Integer, representing the amount of Vote Points the user has
-		dp:
-			Integer, representing the amount of Donation Points the user has
-		char_slots:
-			Integer, representing the number of character slots the user has
-		characters:
-			List of Strings, representing the IGNs of all the characters
-			the user has
-		free_char_slots:
-			Integer, representing the number of free character slots the user has
 	"""
 
 	def __init__(self, account_info, database_config):
 		"""Emulates how account object is handled server-sided
 
 		Args:
-			account_info:
-				dictionary of user attributes, formatted in AzureMS style
-			database_config:
-				dictionary of protected attributes from a Lazuli object
+
+			account_info: `dict` of user attributes, formatted in AzureMS style
+			database_config: `dict` of protected attributes from a Lazuli object
 		"""
 
 		self._account_info = account_info
@@ -81,9 +51,9 @@ class Account:
 	def init_account_stats(self):
 		"""Initialises Account instance attributes' values.
 
-		Runs near the end of Account::__init__(account_info, database_config).
-		Assigns values contained in account_info (a dictionary of
-		account-related attributes from AzureMS's DB) to the Account object's
+		Runs near the end of `Account::__init__(account_info, database_config)`.
+		Assign values contained in `account_info` (a dictionary of
+		account-related attributes from AzureMS's DB) to the `Account` object's
 		corresponding attributes.
 		"""
 		self._account_id = self._account_info['id']
@@ -101,10 +71,15 @@ class Account:
 
 	@property
 	def account_id(self):
+		"""`int`: Represents Primary Key for account - Do **NOT** set manually"""
 		return self._account_id  # Primary Key; DO NOT set
 
 	@property
 	def username(self):
+		"""`str`: Represents account username
+
+		This is a `varchar(64)` in the database.
+		"""
 		return self._username
 
 	@username.setter
@@ -130,6 +105,11 @@ class Account:
 
 	@property
 	def logged_in(self):
+		"""`int`: Represents the login status of the account
+
+		Note that in the database, this is a `int(1)`,
+		and not `bool`/`bit`/`char` for some reason.
+		"""
 		return self._logged_in
 
 	@logged_in.setter
@@ -148,6 +128,11 @@ class Account:
 
 	@property
 	def banned(self):
+		"""`int`: Represents the ban status of the account
+
+		Note that in the database, this is a `int(1)`,
+		and not `bool`/`bit`/`char` for some reason.
+		"""
 		return self._banned
 
 	@banned.setter
@@ -165,6 +150,10 @@ class Account:
 
 	@property
 	def ban_reason(self):
+		"""`str`: Represents the account ban reason
+
+		This is a `text` in the database.
+		"""
 		return self._ban_reason
 
 	@ban_reason.setter
@@ -174,6 +163,11 @@ class Account:
 
 	@property
 	def nx(self):
+		"""`int`: Represents the amount of NX Prepaid the user has
+
+		Note that the setter does not allow `int` values larger than 32-bit
+		signed `int`.
+		"""
 		return self._nx
 
 	@nx.setter
@@ -188,14 +182,19 @@ class Account:
 		"""Adds the specified amount to the current NX pool
 
 		Args:
-			amount:
-				Int, representing the amount of NX to be added to the NX pool
+
+			amount (`int`): Represents the amount of NX to be added to the NX pool
 		"""
 		new_nx = int(amount) + self.nx
 		self.nx = new_nx
 
 	@property
 	def maple_points(self):
+		"""`int`: Represents the amount of Maple Points the user has
+
+		Note that the setter does not allow `int` values larger than 32-bit
+		signed `int`.
+		"""
 		return self._maple_points
 
 	@maple_points.setter
@@ -212,15 +211,19 @@ class Account:
 		"""Adds the specified amount to the current Maple Points pool
 
 		Args:
-			amount:
-				Int, representing the number of Maple Points
-				to be added to the current pool
+
+			amount (`int`): Represents the number of Maple Points to be added to the current pool
 		"""
 		new_maple_points = int(amount) + self.maple_points
 		self.maple_points = new_maple_points
 
 	@property
 	def vp(self):
+		"""`int`: Represents the amount of Vote Points the user has
+
+		Note that the setter does not allow `int` values larger than 32-bit
+		signed `int`.
+		"""
 		return self._vp
 
 	@vp.setter
@@ -237,15 +240,19 @@ class Account:
 		"""Adds the specified amount to the current VP count
 
 		Args:
-			amount:
-				Int, representing the number of vote points (VP) to be added
-				to the current VP count
+
+			amount (`int`): Represents the number of vote points (VP) to be added to the current VP count
 		"""
 		new_vp = int(amount) + self.vp
 		self.vp = new_vp
 
 	@property
 	def dp(self):
+		"""`int`: Represents the amount of Donation Points the user has
+
+		Note that the setter does not allow `int` values larger than 32-bit
+		signed `int`.
+		"""
 		return self._dp
 
 	@dp.setter
@@ -260,15 +267,18 @@ class Account:
 		"""Adds the specified amount to the current DP count
 
 		Args:
-			amount:
-				Int, representing the number of DPs to be added
-				to the current DP count
+
+			amount (`int`): Represents the number of DPs to be added to the current DP count
 		"""
 		new_dp = int(amount) + self.dp
 		self.dp = new_dp
 
 	@property
 	def char_slots(self):
+		"""`int`: Represents the number of character slots the user has
+
+		Note that the setter does not allow `int` values larger than `52`.
+		"""
 		return self._char_slots
 
 	@char_slots.setter
@@ -285,9 +295,8 @@ class Account:
 		"""Adds the specified amount to the current character slot count
 
 		Args:
-			amount:
-				Int, representing the number of slots to be added
-				to the current count
+
+			amount (`int`): Represents the number of slots to be added to the current count
 		"""
 		new_count = int(amount) + self.char_slots
 		self.char_slots = new_count
@@ -295,12 +304,12 @@ class Account:
 	def _get_char_list(self):
 		"""Fetch all rows with the same account ID, from DB
 
-		Returns
-			List, representing all characters in the same account
+		Returns:
+			`list`, representing all characters in the same account.
 			Defaults to False in the event of an error during execution
 
 		Raises:
-			Generic error on failure
+			A generic error on failure
 		"""
 		data = utils.get_db_all_hits(
 			self._database_config,
@@ -310,52 +319,55 @@ class Account:
 
 	@property
 	def characters(self):
-		"""Fetches the IGN of all characters in the same account
+		"""`list[str]`: Represents the IGN of all characters in the same account
 
-		Returns
-			List, containing character names of all characters
-			in the same account
+		Returns:
+			A `list`, containing character names of all characters
+			in the same account.
 			Defaults to False in the event of an error during execution
 
 		Raises:
-			Generic error on failure
+			A generic error on failure
 		"""
 		char_data = self._get_char_list()
 		return utils.extract_name(char_data)
 
 	@property
 	def free_char_slots(self):
+		"""`int`: Represents the number of free character slots the user has"""
 		total_slots = self._char_slots
 		used_slots = len(self._get_char_list())  # count the number of chars
 		return total_slots - used_slots
 
 	def is_online(self):
-		"""Checks if the 'loggedin' column is greater than 0
+		"""Checks if the `loggedin` column is greater than `0`
 
 		Returns:
-			Boolean, representing the online status of the account
+			A `bool`, representing the online status of the account
 		"""
 		if int(self.logged_in) > 0:
 			return True
 		return False
 
 	def unstuck(self):
-		"""Sets loggedin column in database to 0
+		"""Sets `loggedin` column in database to `0`
 
-		This unstucks the account, since server checks loggedin value
-		to decided whether they are "logged in"
+		This unstucks the account, since server checks the `loggedin` value
+		to decided whether they are "logged in".
 		"""
 		self.logged_in = 0
 
 	def change_password(self, new_pass):
 		"""Changes the current password to the given one.
 
-		WARNING: INHERENTLY UNSAFE
-		Azure316 does not hash passwords by default, so this function
-		is technically functional for the open source version.
+		- **WARNING**: DEPRECATED!
+		- **WARNING**: INHERENTLY UNSAFE!
+
+		Azure316 now hashes passwords, as of [5dc6d6e](https://github.com/SoulGirlJP/AzureV316/commit/5dc6d6e2439195618337d02593512c515ab5de58).
 
 		Args:
-			new_pass: string, representing the new password
+
+			new_pass (`str`): Represents the new password
 		"""
 		self.set_stat_by_column("password", new_pass)
 
@@ -380,38 +392,37 @@ class Account:
 		"""Fetches account attribute by column name
 
 		Args:
-			column: String, representing column name in DB
+
+			column (`str`): Represents column name in the DB
 
 		Returns:
-			Int or String, representing user attribute queried
+			An `int` or `str`, representing user attribute queried
 
 		Raises:
-			Generic error on failure, handled by utils.get_stat_by_column
+			A generic error on failure, handled by utils.get_stat_by_column
 		"""
 		return utils.get_stat_by_column(self._account_info, column)
 
 	def set_stat_by_column(self, column, value):
-		"""Sets a account's attributes by column name in database
+		"""Sets an account's attributes by column name in database
 
 		Grabs the database attributes provided through the class constructor.
 		Uses these attributes to attempt a database connection through
-		utility.write_to_db. Attempts to update the field represented by
+		`utility.write_to_db`. Attempts to update the field represented by
 		the provided column in the accounts table, with the provided value.
-		Not recommended to use this method on it's own, as it will not update
+		**NOT** recommended to use this method on its own, as it will not update
 		the account instance variables (in memory) post-change.
 
 		Args:
-			value:
-				int or string, representing the value to be set in the database
-			column:
-				string, representing the column in the database
-				that is to be updated
+
+			value (`int` or `str`): Represents the value to be set in the database
+			column (`str`): Represents the column in the database that is to be updated
 
 		Returns:
-			A boolean representing whether the operation was successful.
+			A `bool` representing whether the operation was successful.
 
 		Raises:
-			Generic error, handled in utility.write_to_db
+			A generic error, handled in `utility.write_to_db`
 		"""
 		status = utils.write_to_db(
 			self._database_config,
