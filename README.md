@@ -15,7 +15,8 @@ This makes it possible to produce not only feature-rich Discord bots, but also i
   - API docs and example code provided
   - Already used in [Lapis](https://github.com/TEAM-SPIRIT-Productions/Lapis)
 
-**Current Status: Now Available on [PyPi](https://pypi.org/project/lazuli/) (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))**
+**Current Status: Now Available on [PyPi](https://pypi.org/project/lazuli/) (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))**  
+*Note: Lazuli v3 includes several dependency removals. We suggest you delete your `venv` folder and re-creating the virtual environment when upgrading from v2 to v3.*  
 
 ---
 ### Quick Start
