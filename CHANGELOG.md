@@ -1,5 +1,12 @@
 ## CHANGELOG:  
 
+### v3.0.0
+- Remove distribution- and documentation-related dependencies from requirements
+- Change documentation library from `Portray` to `pdoc`
+- Reformat docstrings to follow Google style
+- Replace `JOBS` dictionary in `__init__` module with the SpiritSuite YAML document
+- Add type hints
+
 ### v2.2.3
 - Update dependencies following vulnerability notices from GitHub Advisory Database
   - PyYaml
