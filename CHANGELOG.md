@@ -1,7 +1,30 @@
 ## CHANGELOG:  
 
+### v2.2.3
+- Update dependencies following vulnerability notices from GitHub Advisory Database
+  - PyYaml
+    - [CVE-2020-1747](https://github.com/advisories/GHSA-6757-jp84-gxfx)
+  - mkdocs
+    - [CVE-2021-40978](https://github.com/advisories/GHSA-qh9q-34h6-hcv9)
+  - jinja2
+    - [CVE-2020-28493](https://github.com/advisories/GHSA-g3rq-g295-4j3m)
+  - urllib3
+    - [CVE-2021-28363](https://github.com/advisories/GHSA-5phf-pp7p-vc2r)
+  - urllib3
+    - [CVE-2021-33503](https://github.com/advisories/GHSA-q2q7-5pp4-w6pg)
+  - Pygments
+    - [CVE-2021-20270](https://github.com/advisories/GHSA-9w8r-397f-prfh)
+  - Pygments
+    - [CVE-2021-27291](https://github.com/advisories/GHSA-pq64-v7f5-gqh8)
+  - nltk
+    - [CVE-2021-3828](https://github.com/advisories/GHSA-2ww3-fxvq-293j)
+  - nltk
+    - [CVE-2021-3842](https://github.com/advisories/GHSA-rqjh-jp2r-59cj)
+  - nltk
+    - [CVE-2021-43854](https://github.com/advisories/GHSA-f8m6-h2c7-8h9x)
+
 ### v2.2.2
-- Update dependencies
+- Update dependencies following vulnerability notices from GitHub Advisory Database
   - Update MySQL Connector and protobuf, in view of CVE-2021-22570
 - Change dummy name for unit tests
   - Use `tester0xFF` instead of the arbitrary `KOOKIE` for account and character name-change unit tests
