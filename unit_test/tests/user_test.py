@@ -7,7 +7,7 @@ project to create a tester account. Once it's been successfully run, you can
 use this script to test the functionality of Lazuli's APIs.
 Note that you may re-run the SQL script to reset all tester accounts
 and characters to their baseline values, if desired.
-Copyright KOOKIIE Studios 2020. All rights reserved.
+Copyright KOOKIIE Studios 2022. All rights reserved.
 """
 import pytest
 from lazuli.database import Lazuli
@@ -112,7 +112,7 @@ def test_fetch_char_slots(user, expected):
 
 # User info setting tests -------------------------------------------------------------------------------
 @pytest.mark.parametrize("before, expected", [
-	("tester0x00", "KOOKIIE"),
+	("tester0x00", "tester0xFF"),
 ])
 def test_name_changes(user, before, expected):
 	user.username = expected
