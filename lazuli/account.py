@@ -21,12 +21,12 @@ class Account:
 	"""
 
 	def __init__(self, account_info, database_config):
-		"""Emulates how account object is handled server-sided
+		"""Emulates how the `Account` object is handled by a game server
 
 		Args:
 
 			account_info: `dict` of user attributes, formatted in AzureMS style
-			database_config: `dict` of protected attributes from a Lazuli object
+			database_config: `dict` of protected attributes from a `Lazuli` object
 		"""
 
 		self._account_info = account_info
@@ -49,7 +49,7 @@ class Account:
 		self.init_account_stats()
 
 	def init_account_stats(self):
-		"""Initialises Account instance attributes' values.
+		"""Initialises `Account` instance attributes' values.
 
 		Runs near the end of `Account::__init__(account_info, database_config)`.
 		Assign values contained in `account_info` (a dictionary of
@@ -352,7 +352,7 @@ class Account:
 	def unstuck(self):
 		"""Sets `loggedin` column in database to `0`
 
-		This unstucks the account, since server checks the `loggedin` value
+		This un-stucks the account, since server checks the `loggedin` value
 		to decided whether they are "logged in".
 		"""
 		self.logged_in = 0
@@ -372,7 +372,7 @@ class Account:
 		self.set_stat_by_column("password", new_pass)
 
 	def get_deep_copy(self):
-		"""Returns all known info about the Account as a Dictionary"""
+		"""Returns all known info about the `Account` as a Dictionary"""
 		attributes = [
 			f"Username {self.username}'s attributes:\n",
 			f"Account ID: {self.account_id}, ",
@@ -399,7 +399,7 @@ class Account:
 			An `int` or `str`, representing user attribute queried
 
 		Raises:
-			A generic error on failure, handled by utils.get_stat_by_column
+			A generic error on failure, handled by `utils.get_stat_by_column`
 		"""
 		return utils.get_stat_by_column(self._account_info, column)
 
