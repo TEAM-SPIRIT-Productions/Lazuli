@@ -1,9 +1,9 @@
 """This module holds the Character class for the lazuli package.
 
-Copyright 2020 TEAM SPIRIT. All rights reserved.
+Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.
-Refer to database.py or the project wiki on GitHub for usage examples.
+Refer to `database.py` or the project wiki on GitHub for usage examples.
 """
 
 from lazuli import JOBS
@@ -13,59 +13,27 @@ import lazuli.utility as utils
 
 
 class Character:
-	"""Character object; models AzureMS characters.
+	"""`Character` object; models AzureMS characters.
 
-	Using instance method Lazuli::get_char_by_name(name) will create a
-	Character object instance with attributes identical to the character with
-	IGN "name" in the connected AzureMS-based database. This class contains
+	Using instance method `Lazuli::get_char_by_name(name)` will create a
+	`Character` object instance with attributes identical to the character with
+	IGN `name` in the connected AzureMS-based database. This class contains
 	the appropriate getter and setter methods for said attributes.
-
-	Attributes:
-		character_id: Integer, representing Primary Key for Character; int(11)
-		account_id: Integer, representing Primary Key for Account (FK); int(11)
-		name: String, representing Character IGN; varchar(13)
-		level: Integer, representing Character level
-		exp: Integer, representing Character EXP; bigint(20)
-		strength: Integer, representing Character STR stat pool
-		dex: Integer, representing Character DEX stat pool
-		luk: Integer, representing Character LUK stat pool
-		inte: Integer, representing Character INT stat pool
-		max_hp: Integer, representing Character Max HP stat pool
-		max_mp: Integer, representing Character Max MP stat pool
-		meso: Integer, representing character wealth (aka Meso count)
-		job: Integer, representing Job ID of the character
-		skin: Integer, representing Skin ID of the character
-		gender: Integer, representing Gender ID of the character
-		fame: Integer, representing Character fame count
-		hair: Integer, representing Hair ID of the character
-		face: Integer, representing Face ID of the character
-		ap: Integer, representing Character free Ability Points (AP) pool
-		map: Integer, representing Map ID of the map that the character is in
-		bl_slots: Integer, representing Character Buddy List slots
-		rebirths: Integer, representing Character rebirth count
-		ambition: Integer, representing Character Ambition pool
-		insight: Integer, representing Character Insight pool
-		willpower: Integer, representing Character Willpower pool
-		diligence: Integer, representing Character Diligence pool
-		empathy: Integer, representing Character Empathy pool
-		charm: Integer, representing Character Charm pool
-		honour: Integer, representing Character Honour pool
-		mute: String, representing whether a character is chat-banned
-		currency: Dictionary, representing all currencies associated with the
-			character, including Mesos, NX, Maple Points, VP, DP
 	"""
 
 	def __init__(self, char_stats, database_config):
-		"""Emulates how character object is handled server-sided
+		"""Emulates how the `Character` object is handled by a game server
 
 		Not all character attributes are inherited, as the database
 		table design in AzureMS is quite verbose
 
+		Note that AzureMS uses a mixture of `utf8`, `latin1`, and `euckr` in its
+		database - YMMV when attempting to expand attribute handling features.
+
 		Args:
-			char_stats:
-				Dictionary of character stats, formatted in AzureMS style
-			database_config:
-				Dictionary of protected attributes from a Lazuli object
+
+			char_stats: `dict` of character stats, formatted in AzureMS style
+			database_config: `dict` of protected attributes from a `Lazuli` object
 		"""
 		self._stats = char_stats
 		self._database_config = database_config
@@ -110,11 +78,11 @@ class Character:
 
 	# fill with attributes from init
 	def init_stats(self):
-		"""Initialises Character instance attributes' values.
+		"""Initialises `Character` instance attributes' values.
 
-		Runs near the end of Character::__init__(char_stats, database_config).
-		Assigns values contained in char_stats (a dictionary of
-		character-related attributes from AzureMS's DB) to the Character
+		Runs near the end of `Character::__init__(char_stats, database_config)`.
+		Assign values contained in `char_stats` (a dictionary of
+		character-related attributes from AzureMS's DB) to the `Character`
 		object's corresponding attributes.
 		"""
 		self._character_id = self._stats['id']
@@ -149,20 +117,21 @@ class Character:
 		self._mute = self._stats['chatban']
 
 	def init_account(self):
-		"""Instantiate a Account object corresponding to the character
+		"""Instantiate an `Account` object corresponding to the character
 
-		Runs at the end of Character::__init__(char_stats, database_config).
-		Fetch the account ID associated with the character instance; use the
+		Runs at the end of `Character::__init__(char_stats, database_config)`.
+		Fetch the account ID associated with the `Character` instance; use the
 		account ID to fetch the account attributes as a dictionary.
-		Then use the Account class constructor to create a new Account object
+		Then use the `Account` class constructor to create a new `Account` object
 		instance, with the relevant attributes from the database.
 
 		Returns:
-			Account object with attributes identical to its
+
+			`Account` object with attributes identical to its
 			corresponding entry in the database
 		Raises:
 			Generic error on failure - handled by the
-			utility.get_db_first_hit() method
+			`utility.get_db_first_hit()` method
 		"""
 		account_id = utils.get_db_first_hit(
 			self._database_config,
@@ -184,22 +153,39 @@ class Character:
 
 	@property
 	def character_id(self):
+		"""`int`: Represents Primary Key for Character - Do **NOT** set manually
+
+		This is an `int(11)` in the database.
+		"""
 		return self._character_id
 		# Only getter, no setter; Primary Key must not be set manually!
 
 	@property
 	def account_id(self):
+		"""`int`: Represents Primary Key for Account (FK) - Do **NOT** set manually
+
+		This is an `int(11)` in the database.
+		"""
 		return self._account_id
 		# Only getter, no setter; Primary Key must not be set manually!
 
 	@property
 	def level(self):
+		"""`int`: Represents Character level
+
+		Note that the setter does not allow `int` values outside `1` to `275`.
+		YMMV if you're attempting to use Lazuli for older Odin-like servers
+		that only support a level cap of 255, or for newer ones that support
+		higher level caps.
+		"""
 		return self._level
 
 	@level.setter
 	def level(self, x):
 		if x > 275:
 			raise ValueError("Level should not exceed 275!")
+		elif x < 1:
+			raise ValueError("Level should not be lower than 1!")
 		else:
 			self.set_stat_by_column("level", x)
 			self._level = x
@@ -208,15 +194,19 @@ class Character:
 		"""Adds the specified amount to the current level count
 
 		Args:
-			amount:
-				Int, representing the number of levels to be added
-				to the current count
+
+			amount (`int`): Represents the number of levels to be added to the current count
 		"""
 		new_level = int(self.level) + amount
 		self.level = new_level
 
 	@property
 	def job(self):
+		"""`int`: Represents the Job ID of the character
+
+		Note that the setter does not allow arbitrary Job IDs not documented
+		in SpiritSuite.
+		"""
 		return self._job
 
 	@job.setter
@@ -231,27 +221,30 @@ class Character:
 		"""Returns the actual name of the job from job id
 
 		Returns:
-			String, representing the job name corresponding to a job ID
+			A string representing the job name corresponding to a job ID
 		"""
 		return JOBS[str(self.job)]
 
 	@property
 	def name(self):
+		"""`str`: Represents the character's IGN
+
+		This is an `varchar(13)` in the database.
+		The setter only accepts names that are up to 13 characters long, and
+		does not check for names with special symbols, due to
+		its use downstream being intended to be restricted to admin/staff only.
+		Note that you may encounter encoding issues if you're attempting to set
+		non-latin names, as Korean character support is not a priority for this
+		module.
+		"""
 		return self._name
 
 	@name.setter
 	def name(self, new_name):
-		"""Set a new name for the character
-
-		Args:
-			new_name:
-				String, representing the new character name that
-				will be set in the database
-		"""
 		# Check length against max length in Azure DB
-		# Not checking for special symbols etc, since this is an admin command
-		if len(str(new_name)) > 13:
-			raise ValueError("Character names can only be 13 characters long!")
+		length = len(str(new_name))
+		if not length or length > 13:
+			raise ValueError("Character names can only be 1 - 13 characters long!")
 		# Check clashes
 		data = utils.get_db_all_hits(
 			self._database_config,
@@ -267,12 +260,20 @@ class Character:
 
 	@property
 	def meso(self):
+		"""`int`: Represents the character's wealth (aka Meso count)
+
+		The setter only accepts values from 0 to 10 billion. YMMV if you're
+		attempting to use Lazuli for older Odin-like servers that only supports
+		32-bit signed `int` values for mesos.
+		"""
 		return self._meso
 
 	@meso.setter
 	def meso(self, amount):
 		if amount > 10000000000:
 			raise ValueError("You should not try to set meso to more than 10b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set meso to less than 0!")
 		else:
 			self.set_stat_by_column("meso", amount)
 			self._meso = amount
@@ -281,21 +282,27 @@ class Character:
 		"""Adds the specified amount to the current meso count
 
 		Args:
-			amount:
-				Int, representing the amount of mesos to be added
-				to the current count
+
+			amount (`int`): Represents the amount of mesos to be added to the current count
 		"""
 		new_amount = int(self.meso) + amount
 		self.meso = new_amount
 
 	@property
 	def fame(self):
+		"""`int`: Represents the character's fame count
+
+		The setter only accepts values that can be held using Java's signed
+		`shorts` (-32768 - 32767).
+		"""
 		return self._fame
 
 	@fame.setter
 	def fame(self, amount):
 		if amount > 32767:
-			raise ValueError("You should not try to set fame to more than 30k!")
+			raise ValueError("You should not try to set fame to more than 32k!")
+		elif amount < -32768:
+			raise ValueError("You should not try to set fame to less than -32k!")
 		else:
 			self.set_stat_by_column("fame", amount)
 			self._fame = amount
@@ -304,15 +311,18 @@ class Character:
 		"""Adds the specified amount to the current fame count
 
 		Args:
-			amount:
-				Int, representing the number of fames to be added
-				to the current count
+
+			amount (`int`): Represents the number of fames to be added to the current count
 		"""
 		new_fame = int(self.fame) + amount
 		self.fame = new_fame
 
 	@property
 	def map(self):
+		"""`int`: Represents the Map ID of the map that the character is in
+
+		The setter only accepts map IDs ranging from 100,000,000 to 999,999,999.
+		"""
 		return self._map
 
 	@map.setter
@@ -326,6 +336,10 @@ class Character:
 
 	@property
 	def face(self):
+		"""`int`: Represents the Face ID of the character
+
+		The setter only accepts face IDs ranging from 20,000 to 29,999.
+		"""
 		return self._face
 
 	@face.setter
@@ -339,6 +353,10 @@ class Character:
 
 	@property
 	def hair(self):
+		"""`int`: Represents the Hair ID of the character
+
+		The setter only accepts hair IDs ranging from 30,000 to 49,999.
+		"""
 		return self._hair
 
 	@hair.setter
@@ -352,6 +370,10 @@ class Character:
 
 	@property
 	def skin(self):
+		"""`int`: Represents the Skin ID of the character
+
+		The setter only accepts skin IDs ranging from 0 to 16.
+		"""
 		return self._skin
 
 	@skin.setter
@@ -365,6 +387,10 @@ class Character:
 
 	@property
 	def gender(self):
+		"""`int`: Represents the Gender ID of the character
+
+		The setter only accepts skin IDs ranging from -1 to 1.
+		"""
 		return self._gender
 
 	@gender.setter
@@ -378,6 +404,14 @@ class Character:
 
 	@property
 	def exp(self):
+		"""`int`: Represents the character's EXP
+
+		This is a `bigint(20)` in the DB.
+		The setter allows values that can be held in a `bigint`, but YMMV with
+		large EXP values, subject to what the server can handle without
+		overflows. The upper limits have not been tested. Negative values are
+		allowed, for convenience of developers' testing.
+		"""
 		return self._exp
 
 	@exp.setter
@@ -385,6 +419,10 @@ class Character:
 		if exp_amount > 9223372036854775807:  # Azure DB uses Bigint for EXP
 			raise ValueError(
 				"You should not try to set EXP above 9.2 Quintillion!"
+			)
+		elif exp_amount < -9223372036854775808:
+			raise ValueError(
+				"You should not try to set EXP below -9.2 Quintillion!"
 			)
 		else:
 			self.set_stat_by_column("exp", exp_amount)
@@ -394,15 +432,19 @@ class Character:
 		"""Add the specified amount to the current existing EXP pool
 
 		Args:
-			amount:
-				Int, representing the amount of EXP to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of EXP to be added to the current pool
 		"""
 		new_exp = int(self.exp) + amount
 		self.exp = new_exp
 
 	@property
 	def strength(self):
+		"""`int`: Represents the character's STR stat pool
+
+		The setter only accepts values that can be held using Java's signed
+		`shorts` (-32768 - 32767).
+		"""
 		return self._strength
 
 	@strength.setter
@@ -411,6 +453,8 @@ class Character:
 		# with the client if one exceeds signed shorts (max 32k)
 		if amount > 32767:
 			raise ValueError("You should not try to set STR above 30k!")
+		elif amount < -32768:
+			raise ValueError("You should not try to set STR to less than -32k!")
 		else:
 			self.set_stat_by_column("str", amount)
 			self._strength = amount
@@ -419,21 +463,27 @@ class Character:
 		"""Add the specified amount to the current existing STR pool
 
 		Args:
-			amount:
-				Int, representing the amount of STR to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of STR to be added to the current pool
 		"""
 		new_str = int(self.strength) + amount
 		self.strength = new_str
 
 	@property
 	def dex(self):
+		"""`int`: Represents the character's DEX stat pool
+
+		The setter only accepts values that can be held using Java's signed
+		`shorts` (-32768 - 32767).
+		"""
 		return self._dex
 
 	@dex.setter
 	def dex(self, amount):
 		if amount > 32767:
 			raise ValueError("You should not try to set DEX above 30k!")
+		elif amount < -32768:
+			raise ValueError("You should not try to set DEX to less than -32k!")
 		else:
 			self.set_stat_by_column("dex", amount)
 			self._dex = amount
@@ -442,21 +492,27 @@ class Character:
 		"""Add the specified amount to the current existing DEX pool
 
 		Args:
-			amount:
-				Int, representing the amount of DEX to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of DEX to be added to the current pool
 		"""
 		new_dex = int(self.dex) + amount
 		self.dex = new_dex
 
 	@property
 	def inte(self):
+		"""`int`: Represents the character's INT stat pool
+
+		The setter only accepts values that can be held using Java's signed
+		`shorts` (-32768 - 32767).
+		"""
 		return self._inte
 
 	@inte.setter
 	def inte(self, amount):
 		if amount > 32767:
 			raise ValueError("You should not try to set INT above 30k!")
+		elif amount < -32768:
+			raise ValueError("You should not try to set INT to less than -32k!")
 		else:
 			self.set_stat_by_column("int", amount)
 			self._inte = amount
@@ -465,21 +521,27 @@ class Character:
 		"""Add the specified amount to the current existing INT pool
 
 		Args:
-			amount:
-				Int, representing the amount of INT to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of INT to be added to the current pool
 		"""
 		new_inte = int(self.inte) + amount
 		self.inte = new_inte
 
 	@property
 	def luk(self):
+		"""`int`: Represents the character's LUK stat pool
+
+		The setter only accepts values that can be held using Java's signed
+		`shorts` (-32768 - 32767).
+		"""
 		return self._luk
 
 	@luk.setter
 	def luk(self, amount):
 		if amount > 32767:
 			raise ValueError("You should not try to set LUK above 30k!")
+		elif amount < -32768:
+			raise ValueError("You should not try to set LUK to less than -32k!")
 		else:
 			self.set_stat_by_column("luk", amount)
 			self._luk = amount
@@ -488,9 +550,8 @@ class Character:
 		"""Add the specified amount to the current existing LUK pool
 
 		Args:
-			amount:
-				Int, representing the amount of LUK to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of LUK to be added to the current pool
 		"""
 		new_luk = int(self.luk) + amount
 		self.luk = new_luk
@@ -499,7 +560,7 @@ class Character:
 		"""Returns str, int, dex, luk values in a dictionary
 
 		Returns:
-			A Dictionary of the 4 primary stats
+			A dictionary of the 4 primary stats
 		"""
 		primary_stats = {
 			"str": self.strength,
@@ -511,13 +572,20 @@ class Character:
 
 	@property
 	def max_hp(self):
+		"""`int`: Represents the character's Max HP stat pool
+
+		The setter only accepts values from 1 to 500,000. YMMV if you're using
+		an older Odin-like server whose client can not support 500,000 max HP.
+		"""
 		return self._max_hp
 
 	@max_hp.setter
 	def max_hp(self, amount):
 		# Client-sided cap of 500k
 		if amount > 500000:
-			raise ValueError("You should not try to set HP above 500k!")
+			raise ValueError("You should not try to set Max HP above 500k!")
+		elif amount < 1:
+			raise ValueError("You should not try to set Max HP below 1!")
 		else:
 			self.set_stat_by_column("maxhp", amount)
 			self._max_hp = amount
@@ -526,22 +594,28 @@ class Character:
 		"""Add the specified amount to the current existing Max HP pool
 
 		Args:
-			amount:
-				Int, representing the amount of Max HP to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of Max HP to be added to the current pool
 		"""
 		new_hp = int(self.max_hp) + amount
 		self.max_hp = new_hp
 
 	@property
 	def max_mp(self):
+		"""`int`: Represents the character's Max MP stat pool
+
+		The setter only accepts values from 1 to 500,000. YMMV if you're using
+		an older Odin-like server whose client can not support 500,000 max MP.
+		"""
 		return self._max_mp
 
 	@max_mp.setter
 	def max_mp(self, amount):
 		# Client-sided cap of 500k
 		if amount > 500000:
-			raise ValueError("You should not try to set MP above 500k!")
+			raise ValueError("You should not try to set Max MP above 500k!")
+		elif amount < 1:
+			raise ValueError("You should not try to set Max MP below 1!")
 		else:
 			self.set_stat_by_column("maxmp", amount)
 			self._max_mp = amount
@@ -550,15 +624,20 @@ class Character:
 		"""Add the specified amount to the current existing Max MP pool
 
 		Args:
-			amount:
-				Int, representing the amount of max MP to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of max MP to be added to the current pool
 		"""
 		new_mp = int(self.max_mp) + amount
 		self.max_mp = new_mp
 
 	@property
 	def ap(self):
+		"""`int`: Represents the character's free Ability Points (AP) pool
+
+		The setter only accepts values that can be held using Java's signed
+		`shorts` (-32768 - 32767). Negative values are allowed for developers'
+		testing convenience.
+		"""
 		return self._ap
 
 	@ap.setter
@@ -566,7 +645,9 @@ class Character:
 		# Azure DB uses Int (max 2.1b) for stats, but it may cause problems
 		# with the client if one exceeds signed shorts (max 32k)
 		if amount > 32767:
-			raise ValueError("You should not try to set AP above 30k!")
+			raise ValueError("You should not try to set AP above 32k!")
+		elif amount < -32768:
+			raise ValueError("You should not try to set AP to less than -32k!")
 		else:
 			self.set_stat_by_column("ap", amount)
 			self._ap = amount
@@ -575,15 +656,18 @@ class Character:
 		"""Add the specified amount to the current existing free AP pool
 
 		Args:
-			amount:
-				Int, representing the amount of free AP to be added to
-				the current pool
+
+			amount (`int`): Represents the amount of free AP to be added to the current pool
 		"""
 		new_ap = int(self.ap) + amount
 		self.ap = new_ap
 
 	@property
 	def bl_slots(self):
+		"""`int`: Represents the character's Buddy List slots
+
+		The setter only accepts values from 20 to 100.
+		"""
 		return self._bl_slots
 
 	@bl_slots.setter
@@ -591,112 +675,240 @@ class Character:
 		# Client-sided cap of 100
 		if amount > 100:
 			raise ValueError("You should not try to set BL slots above 100!")
+		elif amount < 20:
+			raise ValueError("You should not try to set BL slots below 20!")
 		else:
 			self.set_stat_by_column("buddyCapacity", amount)
 			self._bl_slots = amount
 
 	def add_bl_slots(self, amount):
+		"""Add the specified amount to the current existing BL slots cap
+
+		Args:
+
+			amount (`int`): Represents the amount of BL slots to be added to the current limit
+		"""
 		new_amount = int(self.bl_slots) + amount
 		self.bl_slots = new_amount
 
 	@property
 	def rebirths(self):
+		"""`int`: Represents the character's rebirth count
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`.
+		"""
 		return self._rebirths
 
 	@rebirths.setter
 	def rebirths(self, amount):
 		if amount > 2147483647:
 			raise ValueError("You should not try to set rebirths above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set rebirths below 0!")
 		else:
 			self.set_stat_by_column("reborns", amount)
 			self._rebirths = amount
 
 	def add_rebirths(self, amount):
+		"""Add the specified amount to the current existing rebirth count
+
+		Args:
+
+			amount (`int`): Represents the amount of rebirths to be added to the current count
+		"""
 		new_amount = int(self.rebirths) + amount
 		self.rebirths = new_amount
 
 	@property
 	def ambition(self):
+		"""`int`: Represents the character's Ambition pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._ambition
 
 	@ambition.setter
 	def ambition(self, amount):
 		# TODO: Add checks; DB allows 2.1b,
 		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Ambition above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Ambition below 0!")
 		self.set_stat_by_column("ambition", amount)
 		self._ambition = amount
 
 	def add_ambition(self, amount):
+		"""Add the specified amount to the current existing Ambition pool
+
+		Args:
+
+			amount (`int`): Represents the amount of ambition exp to be added to the current pool
+		"""
 		new_amount = int(self.ambition) + amount
 		self.ambition = new_amount
 
 	@property
 	def insight(self):
+		"""`int`: Represents the character's Insight pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._insight
 
 	@insight.setter
 	def insight(self, amount):
-		# TODO: Add checks
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Insight above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Insight below 0!")
 		self.set_stat_by_column("insight", amount)
 		self._insight = amount
 
 	def add_insight(self, amount):
+		"""Add the specified amount to the current existing Insight pool
+
+		Args:
+
+			amount (`int`): Represents the amount of insight exp to be added to the current pool
+		"""
 		new_amount = int(self.insight) + amount
 		self.insight = new_amount
 
 	@property
 	def willpower(self):
+		"""`int`: Represents the character's Willpower pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._willpower
 
 	@willpower.setter
 	def willpower(self, amount):
-		# TODO: Add checks
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Willpower above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Willpower below 0!")
 		self.set_stat_by_column("willpower", amount)
 		self._willpower = amount
 
 	def add_willpower(self, amount):
+		"""Add the specified amount to the current existing Willpower pool
+
+		Args:
+
+			amount (`int`): Represents the amount of willpower exp to be added to the current pool
+		"""
 		new_amount = int(self.willpower) + amount
 		self.willpower = new_amount
 
 	@property
 	def diligence(self):
+		"""`int`: Represents the character's Diligence pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._diligence
 
 	@diligence.setter
 	def diligence(self, amount):
-		# TODO: Add checks
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Diligence above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Diligence below 0!")
 		self.set_stat_by_column("diligence", amount)
 		self._diligence = amount
 
 	def add_diligence(self, amount):
+		"""Add the specified amount to the current existing Diligence pool
+
+		Args:
+
+			amount (`int`): Represents the amount of diligence exp to be added to the current pool
+		"""
 		new_amount = int(self.diligence) + amount
 		self.diligence = new_amount
 
 	@property
 	def empathy(self):
+		"""`int`: Represents the character's Empathy pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._empathy
 
 	@empathy.setter
 	def empathy(self, amount):
-		# TODO: Add checks
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Empathy above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Empathy below 0!")
 		self.set_stat_by_column("empathy", amount)
 		self._empathy = amount
 
 	def add_empathy(self, amount):
+		"""Add the specified amount to the current existing Empathy pool
+
+		Args:
+
+			amount (`int`): Represents the amount of empathy exp to be added to the current pool
+		"""
 		new_amount = int(self.empathy) + amount
 		self.empathy = new_amount
 
 	@property
 	def charm(self):
+		"""`int`: Represents the character's Charm pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._charm
 
 	@charm.setter
 	def charm(self, amount):
-		# TODO: Add checks
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Charm above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Charm below 0!")
 		self.set_stat_by_column("charm", amount)
 		self._charm = amount
 
 	def add_charm(self, amount):
+		"""Add the specified amount to the current existing Charm pool
+
+		Args:
+
+			amount (`int`): Represents the amount of charm exp to be added to the current pool
+		"""
 		new_amount = int(self.charm) + amount
 		self.charm = new_amount
 
@@ -704,7 +916,7 @@ class Character:
 		"""Returns the 6 personality traits' values in a dictionary
 
 		Returns:
-			dictionary of personality traits
+			A dictionary of personality traits
 		"""
 		traits = {
 			"ambition": self.ambition,
@@ -718,20 +930,42 @@ class Character:
 
 	@property
 	def honour(self):
+		"""`int`: Represents the character's Honour pool
+
+		The setter only accepts values from 0 to the upper limit for a 32-bit
+		signed `int`. Note that we are unsure of the actual limitations in-game
+		, so YMMV for large numbers. The current checks are based on the DB's
+		limits.
+		"""
 		return self._honour
 
 	@honour.setter
 	def honour(self, amount):
-		# TODO: Add checks
+		# TODO: Add checks; DB allows 2.1b,
+		#  but not sure what the actual cap in source is
+		if amount > 2147483647:
+			raise ValueError("You should not try to set Honour above 2.1b!")
+		elif amount < 0:
+			raise ValueError("You should not try to set Honour below 0!")
 		self.set_stat_by_column("innerExp", amount)
 		self._honour = amount
 
 	def add_honour(self, amount):
+		"""Add the specified amount to the current existing Honour pool
+
+		Args:
+
+			amount (`int`): Represents the amount of honour exp to be added to the current pool
+		"""
 		new_amount = int(self.honour) + amount
 		self.honour = new_amount
 
 	@property
 	def mute(self):
+		"""`str`: Represents whether a character is chat-banned
+
+		The setter only accepts string values "false", or "true".
+		"""
 		return self._mute
 
 	@mute.setter
@@ -744,14 +978,14 @@ class Character:
 
 	@property
 	def account(self):
+		"""`Account`: Represents the account associate with the character"""
 		return self._account
 
-	@property
 	def currency(self):
 		"""Returns the values of the currencies held, in a dictionary
 
 		Returns:
-			dictionary of mesos, nx, maple points, vp, dp
+			A dictionary of mesos, nx, maple points, vp, dp.
 		"""
 		currencies = {
 			"mesos": self.meso,
@@ -763,7 +997,15 @@ class Character:
 		return currencies
 
 	def get_deep_copy(self):
-		"""Returns all known info about the character as a Dictionary"""
+		"""Returns all known info about the character as a Dictionary
+
+		Returns:
+			A dictionary of IGN, Char ID, Account ID, Job Name, RB count,
+			Level, Mesos, Fame, Gender, HP, MP, Stats, AP, EXP, Honour,
+			Traits, BL slots, Map ID, Mute Status, Login Status, Ban Status,
+			Ban Reason, Total Char Slots, Free Char Slots, DP, VP, NX,
+			and Maple Points.
+		"""
 		attributes = [
 			f"Character {self.name}'s attributes:\n",
 			f"Character ID: {self.character_id}, ",
@@ -790,28 +1032,28 @@ class Character:
 		return attributes
 
 	def get_inv(self):
-		"""Create an Inventory instance from the Character ID attribute
+		"""Create an `Inventory` instance from the Character ID attribute
 
 		Uses the Character ID associated with the character, and the
-		Inventory class constructor to create a new Inventory object instance,
+		`Inventory` class constructor to create a new `Inventory` object instance,
 		with the relevant inventory attributes from the database.
 
 		Returns:
-			Inventory object instantiated with corresponding data from the
+			An `Inventory` object instantiated with corresponding data from the
 			connected database.
-			Defaults to None if the operation fails.
+			Defaults to `None` if the operation fails.
 
 		Raises:
-			Generic error on failure - handled by the get_db_first_hit() method
+			Generic error on failure - handled by the `get_db_first_hit()` method
 		"""
 		inventory = Inventory(self.character_id, self._database_config)
 		return inventory
 
 	def get_char_img(self):
-		"""Generates character avatar using MapleStory.io; PLEASE USE SPARINGLY!
+		"""Generates a character avatar using `MapleStory.io`; PLEASE USE SPARINGLY!
 
 		Returns:
-			url: String, a link to the generated avatar
+			A string, a link to the generated avatar
 		"""
 		equipped_items = [self.face, self.hair]
 		equipped_inv = self.get_inv().equipped_inv
@@ -829,23 +1071,21 @@ class Character:
 
 		Grabs the database attributes provided through the class constructor.
 		Uses these attributes to attempt a database connection through
-		utility.write_to_db. Attempts to update the field represented by the
+		`utility.write_to_db`. Attempts to update the field represented by the
 		provided column in the characters table, with the provided value.
-		Not recommended to use this alone, as it won't update the
+		**NOT** recommended to use this alone, as it won't update the
 		character instance variables (in memory) post-change.
 
 		Args:
-			value:
-				Int or String, representing the value to be set in the database
-			column:
-				String, representing the column in the database
-				that is to be updated
+
+			value (`int` or `str`): Represents the value to be set in the database
+			column (`str`): Represents the column in the database that is to be updated
 
 		Returns:
-			A Boolean representing whether the operation was successful
+			A `bool` representing whether the operation was successful
 
 		Raises:
-			Generic error, handled in utility.write_to_db
+			Generic error, handled in `utility.write_to_db`
 		"""
 		status = utils.write_to_db(
 			self._database_config,
@@ -864,12 +1104,13 @@ class Character:
 		"""Fetches account attribute by column name
 
 		Args:
-			column: String, representing column name in DB
+
+			column (`str`): Represents column name in DB
 
 		Returns:
-			Int or String, representing user attribute queried
+			An `int` or `str`, representing user attribute queried
 
 		Raises:
-			Generic error on failure, handled by utils.get_stat_by_column
+			Generic error on failure, handled by `utils.get_stat_by_column`
 		"""
 		return utils.get_stat_by_column(self._stats, column)
