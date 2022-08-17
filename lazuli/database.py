@@ -1,8 +1,8 @@
 """This module contains the main class that users would instantiate
 
-Copyright 2020 TEAM SPIRIT. All rights reserved.
+*Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
-in the LICENSE file. Lazuli is designed for use in development of
+in the LICENSE file.* Lazuli is designed for use in development of
 AzureMSv316-based MapleStory private server tools (e.g. Discord bots).
 Users can use this class to fetch and manipulate information from the database.
 Refer to the project wiki on GitHub for more in-depth examples.
@@ -21,31 +21,28 @@ import lazuli.utility as utils
 
 
 class Lazuli:
-	"""Database object; models the AzureMS DB.
+	"""`Database` object; models the AzureMS DB.
 
 	Use this class to create instances of AzureMS characters, accounts, or
 	inventories, complete with their respective data from the connected
 	AzureMS-based database. Using the instance method
-	Lazuli::get_char_by_name("name") will create a Character object
-	(see character.py) instance that has attributes identical to the
-	character with IGN "name" in the connected AzureMS-based database.
-	Azure source technically uses Win-949 encoding, but cp949 is not a
+	`Lazuli::get_char_by_name("name")` will create a `Character` object
+	(see `character.py`) instance that has attributes identical to the
+	character with IGN`name` in the connected AzureMS-based database.
+	Azure server codebase technically uses `win-949` encoding, but `cp949` is not a
 	supported charset by MySQL/MariaDB, so this module shall default to the
-	EucKR charset (used in the DB) instead.
+	`euckr` charset (used in the DB) instead. Note that AzureMS uses a mixture
+	of `utf8`, `latin1`, and `euckr` in its database - YMMV when attempting
+	to expand attribute handling features.
 
 	Attributes:
-		host:
-			Optional; IP address of the database. Defaults to "localhost"
-		schema:
-			Optional; Name of the schema of the database. Defaults to "kms_316"
-		user:
-			Optional; Username for access to the database. Defaults to "root"
-		password:
-			Optional; Password for access to the database. Defaults to ""
-		port:
-			Optional; Port with which to access the database. Defaults to 3306
-		charset:
-			Optional; Encoding. Defaults to "euckr"
+
+		host (str): Optional; IP address of the database. Defaults to `localhost`
+		schema (str): Optional; Name of the schema of the database. Defaults to `kms_316`
+		user (str): Optional; Username for access to the database. Defaults to `root`
+		password (str): Optional; Password for access to the database. Defaults to empty string.
+		port (int): Optional; Port with which to access the database. Defaults to `3306`
+		charset (str): Optional; Encoding. Defaults to `euckr`
 	"""
 
 	def __init__(
@@ -76,60 +73,63 @@ class Lazuli:
 	def get_db_all_hits(self, query):
 		"""Fetch all matching data from DB using the provided query
 
-		Wrapper function. Uses the DB config from Lazuli attributes for
-		DB connection. Feeds the config values into utility.get_db_all_hits().
+		Wrapper function. Uses the DB config from `Lazuli` attributes for
+		DB connection. Feeds the config values into `utility.get_db_all_hits()`.
 		Added here for API-use purposes.
 
 		Args:
-			query: String, representing SQL query
+
+			query (str): Represents the SQL query to be executed
 
 		Returns:
-			List of objects, representing the result of the provided SQL query,
+			A `list` of objects, representing the result of the provided SQL query,
 			using the provided DB connection attributes
 
 		Raises:
-			Generic error on failure - handled by the
-			utility.get_db_all_hits() method
+			A generic error on failure - handled by the
+			`utility.get_db_all_hits()` method
 
 		"""
 		data = utils.get_db_all_hits(self._database_config, query)
 		return data
 
 	def get_db_first_hit(self, query):
-		"""Fetch data (first hit) from DB using the provided query
+		"""Fetch data (first result) from DB using the provided query
 
-		This function grabs the first hit from get_db_all_hits.
+		This function grabs the first result from `get_db_all_hits.
 		Added here for API-use purposes.
 
 		Args:
-			query: String, representing SQL query
+
+			query (str): Represents the SQL query to be executed
 
 		Returns:
-			Var, representing first result
+			An object, representing first result
 
 		Raises:
-			Generic error on failure - handled by the
-			utility.get_db_all_hits() method
+			A generic error on failure - handled by the
+			`utility.get_db_all_hits()` method
 		"""
 		return self.get_db_all_hits(query)[0]
 
 	def get_char_by_name(self, char_name):
-		"""Create a Character instance from the given character name
+		"""Create a `Character` instance from the given character name
 
-		Uses the class constructor of the Character class to create a new
+		Uses the class constructor of the `Character` class to create a new
 		instance, with the corresponding character data and database attributes
 		from the connected database.
 
 		Args:
-			char_name: string, representing character name (aka IGN)
+
+			char_name (`str`): Represents the character name (aka IGN)
 
 		Returns:
-			Character object instantiated with corresponding data from the
+			A `Character` object instantiated with corresponding data from the
 			connected database.
-			Defaults to None if the operation fails.
+			Defaults to `None` if the operation fails.
 
 		Raises:
-			Generic error on failure - handled by the get_db_first_hit() method
+			A generic error on failure - handled by the `get_db_first_hit()` method
 		"""
 		# Fetch first result because there should only be one character
 		# with that name
@@ -141,22 +141,22 @@ class Lazuli:
 		return character
 
 	def get_inv_by_name(self, char_name):
-		"""Create an Inventory instance from the given character name
+		"""Create an `Inventory` instance from the given character name
 
 		Uses the Character ID associated with the character name, and the
-		Inventory class constructor to create a new Inventory object instance,
+		`Inventory` class constructor to create a new `Inventory` object instance,
 		with the relevant inventory attributes from the database.
 
 		Args:
-			char_name: string, representing character name (aka IGN)
+			char_name (`str`): Represents the character name (aka IGN)
 
 		Returns:
-			Inventory object instantiated with corresponding data from the
+			An `Inventory` object instantiated with corresponding data from the
 			connected database.
-			Defaults to None if the operation fails.
+			Defaults to `None` if the operation fails.
 
 		Raises:
-			Generic error on failure - handled by the get_db_first_hit() method
+			A generic error on failure - handled by the `get_db_first_hit()` method
 		"""
 		# Fetch first result because there should only be one character
 		# with that name
@@ -168,24 +168,23 @@ class Lazuli:
 		return inventory
 
 	def get_account_by_username(self, username):
-		"""Given a username (NOT IGN), create a new account object instance
+		"""Given a username (NOT IGN), create a new `Account` object instance
 
 		Fetches the user account attributes from the database by querying for
-		username. Uses the User class constructor to create a new User object
+		username. Uses the `User` class constructor to create a new `User` object
 		instance, with the said attributes.
 		Useful for getting account information from accounts with no characters.
 
 		Args:
-			username:
-				String, representing the username used for logging the
-				user into game
+
+			username (`str`): Represents the username used for logging the user into game
 
 		Returns:
-			Account object with attributes identical to its corresponding
+			An `Account` object with attributes identical to its corresponding
 			entry in the database
 
 		Raises:
-			Generic error on failure - handled by the get_db_first_hit() method
+			A generic error on failure - handled by the `get_db_first_hit()` method
 		"""
 		# Fetch first result because there should only be one character
 		# with that name
@@ -200,22 +199,19 @@ class Lazuli:
 		"""Set the given value for the given name and column
 
 		Given a character name and column name, change its value in the
-		database using utility.write_to_db
+		database using `utility.write_to_db()`
 
 		Args:
-			column:
-				String, representing the column in the database
-			name:
-				String, representing the character name in the database
-			value:
-				String/Int, representing the value that is to be updated
-				in the corresponding field
+
+			column (`str`): Represents the column in the database
+			name (`str`): Represents the character name in the database
+			value (`str | int`): Represents  the value that is to be updated in the corresponding field
 
 		Returns:
-			Boolean, representing whether the operation completed successfully
+			A `bool`, representing whether the operation completed successfully
 
 		Raises:
-			Generic error, handled in utility.write_to_db
+			A generic error, handled in `utility.write_to_db()`
 		"""
 		status = utils.write_to_db(
 			self._database_config,
@@ -229,16 +225,16 @@ class Lazuli:
 	def get_online_list(self):
 		"""Fetch the list of players currently online
 
-		AzureMS stores login state in the DB, in the 'accounts' table,
-		'loggedin' column. Lazuli::get_online_list queries for a list of all
-		accounts that are logged in, using the Lazuli::get_db_all_hits method.
+		AzureMS stores login state in the DB, in the `accounts` table,
+		`loggedin` column. `Lazuli::get_online_list` queries for a list of all
+		accounts that are logged in, using the `Lazuli::get_db_all_hits` method.
 
 		Returns:
-			List, representing all players online.
-			Defaults to False in the event of an error during execution
+			A `list`, representing all players online.
+			Defaults to `False` in the event of an error during execution
 
 		Raises:
-			Generic error on failure
+			Generic error on failure, handled by `utility.get_db_all_hits()`
 		"""
 		data = self.get_db_all_hits(
 			"SELECT * FROM `accounts` WHERE `loggedin` > 0"
@@ -248,16 +244,16 @@ class Lazuli:
 	def get_online_count(self):
 		"""Fetch the number of players currently online
 
-		Uses the Lazuli::get_online_list method to fetch the list of all
+		Uses the `Lazuli::get_online_list` method to fetch the list of all
 		players online. Counts the length of said list, to obtain number of
 		players online.
 
 		Returns:
-			Int, representing number of players online.
-			Defaults to False in the event of an error during execution
+			An `int`, representing number of players online.
+			Defaults to `False` in the event of an error during execution
 
 		Raises:
-			Generic error on failure, handled by Lazuli::get_online_list()
+			Generic error on failure, handled by `utility.get_db_all_hits()`
 		"""
 		players = self.get_online_list()
 		return len(players)
@@ -265,15 +261,15 @@ class Lazuli:
 	def get_online_players(self):
 		"""Fetch usernames of all players currently online
 
-		Uses the Lazuli::get_online_list method to fetch the list of all
+		Uses the `Lazuli::get_online_list` method to fetch the list of all
 		players online. Extract the usernames from the said list.
 
 		Returns:
-			List, representing all players online.
-			Defaults to False in the event of an error during execution
+			A `list`, representing all players online.
+			Defaults to `False` in the event of an error during execution
 
 		Raises:
-			Generic error on failure, handled by Lazuli::get_online_list()
+			Generic error on failure, handled by `utility.get_db_all_hits()`
 		"""
 		player_data = self.get_online_list()
 		return utils.extract_name(player_data)
@@ -281,18 +277,16 @@ class Lazuli:
 	def get_level_ranking(self, number_of_players=5, show_gm=False):
 		"""Fetches the top ranking players in terms of level
 
-		Uses Lazuli::get_db_all_hits to query, and
-		utility.extract_name_and_value to process the data.
+		Uses `Lazuli::get_db_all_hits` to query, and
+		`utility.extract_name_and_value` to process the data.
 
 		Args:
-			show_gm:
-				Optional; Add GMs (Game Masters) to the list of rankings
-			number_of_players:
-				Optional; Int
-				e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
+			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
 		Returns:
-			List of Tuples, representing player names and their
+			A `list` of `tuple`, representing player names and their
 			corresponding level
 		"""
 		if show_gm:
@@ -312,18 +306,16 @@ class Lazuli:
 	def get_meso_ranking(self, number_of_players=5, show_gm=False):
 		"""Fetches the top ranking players in terms of mesos
 
-		Uses Lazuli::get_db_all_hits to query, and
-		utility.extract_name_and_value to process the data.
+		Uses `Lazuli::get_db_all_hits` to query, and
+		`utility.extract_name_and_value` to process the data.
 
 		Args:
-			show_gm:
-				Optional; Add GMs (Game Masters) to the list of rankings
-			number_of_players:
-				Optional; Int
-				e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
+			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
 		Returns:
-			List of Tuples, representing player names and their
+			A `list` of `tuple`, representing player names and their
 			corresponding mesos
 		"""
 		if show_gm:
@@ -343,18 +335,16 @@ class Lazuli:
 	def get_fame_ranking(self, number_of_players=5, show_gm=False):
 		"""Fetches the top ranking players in terms of fame
 
-		Uses Lazuli::get_db_all_hits to query, and
-		utility.extract_name_and_value to process the data.
+		Uses `Lazuli::get_db_all_hits` to query, and
+		`utility.extract_name_and_value` to process the data.
 
 		Args:
-			show_gm:
-				Optional; Add GMs (Game Masters) to the list of rankings
-			number_of_players:
-				Optional; Int
-				e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
+			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
 		Returns:
-			List of Tuples, representing player names and their
+			A `list` of `tuple`, representing player names and their
 			corresponding fame
 		"""
 		if show_gm:
@@ -374,18 +364,16 @@ class Lazuli:
 	def get_rebirth_ranking(self, number_of_players=5, show_gm=False):
 		"""Fetches the top ranking players in terms of rebirths
 
-		Uses Lazuli::get_db_all_hits to query, and
-		utility.extract_name_and_value to process the data.
+		Uses `Lazuli::get_db_all_hits` to query, and
+		`utility.extract_name_and_value` to process the data.
 
 		Args:
-			show_gm:
-				Optional; Add GMs (Game Masters) to the list of rankings
-			number_of_players:
-				Optional; Int
-				e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
+			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
 		Returns:
-			List of Tuples, representing player names and their
+			A `list` of `tuple`, representing player names and their
 			corresponding rebirths
 		"""
 		if show_gm:
@@ -410,21 +398,18 @@ class Lazuli:
 	):
 		"""Fetches the top ranking players (by class) in terms of rebirths
 
-		Uses Lazuli::get_db_all_hits to query, and
-		utility.extract_name_and_value to process the data.
+		Uses `Lazuli::get_db_all_hits` to query, and
+		`utility.extract_name_and_value` to process the data.
 		Searches based on specific job IDs.
 
 		Args:
-			show_gm:
-				Optional; Add GMs (Game Masters) to the list of rankings
-			job_id:
-				Int, representing specific Job ID to query
-			number_of_players:
-				Optional; Int
-				e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
+			job_id (`int | str`): Represents the specific Job ID to query
+			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
 
 		Returns:
-			List of Tuples, representing player names and their
+			A `list` of `tuple`, representing player names and their
 			corresponding rebirths
 		"""
 		if show_gm:
