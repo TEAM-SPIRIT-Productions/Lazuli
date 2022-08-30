@@ -32,8 +32,8 @@ class Character:
 
 		Args:
 
-			char_stats: `dict` of character stats, formatted in AzureMS style
-			database_config: `dict` of protected attributes from a `Lazuli` object
+			char_stats (`dict`): Represents character stats, formatted in AzureMS style
+			database_config (`dict`): Represents the protected attributes from a `Lazuli` object
 		"""
 		self._stats = char_stats
 		self._database_config = database_config

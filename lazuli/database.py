@@ -37,12 +37,12 @@ class Lazuli:
 
 	Attributes:
 
-		host (str): Optional; IP address of the database. Defaults to `localhost`
-		schema (str): Optional; Name of the schema of the database. Defaults to `kms_316`
-		user (str): Optional; Username for access to the database. Defaults to `root`
-		password (str): Optional; Password for access to the database. Defaults to empty string.
-		port (int): Optional; Port with which to access the database. Defaults to `3306`
-		charset (str): Optional; Encoding. Defaults to `euckr`
+		host (`str`): Optional; IP address of the database. Defaults to `localhost`
+		schema (`str`): Optional; Name of the schema of the database. Defaults to `kms_316`
+		user (`str`): Optional; Username for access to the database. Defaults to `root`
+		password (`str`): Optional; Password for access to the database. Defaults to empty string.
+		port (`int`): Optional; Port with which to access the database. Defaults to `3306`
+		charset (`str`): Optional; Encoding. Defaults to `euckr`
 	"""
 
 	def __init__(
@@ -79,7 +79,7 @@ class Lazuli:
 
 		Args:
 
-			query (str): Represents the SQL query to be executed
+			query (`str`): Represents the SQL query to be executed
 
 		Returns:
 			A `list` of objects, representing the result of the provided SQL query,
@@ -101,7 +101,7 @@ class Lazuli:
 
 		Args:
 
-			query (str): Represents the SQL query to be executed
+			query (`str`): Represents the SQL query to be executed
 
 		Returns:
 			An object, representing first result
