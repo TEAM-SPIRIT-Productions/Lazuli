@@ -1,9 +1,9 @@
 """This module holds the utility functions and constants for the lazuli package.
 
-Copyright 2020 TEAM SPIRIT. All rights reserved.
+Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.
-Refer to database.py or the project wiki on GitHub for usage examples.
+Refer to `database.py` or the project wiki on GitHub for usage examples.
 """
 import mysql.connector as con
 
@@ -29,21 +29,22 @@ def get_key(dictionary, val):
 
 	Iterates through the dictionary, comparing values to see if it matches
 	the desired value. If so, return the corresponding key. If no matches are
-	found by the end, return False.
+	found by the end, return `False`.
 	This function short-circuits (i.e. returns with the first match found).
 	Note: OrderedDict is no longer necessary for this as of Python 3.6,
 	as order is preserved automagically.
 
 	Args:
-		dictionary: Dictionary, representing the dictionary to be searched
-		val: Var, representing the desired/target value to search for
+
+		dictionary (`dict`): Represents the dictionary to be searched
+		val (`any`): Represents the desired/target value to search for
 
 	Returns:
-		Var, representing the corresponding key (if any)
-		Defaults to False, if none are found
+		A variable of `any` type, representing the corresponding key (if any).
+		Defaults to `False`, if none are found.
 
 	Raises:
-		Generic error for any failures
+		A generic error for any failures
 	"""
 	try:
 		for key, value in dictionary.items():
@@ -66,15 +67,16 @@ def get_db_all_hits(config, query):
 	using the provided DB config and query
 
 	Args:
-		config: Dictionary, representing database config attributes
-		query: String, representing SQL query
+
+		config (`dict`): Represents the database config attributes
+		query (`str`): Represents the SQL query to execute
 
 	Returns:
-		List of objects, representing the result of the provided SQL query,
+		A `list` of objects, representing the result of the provided SQL query,
 		using the provided DB connection attributes
 
 	Raises:
-		SQL Error 2003: Can't cannect to DB
+		SQL Error 2003: Can't connect to DB
 		WinError 10060: No response from DB
 		List index out of range: Wrong column name
 		Generic error as a final catch-all
@@ -105,15 +107,16 @@ def get_db_all_hits(config, query):
 def get_db_first_hit(config, query):
 	"""Generic function for fetching the first result from DB
 
-	This function grabs the first hit from get_db_all_hits;
-	errors handled in get_db_all_hits.
+	This function grabs the first hit from `get_db_all_hits`;
+	errors handled in `get_db_all_hits`.
 
 	Args:
-		config: Dictionary, representing database config attributes
-		query: String, representing SQL query
+
+		config (`dict`): Represents the database config attributes
+		query (`str`): Represents the SQL query to execute
 
 	Returns:
-		Var, representing first result
+		A variable of `any` type, representing first result
 	"""
 	return get_db_all_hits(config, query)[0]
 
@@ -122,14 +125,15 @@ def get_stat_by_column(data, column):
 	"""Fetches dictionary attribute by key (wrapper)
 
 	Args:
-		data: Dictionary, representing account or character attributes
-		column: String, representing column name in DB
+
+		data (`dict`): Represents the account or character attributes
+		column (`str`): Represents the column name in DB
 
 	Returns:
-		Int or String, representing user attribute queried
+		An `int` or `str`, representing user attribute queried
 
 	Raises:
-		Generic error on failure
+		A generic error on failure
 	"""
 	try:
 		return data[column]
@@ -143,11 +147,12 @@ def write_to_db(config, query):
 	"""Performs write operations to DB using the provided DB config and query
 
 	Args:
-		config: Dictionary, representing database config attributes
-		query: String, representing SQL query
+
+		config (`dict`): Represents the database config attributes
+		query (`str`): Represents the SQL query to execute
 
 	Returns:
-		A Boolean representing whether the operation was successful
+		A `bool` representing whether the operation was successful
 
 	Raises:
 		SQL Error 2003: Can't connect to DB
@@ -187,17 +192,18 @@ def get_inv_name_by_type(inv_type):  # Never used
 def has_item_in_inv_type(inv_type, item_id):
 	"""Checks whether the particular tab of the inventory has an item
 
-	Generic top level function used by Inventory::has_item_in_XXX() methods,
-	and the Inventory::is_equipping() method. Iterates through the dictionary
+	Generic top level function used by `Inventory::has_item_in_XXX()` methods,
+	and the `Inventory::is_equipping()` method. Iterates through the dictionary
 	of items associated with the specified tab, and check if
 	the provided item ID can be found as a value.
 
 	Args:
-		inv_type: Inventory object, representing inventory tab to search
-		item_id: Int, representing the ID of the item to search for
+
+		inv_type (`Inventory`): Represents the inventory tab to search
+		item_id (`int`): Represents the ID of the item to search for
 
 	Returns:
-		Boolean, representing whether the specified item was found
+		A `bool`, representing whether the specified item was found
 	"""
 	for bag_index in inv_type:
 		if inv_type[bag_index]['itemid'] == item_id:
@@ -206,13 +212,14 @@ def has_item_in_inv_type(inv_type, item_id):
 
 
 def extract_name(player_list):
-	"""Extracts a list of players from SQL data, via the name column
+	"""Extracts a `list` of players from SQL data, via the name column
 
 	Args:
-		player_list: List of Dictionaries, representing list of all players
+
+		player_list (`list[dict]`): Represents a list of all players
 
 	Returns:
-		List of Strings, representing player names
+		A `list` of `str`, representing player names
 	"""
 	if not player_list[0]['name']:  # if empty or null; sanity check
 		raise RuntimeError("No players found!")
@@ -226,17 +233,18 @@ def extract_name(player_list):
 
 
 def extract_name_and_value(player_list, column):
-	"""Extracts a list of players and their corresponding attribute
+	"""Extracts a `list` of players and their corresponding attribute
 
-	Extracts a list of players and their corresponding attribute value from
+	Extracts a `list` of players and their corresponding attribute value from
 	SQL data, via the name column and another provided column
 
 	Args:
-		player_list: List of Dictionaries, representing list of all players
-		column: String, representing column name to extract
+
+		player_list (`list[dict]`): Represents a list of all players
+		column (`str`): Represents the column name to extract
 
 	Returns:
-		List of Tuples, representing player names and
+		A `list` of `tuple`, representing player names and
 		their corresponding values (e.g. level)
 	"""
 	if not player_list[0]['name']:  # if empty or null; sanity check
