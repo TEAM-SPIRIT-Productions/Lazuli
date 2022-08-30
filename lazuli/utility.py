@@ -180,11 +180,13 @@ def write_to_db(config, query):
 
 
 def get_inv_type_by_name(inv_string):
+	"""`int`: Encode an inventory type using its common name"""
 	inv_type = map_inv_types.get(inv_string)
 	return inv_type
 
 
 def get_inv_name_by_type(inv_type):  # Never used
+	"""`str`: Decode an inventory type using from its value"""
 	inv_name = get_key(map_inv_types, inv_type)
 	return inv_name
 
