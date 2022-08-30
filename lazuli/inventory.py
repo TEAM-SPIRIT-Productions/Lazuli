@@ -1,6 +1,6 @@
 """This module holds the Inventory class for the lazuli package.
 
-Copyright 2020 TEAM SPIRIT. All rights reserved.
+Copyright 2022 TEAM SPIRIT. All rights reserved.
 Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
@@ -10,51 +10,37 @@ import lazuli.utility as utils
 
 
 class Inventory:
-	"""Inventory object; quasi-models AzureMS inventories.
+	"""`Inventory` object; quasi-models AzureMS inventories.
 
-	The instance method Lazuli::get_char_by_name(name) creates a Character
-	object; as part of lazuli Character object instantiation, an Inventory
+	The instance method `Lazuli::get_char_by_name(name)` creates a `Character`
+	object; as part of lazuli `Character` object instantiation, an `Inventory`
 	object instance containing inventory attributes of the character with
-	IGN "name" in the connected AzureMS-based database is created.
+	IGN `name` in the connected AzureMS-based database is created.
 	This class contains the appropriate getter methods for said attributes.
 	As a consequence of the inherent complexity of MapleStory's item system,
 	for safety reasons, this module offers NO inventory-write operations
 	(aka setter methods).
-
-	Attributes:
-		equip_inv:
-			List of Dictionaries, representing in-game items contained
-			within the EQUIP tab
-		consume_inv:
-			List of Dictionaries, representing in-game items contained
-			within the USE tab
-		etc_inv:
-			List of Dictionaries, representing in-game items contained
-			within the ETC tab
-		install_inv:
-			List of Dictionaries, representing in-game items contained
-			within the SETUP tab
-		cash_inv:
-			List of Dictionaries, representing in-game items contained
-			within the CASH tab
-		equipped_inv:
-			List of Dictionaries, representing in-game items currently
-			equipped by the character
 	"""
 
 	def __init__(self, character_id, db_config):
-		"""Inventory object; quasi-models AzureMS inventories.
+		"""`Inventory` object; quasi-models AzureMS inventories.
 
-		Modelled after SwordieDB project's Inventory class init method.
-		This Inventory object attempts to model attributes of all 6 of
+		Modelled after SwordieDB project's `Inventory` class init method.
+		This `Inventory` object attempts to model attributes of all 6 of
 		AzureMS's inventory types, using a custom object.
-		Every inventory attribute is a dictionary of dictionaries,
+		Every inventory attribute is a `dict` of `dict`,
 		the latter of which models the contents of the `inventoryitems` table
 		in a AzureMS-based database.
+
+		Args:
+
+			character_id (`int`): Represents the foreign key
+			db_config (`dict`): Represents the protected attributes from a `Lazuli` object
 	"""
 		self._character_id = character_id
 		self._database_config = db_config
 
+		# `list[`dict`]`: Represents all inventory/equipped items
 		self._all_items = self.fetch_all_inv_items()
 
 		self._equip_inv = self.init_equip_items()
@@ -67,30 +53,64 @@ class Inventory:
 
 	@property
 	def equip_inv(self):
+		"""`dict` of `dict`: Represents the in-game items contained within the EQUIP tab
+
+		The key is the position of the item in the inventory tab, and the value
+		contains the item attributes.
+		"""
 		return self._equip_inv
 
 	@property
 	def consume_inv(self):
+		"""`dict` of `dict`: Represents the in-game items contained within the USE tab
+
+		The key is the position of the item in the inventory tab, and the value
+		contains the item attributes.
+		"""
 		return self._use_inv
 
 	@property
 	def etc_inv(self):
+		"""`dict` of `dict`: Represents the in-game items contained within the ETC tab
+
+		The key is the position of the item in the inventory tab, and the value
+		contains the item attributes.
+		"""
 		return self._etc_inv
 
 	@property
 	def cash_inv(self):
+		"""`dict` of `dict`: Represents the in-game items contained within the CASH tab
+
+		The key is the position of the item in the inventory tab, and the value
+		contains the item attributes.
+		"""
 		return self._cash_inv
 
 	@property
 	def install_inv(self):
+		"""`dict` of `dict`: Represents the in-game items contained within the SETUP tab
+
+		The key is the position of the item in the inventory tab, and the value
+		contains the item attributes.
+		"""
 		return self._install_inv
 
 	@property
 	def equipped_inv(self):
+		"""`dict` of `dict`: Represents the in-game items currently equipped by the character
+
+		The key is the position of the item in the inventory tab, and the value
+		contains the item attributes.
+		"""
 		return self._equipped_inv
 
 	def fetch_all_inv_items(self):
-		"""Fetch all items associated with the character"""
+		"""Fetch all items associated with the character
+
+		Returns:
+			A `list` of `dict` representing all inventory/equipped items
+		"""
 		try:
 			database = con.connect(
 				host=self._database_config['host'],
@@ -111,19 +131,20 @@ class Inventory:
 			print(f"ERROR: Unable to fetch inventory items\n{e}")
 
 	def load_inv(self, inv_type):
-		"""Given an inventory_type, fetch every item associated with it
+		"""Given an inventory type, fetch every item associated with it
 
-		Examples of inventory types: -1, 1, 2, 3, 4, 5
+		Examples of inventory types: `-1`, `1`, `2`, `3`, `4`, `5`
 
 		Args:
-			inv_type: Int
+
+			inv_type (`int`): Representation of the inventory type encoded in the database
 
 		Returns:
-			Dictionary of Dictionaries, representing all the in-game items
+			A `dict` of `dict`, representing all the in-game items
 			that are in the specified inventory type
 
 		Raises:
-			Generic error on failure
+			A generic error on failure
 		"""
 		try:
 			all_items = self._all_items
@@ -156,80 +177,110 @@ class Inventory:
 			print(f"ERROR: Unable to load inventory type {inv_type}\n{e}")
 
 	def init_equip_items(self):
+		"""Extract items belonging to the EQUIP tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("equip"))
 
 	def init_use_inv(self):
+		"""Extract items belonging to the USE tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("use"))
 
 	def init_etc_inv(self):
+		"""Extract items belonging to the ETC tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("etc'"))
 
 	def init_cash_inv(self):
+		"""Extract items belonging to the CASH tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("cash"))
 
 	def init_equipped_inv(self):
+		"""Extract items that are currently equipped from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("equipped"))
 
 	def init_install_inv(self):
+		"""Extract items belonging to the SETUP tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("setup"))
 
 	def has_item_in_equip(self, item_id):
 		"""Checks whether the EQUIP tab of the inventory has an item
 
-		Uses Inventory::has_item_in_inv_type()
+		Uses `Inventory::has_item_in_inv_type()`
+
+		Args:
+
+			item_id (`int`): Item ID of the item to check for
 
 		Returns:
-			Boolean, representing whether the specified item was found
+			A `bool`, representing whether the specified item was found
 		"""
 		return utils.has_item_in_inv_type(self.equip_inv, item_id)
 
 	def has_item_in_consume(self, item_id):
 		"""Checks whether the USE tab of the inventory has an item
 
-		Uses Inventory::has_item_in_inv_type()
+		Uses `Inventory::has_item_in_inv_type()`
+
+		Args:
+
+			item_id (`int`): Item ID of the item to check for
 
 		Returns:
-			Boolean, representing whether the specified item was found
+			A `bool`, representing whether the specified item was found
 		"""
 		return utils.has_item_in_inv_type(self.consume_inv, item_id)
 
 	def has_item_in_etc(self, item_id):
 		"""Checks whether the ETC tab of the inventory has an item
 
-		Uses Inventory::has_item_in_inv_type()
+		Uses `Inventory::has_item_in_inv_type()`
+
+		Args:
+
+			item_id (`int`): Item ID of the item to check for
 
 		Returns:
-			Boolean, representing whether the specified item was found
+			A `bool`, representing whether the specified item was found
 		"""
 		return utils.has_item_in_inv_type(self.etc_inv, item_id)
 
 	def has_item_in_install(self, item_id):
 		"""Checks whether the SETUP tab of the inventory has an item
 
-		Uses Inventory::has_item_in_inv_type()
+		Uses `Inventory::has_item_in_inv_type()`
+
+		Args:
+
+			item_id (`int`): Item ID of the item to check for
 
 		Returns:
-			Boolean, representing whether the specified item was found
+			A `bool`, representing whether the specified item was found
 		"""
 		return utils.has_item_in_inv_type(self.install_inv, item_id)
 
 	def has_item_in_cash(self, item_id):
 		"""Checks whether the CASH tab of the inventory has an item
 
-		Uses Inventory::has_item_in_inv_type()
+		Uses `Inventory::has_item_in_inv_type()`
+
+		Args:
+
+			item_id (`int`): Item ID of the item to check for
 
 		Returns:
-			Boolean, representing whether the specified item was found
+			A `bool`, representing whether the specified item was found
 		"""
 		return utils.has_item_in_inv_type(self.cash_inv, item_id)
 
 	def is_equipping(self, item_id):
-		"""Checks whether the an item is currently equipped
+		"""Checks whether an item is currently equipped
 
-		Uses Inventory::has_item_in_inv_type() to check whether the
+		Uses `Inventory::has_item_in_inv_type()` to check whether the
 		EQUIP window (i.e. Hotkey "E") has an item (i.e. item is equipped)
 
+		Args:
+
+			item_id (`int`): Item ID of the item to check for
+
 		Returns:
-			Boolean, representing whether the specified item was found
+			A `bool`, representing whether the specified item was found
 		"""
 		return utils.has_item_in_inv_type(self.equipped_inv, item_id)
