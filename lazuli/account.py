@@ -25,8 +25,8 @@ class Account:
 
 		Args:
 
-			account_info: `dict` of user attributes, formatted in AzureMS style
-			database_config: `dict` of protected attributes from a `Lazuli` object
+			account_info (`dict`):  Represents user attributes, formatted in AzureMS style
+			database_config (`dict`): Represents the of protected attributes from a `Lazuli` object
 		"""
 
 		self._account_info = account_info
