@@ -12,7 +12,7 @@ license = { file="LICENSE" }
 authors = [
     { name="Amos Chua" },
 ]
-maintainers - [
+maintainers = [
     { name="Brandon Phu" }
 ]
 keywords = [
