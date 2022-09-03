@@ -1,3 +1,45 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazuli"
+version = "3.0.0"
+description = "A Python-based tool for interacting with AzureMSv316-based databases."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file="LICENSE" }
+authors = [
+    { name="Amos Chua" },
+]
+maintainers - [
+    { name="Brandon Phu" }
+]
+keywords = [
+    "database",
+    "maplestory",
+]
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"Intended Audience :: Developers",
+	"Intended Audience :: Education",
+	"Operating System :: OS Independent",
+	"License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+	"Natural Language :: English",
+	"Programming Language :: Python :: 3.10",
+	"Topic :: Games/Entertainment :: Side-Scrolling/Arcade Games",
+]
+dependencies = [
+    "mysql-connector-python >= 8.0.30",
+    "protobuf >= 3.2.*, < 4.0.*",
+]
+# Don't list test/packaging optional dependencies, since these are Git-side only 
+
+[project.urls]
+"Homepage" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli"
+"Bug Tracker" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli/issues"
+"Wiki" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki"
+"API Docs" = "https://team-spirit-productions.github.io/Lazuli/reference/lazuli/"
+
+[tool.setuptools]
+packages = ["lazuli"]
