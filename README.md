@@ -3,7 +3,7 @@
 [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=month&units=international_system&left_color=black&right_color=blue&left_text=Monthly%20Downloads)](https://pepy.tech/project/lazuli) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=week&units=international_system&left_color=black&right_color=blue&left_text=Weekly%20Downloads)](https://pepy.tech/project/lazuli) [![HitCount](http://hits.dwyl.com/TEAM-SPIRIT-Productions/Lazuli.svg)](http://hits.dwyl.com/TEAM-SPIRIT-Productions/Lazuli)  
 *Stats courtesy of PePy and [dwyl](https://github.com/dwyl)*  
 
-Lazuli is a pip-compatible, Python-based package for interacting with [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
+Lazuli is a pip-compatible, Python-based package for interacting with [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases, such as [ElectronMS](https://github.com/Bratah123/ElectronMS).  
 Lazuli is inspired by and based on the [SwordieDB](https://github.com/Bratah123/SwordieDB) project.  
 
 Lazuli allows access to character and inventory attributes in [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
@@ -13,6 +13,7 @@ This makes it possible to produce not only feature-rich Discord bots, but also i
   - Easy to set-up - *simply install with pip!*
   - Lovingly commented
   - API docs and example code provided
+  - IDE hints available when importing after pip-installtion
   - Already used in [Lapis](https://github.com/TEAM-SPIRIT-Productions/Lapis)
 
 **Current Status: Now Available on [PyPi](https://pypi.org/project/lazuli/) (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))**  
