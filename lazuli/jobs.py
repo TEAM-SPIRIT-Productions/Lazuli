@@ -38,4 +38,3 @@ def parse_yaml_file(file_name: str) -> dict:
 
 YAML_FILE_NAME = "jobs.yaml"
 JOBS: dict[str, str] = parse_yaml_file(YAML_FILE_NAME)
-print(JOBS)
