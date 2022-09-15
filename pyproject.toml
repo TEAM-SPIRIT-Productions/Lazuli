@@ -7,7 +7,7 @@ name = "lazuli"
 version = "3.0.0"
 description = "A Python-based tool for interacting with AzureMSv316-based databases."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10.0"
 license = { file="LICENSE" }
 authors = [
     { name="Amos Chua" },
@@ -27,6 +27,7 @@ classifiers = [
 	"License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
 	"Natural Language :: English",
 	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
 	"Topic :: Games/Entertainment :: Side-Scrolling/Arcade Games",
 ]
 dependencies = [
@@ -42,5 +43,9 @@ dependencies = [
 "Wiki" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki"
 "API Docs" = "https://team-spirit-productions.github.io/Lazuli/reference/lazuli/"
 
+# Setuptools-specific configuration:
 [tool.setuptools]
 packages = ["lazuli"]
+
+[tool.setuptools.package-data]
+mypkg = ["jobs.yaml"]
