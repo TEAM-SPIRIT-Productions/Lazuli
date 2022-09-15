@@ -19,7 +19,7 @@ INSERT INTO `characters` (`id`, `accountid`, `name`, `level`, `str`, `dex`, `luk
 `int`, `hp`, `mp`, `maxhp`, `maxmp`, `hair`, `face`, `map`, `rankpoint`, `gp`, `soul`, `chatban`)
 VALUES (900001, 90001, 'tester0x00', 249, 40, 4, 4, 
 4, 500, 500, 500, 500, 36786, 23300, 253000000, 0, 0, 0, 'false')
-ON DUPLICATE KEY UPDATE `accountid`=90001, `name`='tester0x00', `level`=10, `str`=40, `dex`=4, `luk`=4, 
+ON DUPLICATE KEY UPDATE `accountid`=90001, `name`='tester0x00', `level`=249, `str`=40, `dex`=4, `luk`=4, 
 `int`=4, `hp`=500, `mp`=500, `maxhp`=500, `maxmp`=500, `hair`=36786, `face`=23300, `map`=253000000, `rankpoint`=0, `gp`=0, `soul`=0, `chatban`='false';
 
 -- Create admin tester character with Character ID of 900,002
@@ -27,7 +27,7 @@ INSERT INTO `characters` (`id`, `accountid`, `name`, `level`, `str`, `dex`, `luk
 `int`, `hp`, `mp`, `maxhp`, `maxmp`, `hair`, `face`, `map`, `rankpoint`, `gp`, `soul`, `chatban`)
 VALUES (900002, 90002, 'tester0x01', 250, 40, 4, 4, 
 4, 500, 500, 500, 500, 36786, 23300, 253000000, 0, 0, 0, 'false')
-ON DUPLICATE KEY UPDATE `accountid`=90002, `name`='tester0x01', `level`=10, `str`=40, `dex`=4, `luk`=4, 
+ON DUPLICATE KEY UPDATE `accountid`=90002, `name`='tester0x01', `level`=250, `str`=40, `dex`=4, `luk`=4, 
 `int`=4, `hp`=500, `mp`=500, `maxhp`=500, `maxmp`=500, `hair`=36786, `face`=23300, `map`=253000000, `rankpoint`=0, `gp`=0, `soul`=0, `chatban`='false';
 
 -- Allocate Inventory slots for character with Character ID of 900,001

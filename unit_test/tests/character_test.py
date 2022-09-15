@@ -71,7 +71,7 @@ def test_fetch_char_class_id(char, expected):
 		f"Job ID test failed! Job ID: {char.job}; Type: {type(char.job)}"
 
 
-@pytest.mark.parametrize("expected", [10])
+@pytest.mark.parametrize("expected", [249])
 def test_fetch_char_level(char, expected):
 	assert char.level == expected, \
 		f"Character level test failed! Level count: {char.level}; Type: {type(char.level)}"
