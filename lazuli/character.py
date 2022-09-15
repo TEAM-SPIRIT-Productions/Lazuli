@@ -6,9 +6,9 @@ in the LICENSE file.
 Refer to `database.py` or the project wiki on GitHub for usage examples.
 """
 
-from lazuli import JOBS
 from lazuli.account import Account
 from lazuli.inventory import Inventory
+from lazuli.jobs import JOBS
 import lazuli.utility as utils
 
 
