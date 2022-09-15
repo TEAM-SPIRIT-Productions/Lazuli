@@ -9,6 +9,11 @@ code.
 Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.*
 
+### Word of Caution  
+Please note that database changes will not take effect if the server is running. 
+Please make sure to only use the setter/adders when the server is not running 
+or, better yet, avoid these mutators altogether.
+
 .. include:: ../README.md
 """
 __docformat__ = "google"
