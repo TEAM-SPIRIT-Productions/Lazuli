@@ -1,2 +1,4 @@
 mysql-connector-python==8.0.30
 protobuf==3.20.1
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
