@@ -6,7 +6,7 @@
 Lazuli is a pip-compatible, Python-based package for interacting with [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases, such as [ElectronMS](https://github.com/Bratah123/ElectronMS).  
 Lazuli is inspired by and based on the [SwordieDB](https://github.com/Bratah123/SwordieDB) project.  
 
-Lazuli allows access to character and inventory attributes in [AzureMSv316](https://github.com/SoulGirlJP/AzureV316)-based databases.  
+Lazuli allows access to character and inventory attributes in Odin-like databases.  
 This makes it possible to produce not only feature-rich Discord bots, but also integrated websites.  
 
 ***Perks:***  
@@ -17,7 +17,8 @@ This makes it possible to produce not only feature-rich Discord bots, but also i
   - Already used in [Lapis](https://github.com/TEAM-SPIRIT-Productions/Lapis)
 
 **Current Status: Now Available on [PyPi](https://pypi.org/project/lazuli/) (See [changelog](https://github.com/TEAM-SPIRIT-Productions/Lazuli/blob/main/CHANGELOG.md))**  
-*Note: Lazuli v3 includes several dependency removals. We suggest you delete your `venv` folder and re-creating the virtual environment when upgrading from v2 to v3.*  
+*Note: Lazuli v3 includes several dependency removals.*  
+*We suggest you delete your `venv` folder and re-creating the virtual environment when upgrading from v2 to v3.*  
 
 ---
 ### Quick Start
@@ -35,7 +36,7 @@ Installation via PyPi/Pip:
         - gives number (int) of accounts currently connected to the server
 
 ## Documentation:
-Kindly refer to the [Project Wiki](https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki) for detailed documentation.  
+Kindly refer to the [Project Wiki](https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki) and [API Docs](https://team-spirit-productions.github.io/Lazuli/reference/lazuli/) for detailed documentation.  
 The [Discussions Page](https://github.com/TEAM-SPIRIT-Productions/Lazuli/discussions) is currently open for any questions!  
 Please report any [issues](https://github.com/TEAM-SPIRIT-Productions/Lazuli/issues)!  
 
