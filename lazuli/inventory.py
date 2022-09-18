@@ -5,6 +5,7 @@ Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
+from typing import Any, Optional
 import mysql.connector as con
 import lazuli.utility as utils
 
@@ -50,6 +51,32 @@ class Inventory:
 		self._install_inv = self.init_install_inv()
 
 		self._equipped_inv = self.init_equipped_inv()
+
+
+	@staticmethod
+	def has_item_in_inv_type(
+		inv_type: dict[int, dict[str, Optional[int]]],
+		item_id: int,
+	) -> bool:
+		"""Checks whether the particular tab of the inventory has an item
+
+		Generic method used by `Inventory::has_item_in_XXX()` methods,
+		and the `Inventory::is_equipping()` method. Iterates through the dictionary
+		of items associated with the specified tab, and check if
+		the provided item ID can be found as a value.
+
+		Args:
+
+			inv_type (`dict`): Represents the inventory tab to search
+			item_id (`int`): Represents the ID of the item to search for
+
+		Returns:
+			A `bool`, representing whether the specified item was found
+		"""
+		for bag_index in inv_type:
+			if inv_type[bag_index]['itemid'] == item_id:
+				return True
+		return False
 
 	@property
 	def equip_inv(self):
@@ -212,7 +239,7 @@ class Inventory:
 		Returns:
 			A `bool`, representing whether the specified item was found
 		"""
-		return utils.has_item_in_inv_type(self.equip_inv, item_id)
+		return self.has_item_in_inv_type(self.equip_inv, item_id)
 
 	def has_item_in_consume(self, item_id):
 		"""Checks whether the USE tab of the inventory has an item
@@ -226,7 +253,7 @@ class Inventory:
 		Returns:
 			A `bool`, representing whether the specified item was found
 		"""
-		return utils.has_item_in_inv_type(self.consume_inv, item_id)
+		return self.has_item_in_inv_type(self.consume_inv, item_id)
 
 	def has_item_in_etc(self, item_id):
 		"""Checks whether the ETC tab of the inventory has an item
@@ -240,7 +267,7 @@ class Inventory:
 		Returns:
 			A `bool`, representing whether the specified item was found
 		"""
-		return utils.has_item_in_inv_type(self.etc_inv, item_id)
+		return self.has_item_in_inv_type(self.etc_inv, item_id)
 
 	def has_item_in_install(self, item_id):
 		"""Checks whether the SETUP tab of the inventory has an item
@@ -254,7 +281,7 @@ class Inventory:
 		Returns:
 			A `bool`, representing whether the specified item was found
 		"""
-		return utils.has_item_in_inv_type(self.install_inv, item_id)
+		return self.has_item_in_inv_type(self.install_inv, item_id)
 
 	def has_item_in_cash(self, item_id):
 		"""Checks whether the CASH tab of the inventory has an item
@@ -268,7 +295,7 @@ class Inventory:
 		Returns:
 			A `bool`, representing whether the specified item was found
 		"""
-		return utils.has_item_in_inv_type(self.cash_inv, item_id)
+		return self.has_item_in_inv_type(self.cash_inv, item_id)
 
 	def is_equipping(self, item_id):
 		"""Checks whether an item is currently equipped
@@ -283,4 +310,4 @@ class Inventory:
 		Returns:
 			A `bool`, representing whether the specified item was found
 		"""
-		return utils.has_item_in_inv_type(self.equipped_inv, item_id)
+		return self.has_item_in_inv_type(self.equipped_inv, item_id)
