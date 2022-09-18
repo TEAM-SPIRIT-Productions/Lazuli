@@ -358,6 +358,8 @@ class Account:
 			A generic error on failure
 		"""
 		char_data = self._get_char_list()
+		if not char_data:  # empty list
+			return char_data
 		return utils.extract_name(char_data)
 
 	@property
