@@ -135,7 +135,7 @@ class Lazuli:
 		# Fetch first result because there should only be one character
 		# with that name
 		character_stats: dict[str, Any] = self.get_db_first_hit(
-			f"SELECT * FROM `characters` WHERE `name` =' {char_name}'"
+			f"SELECT * FROM `characters` WHERE `name` ='{char_name}'"
 		)
 
 		character = Character(character_stats, self._database_config)
