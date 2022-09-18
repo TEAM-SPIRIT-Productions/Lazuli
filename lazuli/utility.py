@@ -5,12 +5,13 @@ Use of this source code is governed by a AGPL-style license that can be found
 in the LICENSE file.
 Refer to `database.py` or the project wiki on GitHub for usage examples.
 """
+from typing import Any
 import mysql.connector as con
 
 # CONSTANTS -------------------------------------------------------------------
 # Dictionary that maps inventory tabs' names to
 # their corresponding index in the DB/source
-map_inv_types = {
+MAP_INV_TYPES = {
 	'equipped': -1,
 	'equip': 1,
 	'eqp': 1,
@@ -19,12 +20,12 @@ map_inv_types = {
 	'etc': 4,
 	'setup': 3,  # Default name for Lazuli purposes
 	'install': 3,  # name in WZ
-	'cash': 5
+	'cash': 5,
 }
 
 
 # UTILITY FUNCTIONS -----------------------------------------------------------
-def get_key(dictionary, val):
+def get_key(dictionary: dict, val: Any) -> Any:
 	"""Generic function to return the key for a given value
 
 	Iterates through the dictionary, comparing values to see if it matches
@@ -33,6 +34,8 @@ def get_key(dictionary, val):
 	This function short-circuits (i.e. returns with the first match found).
 	Note: OrderedDict is no longer necessary for this as of Python 3.6,
 	as order is preserved automagically.
+	Note2: This function does not check whether the value type provided matches 
+	with the type of the value in the provided dictionary.
 
 	Args:
 
@@ -60,7 +63,7 @@ def get_key(dictionary, val):
 		return False
 
 
-def get_db_all_hits(config, query):
+def get_db_all_hits(config: dict[str, str], query: str) -> list:
 	"""Generic function for fetching all matching data from the DB
 
 	Generic top level function for fetching all matching data from DB,
@@ -104,7 +107,7 @@ def get_db_all_hits(config, query):
 		)
 
 
-def get_db_first_hit(config, query):
+def get_db_first_hit(config: dict[str, str], query: str) -> Any:
 	"""Generic function for fetching the first result from DB
 
 	This function grabs the first hit from `get_db_all_hits`;
@@ -121,7 +124,7 @@ def get_db_first_hit(config, query):
 	return get_db_all_hits(config, query)[0]
 
 
-def get_stat_by_column(data, column):
+def get_stat_by_column(data: dict[str, Any], column: str) -> Any:
 	"""Fetches dictionary attribute by key (wrapper)
 
 	Args:
@@ -143,7 +146,7 @@ def get_stat_by_column(data, column):
 		)
 
 
-def write_to_db(config, query):
+def write_to_db(config: dict[str, str], query: str) -> bool:
 	"""Performs write operations to DB using the provided DB config and query
 
 	### CAN ONLY BE SET WHEN SERVER IS OFF!
@@ -181,19 +184,19 @@ def write_to_db(config, query):
 		return False
 
 
-def get_inv_type_by_name(inv_string):
+def get_inv_type_by_name(inv_string: str) -> int:
 	"""`int`: Encode an inventory type using its common name"""
-	inv_type = map_inv_types.get(inv_string)
+	inv_type = MAP_INV_TYPES.get(inv_string)
 	return inv_type
 
 
-def get_inv_name_by_type(inv_type):  # Never used
+def get_inv_name_by_type(inv_type: int) -> str:  # Never used
 	"""`str`: Decode an inventory type using from its value"""
-	inv_name = get_key(map_inv_types, inv_type)
+	inv_name = get_key(MAP_INV_TYPES, inv_type)
 	return inv_name
 
-
-def has_item_in_inv_type(inv_type, item_id):
+# TODO: REFACTOR
+def has_item_in_inv_type(inv_type: Inventory, item_id: int) -> bool:
 	"""Checks whether the particular tab of the inventory has an item
 
 	Generic top level function used by `Inventory::has_item_in_XXX()` methods,
@@ -215,7 +218,7 @@ def has_item_in_inv_type(inv_type, item_id):
 	return False
 
 
-def extract_name(player_list):
+def extract_name(player_list: list[dict[str, Any]]) -> list[str]:
 	"""Extracts a `list` of players from SQL data, via the name column
 
 	Args:
@@ -224,6 +227,9 @@ def extract_name(player_list):
 
 	Returns:
 		A `list` of `str`, representing player names
+
+	Raises:
+		RuntimeError: Improperly formatted or empty player list
 	"""
 	if not player_list[0]['name']:  # if empty or null; sanity check
 		raise RuntimeError("No players found!")
@@ -236,7 +242,10 @@ def extract_name(player_list):
 		return players
 
 
-def extract_name_and_value(player_list, column):
+def extract_name_and_value(
+	player_list: list[dict[str, Any]],
+	column: str,
+) -> list[tuple[str, Any]]:
 	"""Extracts a `list` of players and their corresponding attribute
 
 	Extracts a `list` of players and their corresponding attribute value from
@@ -250,6 +259,9 @@ def extract_name_and_value(player_list, column):
 	Returns:
 		A `list` of `tuple`, representing player names and
 		their corresponding values (e.g. level)
+
+	Raises:
+		RuntimeError: Improperly formatted or empty player list
 	"""
 	if not player_list[0]['name']:  # if empty or null; sanity check
 		raise RuntimeError("No such players found!")
