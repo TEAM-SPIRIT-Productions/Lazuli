@@ -76,7 +76,7 @@ class Lazuli:
 
 		Wrapper function. Uses the DB config from `Lazuli` attributes for
 		DB connection. Feeds the config values into `utility.get_db_all_hits()`.
-		Added here for API-use purposes.
+		Added here for explicit API-use purposes (discouraged).
 
 		Args:
 
@@ -98,7 +98,7 @@ class Lazuli:
 		"""Fetch data (first result) from DB using the provided query
 
 		This function grabs the first result from `get_db_all_hits.
-		Added here for API-use purposes.
+		Added here for explicit API-use purposes (discouraged).
 
 		Args:
 
