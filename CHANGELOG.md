@@ -3,9 +3,12 @@
 ### v3.0.0
 - Remove distribution- and documentation-related dependencies from requirements
 - Change documentation library from `Portray` to `pdoc`
+- Create GitHub Actions workflow for automatic generation of API documentation 
 - Reformat docstrings to follow Google style
 - Replace `JOBS` dictionary in `__init__` module with the SpiritSuite YAML document
-- Add type hints
+- PEP 484 Compliance: add type hints
+- PEP 621 Compliance: Use `pyproject.toml`, `setuptools`, and `build` for distribution
+- Update setup and build scripts
 
 ### v2.2.3
 - Update dependencies following vulnerability notices from GitHub Advisory Database
