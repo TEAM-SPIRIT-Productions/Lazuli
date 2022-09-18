@@ -1,5 +1,6 @@
 attrs==22.1.0
 bleach==5.0.1
+build==0.8.0
 certifi==2022.6.15
 charset-normalizer==2.1.1
 colorama==0.4.5
@@ -16,6 +17,7 @@ more-itertools==8.14.0
 mysql-connector-python==8.0.30
 packaging==21.3
 pdoc==12.1.0
+pep517==0.13.0
 pkginfo==1.8.3
 pluggy==1.0.0
 protobuf==3.20.1
