@@ -241,7 +241,7 @@ def test_level_changes(char, before, delta, expected):
 	# character is now level 31
 	assert char.level == expected, \
 		f"Character level adding test failed! Expected: {expected}; Level count: {char.level}; Type: {type(char.level)}"
-	char.level = 10  # reset to baseline
+	char.level = 249  # reset to baseline
 
 
 @pytest.mark.parametrize("before, expected", [
