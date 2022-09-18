@@ -33,7 +33,7 @@ classifiers = [
 dependencies = [
     "mysql-connector-python >= 8.0.30",
     "protobuf >= 3.2.*, < 4.0.*",
-	"ruamel.yaml >= 0.17.21 < 18.0.0",
+	"ruamel.yaml >= 0.17.21, < 18.0.0",
 ]
 # Don't list test/packaging optional dependencies, since these are Git-side only 
 
