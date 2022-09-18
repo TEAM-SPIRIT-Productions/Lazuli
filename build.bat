@@ -19,7 +19,7 @@ echo You have selected A: Build and publish to TestPyPi (Test)
 echo Now building the distribution archives...
 python -m build
 echo Now uploading the distribution archives...
-python -m twine upload --repository testpypi dist/*
+python -m twine upload --skip-existing --repository testpypi dist/*
 call pypi\scripts\deactivate.bat
 echo Sequence completed!
 pause
@@ -30,7 +30,7 @@ goto :eof
 :production
 echo You have selected B: Only publish to PyPi (Production)
 echo Now uploading the distribution archives...
-python -m twine upload dist/*
+python -m twine upload --skip-existing dist/*
 call pypi\scripts\deactivate.bat
 echo Sequence completed!
 pause
