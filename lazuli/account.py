@@ -79,6 +79,8 @@ class Account:
 		"""`str`: Represents account username
 
 		This is a `varchar(64)` in the database.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._username
 
@@ -109,6 +111,8 @@ class Account:
 
 		Note that in the database, this is a `int(1)`,
 		and not `bool`/`bit`/`char` for some reason.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._logged_in
 
@@ -132,6 +136,8 @@ class Account:
 
 		Note that in the database, this is a `int(1)`,
 		and not `bool`/`bit`/`char` for some reason.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._banned
 
@@ -153,6 +159,8 @@ class Account:
 		"""`str`: Represents the account ban reason
 
 		This is a `text` in the database.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._ban_reason
 
@@ -167,6 +175,8 @@ class Account:
 
 		Note that the setter does not allow `int` values larger than 32-bit
 		signed `int`.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._nx
 
@@ -181,6 +191,8 @@ class Account:
 	def add_nx(self, amount):
 		"""Adds the specified amount to the current NX pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of NX to be added to the NX pool
@@ -194,6 +206,8 @@ class Account:
 
 		Note that the setter does not allow `int` values larger than 32-bit
 		signed `int`.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._maple_points
 
@@ -210,6 +224,8 @@ class Account:
 	def add_maple_points(self, amount):
 		"""Adds the specified amount to the current Maple Points pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the number of Maple Points to be added to the current pool
@@ -223,6 +239,8 @@ class Account:
 
 		Note that the setter does not allow `int` values larger than 32-bit
 		signed `int`.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._vp
 
@@ -239,6 +257,8 @@ class Account:
 	def add_vp(self, amount):
 		"""Adds the specified amount to the current VP count
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the number of vote points (VP) to be added to the current VP count
@@ -252,6 +272,8 @@ class Account:
 
 		Note that the setter does not allow `int` values larger than 32-bit
 		signed `int`.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._dp
 
@@ -266,6 +288,8 @@ class Account:
 	def add_dp(self, amount):
 		"""Adds the specified amount to the current DP count
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the number of DPs to be added to the current DP count
@@ -278,6 +302,8 @@ class Account:
 		"""`int`: Represents the number of character slots the user has
 
 		Note that the setter does not allow `int` values larger than `52`.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._char_slots
 
@@ -293,6 +319,8 @@ class Account:
 
 	def add_char_slots(self, amount):
 		"""Adds the specified amount to the current character slot count
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 
 		Args:
 
@@ -354,6 +382,8 @@ class Account:
 
 		This un-stucks the account, since server checks the `loggedin` value
 		to decided whether they are "logged in".
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		self.logged_in = 0
 
@@ -364,6 +394,8 @@ class Account:
 		- **WARNING**: INHERENTLY UNSAFE!
 
 		Azure316 now hashes passwords, as of [5dc6d6e](https://github.com/SoulGirlJP/AzureV316/commit/5dc6d6e2439195618337d02593512c515ab5de58).
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 
 		Args:
 
@@ -405,6 +437,8 @@ class Account:
 
 	def set_stat_by_column(self, column, value):
 		"""Sets an account's attributes by column name in database
+
+		### ONLY WORKS WHEN SERVER IS OFF!
 
 		Grabs the database attributes provided through the class constructor.
 		Uses these attributes to attempt a database connection through

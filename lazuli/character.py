@@ -177,6 +177,8 @@ class Character:
 		YMMV if you're attempting to use Lazuli for older Odin-like servers
 		that only support a level cap of 255, or for newer ones that support
 		higher level caps.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._level
 
@@ -193,6 +195,8 @@ class Character:
 	def add_level(self, amount):
 		"""Adds the specified amount to the current level count
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the number of levels to be added to the current count
@@ -206,6 +210,8 @@ class Character:
 
 		Note that the setter does not allow arbitrary Job IDs not documented
 		in SpiritSuite.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._job
 
@@ -236,6 +242,8 @@ class Character:
 		Note that you may encounter encoding issues if you're attempting to set
 		non-latin names, as Korean character support is not a priority for this
 		module.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._name
 
@@ -265,6 +273,8 @@ class Character:
 		The setter only accepts values from 0 to 10 billion. YMMV if you're
 		attempting to use Lazuli for older Odin-like servers that only supports
 		32-bit signed `int` values for mesos.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._meso
 
@@ -281,6 +291,8 @@ class Character:
 	def add_mesos(self, amount):
 		"""Adds the specified amount to the current meso count
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of mesos to be added to the current count
@@ -294,6 +306,8 @@ class Character:
 
 		The setter only accepts values that can be held using Java's signed
 		`shorts` (-32768 - 32767).
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._fame
 
@@ -310,6 +324,8 @@ class Character:
 	def add_fame(self, amount):
 		"""Adds the specified amount to the current fame count
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the number of fames to be added to the current count
@@ -322,6 +338,8 @@ class Character:
 		"""`int`: Represents the Map ID of the map that the character is in
 
 		The setter only accepts map IDs ranging from 100,000,000 to 999,999,999.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._map
 
@@ -339,6 +357,8 @@ class Character:
 		"""`int`: Represents the Face ID of the character
 
 		The setter only accepts face IDs ranging from 20,000 to 29,999.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._face
 
@@ -356,6 +376,8 @@ class Character:
 		"""`int`: Represents the Hair ID of the character
 
 		The setter only accepts hair IDs ranging from 30,000 to 49,999.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._hair
 
@@ -373,6 +395,8 @@ class Character:
 		"""`int`: Represents the Skin ID of the character
 
 		The setter only accepts skin IDs ranging from 0 to 16.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._skin
 
@@ -390,6 +414,8 @@ class Character:
 		"""`int`: Represents the Gender ID of the character
 
 		The setter only accepts skin IDs ranging from -1 to 1.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._gender
 
@@ -411,6 +437,8 @@ class Character:
 		large EXP values, subject to what the server can handle without
 		overflows. The upper limits have not been tested. Negative values are
 		allowed, for convenience of developers' testing.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._exp
 
@@ -431,6 +459,8 @@ class Character:
 	def add_exp(self, amount):
 		"""Add the specified amount to the current existing EXP pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of EXP to be added to the current pool
@@ -444,6 +474,8 @@ class Character:
 
 		The setter only accepts values that can be held using Java's signed
 		`shorts` (-32768 - 32767).
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._strength
 
@@ -462,6 +494,8 @@ class Character:
 	def add_str(self, amount):
 		"""Add the specified amount to the current existing STR pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of STR to be added to the current pool
@@ -475,6 +509,8 @@ class Character:
 
 		The setter only accepts values that can be held using Java's signed
 		`shorts` (-32768 - 32767).
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._dex
 
@@ -491,6 +527,8 @@ class Character:
 	def add_dex(self, amount):
 		"""Add the specified amount to the current existing DEX pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of DEX to be added to the current pool
@@ -504,6 +542,8 @@ class Character:
 
 		The setter only accepts values that can be held using Java's signed
 		`shorts` (-32768 - 32767).
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._inte
 
@@ -520,6 +560,8 @@ class Character:
 	def add_inte(self, amount):
 		"""Add the specified amount to the current existing INT pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of INT to be added to the current pool
@@ -533,6 +575,8 @@ class Character:
 
 		The setter only accepts values that can be held using Java's signed
 		`shorts` (-32768 - 32767).
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._luk
 
@@ -548,6 +592,8 @@ class Character:
 
 	def add_luk(self, amount):
 		"""Add the specified amount to the current existing LUK pool
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 
 		Args:
 
@@ -576,6 +622,8 @@ class Character:
 
 		The setter only accepts values from 1 to 500,000. YMMV if you're using
 		an older Odin-like server whose client can not support 500,000 max HP.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._max_hp
 
@@ -593,6 +641,8 @@ class Character:
 	def add_max_hp(self, amount):
 		"""Add the specified amount to the current existing Max HP pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of Max HP to be added to the current pool
@@ -606,6 +656,8 @@ class Character:
 
 		The setter only accepts values from 1 to 500,000. YMMV if you're using
 		an older Odin-like server whose client can not support 500,000 max MP.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._max_mp
 
@@ -623,6 +675,8 @@ class Character:
 	def add_max_mp(self, amount):
 		"""Add the specified amount to the current existing Max MP pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of max MP to be added to the current pool
@@ -637,6 +691,8 @@ class Character:
 		The setter only accepts values that can be held using Java's signed
 		`shorts` (-32768 - 32767). Negative values are allowed for developers'
 		testing convenience.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._ap
 
@@ -655,6 +711,8 @@ class Character:
 	def add_ap(self, amount):
 		"""Add the specified amount to the current existing free AP pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of free AP to be added to the current pool
@@ -667,6 +725,8 @@ class Character:
 		"""`int`: Represents the character's Buddy List slots
 
 		The setter only accepts values from 20 to 100.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._bl_slots
 
@@ -684,6 +744,8 @@ class Character:
 	def add_bl_slots(self, amount):
 		"""Add the specified amount to the current existing BL slots cap
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of BL slots to be added to the current limit
@@ -697,6 +759,8 @@ class Character:
 
 		The setter only accepts values from 0 to the upper limit for a 32-bit
 		signed `int`.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._rebirths
 
@@ -713,6 +777,8 @@ class Character:
 	def add_rebirths(self, amount):
 		"""Add the specified amount to the current existing rebirth count
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of rebirths to be added to the current count
@@ -728,6 +794,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._ambition
 
@@ -745,6 +813,8 @@ class Character:
 	def add_ambition(self, amount):
 		"""Add the specified amount to the current existing Ambition pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of ambition exp to be added to the current pool
@@ -760,6 +830,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._insight
 
@@ -777,6 +849,8 @@ class Character:
 	def add_insight(self, amount):
 		"""Add the specified amount to the current existing Insight pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of insight exp to be added to the current pool
@@ -792,6 +866,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._willpower
 
@@ -809,6 +885,8 @@ class Character:
 	def add_willpower(self, amount):
 		"""Add the specified amount to the current existing Willpower pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of willpower exp to be added to the current pool
@@ -824,6 +902,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._diligence
 
@@ -841,6 +921,8 @@ class Character:
 	def add_diligence(self, amount):
 		"""Add the specified amount to the current existing Diligence pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of diligence exp to be added to the current pool
@@ -856,6 +938,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._empathy
 
@@ -873,6 +957,8 @@ class Character:
 	def add_empathy(self, amount):
 		"""Add the specified amount to the current existing Empathy pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of empathy exp to be added to the current pool
@@ -888,6 +974,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._charm
 
@@ -904,6 +992,8 @@ class Character:
 
 	def add_charm(self, amount):
 		"""Add the specified amount to the current existing Charm pool
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 
 		Args:
 
@@ -936,6 +1026,8 @@ class Character:
 		signed `int`. Note that we are unsure of the actual limitations in-game
 		, so YMMV for large numbers. The current checks are based on the DB's
 		limits.
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._honour
 
@@ -953,6 +1045,8 @@ class Character:
 	def add_honour(self, amount):
 		"""Add the specified amount to the current existing Honour pool
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
 			amount (`int`): Represents the amount of honour exp to be added to the current pool
@@ -965,6 +1059,8 @@ class Character:
 		"""`str`: Represents whether a character is chat-banned
 
 		The setter only accepts string values "false", or "true".
+
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
 		"""
 		return self._mute
 
@@ -1075,6 +1171,8 @@ class Character:
 		provided column in the characters table, with the provided value.
 		**NOT** recommended to use this alone, as it won't update the
 		character instance variables (in memory) post-change.
+
+		### ONLY WORKS WHEN SERVER IS OFF!
 
 		Args:
 

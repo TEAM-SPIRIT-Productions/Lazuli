@@ -146,6 +146,8 @@ def get_stat_by_column(data, column):
 def write_to_db(config, query):
 	"""Performs write operations to DB using the provided DB config and query
 
+	### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 	Args:
 
 		config (`dict`): Represents the database config attributes
