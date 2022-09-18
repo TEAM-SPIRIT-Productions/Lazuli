@@ -17,7 +17,7 @@ echo Now building the distribution archives...
 python -m build
 echo Now uploading the distribution archives...
 python -m twine upload --repository testpypi dist/*
-call venv\scripts\deactivate.bat
+call pypi\scripts\deactivate.bat
 echo Sequence completed!
 pause
 
@@ -28,6 +28,6 @@ EXIT /B 0
 echo You have selected B: Only publish to PyPi (Production)
 echo Now uploading the distribution archives...
 python -m twine upload dist/*
-call venv\scripts\deactivate.bat
+call pypi\scripts\deactivate.bat
 echo Sequence completed!
 pause
