@@ -6,6 +6,7 @@ in the LICENSE file.
 Refer to `database.py` or the project wiki on GitHub for usage examples.
 """
 
+from typing import Any
 import lazuli.utility as utils
 
 
@@ -20,7 +21,11 @@ class Account:
 	appropriate getter and setter methods for said attributes.
 	"""
 
-	def __init__(self, account_info, database_config):
+	def __init__(
+		self,
+		account_info: dict[str, Any],
+		database_config: dict[str, str],
+	) -> None:
 		"""Emulates how the `Account` object is handled by a game server
 
 		Args:
@@ -32,23 +37,23 @@ class Account:
 		self._account_info = account_info
 		self._database_config = database_config
 
-		self._account_id = 0  # Primary Key - Do NOT set
-		self._username = ""  # varchar(64)
-		self._logged_in = 0  # int(1) and not bool for some reason
-		self._banned = 0  # int(1) and not bool for some reason
-		self._ban_reason = ""  # text
+		self._account_id: int = 0  # Primary Key - Do NOT set
+		self._username: str = ""  # varchar(64)
+		self._logged_in: int = 0  # int(1) and not bool for some reason
+		self._banned: int = 0  # int(1) and not bool for some reason
+		self._ban_reason: str = ""  # text
 		# The GM attribute has nothing to do with
 		# in-game GM command level - excluded for now
-		# self._gm = 0
-		self._nx = 0
-		self._maple_points = 0
-		self._vp = 0
-		self._dp = 0
-		self._char_slots = 0
+		# self._gm: int = 0
+		self._nx: int = 0
+		self._maple_points: int = 0
+		self._vp: int = 0
+		self._dp: int = 0
+		self._char_slots: int = 0
 
 		self.init_account_stats()
 
-	def init_account_stats(self):
+	def init_account_stats(self) -> None:
 		"""Initialises `Account` instance attributes' values.
 
 		Runs near the end of `Account::__init__(account_info, database_config)`.
@@ -70,12 +75,12 @@ class Account:
 		self._char_slots = self._account_info['chrslot']
 
 	@property
-	def account_id(self):
+	def account_id(self) -> int:
 		"""`int`: Represents Primary Key for account - Do **NOT** set manually"""
 		return self._account_id  # Primary Key; DO NOT set
 
 	@property
-	def username(self):
+	def username(self) -> str:
 		"""`str`: Represents account username
 
 		This is a `varchar(64)` in the database.
@@ -85,7 +90,7 @@ class Account:
 		return self._username
 
 	@username.setter
-	def username(self, new_name):
+	def username(self, new_name: str) -> None:
 		# Check for length:
 		if len(str(new_name)) > 64:
 			# Message to be passed along on failure:
@@ -106,7 +111,7 @@ class Account:
 				raise ValueError("That name is already taken!")
 
 	@property
-	def logged_in(self):
+	def logged_in(self) -> int:
 		"""`int`: Represents the login status of the account
 
 		Note that in the database, this is a `int(1)`,
@@ -117,11 +122,8 @@ class Account:
 		return self._logged_in
 
 	@logged_in.setter
-	def logged_in(self, value):
-		if not isinstance(value, int):
-			raise ValueError("Invalid input! Stick to either 0 or 1!")
-
-		elif value > 127:  # DB only accepts 1-byte int
+	def logged_in(self, value: int) -> None:
+		if value > 127:  # DB only accepts 1-byte int
 			raise ValueError(
 				"That `logged_in` value is too large! "
 				"Stick to either 0 or 1!")
@@ -131,7 +133,7 @@ class Account:
 			self._logged_in = value
 
 	@property
-	def banned(self):
+	def banned(self) -> int:
 		"""`int`: Represents the ban status of the account
 
 		Note that in the database, this is a `int(1)`,
@@ -142,11 +144,8 @@ class Account:
 		return self._banned
 
 	@banned.setter
-	def banned(self, value):
-		if not isinstance(value, int):
-			raise ValueError("Invalid input! Stick to either 0 or 1!")
-
-		elif value > 127:  # DB only accepts 1-byte int
+	def banned(self, value: int) -> None:
+		if value > 127:  # DB only accepts 1-byte int
 			raise ValueError(
 				"That `banned` value is too large! "
 				"Stick to either 0 or 1!")
@@ -155,7 +154,7 @@ class Account:
 			self._banned = value
 
 	@property
-	def ban_reason(self):
+	def ban_reason(self) -> str:
 		"""`str`: Represents the account ban reason
 
 		This is a `text` in the database.
@@ -165,12 +164,12 @@ class Account:
 		return self._ban_reason
 
 	@ban_reason.setter
-	def ban_reason(self, value):
+	def ban_reason(self, value: str) -> None:
 		self.set_stat_by_column("banreason", value)  # type `text`; 65k chars
 		self._ban_reason = value
 
 	@property
-	def nx(self):
+	def nx(self) -> int:
 		"""`int`: Represents the amount of NX Prepaid the user has
 
 		Note that the setter does not allow `int` values larger than 32-bit
@@ -181,14 +180,14 @@ class Account:
 		return self._nx
 
 	@nx.setter
-	def nx(self, value):
+	def nx(self, value: int) -> None:
 		if value > 2147483647:
 			raise ValueError("Invalid input! Please keep NX within 2.1b!")
 		else:
 			self.set_stat_by_column("nxCash", value)
 			self._nx = value
 
-	def add_nx(self, amount):
+	def add_nx(self, amount: int) -> None:
 		"""Adds the specified amount to the current NX pool
 
 		### CAN ONLY BE SET WHEN SERVER IS OFF!
@@ -201,7 +200,7 @@ class Account:
 		self.nx = new_nx
 
 	@property
-	def maple_points(self):
+	def maple_points(self) -> int:
 		"""`int`: Represents the amount of Maple Points the user has
 
 		Note that the setter does not allow `int` values larger than 32-bit
@@ -212,7 +211,7 @@ class Account:
 		return self._maple_points
 
 	@maple_points.setter
-	def maple_points(self, value):
+	def maple_points(self, value: int) -> None:
 		if value > 2147483647:
 			raise ValueError(
 				"Invalid input! "
@@ -221,7 +220,7 @@ class Account:
 			self.set_stat_by_column("mPoints", value)
 			self._maple_points = value
 
-	def add_maple_points(self, amount):
+	def add_maple_points(self, amount: int) -> None:
 		"""Adds the specified amount to the current Maple Points pool
 
 		### CAN ONLY BE SET WHEN SERVER IS OFF!
@@ -234,7 +233,7 @@ class Account:
 		self.maple_points = new_maple_points
 
 	@property
-	def vp(self):
+	def vp(self) -> int:
 		"""`int`: Represents the amount of Vote Points the user has
 
 		Note that the setter does not allow `int` values larger than 32-bit
@@ -245,7 +244,7 @@ class Account:
 		return self._vp
 
 	@vp.setter
-	def vp(self, value):
+	def vp(self, value: int) -> None:
 		if value > 2147483647:
 			raise ValueError(
 				"Invalid input! "
@@ -254,7 +253,7 @@ class Account:
 			self.set_stat_by_column("vpoints", value)
 			self._vp = value
 
-	def add_vp(self, amount):
+	def add_vp(self, amount: int) -> None:
 		"""Adds the specified amount to the current VP count
 
 		### CAN ONLY BE SET WHEN SERVER IS OFF!
@@ -267,7 +266,7 @@ class Account:
 		self.vp = new_vp
 
 	@property
-	def dp(self):
+	def dp(self) -> int:
 		"""`int`: Represents the amount of Donation Points the user has
 
 		Note that the setter does not allow `int` values larger than 32-bit
@@ -278,14 +277,14 @@ class Account:
 		return self._dp
 
 	@dp.setter
-	def dp(self, value):
+	def dp(self, value: int) -> None:
 		if value > 2147483647:
 			raise ValueError("Invalid input! Please keep DPs within 2.1b!")
 		else:
 			self.set_stat_by_column("realcash", value)
 			self._dp = value
 
-	def add_dp(self, amount):
+	def add_dp(self, amount: int) -> None:
 		"""Adds the specified amount to the current DP count
 
 		### CAN ONLY BE SET WHEN SERVER IS OFF!
@@ -298,7 +297,7 @@ class Account:
 		self.dp = new_dp
 
 	@property
-	def char_slots(self):
+	def char_slots(self) -> int:
 		"""`int`: Represents the number of character slots the user has
 
 		Note that the setter does not allow `int` values larger than `52`.
@@ -308,7 +307,7 @@ class Account:
 		return self._char_slots
 
 	@char_slots.setter
-	def char_slots(self, value):
+	def char_slots(self, value: int) -> None:
 		if value > 52:
 			raise ValueError(
 				"Invalid input! "
@@ -317,7 +316,7 @@ class Account:
 			self.set_stat_by_column("chrslot", value)
 			self._char_slots = value
 
-	def add_char_slots(self, amount):
+	def add_char_slots(self, amount: int) -> None:
 		"""Adds the specified amount to the current character slot count
 
 		### CAN ONLY BE SET WHEN SERVER IS OFF!
@@ -329,7 +328,7 @@ class Account:
 		new_count = int(amount) + self.char_slots
 		self.char_slots = new_count
 
-	def _get_char_list(self):
+	def _get_char_list(self) -> list[dict[str, Any]]:
 		"""Fetch all rows with the same account ID, from DB
 
 		Returns:
@@ -346,7 +345,7 @@ class Account:
 		return data
 
 	@property
-	def characters(self):
+	def characters(self) -> list[str]:
 		"""`list[str]`: Represents the IGN of all characters in the same account
 
 		Returns:
@@ -363,13 +362,13 @@ class Account:
 		return utils.extract_name(char_data)
 
 	@property
-	def free_char_slots(self):
+	def free_char_slots(self) -> int:
 		"""`int`: Represents the number of free character slots the user has"""
 		total_slots = self._char_slots
 		used_slots = len(self._get_char_list())  # count the number of chars
 		return total_slots - used_slots
 
-	def is_online(self):
+	def is_online(self) -> bool:
 		"""Checks if the `loggedin` column is greater than `0`
 
 		Returns:
@@ -379,7 +378,7 @@ class Account:
 			return True
 		return False
 
-	def unstuck(self):
+	def unstuck(self) -> None:
 		"""Sets `loggedin` column in database to `0`
 
 		This un-stucks the account, since server checks the `loggedin` value
@@ -389,7 +388,7 @@ class Account:
 		"""
 		self.logged_in = 0
 
-	def change_password(self, new_pass):
+	def change_password(self, new_pass: str) -> None:
 		"""Changes the current password to the given one.
 
 		- **WARNING**: DEPRECATED!
@@ -405,8 +404,8 @@ class Account:
 		"""
 		self.set_stat_by_column("password", new_pass)
 
-	def get_deep_copy(self):
-		"""Returns all known info about the `Account` as a Dictionary"""
+	def get_deep_copy(self) -> list[str]:
+		"""Returns all known info about the `Account` as a list"""
 		attributes = [
 			f"Username {self.username}'s attributes:\n",
 			f"Account ID: {self.account_id}, ",
@@ -422,7 +421,7 @@ class Account:
 		]
 		return attributes
 
-	def get_stat_by_column(self, column):
+	def get_stat_by_column(self, column:str) -> Any:
 		"""Fetches account attribute by column name
 
 		Args:
@@ -430,14 +429,14 @@ class Account:
 			column (`str`): Represents column name in the DB
 
 		Returns:
-			An `int` or `str`, representing user attribute queried
+			`Any` type (likely `str`, `int`, or `datetime`), representing user attribute queried
 
 		Raises:
 			A generic error on failure, handled by `utils.get_stat_by_column`
 		"""
 		return utils.get_stat_by_column(self._account_info, column)
 
-	def set_stat_by_column(self, column, value):
+	def set_stat_by_column(self, column: str, value: Any) -> bool:
 		"""Sets an account's attributes by column name in database
 
 		### ONLY WORKS WHEN SERVER IS OFF!
