@@ -1,20 +1,33 @@
-rem This script generates API docs and pushes them to GitHub, as well as builds
-rem and pushes builds to PyPi
+rem This script builds lazulim and pushes the builds to PyPi
 rem @author KOOKIIE
 echo off
-call venv\scripts\activate.bat
-rem Generate API docs
-echo Now re-generating API Docs...
-call portray on_github_pages -mo lazuli
-echo API Docs pushed to GitHub Pages!
+call pypi\scripts\activate.bat
 
-rem Build & Distribute
+echo Please select which repository to publish to:
+echo A: Build and publish to TestPyPi (Test)
+echo B: Only publish to PyPi (Production)
+choice /c AB /t 10 /d A /m "What is your choice"
+if errorlevel 2 call :production
+if errorlevel 1 call :test
+
+:: function to run from choice A
+:test
+echo You have selected A: Build and publish to TestPyPi (Test)
 echo Now building the distribution archives...
-python setup.py sdist bdist_wheel
+python -m build
 echo Now uploading the distribution archives...
 python -m twine upload --repository testpypi dist/*
-python -m twine upload dist/*
+call venv\scripts\deactivate.bat
+echo Sequence completed!
+pause
 
+EXIT /B 0
+
+:: function to run from choice B
+:production
+echo You have selected B: Only publish to PyPi (Production)
+echo Now uploading the distribution archives...
+python -m twine upload dist/*
 call venv\scripts\deactivate.bat
 echo Sequence completed!
 pause
