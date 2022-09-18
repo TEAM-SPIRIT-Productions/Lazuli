@@ -35,7 +35,7 @@ pip install -r requirements.txt
 echo Sequence completed! You may now close this window:
 pause
 
-EXIT /B 0
+goto :eof
 
 rem ----------------------------------------------------------
 
