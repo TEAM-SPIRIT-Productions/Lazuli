@@ -275,6 +275,8 @@ class Lazuli:
 			Generic error on failure, handled by `utility.get_db_all_hits()`
 		"""
 		player_data = self.get_online_list()
+		if not player_data:  # empty list
+			return player_data
 		return utils.extract_name(player_data)
 
 	def get_level_ranking(
