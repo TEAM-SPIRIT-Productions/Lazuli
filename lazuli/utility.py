@@ -195,28 +195,6 @@ def get_inv_name_by_type(inv_type: int) -> str:  # Never used
 	inv_name = get_key(MAP_INV_TYPES, inv_type)
 	return inv_name
 
-# TODO: REFACTOR
-def has_item_in_inv_type(inv_type: Inventory, item_id: int) -> bool:
-	"""Checks whether the particular tab of the inventory has an item
-
-	Generic top level function used by `Inventory::has_item_in_XXX()` methods,
-	and the `Inventory::is_equipping()` method. Iterates through the dictionary
-	of items associated with the specified tab, and check if
-	the provided item ID can be found as a value.
-
-	Args:
-
-		inv_type (`Inventory`): Represents the inventory tab to search
-		item_id (`int`): Represents the ID of the item to search for
-
-	Returns:
-		A `bool`, representing whether the specified item was found
-	"""
-	for bag_index in inv_type:
-		if inv_type[bag_index]['itemid'] == item_id:
-			return True
-	return False
-
 
 def extract_name(player_list: list[dict[str, Any]]) -> list[str]:
 	"""Extracts a `list` of players from SQL data, via the name column
