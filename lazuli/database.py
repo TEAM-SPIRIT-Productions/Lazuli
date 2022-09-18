@@ -14,6 +14,7 @@ Refer to the project wiki on GitHub for more in-depth examples.
 	meso = char.money  # Use of Character methods to fetch data from DB
 	char.money = 123456789  # Use of Character methods to write data to DB
 """
+from typing import Any, Union
 from lazuli.character import Character
 from lazuli.account import Account
 from lazuli.inventory import Inventory
@@ -47,13 +48,13 @@ class Lazuli:
 
 	def __init__(
 			self,
-			host="localhost",
-			schema="kms_316",
-			user="root",
-			password="",
-			port=3306,
-			charset="euckr"
-	):
+			host: str="localhost",
+			schema: str="kms_316",
+			user: str="root",
+			password: str="",
+			port: str=3306,
+			charset: str="euckr"
+	) -> None:
 		self._host = host
 		self._schema = schema
 		self._user = user
@@ -70,7 +71,7 @@ class Lazuli:
 			'charset': self._charset
 		}
 
-	def get_db_all_hits(self, query):
+	def get_db_all_hits(self, query: str) -> list:
 		"""Fetch all matching data from DB using the provided query
 
 		Wrapper function. Uses the DB config from `Lazuli` attributes for
@@ -93,7 +94,7 @@ class Lazuli:
 		data = utils.get_db_all_hits(self._database_config, query)
 		return data
 
-	def get_db_first_hit(self, query):
+	def get_db_first_hit(self, query: str) -> Any:
 		"""Fetch data (first result) from DB using the provided query
 
 		This function grabs the first result from `get_db_all_hits.
@@ -112,7 +113,7 @@ class Lazuli:
 		"""
 		return self.get_db_all_hits(query)[0]
 
-	def get_char_by_name(self, char_name):
+	def get_char_by_name(self, char_name: str) -> Character:
 		"""Create a `Character` instance from the given character name
 
 		Uses the class constructor of the `Character` class to create a new
@@ -133,14 +134,14 @@ class Lazuli:
 		"""
 		# Fetch first result because there should only be one character
 		# with that name
-		character_stats = self.get_db_first_hit(
-			f"SELECT * FROM `characters` WHERE `name` = '{char_name}'"
+		character_stats: dict[str, Any] = self.get_db_first_hit(
+			f"SELECT * FROM `characters` WHERE `name` =' {char_name}'"
 		)
 
 		character = Character(character_stats, self._database_config)
 		return character
 
-	def get_inv_by_name(self, char_name):
+	def get_inv_by_name(self, char_name: str) -> Inventory:
 		"""Create an `Inventory` instance from the given character name
 
 		Uses the Character ID associated with the character name, and the
@@ -160,14 +161,14 @@ class Lazuli:
 		"""
 		# Fetch first result because there should only be one character
 		# with that name
-		char_id = self.get_db_first_hit(
+		char_id: int = self.get_db_first_hit(
 			f"SELECT * FROM `characters` WHERE `name` = '{char_name}'"
 		)['id']
 
 		inventory = Inventory(char_id, self._database_config)
 		return inventory
 
-	def get_account_by_username(self, username):
+	def get_account_by_username(self, username: str) -> Account:
 		"""Given a username (NOT IGN), create a new `Account` object instance
 
 		Fetches the user account attributes from the database by querying for
@@ -188,23 +189,25 @@ class Lazuli:
 		"""
 		# Fetch first result because there should only be one character
 		# with that name
-		account_info = self.get_db_first_hit(
+		account_info: dict[str, Any] = self.get_db_first_hit(
 			f"SELECT * FROM `accounts` WHERE `name` = '{username}'"
 		)
 
 		account = Account(account_info, self._database_config)
 		return account
 
-	def set_char_stat(self, name, column, value):
+	def set_char_stat(self, name: str, column: str, value: Union[str, int]) -> bool:
 		"""Set the given value for the given name and column
 
 		Given a character name and column name, change its value in the
 		database using `utility.write_to_db()`
 
+		### CAN ONLY BE SET WHEN SERVER IS OFF!
+
 		Args:
 
-			column (`str`): Represents the column in the database
 			name (`str`): Represents the character name in the database
+			column (`str`): Represents the column in the database
 			value (`str | int`): Represents  the value that is to be updated in the corresponding field
 
 		Returns:
@@ -222,15 +225,15 @@ class Lazuli:
 			print(f"Successfully set {name}'s stats in database.")
 		return status
 
-	def get_online_list(self):
-		"""Fetch the list of players currently online
+	def get_online_list(self) -> list[dict[str, Any]]:
+		"""Fetch the list of players' data for all players currently online
 
 		AzureMS stores login state in the DB, in the `accounts` table,
 		`loggedin` column. `Lazuli::get_online_list` queries for a list of all
 		accounts that are logged in, using the `Lazuli::get_db_all_hits` method.
 
 		Returns:
-			A `list`, representing all players online.
+			A `list`, representing the rows in the database, corresponding to all online players.
 			Defaults to `False` in the event of an error during execution
 
 		Raises:
@@ -241,7 +244,7 @@ class Lazuli:
 		)
 		return data  # List of online players
 
-	def get_online_count(self):
+	def get_online_count(self) -> int:
 		"""Fetch the number of players currently online
 
 		Uses the `Lazuli::get_online_list` method to fetch the list of all
@@ -258,7 +261,7 @@ class Lazuli:
 		players = self.get_online_list()
 		return len(players)
 
-	def get_online_players(self):
+	def get_online_players(self) -> list[str]:
 		"""Fetch usernames of all players currently online
 
 		Uses the `Lazuli::get_online_list` method to fetch the list of all
@@ -274,7 +277,11 @@ class Lazuli:
 		player_data = self.get_online_list()
 		return utils.extract_name(player_data)
 
-	def get_level_ranking(self, number_of_players=5, show_gm=False):
+	def get_level_ranking(
+		self,
+		number_of_players: int=5,
+		show_gm: bool=False,
+	) -> list[tuple[str, int]]:
 		"""Fetches the top ranking players in terms of level
 
 		Uses `Lazuli::get_db_all_hits` to query, and
@@ -282,8 +289,8 @@ class Lazuli:
 
 		Args:
 
-			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 
 		Returns:
 			A `list` of `tuple`, representing player names and their
@@ -303,7 +310,11 @@ class Lazuli:
 		player_data = self.get_db_all_hits(prepared_statement)
 		return utils.extract_name_and_value(player_data, "level")
 
-	def get_meso_ranking(self, number_of_players=5, show_gm=False):
+	def get_meso_ranking(
+		self,
+		number_of_players: int=5,
+		show_gm: bool=False,
+	) -> list[tuple[str, int]]:
 		"""Fetches the top ranking players in terms of mesos
 
 		Uses `Lazuli::get_db_all_hits` to query, and
@@ -311,8 +322,8 @@ class Lazuli:
 
 		Args:
 
-			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 
 		Returns:
 			A `list` of `tuple`, representing player names and their
@@ -332,7 +343,11 @@ class Lazuli:
 		player_data = self.get_db_all_hits(prepared_statement)
 		return utils.extract_name_and_value(player_data, "meso")
 
-	def get_fame_ranking(self, number_of_players=5, show_gm=False):
+	def get_fame_ranking(
+		self,
+		number_of_players: int=5,
+		show_gm: bool=False,
+	) -> list[tuple[str, int]]:
 		"""Fetches the top ranking players in terms of fame
 
 		Uses `Lazuli::get_db_all_hits` to query, and
@@ -340,8 +355,8 @@ class Lazuli:
 
 		Args:
 
-			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 
 		Returns:
 			A `list` of `tuple`, representing player names and their
@@ -361,7 +376,11 @@ class Lazuli:
 		player_data = self.get_db_all_hits(prepared_statement)
 		return utils.extract_name_and_value(player_data, "fame")
 
-	def get_rebirth_ranking(self, number_of_players=5, show_gm=False):
+	def get_rebirth_ranking(
+		self,
+		number_of_players: int=5,
+		show_gm: bool=False,
+	) -> list[tuple[str, int]]:
 		"""Fetches the top ranking players in terms of rebirths
 
 		Uses `Lazuli::get_db_all_hits` to query, and
@@ -369,8 +388,8 @@ class Lazuli:
 
 		Args:
 
-			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 
 		Returns:
 			A `list` of `tuple`, representing player names and their
@@ -391,11 +410,11 @@ class Lazuli:
 		return utils.extract_name_and_value(player_data, "reborns")
 
 	def get_rebirth_ranking_by_job_id(
-			self,
-			job_id,
-			number_of_players=5,
-			show_gm=False
-	):
+		self,
+		job_id: Union[int, str],
+		number_of_players: int=5,
+		show_gm: bool=False,
+	) -> list[tuple[str, int]]:
 		"""Fetches the top ranking players (by class) in terms of rebirths
 
 		Uses `Lazuli::get_db_all_hits` to query, and
@@ -404,9 +423,9 @@ class Lazuli:
 
 		Args:
 
-			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 			job_id (`int | str`): Represents the specific Job ID to query
 			number_of_players (`int`): Optional; Number of players to show, e.g. Top 5 Ranking (default), Top 10 Ranking, etc.
+			show_gm (`bool`): Optional; Whether to add GMs (Game Masters) to the list of rankings
 
 		Returns:
 			A `list` of `tuple`, representing player names and their
