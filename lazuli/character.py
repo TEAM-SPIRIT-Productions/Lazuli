@@ -110,17 +110,17 @@ class Character:
 		self._face = self._stats['face']
 		self._ap = self._stats['ap']
 		self._map = self._stats['map']
-		# Add default for these:
 		self._bl_slots = self._stats['buddyCapacity']
-		self._rebirths = self._stats['reborns']
-		self._ambition = self._stats['ambition']
-		self._insight = self._stats['insight']
-		self._willpower = self._stats['willpower']
-		self._diligence = self._stats['diligence']
-		self._empathy = self._stats['empathy']
-		self._charm = self._stats['charm']
-		self._honour = self._stats['innerExp']  # Best guess - might be wrong!
-		self._mute = self._stats['chatban']
+		# Defaults to 0/false for non-Azure Odin-like DBs that don't have these:
+		self._rebirths = self._stats.get("reborns", 0)
+		self._ambition = self._stats.get("ambition", 0)
+		self._insight = self._stats.get("insight", 0)
+		self._willpower = self._stats.get("willpower", 0)
+		self._diligence = self._stats.get("diligence", 0)
+		self._empathy = self._stats.get("empathy", 0)
+		self._charm = self._stats.get("charm", 0)
+		self._honour = self._stats.get("innerExp", 0)  # Best guess - might be wrong!
+		self._mute = self._stats.get("chatban", "false")
 
 	def init_account(self) -> Account:
 		"""Instantiate an `Account` object corresponding to the character
