@@ -31,3 +31,5 @@ python -m twine upload dist/*
 call pypi\scripts\deactivate.bat
 echo Sequence completed!
 pause
+
+EXIT
