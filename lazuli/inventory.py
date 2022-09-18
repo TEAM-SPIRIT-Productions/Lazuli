@@ -23,7 +23,7 @@ class Inventory:
 	(aka setter methods).
 	"""
 
-	def __init__(self, character_id, db_config):
+	def __init__(self, character_id: int, db_config: dict[str, str]) -> None:
 		"""`Inventory` object; quasi-models AzureMS inventories.
 
 		Modelled after SwordieDB project's `Inventory` class init method.
@@ -79,7 +79,7 @@ class Inventory:
 		return False
 
 	@property
-	def equip_inv(self):
+	def equip_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""`dict` of `dict`: Represents the in-game items contained within the EQUIP tab
 
 		The key is the position of the item in the inventory tab, and the value
@@ -88,7 +88,7 @@ class Inventory:
 		return self._equip_inv
 
 	@property
-	def consume_inv(self):
+	def consume_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""`dict` of `dict`: Represents the in-game items contained within the USE tab
 
 		The key is the position of the item in the inventory tab, and the value
@@ -97,7 +97,7 @@ class Inventory:
 		return self._use_inv
 
 	@property
-	def etc_inv(self):
+	def etc_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""`dict` of `dict`: Represents the in-game items contained within the ETC tab
 
 		The key is the position of the item in the inventory tab, and the value
@@ -106,7 +106,7 @@ class Inventory:
 		return self._etc_inv
 
 	@property
-	def cash_inv(self):
+	def cash_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""`dict` of `dict`: Represents the in-game items contained within the CASH tab
 
 		The key is the position of the item in the inventory tab, and the value
@@ -115,7 +115,7 @@ class Inventory:
 		return self._cash_inv
 
 	@property
-	def install_inv(self):
+	def install_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""`dict` of `dict`: Represents the in-game items contained within the SETUP tab
 
 		The key is the position of the item in the inventory tab, and the value
@@ -124,7 +124,7 @@ class Inventory:
 		return self._install_inv
 
 	@property
-	def equipped_inv(self):
+	def equipped_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""`dict` of `dict`: Represents the in-game items currently equipped by the character
 
 		The key is the position of the item in the inventory tab, and the value
@@ -132,7 +132,7 @@ class Inventory:
 		"""
 		return self._equipped_inv
 
-	def fetch_all_inv_items(self):
+	def fetch_all_inv_items(self) -> list[dict[str, Any]]:
 		"""Fetch all items associated with the character
 
 		Returns:
@@ -157,7 +157,7 @@ class Inventory:
 		except Exception as e:
 			print(f"ERROR: Unable to fetch inventory items\n{e}")
 
-	def load_inv(self, inv_type):
+	def load_inv(self, inv_type: int) -> dict[int, dict[str, Optional[int]]]:
 		"""Given an inventory type, fetch every item associated with it
 
 		Examples of inventory types: `-1`, `1`, `2`, `3`, `4`, `5`
@@ -203,31 +203,31 @@ class Inventory:
 		except Exception as e:
 			print(f"ERROR: Unable to load inventory type {inv_type}\n{e}")
 
-	def init_equip_items(self):
+	def init_equip_items(self) -> dict[int, dict[str, Optional[int]]]:
 		"""Extract items belonging to the EQUIP tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("equip"))
 
-	def init_use_inv(self):
+	def init_use_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""Extract items belonging to the USE tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("use"))
 
-	def init_etc_inv(self):
+	def init_etc_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""Extract items belonging to the ETC tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("etc'"))
 
-	def init_cash_inv(self):
+	def init_cash_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""Extract items belonging to the CASH tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("cash"))
 
-	def init_equipped_inv(self):
+	def init_equipped_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""Extract items that are currently equipped from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("equipped"))
 
-	def init_install_inv(self):
+	def init_install_inv(self) -> dict[int, dict[str, Optional[int]]]:
 		"""Extract items belonging to the SETUP tab from the full list of items"""
 		return self.load_inv(utils.get_inv_type_by_name("setup"))
 
-	def has_item_in_equip(self, item_id):
+	def has_item_in_equip(self, item_id: int) -> bool:
 		"""Checks whether the EQUIP tab of the inventory has an item
 
 		Uses `Inventory::has_item_in_inv_type()`
@@ -241,7 +241,7 @@ class Inventory:
 		"""
 		return self.has_item_in_inv_type(self.equip_inv, item_id)
 
-	def has_item_in_consume(self, item_id):
+	def has_item_in_consume(self, item_id: int) -> bool:
 		"""Checks whether the USE tab of the inventory has an item
 
 		Uses `Inventory::has_item_in_inv_type()`
@@ -255,7 +255,7 @@ class Inventory:
 		"""
 		return self.has_item_in_inv_type(self.consume_inv, item_id)
 
-	def has_item_in_etc(self, item_id):
+	def has_item_in_etc(self, item_id: int) -> bool:
 		"""Checks whether the ETC tab of the inventory has an item
 
 		Uses `Inventory::has_item_in_inv_type()`
@@ -269,7 +269,7 @@ class Inventory:
 		"""
 		return self.has_item_in_inv_type(self.etc_inv, item_id)
 
-	def has_item_in_install(self, item_id):
+	def has_item_in_install(self, item_id: int) -> bool:
 		"""Checks whether the SETUP tab of the inventory has an item
 
 		Uses `Inventory::has_item_in_inv_type()`
@@ -283,7 +283,7 @@ class Inventory:
 		"""
 		return self.has_item_in_inv_type(self.install_inv, item_id)
 
-	def has_item_in_cash(self, item_id):
+	def has_item_in_cash(self, item_id: int) -> bool:
 		"""Checks whether the CASH tab of the inventory has an item
 
 		Uses `Inventory::has_item_in_inv_type()`
@@ -297,7 +297,7 @@ class Inventory:
 		"""
 		return self.has_item_in_inv_type(self.cash_inv, item_id)
 
-	def is_equipping(self, item_id):
+	def is_equipping(self, item_id: int) -> bool:
 		"""Checks whether an item is currently equipped
 
 		Uses `Inventory::has_item_in_inv_type()` to check whether the
