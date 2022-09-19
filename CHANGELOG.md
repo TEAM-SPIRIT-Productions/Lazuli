@@ -1,5 +1,8 @@
 ## CHANGELOG:  
 
+### v3.0.1
+- Update GitHub Actions for GitHub Pages deployment
+
 ### v3.0.0
 - Remove distribution- and documentation-related dependencies from requirements
 - Change documentation library from `Portray` to `pdoc`
