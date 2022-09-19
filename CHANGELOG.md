@@ -1,5 +1,9 @@
 ## CHANGELOG:  
 
+### v3.0.2
+- Fix faulty API docs links, following migration from `Portray` to `pdoc`
+- Fix license text contents flooding PyPI sidebar
+
 ### v3.0.1
 - Update GitHub Actions for GitHub Pages deployment
 

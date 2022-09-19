@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lazuli"
-version = "3.0.1"
+version = "3.0.2"
 description = "A Python-based tool for interacting with AzureMSv316-based databases."
 readme = "README.md"
 requires-python = ">=3.10.0"
-license = { file="LICENSE" }
+license = { text = "AGPL-3.0 license" }
 authors = [
     { name="Amos Chua" },
 ]
@@ -41,7 +41,7 @@ dependencies = [
 "Homepage" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli"
 "Bug Tracker" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli/issues"
 "Wiki" = "https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki"
-"API Docs" = "https://team-spirit-productions.github.io/Lazuli/reference/lazuli/"
+"API Docs" = "https://team-spirit-productions.github.io/Lazuli/"
 
 # Setuptools-specific configuration:
 [tool.setuptools]
