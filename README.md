@@ -30,13 +30,13 @@ Installation via PyPi/Pip:
   3. Create an Azure database object using the Lazuli class constructor
       - `azure = Lazuli()`
       - See the [Wiki](https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki/Sample-Code-Fragments#loading-a-database) for full examples
-      - See the [API Docs](https://team-spirit-productions.github.io/Lazuli/reference/lazuli/) for more in-depth technical documentation
+      - See the [API Docs](https://team-spirit-productions.github.io/Lazuli/) for more in-depth technical documentation
   4. Query
       - E.g. `number_of_players_online = azure.get_online_count()`
         - gives number (int) of accounts currently connected to the server
 
 ## Documentation:
-Kindly refer to the [Project Wiki](https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki) and [API Docs](https://team-spirit-productions.github.io/Lazuli/reference/lazuli/) for detailed documentation.  
+Kindly refer to the [Project Wiki](https://github.com/TEAM-SPIRIT-Productions/Lazuli/wiki) and [API Docs](https://team-spirit-productions.github.io/Lazuli/) for detailed documentation.  
 The [Discussions Page](https://github.com/TEAM-SPIRIT-Productions/Lazuli/discussions) is currently open for any questions!  
 Please report any [issues](https://github.com/TEAM-SPIRIT-Productions/Lazuli/issues)!  
 
